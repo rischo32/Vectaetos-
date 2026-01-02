@@ -1,90 +1,143 @@
 #!/usr/bin/env python3
-# PHI VECTAETOS — MULTIPOLE / CONFIGURABLE / CSV LOG & PLOTS
-# Build: v2.0-enhanced
+# =========================================
+# VECTAETOS – PHI MULTIPOLAR VORTEX (BASIC)
+# Termux compatible
+# =========================================
 
 import random
 import math
-import csv
-import time
-from collections import deque
-from itertools import combinations
-import matplotlib.pyplot as plt  # For visualization
 
-# =========================
+# -------------------------------
 # KONFIGURÁCIA
-# =========================
-CONFIG = {
-    "SEED": 42,
-    "STEPS": 10000,
-    "POLES": 4,
-    "AXIOMS": 8,
-    "LOG_EVERY": 500,
-    "WINDOW": 50,
-    "ENERGY_DECAY": 0.002,
-    "COUPLING": 0.05,
-    "PERTURB_SIZE": 0.35,
-    "PERTURB_PROB": 0.04,
-    "PERSIST_STD": 0.012,
-    "PERSIST_COST": 0.003,
-    "TAU_MIN": 0.05,
-    "TAU_MAX": 0.45,
-    "COLLAPSE_E": 0.18,
-}
+# -------------------------------
+STEPS = 10000
+POLES = 4          # multipole (P0..Pn)
+AXIOMS = 8
+PRINT_EVERY = 500
 
-random.seed(CONFIG["SEED"])
+# anti-atraktor
+STAGNATION_WINDOW = 120
+MAINTENANCE_GAIN = 0.00015
 
-# =========================
-# FUNKCIE PÓLU A POMOCNÉ FUNKCIE
-# =========================
-def clamp(value, lower=0, upper=1):
-    """Obmedzí hodnotu na požadovaný rozsah."""
-    return max(lower, min(upper, value))
+# perturbácie
+PERTURB_THRESHOLD = 1e-4
+PERTURB_STRENGTH = 0.02
 
-def generate_topology(n_poles, topology="random"):
-    """
-    Vytvára topológiu systému.
-    Typy: 
-    - "random" - náhodná asymetrická sieť.
-    - "ring" - kruhová sieť, kde každý pól má spojenia len medzi dvoma polami.
-    - "fully_connected" - každý pól je pripojený ku všetkým ostatným.
-    """
-    if topology == "fully_connected":
-        return [[1 if i != j else 0 for j in range(n_poles)] for i in range(n_poles)]
-    elif topology == "ring":
-        topo = [[0] * n_poles for _ in range(n_poles)]
-        for i in range(n_poles):
-            topo[i][(i+1) % n_poles] = 1
-            topo[(i+1) % n_poles][i] = 1
-        return topo
-    else:  # Random topology
-        topo = [[random.choice([0, 1]) for _ in range(n_poles)] for _ in range(n_poles)]
-        for i in range(n_poles):
-            topo[i][i] = 0  # Žiadny pól nie je pripojený sám na seba
-        return topo
+# hysterezia
+MEMORY_DECAY = 0.999
+MEMORY_GAIN = 0.015
 
-class Pole:
-    """Jednotka simulácie (pól)."""
-    def __init__(self):
-        self.E = random.uniform(0.6, 0.9)  # Energia
-        self.C = random.uniform(0.4, 0.8)  # Koherencia
-        self.T = random.uniform(0.05, 0.2)  # Napätie
-        self.M = 0.0  # Pamäť
-        self.U = 0.0  # Neznáme vplyvy
-        self.tau = random.uniform(CONFIG["TAU_MIN"] + 0.07, CONFIG["TAU_MAX"] - 0.07)
-        self.cost = 0.0  # Náklady na údržbu
-        self.collapse = False
-        self.collapses = 0  # Počet kolapsov
-        self.hist = deque(maxlen=CONFIG["WINDOW"])  # História (okno s poslednými hodnotami)
+# -------------------------------
+# INICIALIZÁCIA POĽA
+# -------------------------------
+poles = []
+for i in range(POLES):
+    poles.append({
+        "E": random.uniform(0.1, 1.0),   # energia
+        "C": random.uniform(0.1, 1.0),   # koherencia
+        "T": random.uniform(0.05, 0.4),  # napätie
+        "M": 1.0,                        # pamäť
+        "history": 0.0                   # hysterezia
+    })
 
-    def update(self, global_perturb, dominant, axiom_effect, inconsistency):
-        """Aktualizuje vlastnosti pólu."""
-        global PERSIST_COST, PERSIST_STD, CLAMP_E
+axioms = [round(random.uniform(0.05, 0.1), 3) for _ in range(AXIOMS)]
 
-        # História / meranie stability
-        self.hist.append((self.E, self.C, self.T))
-        if len(self.hist) == CONFIG["WINDOW"]:
-            flattened = [x for h in self.hist for x in h]
-            mean = sum(flattened) / len(flattened)
-            std = math.sqrt(sum((x - mean) ** 2 for x in flattened) / len(flattened))
-            if std < CONFIG["PERSIST_STD"]:
-                self.cost += CONFIG["PERSIST_COST"] * clamp(std)
+last_state = None
+stagnation_counter = 0
+collapses = 0
+
+# -------------------------------
+# POMOCNÉ FUNKCIE
+# -------------------------------
+def distance(a, b):
+    return abs(a["E"] - b["E"]) + abs(a["C"] - b["C"]) + abs(a["T"] - b["T"])
+
+def redistribute_energy():
+    for i in range(POLES):
+        for j in range(i + 1, POLES):
+            pi = poles[i]
+            pj = poles[j]
+
+            grad_T = pj["T"] - pi["T"]
+            grad_C = pj["C"] - pi["C"]
+
+            flow = 0.01 * grad_T * grad_C
+            flow *= (1 + pi["history"])
+
+            pi["E"] += flow
+            pj["E"] -= flow
+
+            pi["history"] += abs(flow) * MEMORY_GAIN
+            pj["history"] += abs(flow) * MEMORY_GAIN
+
+def apply_hysteresis():
+    for p in poles:
+        p["history"] *= MEMORY_DECAY
+        p["M"] = max(0.1, p["M"] * (1 - p["history"] * 0.001))
+
+def maintenance_cost():
+    global stagnation_counter
+    if stagnation_counter > STAGNATION_WINDOW:
+        for p in poles:
+            p["E"] -= MAINTENANCE_GAIN * stagnation_counter
+            p["C"] -= MAINTENANCE_GAIN * 0.5
+
+def latent_perturbation():
+    for p in poles:
+        p["T"] += random.uniform(-PERTURB_STRENGTH, PERTURB_STRENGTH)
+        p["C"] += random.uniform(-PERTURB_STRENGTH * 0.5, PERTURB_STRENGTH * 0.5)
+
+def clamp():
+    for p in poles:
+        p["E"] = max(0.0, min(1.5, p["E"]))
+        p["C"] = max(0.0, min(1.0, p["C"]))
+        p["T"] = max(0.0, min(1.0, p["T"]))
+
+# -------------------------------
+# HLAVNÁ SMYČKA
+# -------------------------------
+for step in range(1, STEPS + 1):
+    redistribute_energy()
+    apply_hysteresis()
+    maintenance_cost()
+
+    # kontrola stagnácie
+    snapshot = tuple(round(p["E"], 4) for p in poles)
+    if snapshot == last_state:
+        stagnation_counter += 1
+    else:
+        stagnation_counter = 0
+
+    if stagnation_counter > STAGNATION_WINDOW and random.random() < 0.1:
+        latent_perturbation()
+
+    last_state = snapshot
+    clamp()
+
+    # kolaps (nie trest – fyzikálny limit)
+    for p in poles:
+        if p["C"] < 0.02 or p["E"] < 0.02:
+            collapses += 1
+            p["E"] = random.uniform(0.2, 0.6)
+            p["C"] = random.uniform(0.3, 0.7)
+            p["T"] = random.uniform(0.1, 0.4)
+
+    if step % PRINT_EVERY == 0:
+        avgE = sum(p["E"] for p in poles) / POLES
+        avgC = sum(p["C"] for p in poles) / POLES
+        avgT = sum(p["T"] for p in poles) / POLES
+        print(
+            f"step={step:5d} | "
+            f"E={avgE:.3f} C={avgC:.3f} T={avgT:.3f} "
+            f"collapses={collapses}"
+        )
+
+# -------------------------------
+# VÝSTUP
+# -------------------------------
+print("\n--- HOTOVO ---")
+print("Kolapsy celkom:", collapses)
+print("Axiomy:", axioms)
+print("Konečné póly:")
+for i, p in enumerate(poles):
+    print(f"P{i}: E={p['E']:.3f}, C={p['C']:.3f}, T={p['T']:.3f}, M={p['M']:.3f}")
