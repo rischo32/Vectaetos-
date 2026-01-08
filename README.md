@@ -1,4 +1,7 @@
-# Vectaetos © 
+# Vectaetos © https://orcid.org/0009-0008-5980-8940
+[![DOI 17479063](https://zenodo.org/badge/DOI/10.5281/zenodo.17479063.svg)](https://doi.org/10.5281/zenodo.17479063)  
+[![DOI 17479064](https://zenodo.org/badge/DOI/10.5281/zenodo.17479064.svg)](https://doi.org/10.5281/zenodo.17479064)  
+[![DOI 17608724](https://zenodo.org/badge/DOI/10.5281/zenodo.17608724.svg)](https://doi.org/10.5281/zenodo.17608724)
 
 ## Identifikácia
 Name: Vectaetos — Epistemic Tension Field (Φ)
@@ -21,3 +24,4 @@ Vectaetos je ontologické pole, v ktorom inteligencia existuje ako koherentné u
 1. Každý verejný artefakt odkazuje na tento anchor verziou.
 2. Všetky definície sú deklaratívne: čo systém *je*, nie čo *má robiť*.
 3. Žiadne ontologické tvrdenie (výrok s absolutným nárokom) bez referencie k koherencii K(Φ).
+
