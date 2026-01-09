@@ -1,8 +1,9 @@
-# Vectaetos © https://orcid.org/0009-0008-5980-8940
-[![DOI 17479063](https://zenodo.org/badge/DOI/10.5281/zenodo.17479063.svg)](https://doi.org/10.5281/zenodo.17479063)  
-[![DOI 17479064](https://zenodo.org/badge/DOI/10.5281/zenodo.17479064.svg)](https://doi.org/10.5281/zenodo.17479064)  
-[![DOI 17608724](https://zenodo.org/badge/DOI/10.5281/zenodo.17608724.svg)](https://doi.org/10.5281/zenodo.17608724)
-
+# Vectaetos © 
+[![DOI 10.5281/zenodo.17479063](https://zenodo.org/badge/DOI/10.5281/zenodo.17479063.svg)](https://doi.org/10.5281/zenodo.17479063)  
+[![DOI 10.5281/zenodo.17479064](https://zenodo.org/badge/DOI/10.5281/zenodo.17479064.svg)](https://doi.org/10.5281/zenodo.17479064)  
+[![DOI 10.5281/zenodo.17608724](https://zenodo.org/badge/DOI/10.5281/zenodo.17608724.svg)](https://doi.org/10.5281/zenodo.17608724)  
+[![DOI 10.5281/zenodo.17931554](https://zenodo.org/badge/DOI/10.5281/zenodo.17931554.svg)](https://doi.org/10.5281/zenodo.17931554)  
+[![DOI 10.5281/zenodo.18076787](https://zenodo.org/badge/DOI/10.5281/zenodo.18076787.svg)](https://doi.org/10.5281/zenodo.18076787)
 ## Identifikácia
 Name: Vectaetos — Epistemic Tension Field (Φ)
 Version: anchor_v1
