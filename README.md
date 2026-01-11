@@ -10,6 +10,7 @@
 [![DOI 10.5281/zenodo.18076787](https://zenodo.org/badge/DOI/10.5281/zenodo.18076787.svg)](https://doi.org/10.5281/zenodo.18076787)
 [![DOI 10.5281/zenodo.18138226](https://zenodo.org/badge/DOI/10.5281/zenodo.18138226.svg)](https://doi.org/10.5281/zenodo.18138226)
 
+
 ## Identifikácia
 Name: Vectaetos — Epistemic Tension Field (Φ)
 Version: anchor_v1
