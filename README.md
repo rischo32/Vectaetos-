@@ -2,12 +2,20 @@
 
 # Vectaetos © 
 
+
 [![DOI10.5281/zenodo.17479063](https://zenodo.org/badge/DOI/10.5281/zenodo.17479063.svg)](https://doi.org/10.5281/zenodo.17479063)  
+
 [![DOI10.5281/zenodo.17479064](https://zenodo.org/badge/DOI/10.5281/zenodo.17479064.svg)](https://doi.org/10.5281/zenodo.17479064)  
+
 [![DOI10.5281/zenodo.17608724](https://zenodo.org/badge/DOI/10.5281/zenodo.17608724.svg)](https://doi.org/10.5281/zenodo.17608724)  
+
 [![DOI10.5281/zenodo.17931554](https://zenodo.org/badge/DOI/10.5281/zenodo.17931554.svg)](https://doi.org/10.5281/zenodo.17931554)  
+
 [![DOI10.5281/zenodo.18076787](https://zenodo.org/badge/DOI/10.5281/zenodo.18076787.svg)](https://doi.org/10.5281/zenodo.18076787)
+
 [![DOI10.5281/zenodo.18138226](https://zenodo.org/badge/DOI/10.5281/zenodo.18138226.svg)](https://doi.org/10.5281/zenodo.18138226)
+
+
 
 
 ## Identifikácia
