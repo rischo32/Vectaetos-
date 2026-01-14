@@ -1,3 +1,7 @@
+## Citation
+
+DOI: https://doi.org/10.5281/zenodo.18076787
+
 📜 The project is finished, but development continues — tuning, bug fixes, and improvements. Most of it isn’t publicly available yet. We’re testing the site’s capabilities (learning everything step by step…), trying out what’s possible, and experimenting within our limits.
 
 # Vectaetos © 
