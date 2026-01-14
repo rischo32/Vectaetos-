@@ -34,6 +34,27 @@ const truthCuts = [
   "To, čo hľadáš, nie je odpoveď."
 ];
 
+const TRUTH_REZ_CHANCE = 0.15; // 15 % návštev
+const TRUTH_DELAY = 5000;     // 5 sekúnd
+
+const rezClasses = [
+  "truth-dim",
+  "truth-bright",
+  "truth-blur",
+  "truth-shift"
+];
+
+setTimeout(() => {
+  if (Math.random() < TRUTH_REZ_CHANCE) {
+    const cls = rezClasses[Math.floor(Math.random() * rezClasses.length)];
+    document.body.classList.add(cls);
+
+    setTimeout(() => {
+      document.body.classList.remove(cls);
+    }, 1200); // trvanie rezu
+  }
+}, TRUTH_DELAY);
+
 // --- STAV RELÁCIE (bez ukladania) ---
 let currentStream = Object.keys(streams)[Math.floor(Math.random() * 4)];
 let index = Math.floor(Math.random() * streams[currentStream].length);
