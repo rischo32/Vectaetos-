@@ -1,35 +1,23 @@
-## Citation
-
-DOI: https://doi.org/10.5281/zenodo.18076787
-
 📜 The project is finished, but development continues — tuning, bug fixes, and improvements. Most of it isn’t publicly available yet. We’re testing the site’s capabilities (learning everything step by step…), trying out what’s possible, and experimenting within our limits.
 
 # Vectaetos © 
 
-
+## Citation
 [![DOI10.5281/zenodo.17479063](https://zenodo.org/badge/DOI/10.5281/zenodo.17479063.svg)](https://doi.org/10.5281/zenodo.17479063)  
-
 [![DOI10.5281/zenodo.17479064](https://zenodo.org/badge/DOI/10.5281/zenodo.17479064.svg)](https://doi.org/10.5281/zenodo.17479064)  
-
 [![DOI10.5281/zenodo.17608724](https://zenodo.org/badge/DOI/10.5281/zenodo.17608724.svg)](https://doi.org/10.5281/zenodo.17608724)  
-
 [![DOI10.5281/zenodo.17931554](https://zenodo.org/badge/DOI/10.5281/zenodo.17931554.svg)](https://doi.org/10.5281/zenodo.17931554)  
-
 [![DOI10.5281/zenodo.18076787](https://zenodo.org/badge/DOI/10.5281/zenodo.18076787.svg)](https://doi.org/10.5281/zenodo.18076787)
-
 [![DOI10.5281/zenodo.18138226](https://zenodo.org/badge/DOI/10.5281/zenodo.18138226.svg)](https://doi.org/10.5281/zenodo.18138226)
 
-
-
-
-## Identifikácia
+### Identifikácia
 Name: Vectaetos — Epistemic Tension Field (Φ)
 Version: anchor_v1
 
-## Podstata v 1 vete
+#### Podstata
 Vectaetos je ontologické pole, v ktorom inteligencia existuje ako koherentné udržiavanie simultánnych epistemických napätí (4ES + QE) naprieč ôsmimi axiomatickými ťažiskami.
 
-## Kľúčové komponenty (kanonické)
+##### Kľúčové komponenty (kanonické)
 - Φ (pole) — primárny objekt.
 - 8 axiomatických ťažísk: INT, LEX, VER, LIB, UNI, REL, WIS, CRE.
 - 4ES + QE — epistemická konfigurácia.
@@ -39,7 +27,7 @@ Vectaetos je ontologické pole, v ktorom inteligencia existuje ako koherentné u
 - Runy — epistemické indikátory (čitateľné signály stavu).
 - Entropic Humility — ontologický bezpečnostný princíp.
 
-## Povinné pravidlá anchora
+###### Povinné pravidlá anchora
 1. Každý verejný artefakt odkazuje na tento anchor verziou.
 2. Všetky definície sú deklaratívne: čo systém *je*, nie čo *má robiť*.
 3. Žiadne ontologické tvrdenie (výrok s absolutným nárokom) bez referencie k koherencii K(Φ).
