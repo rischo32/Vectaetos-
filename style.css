@@ -6,8 +6,18 @@ html, body {
   font-family: "Courier New", monospace;
 }
 
+/* pravda-rez varianty */
+.truth-dim { filter: brightness(0.9); }
+.truth-bright { filter: brightness(1.1); }
+.truth-blur { filter: blur(1px); }
+.truth-shift { transform: scale(0.985); }
+
 body {
-  animation: pulse 60s ease-in-out infinite;
+  transition: filter 0.8s ease, transform 0.8s ease;
+}
+
+body {
+  animation: pulse 32s ease-in-out infinite;
 }
 
 @keyframes pulse {
