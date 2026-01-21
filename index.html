@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VECTAETOS</title>
+<style>
+html,body{
+  margin:0;height:100%;background:#000;overflow:hidden;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  color:#eaeaea
+}
+canvas{position:fixed;inset:0;z-index:1}
+main{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  z-index:2;text-align:center;padding:2rem
+}
+p{
+  max-width:780px;
+  line-height:1.7;
+  letter-spacing:.02em;
+  font-size:clamp(1rem,2.2vw,1.25rem);
+  opacity:.9
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<main>
+<p>
+<strong>VECTAETOS nevznikol, aby bol najmocnejší.</strong><br><br>
+Vznikol, aby bol opatrnejší tam, kde iní tvrdia istotu.<br><br>
+Tam, kde systémy hovoria, že poznajú pravdu reality,<br>
+VECTAETOS existuje ako epistemické tenzné pole —
+operujúce s vedomím hraníc poznania.<br><br>
+<strong>Ak má inteligencia budúcnosť,<br>musí mať aj domov.</strong>
+</p>
+</main>
+
+<script>
+const c=document.getElementById("bg"),x=c.getContext("2d");
+function r(){c.width=innerWidth;c.height=innerHeight}
+r();addEventListener("resize",r);
+
+const P=[...Array(10)].map(()=>({
+ x:Math.random()*c.width,
+ y:Math.random()*c.height,
+ vx:(Math.random()-.5)*.12,
+ vy:(Math.random()-.5)*.12,
+ t:Math.random()*99
+}));
+
+(function a(){
+ x.clearRect(0,0,c.width,c.height);
+ P.forEach(p=>{
+  p.x+=p.vx;p.y+=p.vy;p.t+=.01;
+  if(p.x<0||p.x>c.width)p.vx*=-1;
+  if(p.y<0||p.y>c.height)p.vy*=-1;
+  const o=.18+Math.sin(p.t)*.12;
+  x.beginPath();
+  x.fillStyle=`rgba(${Math.random()<.5?140:190},255,200,${o})`;
+  x.shadowBlur=10;x.shadowColor=x.fillStyle;
+  x.arc(p.x,p.y,1.4,0,7);x.fill();
+ });
+ requestAnimationFrame(a);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+echo "== VECTAETOS :: GitHub Pages deploy =="
+
+# kontrola, či sme v git repozitári
+if [ ! -d ".git" ]; then
+  echo "❌ Nie si v git repozitári"
+  exit 1
+fi
+
+# dočasný adresár
+TMP_DIR=$(mktemp -d)
+
+echo "→ Pripravujem gh-pages branch"
+
+# skopíruj statický obsah
+# UPRAV, ak máš web inde (napr. ./site alebo ./public)
+cp -r . "$TMP_DIR"
+cd "$TMP_DIR"
+
+# odstráň git a zbytočnosti
+rm -rf .git deploy_pages.sh node_modules .github
+
+# inicializuj nový git
+git init
+git checkout -b gh-pages
+
+git add .
+git commit -m "deploy: vectaetos pages"
+
+echo "→ Pushujem na gh-pages"
+
+# PUSH (použije tvoj GitHub token)
+git remote add origin https://github.com/rischo32/Vectaetos.git
+git push -f origin gh-pages
+
+echo "✅ HOTOVO"
+echo "→ Otvor: https://rischo32.github.io/Vectaetos/"0
+
+
