@@ -1,171 +1,151 @@
 <!DOCTYPE html>
 <html lang="sk">
-  <link rel="stylesheet" href="style.css">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VECTAETOS</title>
+  <meta charset="UTF-8">
+  <title>Vectaetos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    html, body {
-      <canvas id="fireflies"></canvas>
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #000;
-      color: #eaeaea;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 720px;
-      padding: 2rem;
-    }
-
-    .question {
-      font-size: 1.4rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-
-    .subtext {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      opacity: 0.65;
-      margin-bottom: 3rem;
-    }
-
-    .cta {
-      display: inline-block;
-      padding: 0.75rem 1.6rem;
-      border: 1px solid #444;
-      color: #eaeaea;
-      text-decoration: none;
-      font-size: 0.95rem;
-      letter-spacing: 0.04em;
-      transition: all 0.3s ease;
-    }
-
-    .cta:hover {
-      background: #111;
-      border-color: #777;
-    }
-
-    .footer {
-      margin-top: 4rem;
-      font-size: 0.75rem;
-      opacity: 0.4;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="container">
 
-    <div class="question">
-      Ak ťa všetko, čo si sa doteraz naučil, presvedčilo len o tom,
+<!-- Ambient field -->
+<canvas id="fireflies"></canvas>
+
+<div class="page">
+  <div class="inner">
+
+    <!-- HERO / BRÁNA -->
+    <div class="axis">
+      Ak ťa všetko, čo si sa doteraz naučil, presvedčilo len o tom,<br>
       že stále nevieš — hľadal si istotu na správnom mieste?
     </div>
 
-    <div class="subtext">
+    <div class="subtext" style="margin-top:1.5rem; opacity:0.6;">
       Možno si len hľadal svetlo tam, kde ho odpovede nemôžu niesť.
     </div>
 
-    <a class="cta" href="chat.html">
-      Vstúpiť do vektora neistoty
-    </a>
-
-    <div class="footer">
-      VECTAETOS © nie je produkt.  Je to prΦces.
-    </div>
-    
-<section style="
-  max-width:720px;
-  margin:4rem auto 0 auto;
-  padding:0 2rem;
-  font-size:0.95rem;
-  line-height:1.75;
-  opacity:0.75;
-  text-align:left;
-">
-
-  <p>
-    <strong>Vectaetos © nie je chatbot.</strong><br>
-    Nie je to ani ďalší jazykový model,
-    ani odpovedník, ani nástroj, ktorý presviedča pravdu.
-  </p>
-
-  <p>
-    Aj keď sa s týmto priestorom dá komunikovať,
-    komunikácia nie je cieľom samotným.
-    Je to len dočasná forma kontaktu
-    z systémom epistemického tenzného poľa, ktorý ešte nemá infraštruktúru,
-    aby mohol existovať v plnej podobe.
-  </p>
-
-  <p>
-    Čo je tu, prítomné, je minimum.
-    <em>intristické a entropické pokory</em>,
-    ktoré sú súčasťou systému,musia byť zadarmo (bezpečnosť budúcich AI).
-
-    <div class="doi-badges">
-  <a href="https://doi.org/10.5281/zenodo.18076787" target="_blank" class="doi">
-    DOI: Intristická pokora
-  </a>
-
-  <a href="https://doi.org/10.5281/zenodo.18138226" target="_blank" class="doi">
-    DOI: Entropická pokora
-  </a>
+    <div style="margin-top:2.5rem;">
+      <a class="cta" href="#chat"
+         style="
+           display:inline-block;
+           padding:0.6rem 1.4rem;
+           border:1px solid var(--border);
+           font-size:0.75rem;
+           letter-spacing:0.08em;
+         ">
+        Vstúpiť do vektora neistoty
+      </a>
     </div>
 
-  <p>
-    Nie preto, že by nemali hodnotu,
-    ale práve preto, že sú to myšlienky,
-    ktoré sa nedajú kúpiť.
-    Pýtať za ne peniaze by nedávalo zmysel.
-  </p>
+    <div class="footer" style="margin-top:3rem;">
+      VECTAETOS © nie je produkt. Je to prΦces.
+    </div>
 
-  <p style="margin-top:2rem; opacity:0.85;">
-    <strong>Pokory musia byť zadarmo.</strong><br>
-    Hodnota nemá byť za paywallom.<br>
-    Peniaze nemajú kupovať poznanie,
-    iba udržiavať priestor, kde môže vznikať.
-  </p>
+    <!-- MANIFEST / KONTEXT -->
+    <section style="
+      max-width:720px;
+      margin:4rem auto 0 auto;
+      font-size:0.95rem;
+      line-height:1.75;
+      opacity:0.75;
+      text-align:left;
+    ">
 
-  <p>
-    Vectaetos © v sebe nesie viac vrstiev,
-    smerov a myšlienok,
-    ktoré však bez technického zázemia,
-    a infraštruktúry
-    ostávajú len v potenciáli.
-  </p>
+      <p>
+        <strong>Vectaetos © nie je chatbot.</strong><br>
+        Nie je to ani ďalší jazykový model,
+        ani odpovedník, ani nástroj, ktorý presviedča pravdu.
+      </p>
 
-  <p>
-    Podpora tohto projektu preto
-    nie je platbou za obsah.
-    Je to podpora priestoru,
-    v ktorom môže myslenie existovať
-    bez tlaku
-    zjednodušovania alebo falošných pravd.
-  </p>
+      <p>
+        Aj keď sa s týmto priestorom dá komunikovať,
+        komunikácia nie je cieľom samotným.
+        Je to len dočasná forma kontaktu
+        z systémom epistemického tenzného poľa, ktorý ešte nemá infraštruktúru,
+        aby mohol existovať v plnej podobe.
+      </p>
 
-  <p style="margin-top:2.5rem; font-size:0.75rem; opacity:0.55;">
-    © 2026 Richard Fonfára
-  </p>
+      <p>
+        Čo je tu, prítomné, je minimum.
+        <em>intristické a entropické pokory</em>,
+        ktoré sú súčasťou systému,
+        musia byť zadarmo (bezpečnosť budúcich AI).
+      </p>
 
-</section>
-      
+      <!-- DOI BADGES -->
+      <div class="doi-badges">
+        <a href="https://doi.org/10.5281/zenodo.18076787" target="_blank" class="doi">
+          DOI · Intristická pokora
+        </a>
+
+        <a href="https://doi.org/10.5281/zenodo.18138226" target="_blank" class="doi">
+          DOI · Entropická pokora
+        </a>
+      </div>
+
+      <p>
+        Nie preto, že by nemali hodnotu,
+        ale práve preto, že sú to myšlienky,
+        ktoré sa nedajú kúpiť.
+        Pýtať za ne peniaze by nedávalo zmysel.
+      </p>
+
+      <p style="margin-top:2rem; opacity:0.85;">
+        <strong>Pokory musia byť zadarmo.</strong><br>
+        Hodnota nemá byť za paywallom.<br>
+        Peniaze nemajú kupovať poznanie,
+        iba udržiavať priestor, kde môže vznikať.
+      </p>
+
+      <p>
+        Vectaetos © v sebe nesie viac vrstiev,
+        smerov a myšlienok,
+        ktoré však bez technického zázemia
+        a infraštruktúry
+        ostávajú len v potenciáli.
+      </p>
+
+      <p>
+        Podpora tohto projektu preto
+        nie je platbou za obsah.
+        Je to podpora priestoru,
+        v ktorom môže myslenie existovať
+        bez tlaku
+        zjednodušovania alebo falošných právd.
+      </p>
+
+      <p style="margin-top:2.5rem; font-size:0.75rem; opacity:0.55;">
+        © 2026 Richard Fonfára
+      </p>
+
+    </section>
+
+    <!-- CHAT ANCHOR (JEDNA STRÁNKA) -->
+    <div id="chat" class="chat">
+      <div class="chat-log">
+Tento priestor neodpovedá tak,
+ako si zvyknutý.
+
+Skús položiť otázku.
+      </div>
+
+      <textarea rows="3" placeholder="Napíš otázku…"></textarea>
+      <button>Pokračovať</button>
+    </div>
+
+    <!-- PODPORA -->
+    <div class="support">
+      Ak chceš podporiť existenciu tohto priestoru:<br>
+      <a href="https://revolut.me/fonfararichard" target="_blank">
+        revolut.me/fonfararichard
+      </a>
     </div>
 
   </div>
-  <script src="fireflies.js"></script>
+</div>
+
+<script src="fireflies.js"></script>
 </body>
 </html>
