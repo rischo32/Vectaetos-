@@ -1,45 +1,20 @@
-/* =========================================================
-   VECTAETOS — CANONICAL STYLE
-   One page. One space. One tension.
-   Ambient layer: fireflies (green / violet)
-   ========================================================= */
-
-/* ---------- ROOT ---------- */
-
 :root {
-  --bg: #000000;
+  --bg: #000;
   --fg: #eaeaea;
-  --muted: #9a9a9a;
-  --border: #333333;
-  --border-hover: #777777;
-  --accent: #eaeaea;
-
-  --font-main: system-ui, -apple-system, BlinkMacSystemFont,
-               "Segoe UI", Roboto, Ubuntu, "Helvetica Neue",
-               Arial, sans-serif;
-
-  --font-size-base: 16px;
-  --line-height-base: 1.75;
+  --border: #333;
+  --border-hover: #777;
+  --font: system-ui, sans-serif;
 }
 
-/* ---------- GLOBAL RESET ---------- */
-
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html, body {
   margin: 0;
   padding: 0;
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-main);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  overflow-x: hidden;
+  font-family: var(--font);
 }
-
-/* ---------- AMBIENT LAYER (FIREFLIES) ---------- */
 
 #fireflies {
   position: fixed;
@@ -48,8 +23,6 @@ html, body {
   pointer-events: none;
   opacity: 0.55;
 }
-
-/* ---------- PAGE CONTAINER ---------- */
 
 .page {
   min-height: 100vh;
@@ -61,159 +34,75 @@ html, body {
 }
 
 .inner {
-  width: 100%;
   max-width: 720px;
   padding: 2rem;
 }
 
-/* ---------- CORE TEXT ---------- */
-
 p {
-  margin: 0 0 1.25rem 0;
-}
-
-strong {
-  font-weight: 600;
-}
-
-em {
-  font-style: italic;
-  opacity: 0.9;
-}
-
-/* ---------- AXIS / MANIFEST ---------- */
-
-.axis {
-  font-size: 1rem;
-  opacity: 0.75;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
 }
 
 .axis-quote {
-  margin: 2rem 0;
-  padding-left: 1rem;
   border-left: 2px solid var(--border);
-  font-size: 0.95rem;
+  padding-left: 1rem;
   opacity: 0.85;
 }
 
-/* ---------- DOI BADGES ---------- */
-
 .doi-badges {
-  margin: 2.5rem 0 1.5rem 0;
   display: flex;
-  flex-wrap: wrap;
   gap: 0.75rem;
+  margin: 2rem 0;
 }
 
 .doi {
-  display: inline-block;
-  padding: 0.45rem 0.9rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
   font-size: 0.7rem;
-  letter-spacing: 0.04em;
   text-decoration: none;
   color: var(--fg);
   opacity: 0.7;
-  transition: all 0.25s ease;
 }
 
 .doi:hover {
   opacity: 1;
   border-color: var(--border-hover);
-  background: #111;
 }
 
-/* ---------- CHAT OVERLAY ---------- */
-
 .chat {
-  margin-top: 3rem;
+  margin-top: 2.5rem;
 }
 
 .chat-log {
-  min-height: 220px;
+  min-height: 160px;
   white-space: pre-wrap;
-  font-size: 0.9rem;
   opacity: 0.85;
 }
 
-.chat textarea {
+textarea {
   width: 100%;
-  margin-top: 1rem;
-  background: var(--bg);
+  background: #000;
   color: var(--fg);
   border: 1px solid var(--border);
-  padding: 0.75rem;
-  resize: none;
-  font-size: 0.9rem;
+  padding: 0.7rem;
 }
 
-.chat textarea:focus {
-  outline: none;
-  border-color: var(--border-hover);
-}
-
-.chat button {
+button {
   margin-top: 1rem;
   background: none;
-  border: 1px solid var(--border);
   color: var(--fg);
-  padding: 0.5rem 1.4rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: all 0.25s ease;
+  border: 1px solid var(--border);
+  padding: 0.4rem 1.2rem;
 }
-
-.chat button:hover {
-  border-color: var(--border-hover);
-  background: #111;
-}
-
-/* ---------- SUPPORT / REVOLUT ---------- */
 
 .support {
   margin-top: 2.5rem;
   font-size: 0.8rem;
   opacity: 0.6;
-  line-height: 1.65;
 }
-
-.support a {
-  color: var(--fg);
-  text-decoration: underline;
-}
-
-.support a:hover {
-  opacity: 1;
-}
-
-/* ---------- FOOTER ---------- */
 
 .footer {
   margin-top: 3rem;
   font-size: 0.7rem;
   opacity: 0.45;
 }
-
-/* ---------- INTERACTION PHILOSOPHY ---------- */
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* ---------- NOISE REDUCTION ---------- */
-
-::selection {
-  background: #222;
-  color: var(--fg);
-}
-
-/* =========================================================
-   END — VECTAETOS CANONICAL STYLE v1.1
-   ========================================================= */
