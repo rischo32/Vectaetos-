@@ -1,6 +1,7 @@
 /* =========================================================
    VECTAETOS — CANONICAL STYLE
    One page. One space. One tension.
+   Ambient layer: fireflies (green / violet)
    ========================================================= */
 
 /* ---------- ROOT ---------- */
@@ -35,6 +36,17 @@ html, body {
   font-family: var(--font-main);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
+  overflow-x: hidden;
+}
+
+/* ---------- AMBIENT LAYER (FIREFLIES) ---------- */
+
+#fireflies {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
 }
 
 /* ---------- PAGE CONTAINER ---------- */
@@ -44,6 +56,8 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .inner {
@@ -201,5 +215,5 @@ a:hover {
 }
 
 /* =========================================================
-   END
+   END — VECTAETOS CANONICAL STYLE v1.1
    ========================================================= */
