@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<title>Vektor neistoty</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin:0;
+  background:#000;
+  color:#eaeaea;
+  font-family: system-ui, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.chat {
+  max-width:720px;
+  padding:2rem;
+}
+.log {
+  min-height:220px;
+  white-space:pre-wrap;
+  opacity:0.85;
+}
+textarea {
+  width:100%;
+  background:#000;
+  color:#eaeaea;
+  border:1px solid #333;
+  padding:0.7rem;
+  resize:none;
+}
+button {
+  margin-top:1rem;
+  background:none;
+  border:1px solid #444;
+  color:#eaeaea;
+  padding:0.5rem 1.4rem;
+}
+.note {
+  margin-top:1.2rem;
+  font-size:0.75rem;
+  opacity:0.45;
+}
+</style>
+</head>
+
+<body>
+<div class="chat">
+  <div class="log" id="log">
+Tento priestor neodpovedá tak,
+ako si zvyknutý.
+
+Skús položiť otázku.
+  </div>
+
+  <textarea id="q" rows="3" placeholder="Napíš otázku…"></textarea>
+  <button onclick="ask()">Pýtať sa</button>
+
+  <div class="note">
+Nejde o odpovede. Ide o hranice.
+  </div>
+</div>
+
+<script>
+let free = 2;
+
+function mirror(q) {
+  return "— Skús sa opýtať, prečo práve táto otázka vznikla.";
+}
+
+function ask() {
+  const q = document.getElementById("q");
+  const log = document.getElementById("log");
+  const text = q.value.trim();
+  if (!text) return;
+
+  q.value = "";
+
+  if (free <= 0) {
+    log.textContent += "\n\n— Tu odpoveď končí. Ďalší krok je na tebe.";
+    return;
+  }
+
+  free--;
+  log.textContent += "\n\n> " + text;
+  log.textContent += "\n\n" + mirror(text);
+}
+</script>
+</body>
+</html>
