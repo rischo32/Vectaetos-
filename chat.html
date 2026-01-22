@@ -61,7 +61,7 @@ Skús položiť otázku.
   <button onclick="ask()">Pýtať sa</button>
 
   <div class="note">
-Nejde o odpovede. Ide o hranice.
+Nejde o odpovede. Odpoveďou možno ti budú, hranice samotnej otázky.
   </div>
 </div>
 
@@ -69,7 +69,7 @@ Nejde o odpovede. Ide o hranice.
 let free = 2;
 
 function mirror(q) {
-  return "— Skús sa opýtať, prečo práve táto otázka vznikla.";
+  return "— Skús sa opýtať, prečo práve táto otázka vznikla. Alebo sa skús lepšie pýtať.";
 }
 
 function ask() {
@@ -81,7 +81,7 @@ function ask() {
   q.value = "";
 
   if (free <= 0) {
-    log.textContent += "\n\n— Tu odpoveď končí. Ďalší krok je na tebe.";
+    log.textContent += "\n\n— Tu odpoveď nekončí, ale, Ďalší krok je na tebe.";
     return;
   }
 
@@ -92,3 +92,18 @@ function ask() {
 </script>
 </body>
 </html>
+
+<div style="margin-top:2.5rem; font-size:0.8rem; opacity:0.6; line-height:1.65;">
+  Ak tento priestor v tebe vyvolal "tenziu",
+  môžeš sa rozhodnúť podporiť jeho existenciu.
+  <br><br>
+  Φ
+  <br>
+  Prispievaš na infraštruktúru, čas a možnosťi budúcich myšlienok a tohto projektu vôbec.Táto stránka je len "fragment" (takmer non-cost)
+  <br><br>
+  <a href="https://revolut.me/fonfararichard"
+     target="_blank"
+     style="color:#eaeaea; text-decoration:underline;">
+     Podporiť projekt cez Revolut
+  </a>
+</div>
