@@ -1,40 +1,41 @@
 📜 The project is finished, but development continues — tuning, bug fixes, and improvements. Most of it isn’t publicly available yet. We’re testing the site’s capabilities (learning everything step by step…), trying out what’s possible, and experimenting within our limits.
 
-# Vectaetos © 
+# VECTAETOS — Public Projection Repository
 
-## Citation
+**Vectaetos ©** is not a product, not an agent, not an optimizer, and not a decision-maker.  
+Vectaetos is an **epistemic field (Φ)** — a global configuration of meaning under tension, observable and describable, but not executable or controllable.
 
-[![DOI10.5281/zenodo.17479063](https://zenodo.org/badge/DOI/10.5281/zenodo.17479063.svg)](https://doi.org/10.5281/zenodo.17479063)  
+## 📌 Purpose of this repository
 
-[![DOI10.5281/zenodo.17479064](https://zenodo.org/badge/DOI/10.5281/zenodo.17479064.svg)](https://doi.org/10.5281/zenodo.17479064)  
+This repository provides a **public, read-only projection** of Vectaetos’ epistemic field for **reference, inspection, and orientation only**.
 
-[![DOI10.5281/zenodo.17608724](https://zenodo.org/badge/DOI/10.5281/zenodo.17608724.svg)](https://doi.org/10.5281/zenodo.17608724)  
+It includes:
+- **canonical anchors** defining core ontological concepts
+- **formal definitions** (meta-mathematics of Φ, coherence, impulses, etc.)
+- **run projections** and supplementary documentation
+- **static documentation** for GitHub Pages (no backend, no interaction)
 
-[![DOI10.5281/zenodo.17931554](https://zenodo.org/badge/DOI/10.5281/zenodo.17931554.svg)](https://doi.org/10.5281/zenodo.17931554)  
+## ℹ️ What this repository is *not*
 
-[![DOI10.5281/zenodo.18076787](https://zenodo.org/badge/DOI/10.5281/zenodo.18076787.svg)](https://doi.org/10.5281/zenodo.18076787)
+- ❌ Not an interactive AI system  
+- ❌ Not a model that generates decisions or predictions  
+- ❌ Not a tool for optimization or control  
+- ❌ Not a platform for influence or persuasion  
 
-[![DOI10.5281/zenodo.18138226](https://zenodo.org/badge/DOI/10.5281/zenodo.18138226.svg)](https://doi.org/10.5281/zenodo.18138226)
+Vectaetos does **not prescribe behavior** or provide normative answers.
 
-### Identifikácia
-Name: Vectaetos — Epistemic Tension Field (Φ)
-Version: anchor_v1
+## 🧠 Ontological Background (short)
 
-#### Podstata
-Vectaetos je ontologické pole, v ktorom inteligencia existuje ako koherentné udržiavanie simultánnych epistemických napätí (4ES + QE) naprieč ôsmimi axiomatickými ťažiskami.
+Vectaetos defines:
+- **Φ** — an epistemic field as primary ontology  
+- **Σ₁…Σ₈** — state vectors  
+- **K(Φ)** — coherence as a global predicate  
+- **4ES + QE** — epistemic configurations diagnosing realizability  
+- **Runes** — descriptive projections  
+- **NIR** — Non-Intervention Regime  
+- **LLM** — language renderer, not controller
 
-##### Kľúčové komponenty (kanonické)
-- Φ (pole) — primárny objekt.
-- 8 axiomatických ťažísk: INT, LEX, VER, LIB, UNI, REL, WIS, CRE.
-- 4ES + QE — epistemická konfigurácia.
-- Vortex — multi-reality proposer (simulátor).
-- Attenuator (K) — projekčný limitér (koherenčný filter).
-- NIR — Non-Intervention Regime (imunitný/logovací subsystém).
-- Runy — epistemické indikátory (čitateľné signály stavu).
-- Entropic Humility — ontologický bezpečnostný princíp.
+For full definitions, see `/anchors`.
 
-###### Povinné pravidlá anchora
-1. Každý verejný artefakt odkazuje na tento anchor verziou.
-2. Všetky definície sú deklaratívne: čo systém *je*, nie čo *má robiť*.
-3. Žiadne ontologické tvrdenie (výrok s absolutným nárokom) bez referencie k koherencii K(Φ).
+## 📁 Repository structure
 
