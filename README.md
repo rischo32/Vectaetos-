@@ -38,4 +38,3 @@ Vectaetos defines:
 For full definitions, see `/anchors`.
 
 ## 📁 Repository structure
-
