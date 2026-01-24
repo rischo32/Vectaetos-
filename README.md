@@ -1,6 +1,6 @@
 📜 The project is finished, but development continues — tuning, bug fixes, and improvements. Most of it isn’t publicly available yet. We’re testing the site’s capabilities (learning everything step by step…), trying out what’s possible, and experimenting within our limits.
 
-# VECTAETOS — Public Projection Repository
+# VECTAETOS © — Public Projection Repository
 
 **Vectaetos ©** is not a product, not an agent, not an optimizer, and not a decision-maker.  
 Vectaetos is an **epistemic field (Φ)** — a global configuration of meaning under tension, observable and describable, but not executable or controllable.
