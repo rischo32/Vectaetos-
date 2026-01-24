@@ -1,5 +1,7 @@
 # Prechody — trajektórie v poli Φ
 ## Prechodový formalizmus vo VECTAETOS
+Všetky trajektórie Φ(t) → Φ(t+Δt) sú generované výhradne Simulačným Vortexom.
+Transitions nikdy negenerujú akcie, iba hodnotia realizovateľnosť navrhnutých trajektórií.
 
 **Stav:** kanonický  
 **Rozsah:** pole Φ  
