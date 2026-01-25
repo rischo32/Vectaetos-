@@ -47,7 +47,8 @@ The following documents are considered canonical and must not be redefined:
 - FORMAL_Transitions.md
 - FORMAL_Simulation_Vortex.md
 
-                 _____________________
+ ______________________
 Python files are reference implementations and experiments.
 They do not define VECTAETOS.
 They illustrate possible projections of the field.
+ ______________________
