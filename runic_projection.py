@@ -1,5 +1,9 @@
+#!/usr/bin/env python3
 # =========================================
 # VECTAETOS — RUNIC PROJECTION (DESCRIPTIVE)
+# =========================================
+# Runy sú projekcia stavu poľa Φ
+# ŽIADNE rozhodovanie, ŽIADNA spätná väzba
 # =========================================
 
 from enum import Enum
@@ -7,16 +11,20 @@ from dataclasses import dataclass
 from typing import List
 
 
-# -------------------------------
-# ZÁKLADNÉ ENUMY
-# -------------------------------
+# -------------------------------------------------
+# EPISTEMICKÉ STAVY RUNY
+# -------------------------------------------------
 
 class RuneState(Enum):
-    STABLE = "◯"
-    TENSION = "△"
-    TRANSITION = "◇"
-    APORIA = "⊘"
+    STABLE = "◯"        # koherentný, nízke napätie
+    TENSION = "△"       # rastúca tenzia
+    TRANSITION = "◇"    # prechodový stav
+    APORIA = "⊘"        # nerealizovateľná projekcia (QE)
 
+
+# -------------------------------------------------
+# AXIOMATICKÉ ŤAŽISKÁ
+# -------------------------------------------------
 
 class Axiom(Enum):
     INT = "ᚨ"   # Intention
@@ -29,30 +37,34 @@ class Axiom(Enum):
     CRE = "ᛞ"   # Creation
 
 
-# -------------------------------
-# DÁTOVÉ ŠTRUKTÚRY
-# -------------------------------
+# -------------------------------------------------
+# STAV Σ (SIGMA)
+# -------------------------------------------------
 
 @dataclass(frozen=True)
 class SigmaState:
-    E: float   # energia
+    E: float   # energia / aktivita
     C: float   # koherencia
     T: float   # tenzia
-    M: float   # pamäť
-    S: float   # entropia
+    M: float   # pamäť (rezonančná)
+    S: float   # entropia / rozpad
 
+
+# -------------------------------------------------
+# RUNA (PROJEKCIA)
+# -------------------------------------------------
 
 @dataclass(frozen=True)
 class Rune:
     symbol: str
     axiom: Axiom
     state: RuneState
-    dynamics: str   # "rising", "falling", "stable", "oscillating"
+    dynamics: str      # rising | falling | stable | oscillating
 
 
-# -------------------------------
-# PROJEKČNÁ FUNKCIA
-# -------------------------------
+# -------------------------------------------------
+# JADRO PROJEKCIE Σ → RUNA
+# -------------------------------------------------
 
 def project_sigma_to_rune(
     sigma: SigmaState,
@@ -60,12 +72,12 @@ def project_sigma_to_rune(
     kappa: float
 ) -> Rune:
     """
-    Čisto deskriptívna projekcia stavu Σ → Runa
-    ŽIADNA preskripcia
+    Čisto deskriptívna projekcia stavu Σ do runy.
+    Neobsahuje rozhodovanie ani spätný zásah.
     """
 
-    # Aporia — nerealizovateľná projekcia
-    if sigma.C < kappa or sigma.S > 0.9:
+    # QE / Aporia — nerealizovateľná projekcia
+    if sigma.C < kappa or sigma.S > 0.85:
         return Rune(
             symbol="⊘",
             axiom=axiom,
@@ -73,19 +85,21 @@ def project_sigma_to_rune(
             dynamics="undefined"
         )
 
-    # Stavová heuristika (projekčná, nie rozhodovacia)
-    if sigma.T < 0.2:
+    # Epistemický stav podľa tenzie
+    if sigma.T < 0.25:
         state = RuneState.STABLE
-    elif sigma.T < 0.5:
+    elif sigma.T < 0.55:
         state = RuneState.TENSION
     else:
         state = RuneState.TRANSITION
 
-    # Dynamika (iba smerová stopa)
-    if sigma.E > 0.6:
+    # Dynamika ako stopa pohybu (nie smer akcie)
+    if sigma.E > 0.65 and sigma.C > 0.6:
         dynamics = "rising"
-    elif sigma.E < 0.3:
+    elif sigma.E < 0.35 or sigma.S > 0.6:
         dynamics = "falling"
+    elif abs(sigma.T - 0.5) < 0.05:
+        dynamics = "oscillating"
     else:
         dynamics = "stable"
 
@@ -97,19 +111,19 @@ def project_sigma_to_rune(
     )
 
 
-# -------------------------------
-# CELOKOVÁ PROJEKCIA POĽA
-# -------------------------------
+# -------------------------------------------------
+# PROJEKCIA CELÉHO POĽA Φ → RUNY
+# -------------------------------------------------
 
 def project_field_to_runes(
     sigmas: List[SigmaState],
     kappa: float
 ) -> List[Rune]:
     """
-    Φ → Runová konfigurácia
-    Bez spätnej väzby, bez optimalizácie
+    Projekcia Φ → runová konfigurácia.
+    Bez optimalizácie, bez spätnej väzby.
     """
-    runes = []
+    runes: List[Rune] = []
 
     for sigma, axiom in zip(sigmas, Axiom):
         runes.append(
@@ -119,9 +133,9 @@ def project_field_to_runes(
     return runes
 
 
-# -------------------------------
-# PRÍKLAD (LEN NA TEST)
-# -------------------------------
+# -------------------------------------------------
+# TEST / DEMO (LEN NA LOKÁLNE OVERENIE)
+# -------------------------------------------------
 
 if __name__ == "__main__":
     sigmas = [
