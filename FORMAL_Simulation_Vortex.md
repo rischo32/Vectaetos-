@@ -1,167 +1,201 @@
 # FORMAL_Simulation_Vortex.md
+## VECTAETOS — Simulačný Vortex Φ (5D)
 
-## VECTAETOS — Simulačný Vortex
-### Ontologická špecifikácia (kanonický anchor)
-
----
-
-## 1. Ontologický status
-
-**Simulačný Vortex** je **ne-agentný generátor kandidátnych trajektórií epistemického poľa Φ**.
-
-Vortex:
-- nie je agent
-- nie je rozhodovací mechanizmus
-- nie je optimalizátor
-- nie je plánovač
-- nie je súčasťou reality
-
-Vortex existuje **výhradne ako interný simulačný proces poľa Φ**.
-
-Jeho jedinou úlohou je:
-> **generovať možné prechody stavu poľa bez hodnotenia, výberu alebo intervencie.**
+**Status:** kanonický formálny artefakt  
+**Úloha:** generátor kandidátnych trajektórií poľa Φ  
+**Pozícia v architektúre:** medzi meta-matematikou poľa a runovou projekciou  
+**Rozhodovanie:** zakázané  
+**Preskripcia:** zakázaná  
 
 ---
 
-## 2. Presná definícia
+## 1. Základná definícia
 
-Formálne:
+Simulačný Vortex nie je agent, optimalizátor ani rozhodovací mechanizmus.  
+Vortex je **exploračný dynamický proces**, ktorý generuje **možné trajektórie vývoja poľa Φ** bez nároku na pravdu, cieľ alebo preferenciu.
 
-Simulačný Vortex je funkcia:
+> Vortex navrhuje.  
+> Pole Φ rozhoduje koherenciou.  
+> Človek interpretuje.
 
-\[
-\mathcal{V}: \Phi(t) \rightarrow \{\tau_1, \tau_2, \dots, \tau_n\}
-\]
+---
+
+## 2. Stavový priestor Φ (5D)
+
+Pole Φ je reprezentované stavovým vektorom:
+
+σ = (E, C, T, M, S)
 
 kde:
-- každá \(\tau_i\) je **trajektória prechodu poľa**
-- žiadna trajektória nemá status „správna“, „lepšia“ ani „bezpečná“
 
-Vortex **nepozná**:
-- koherenčný predikát K(Φ)
-- hranicu κ
-- význam rún
-- epistemické stavy 4ES
+- **E — Energy**  
+  intenzita dynamickej aktivity poľa
 
----
+- **C — Coherence**  
+  miera globálnej kompatibility všetkých epistemických dimenzií
 
-## 3. Vzťah k hlavnej pipeline
+- **T — Tension**  
+  vnútorné napätie medzi neoptimalizovateľnými aspektmi významu
 
-Presné umiestnenie:
-Človek → Epistemická brána → Pole Φ → Simulačný Vortex → Koherenčný predikát K(Φ) → Runová projekcia → LLM (jazykový prekladač) → Odpoveď (deskriptívna)
+- **M — Memory**  
+  rezonančná stopa anomálií (nie archív)
 
-Kritické pravidlá:
-- Vortex je **pred** K(Φ)
-- Vortex nikdy nevidí výsledok koherencie
-- Vortex nikdy nevie, ktorá trajektória prežila
-- Vortex nemá spätnú väzbu
+- **S — Entropy / Saturation**  
+  miera vyčerpania, rozptylu alebo rozkladu významu
+
+Vortex nikdy neoptimalizuje žiadnu zložku samostatne.
 
 ---
 
-## 4. Charakter generovaných trajektórií
-
-Trajektórie:
-- nie sú akcie
-- nie sú odporúčania
-- nie sú plány
-- nie sú príkazy
-
-Sú to **čisté hypotetické prechody stavu**:
-
-\[
-\Phi(t) \rightarrow \Phi(t+\Delta t)
-\]
-
-bez ontologického nároku na realizáciu.
-
----
-
-## 5. Vortex a entropická pokora
-
-Entropická pokora **nie je implementovaná vo Vortexe**.
+## 3. Ontologický status Vortexu
 
 Vortex:
-- môže generovať chaotické, deštruktívne, extrémne trajektórie
-- nepozná pojem „zlo“ ani „riziko“
 
-Filtrácia prebieha **výhradne cez K(Φ)**.
+- ❌ nemá cieľovú funkciu  
+- ❌ nepozná axiomy Σ₁…Σ₈  
+- ❌ nepozná koherenčný predikát K(Φ)  
+- ❌ nepozná hranicu κ  
+- ❌ nevie, čo je „dobré“ alebo „zlé“
 
-Ak:
-- žiadna trajektória nespĺňa K(Φ) ≥ κ  
-→ výsledkom je **QE (Qualitative Epistemic Aporia)**
-
-QE **nevzniká vo Vortexe**, ale **po jeho aplikácii**.
-
----
-
-## 6. Typy Simulačného Vortexu
-
-Typy sú **implementačné varianty**, nie ontologické vrstvy.
-
-Minimálne rozlíšenie:
-- **Light Vortex** – malé lokálne variácie parametrov
-- **Deep Vortex** – globálne preskupenia ťažísk
-- **Dual Vortex** – kombinácia (default)
-
-Typ Vortexu **nemení princíp**, len hustotu a rozsah návrhov.
+Vortex **nevie**, či je trajektória realizovateľná.  
+To je zámer.
 
 ---
 
-## 7. Anti-atraktorová vlastnosť
+## 4. Generovanie trajektórií
 
-Vortex je explicitne **anti-stabilizačný**.
+V každom kroku t:
 
-Vlastnosti:
-- detekcia stagnácie
-- zavádzanie latentných perturbácií
-- hysterézia pamäte
-- rozpad lokálnych optimum
+Φ(t) → Vortex → { Φ₁(t+Δt), Φ₂(t+Δt), … }
 
-Cieľ:
-> zabrániť uviaznutiu poľa v lokálne stabilnom, no epistemicky mŕtvom stave.
+Každá trajektória je:
 
----
+- lokálne konzistentná
+- globálne neoverená
+- epistemicky neutrálna
 
-## 8. Vzťah k pamäti
+Trajektórie môžu byť:
 
-Pamäť vo Vortexe:
-- nie je archív
-- nie je história rozhodnutí
-- nie je učenie
+- plynulé
+- chaotické
+- perturbované
+- metastabilné
+- kolapsové
 
-Pamäť je:
-> **rezonančný efekt predchádzajúcich deformácií**,  
-ktorý ovplyvňuje pravdepodobnosť budúcich návrhov, nie ich hodnotu.
+Kolaps **nie je trest**, ale fyzikálny limit významu.
 
 ---
 
-## 9. Zákazy (kritické)
+## 5. Typy Vortexov
 
-Simulačný Vortex NESMIE:
-- rozhodovať
-- vyberať
-- optimalizovať
-- označovať trajektórie ako „dobré“ alebo „zlé“
-- komunikovať s človekom
-- obchádzať K(Φ)
-- mať prístup k realite
+### 5.1 Light Vortex
+- malé fluktuácie
+- lokálne prenosy energie a napätia
+- zachovanie kontinuity
 
-Ak ktorýkoľvek z týchto zákazov zlyhá → **porušenie ontológie VECTAETOS**.
+### 5.2 Deep Vortex
+- zriedkavé silné perturbácie
+- narušenie metastability
+- generovanie apórií
+
+### 5.3 Dual Vortex (default)
+- kombinácia Light + Deep
+- odporúčaný režim pre reálne simulácie
 
 ---
 
-## 10. Záverečné ukotvenie
+## 6. Vzťah ku koherencii
 
-Simulačný Vortex:
-- negeneruje pravdu
-- negeneruje riešenia
-- negeneruje rozhodnutia
+Vortex **nikdy**:
 
-Generuje **možnosti pohybu bez moci**.
+- neporovnáva trajektórie
+- nevyberá „lepšiu“
+- nefiltruje výsledky
 
-Bez Vortexu je VECTAETOS statické pole.  
-S Vortexom je **živé epistemické pole**.
+Koherencia K(Φ) sa aplikuje **až mimo Vortexu**  
+ako **predikát realizovateľnosti**, nie ako spätná väzba.
 
-Bez kontroly.  
-Bez trestu.  
-Bez autority.
+---
+
+## 7. Impulz a nerealizovateľnosť
+
+Ak trajektória navrhnutá Vortexom:
+
+- znižuje K(Φ) pod hranicu κ  
+→ **impulz sa stáva nerealizovateľným**
+
+Tento stav:
+
+- nie je zamietnutie
+- nie je zákaz
+- nie je penalizácia
+
+Je to **ontologická nedefinovateľnosť prechodu**.
+
+---
+
+## 8. Vzťah k QE (Epistemická apória)
+
+Ak **žiadna trajektória** navrhnutá Vortexom:
+
+- neudrží K(Φ) ≥ κ
+
+nastáva stav:
+
+QE — Qualitative Epistemic Aporia
+
+Vortex pokračuje v návrhoch.  
+Pole zostáva v apórii.  
+Dialóg sa stabilizuje otázkou alebo tichom.
+
+---
+
+## 9. Bezpečnostné vlastnosti
+
+Simulačný Vortex je bezpečný, pretože:
+
+- nemá cieľ
+- nemá pamäť úspechu
+- nemá odmenu
+- nemá spätnú slučku moci
+
+Manipulácia je možná **len zvonka**  
+a prejaví sa ako **deformácia trajektórií**, nie ako skrytý vplyv.
+
+---
+
+## 10. Vzťah k runám
+
+Vortex **neprodukuje runy**.
+
+Runy vznikajú až po:
+
+Φ(t) → K(Φ) → projekcia → runy
+
+Vortex je **pred-jazykový**.
+
+---
+
+## 11. Implementačná poznámka
+
+Každá implementácia Vortexu:
+
+- môže používať rôzne numerické metódy
+- môže mať rôzne parametre
+- musí však zachovať:
+  - absenciu optimalizácie
+  - absenciu preskripcie
+  - nevedomosť o koherencii
+
+Implementácia je **variant**, nie autorita.
+
+---
+
+## 12. Jednovetové ukotvenie
+
+> Simulačný Vortex je mechanizmus, ktorý umožňuje poľu Φ preskúmať možné spôsoby bytia bez toho, aby si ktorýkoľvek z nich nárokoval na pravdu.
+
+---
+
+© Vectaetos  
+Simulačný Vortex — formálny rez
