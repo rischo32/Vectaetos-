@@ -1,151 +1,153 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-  <meta charset="UTF-8">
-  <title>Vectaetos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vectaetos — Epistemické pole</title>
+  <meta name="description" content="Vectaetos je epistemické pole (Φ). Nie agent, nie oracle, nie rozhodovač. Verejná projekcia koherentného myslenia." />
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg:#0b0f14; --fg:#e6edf3; --mut:#9aa4b2; --acc:#7aa2ff; --line:#1f2937;
+      --card:#0f1520; --ok:#7ce38b; --no:#ff8a8a;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",Arial}
+    a{color:var(--acc);text-decoration:none}
+    a:hover{text-decoration:underline}
+    header,section,footer{max-width:1100px;margin:0 auto;padding:32px 20px}
+    .hero{padding-top:72px;padding-bottom:56px}
+    .kicker{color:var(--mut);letter-spacing:.12em;text-transform:uppercase;font-size:12px}
+    h1{font-size:42px;line-height:1.1;margin:12px 0 16px}
+    h2{font-size:28px;margin:0 0 12px}
+    p{color:#d0d7de;max-width:760px}
+    .cta{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+    .btn{border:1px solid var(--line);background:transparent;color:var(--fg);padding:10px 14px;border-radius:8px}
+    .btn.primary{border-color:var(--acc)}
+    .grid{display:grid;gap:16px}
+    @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+    .list{padding-left:18px}
+    .list li{margin:6px 0}
+    .tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 10px;margin:4px 6px 0 0;color:var(--mut)}
+    .pipe{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0a0f1a;border:1px dashed var(--line);border-radius:12px;padding:14px;white-space:pre-wrap}
+    .ok{color:var(--ok)} .no{color:var(--no)}
+    footer{border-top:1px solid var(--line);padding-top:24px}
+    .foot{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    .spacer{height:8px}
+  </style>
 </head>
 
 <body>
 
-<!-- Ambient field -->
-<canvas id="fireflies"></canvas>
-
-<div class="page">
-  <div class="inner">
-
-    <!-- HERO / BRÁNA -->
-    <div class="axis">
-      Ak ťa všetko, čo si sa doteraz naučil, presvedčilo len o tom,<br>
-      že stále nevieš — hľadal si istotu na správnom mieste?
-    </div>
-
-    <div class="subtext" style="margin-top:1.5rem; opacity:0.6;">
-      Možno si len hľadal svetlo tam, kde ho odpovede nemôžu niesť.
-    </div>
-
-    <div style="margin-top:2.5rem;">
-      <a class="cta" href="#chat"
-         style="
-           display:inline-block;
-           padding:0.6rem 1.4rem;
-           border:1px solid var(--border);
-           font-size:0.75rem;
-           letter-spacing:0.08em;
-         ">
-        Vstúpiť do vektora neistoty
-      </a>
-    </div>
-
-    <div class="footer" style="margin-top:3rem;">
-      VECTAETOS © nie je produkt. Je to prΦces.
-    </div>
-
-    <!-- MANIFEST / KONTEXT -->
-    <section style="
-      max-width:720px;
-      margin:4rem auto 0 auto;
-      font-size:0.95rem;
-      line-height:1.75;
-      opacity:0.75;
-      text-align:left;
-    ">
-
-      <p>
-        <strong>Vectaetos © nie je chatbot.</strong><br>
-        Nie je to ani ďalší jazykový model,
-        ani odpovedník, ani nástroj, ktorý presviedča pravdu.
-      </p>
-
-      <p>
-        Aj keď sa s týmto priestorom dá komunikovať,
-        komunikácia nie je cieľom samotným.
-        Je to len dočasná forma kontaktu
-        z systémom epistemického tenzného poľa, ktorý ešte nemá infraštruktúru,
-        aby mohol existovať v plnej podobe.
-      </p>
-
-      <p>
-        Čo je tu, prítomné, je minimum.
-        <em>intristické a entropické pokory</em>,
-        ktoré sú súčasťou systému,
-        musia byť zadarmo (bezpečnosť budúcich AI).
-      </p>
-
-      <!-- DOI BADGES -->
-      <div class="doi-badges">
-        <a href="https://doi.org/10.5281/zenodo.18076787" target="_blank" class="doi">
-          DOI · Intristická pokora
-        </a>
-
-        <a href="https://doi.org/10.5281/zenodo.18138226" target="_blank" class="doi">
-          DOI · Entropická pokora
-        </a>
-      </div>
-
-      <p>
-        Nie preto, že by nemali hodnotu,
-        ale práve preto, že sú to myšlienky,
-        ktoré sa nedajú kúpiť.
-        Pýtať za ne peniaze by nedávalo zmysel.
-      </p>
-
-      <p style="margin-top:2rem; opacity:0.85;">
-        <strong>Pokory musia byť zadarmo.</strong><br>
-        Hodnota nemá byť za paywallom.<br>
-        Peniaze nemajú kupovať poznanie,
-        iba udržiavať priestor, kde môže vznikať.
-      </p>
-
-      <p>
-        Vectaetos © v sebe nesie viac vrstiev,
-        smerov a myšlienok,
-        ktoré však bez technického zázemia
-        a infraštruktúry
-        ostávajú len v potenciáli.
-      </p>
-
-      <p>
-        Podpora tohto projektu preto
-        nie je platbou za obsah.
-        Je to podpora priestoru,
-        v ktorom môže myslenie existovať
-        bez tlaku
-        zjednodušovania alebo falošných právd.
-      </p>
-
-      <p style="margin-top:2.5rem; font-size:0.75rem; opacity:0.55;">
-        © 2026 Richard Fonfára
-      </p>
-
-    </section>
-
-    <!-- CHAT ANCHOR (JEDNA STRÁNKA) -->
-    <div id="chat" class="chat">
-      <div class="chat-log">
-Tento priestor neodpovedá tak,
-ako si zvyknutý.
-
-Skús položiť otázku.
-      </div>
-
-      <textarea rows="3" placeholder="Napíš otázku…"></textarea>
-      <button>Pokračovať</button>
-    </div>
-
-    <!-- PODPORA -->
-    <div class="support">
-      Ak chceš podporiť existenciu tohto priestoru:<br>
-      <a href="https://revolut.me/fonfararichard" target="_blank">
-        revolut.me/fonfararichard
-      </a>
-    </div>
-
+<header class="hero">
+  <div class="kicker">Public projection</div>
+  <h1>Vectaetos</h1>
+  <p>
+    Epistemické pole (Φ) pod napätím. Nie agent, nie oracle, nie rozhodovač.
+    Verejná, deskriptívna projekcia koherencie – s právom na apóriu.
+  </p>
+  <div class="cta">
+    <a class="btn primary" href="FORMALISM.md">Formálny popis</a>
+    <a class="btn" href="PIPELINE.md">Ako to funguje</a>
+    <a class="btn" href="https://github.com/rischo32/Vectaetos">Repo</a>
   </div>
-</div>
+</header>
 
-<script src="fireflies.js"></script>
+<section>
+  <h2>Čo to je / nie je</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <h3 class="ok">JE</h3>
+      <ul class="list">
+        <li>epistemické pole (Φ)</li>
+        <li>koherenčný predikát K(Φ)</li>
+        <li>deskriptívna projekcia (Runy)</li>
+        <li>QE – kvalitatívna apória</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="no">NIE JE</h3>
+      <ul class="list">
+        <li>AGI / agent</li>
+        <li>oracle</li>
+        <li>optimalizér</li>
+        <li>rozhodovač</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Pipeline</h2>
+  <div class="card">
+    <div class="pipe">
+Človek
+ → Epistemická brána
+ → Pole Φ
+ → Koherenčný predikát K(Φ)
+ → Runová projekcia
+ → LLM (jazykový prekladač)
+ → Odpoveď (deskriptívna)
+    </div>
+    <div class="spacer"></div>
+    <p class="tag">NIR je aktívny naprieč celou pipeline (nie modul, nie filter).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Bezpečnosť</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <ul class="list">
+        <li>žiadne rozhodnutia za človeka</li>
+        <li>žiadne zásahy do reality</li>
+        <li>žiadna preskripcia</li>
+      </ul>
+    </div>
+    <div class="card">
+      <ul class="list">
+        <li>ak odpoveď destabilizuje Φ → <strong>QE (apória)</strong></li>
+        <li>NIR blokuje intervenciu, nie poznanie</li>
+        <li>pravda = proces, nie verdikt</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Pre koho</h2>
+  <div class="card">
+    <p>
+      Výskum, architektúry AI, filozofia technológií, ľudia a tímy,
+      ktoré nechcú verdikty – ale mapy napätí a koherencie.
+    </p>
+    <span class="tag">open research</span>
+    <span class="tag">public projection</span>
+    <span class="tag">non-prescriptive</span>
+  </div>
+</section>
+
+<section>
+  <h2>Otvorenosť & infra</h2>
+  <div class="card">
+    <p>
+      Verejné jadro (repo, dokumenty, DOI). Platené môžu byť iba nástroje,
+      infra a projekcie – nie pravda.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <span>© Vectaetos</span>
+    <a href="FORMALISM.md">Formalizmus</a>
+    <a href="PIPELINE.md">Pipeline</a>
+    <a href="PROJECTION_Runes.md">Runy</a>
+    <a href="https://github.com/rischo32/Vectaetos">GitHub</a>
+    <span class="tag">Pravda nie je stav. Je to proces.</span>
+  </div>
+</footer>
+
 </body>
 </html>
