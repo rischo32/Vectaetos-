@@ -1,74 +1,82 @@
-Vectaetos © License (VCL-1.0)
+# Vectaetos Canonical License (VCL-1.0)
 
-(Epistemic Field License)
+Copyright © 2026  
+Richard Fonfára
 
-1. Scope and Nature
-This license governs the use, distribution, and reference of materials related to Vectaetos ©, understood as an epistemic field (Φ) and not as a product, agent, executable system, or decision-making authority.
-Vectaetos is descriptive, not prescriptive.
-Nothing under this license grants authority, control, or agency.
+---
 
-2. What This License Allows
+## 1. Scope
+
+This license governs the use, study, citation, and implementation of the
+Vectaetos framework, including but not limited to:
+
+- canonical documents,
+- formal specifications,
+- epistemic architecture,
+- simulation descriptions,
+- pipeline definitions,
+- and all materials explicitly marked as canonical.
+
+Vectaetos is defined as an **epistemic field (Φ)**, not as a product, agent,
+optimizer, or decision-making system.
+
+---
+
+## 2. Permissions
+
 You are permitted to:
-📖 Read, study, and cite Vectaetos materials
-🔗 Reference and discuss its concepts in academic, technical, or philosophical contexts
-🧠 Implement independent systems inspired by the principles, provided they do not claim to be Vectaetos
-This includes:
-academic papers
-experimental software
-educational materials
 
-3. What This License Explicitly Forbids
-You may not:
-❌ Claim that your system is Vectaetos
-❌ Use Vectaetos as an authority to justify decisions, coercion, or control
-❌ Deploy Vectaetos or its projections as a decision-making or governing mechanism
-❌ Rebrand Vectaetos concepts as proprietary without attribution
-Vectaetos cannot be used as an oracle, judge, or controller.
+- read, study, and analyze the Vectaetos materials,
+- cite the framework in academic, technical, or philosophical work,
+- implement independent systems inspired by Vectaetos principles,
+- simulate or visualize the field for research or educational purposes.
 
-4. DOI-Anchored Canonical References
-The following DOI-registered documents constitute canonical references for the Vectaetos framework.
-They are not licenses, but epistemic anchors.
+---
 
-Vectaetos © Manifest 1.0
+## 3. Restrictions
 
-DOI: https://doi.org/10.5281/zenodo.18138226
+You are **not permitted** to:
 
-Entropic Humility — Ontological Property of Coherent Cognitive Fields
+- present Vectaetos as an artificial general intelligence (AGI),
+- present Vectaetos as an autonomous agent, oracle, or decision-maker,
+- modify canonical definitions and still refer to the result as “Vectaetos”,
+- use the name “Vectaetos” for derivative frameworks that alter its ontology,
+- deploy Vectaetos as an interventionist or prescriptive system.
 
-DOI: https://doi.org/10.5281/zenodo.18076787
+---
 
-These documents define:
-the ontology of Φ
-entropic humility
-epistemic coherence
-non-intervention regime (NIR)
-Any serious reference to Vectaetos must cite at least one canonical DOI.
+## 4. Canonical Integrity
 
-5. Attribution Requirement
-All uses must include attribution in the following form (or equivalent):
-“This work references concepts from Vectaetos © (Richard Fonfára), an epistemic field framework described in DOI-registered publications.”
-Attribution does not imply endorsement.
+The files listed in `CANONICAL_ANCHORS.md` are canonical.
 
-6. No Warranty, No Authority
-Vectaetos materials are provided “as is”.
-No guarantees of correctness
-No guarantees of safety if misapplied
-No claim of completeness
-Vectaetos does not replace human judgment, law, or responsibility.
+Redefinition, reinterpretation, or partial extraction of canonical concepts
+voids the right to refer to the resulting system as Vectaetos.
 
-7. Ontological Clause (Critical)
-Vectaetos is defined as an epistemic field, not an agent.
-Any system that:
-claims agency
-enforces outcomes
-asserts ontological truth
-is not Vectaetos, regardless of inspiration.
+---
 
-8. Final Clause
-This license exists to protect meaning, not control use.
-Vectaetos may be understood, studied, and re-implemented,
-but never owned, commanded, or weaponized.
+## 5. No Warranty
 
-© Vectaetos / Richard Fonfára
+Vectaetos is provided “as is”, without warranty of any kind.
+The authors assume no responsibility for interpretations, implementations,
+or consequences arising from its use.
 
-License version: VCL-1.0
+---
+
+## 6. Attribution
+
+Any public reference to Vectaetos must include:
+
+- the name “Vectaetos”,
+- the version or release identifier,
+- and a citation to the canonical repository or DOI.
+
+---
+
+## 7. Governing Principle
+
+This license prioritizes **epistemic integrity over software permissiveness**.
+
+---
+
+Vectaetos ©  
+An epistemic field under tension, not a controllable system.
