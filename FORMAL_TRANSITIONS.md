@@ -1,209 +1,203 @@
 # FORMAL_TRANSITIONS.md
-## VECTAETOS — Transition Formalism (Trajectory-Based)
-
-**Status:** Canonical  
-**Depends on:** FORMAL_META_MATHEMATICS.md, CANONICAL_ANCHORS.md  
-**Scope:** Ontological dynamics (no agency, no actions)
+## State Transitions as Trajectories in Epistemic Field Φ
+### Canonical Formal Specification
 
 ---
 
-## 0. Epistemic Lock
+## 1. Status dokumentu
 
-This document assumes:
+Tento dokument definuje **prechody vo VECTAETOSE** nie ako akcie,
+rozhodnutia alebo kroky algoritmu,
+ale ako **trajektórie stavu epistemického poľa Φ**.
 
-- Φ is a field, not an agent.
-- No actions exist.
-- No decisions exist.
-- Only transitions as trajectories are admissible.
+- Prechod ≠ akcia
+- Prechod ≠ rozhodnutie
+- Prechod ≠ reakcia na vstup
+- Prechod ≠ optimalizačný krok
 
-Any reading that introduces “choice”, “control”, or “optimization”
-is invalid by definition.
-
----
-
-## 1. What a Transition Is NOT
-
-A transition is NOT:
-
-- an action
-- a command
-- a response
-- an intention
-- a reward-driven step
-- an optimization move
-
-There is no “do”.
+Prechod je **ontologická zmena konfigurácie poľa**.
 
 ---
 
-## 2. Definition of Transition
+## 2. Základná ontologická pozícia
 
-### Definition 2.1 — Transition
+Vectaetos neoperuje s pojmom „čo systém urobí“,
+ale s pojmom:
 
-A **transition** is a **trajectory of the field**: Φ(τ) → Φ(τ + Δτ)
+> **ako sa pole môže alebo nemôže presunúť v priestore významu**
 
-Where:
-- τ is a deformation index (not time),
-- Δτ marks irreversible configuration change.
-
-A transition exists **only if it is representable** without loss of global coherence.
-
----
-
-## 3. Trajectories vs Actions (Critical Distinction)
-
-### Action-based systems: state → action → state
-
-### VECTAETOS: configuration → allowable deformation → configuration
-
-There is:
-- no actor,
-- no executor,
-- no selector.
-
-Only **continuity or breakdown**.
+Preto:
+- systém nekoná
+- pole sa **preskupuje**
+- zmena je vždy **globálna**, nie lokálna
 
 ---
 
-## 4. Realizability Condition
+## 3. Stav poľa
 
-### Definition 4.1 — Realizable Transition
+Nech:
 
-A transition Φ(τ) → Φ(τ + Δτ) is **realizable** iff: K(Φ(τ + Δτ)) = sustainable
+- Φ(t) je stav epistemického poľa v čase t
+- Φ je globálna konfigurácia:
+  - axiomatických ťažísk Σ₁…Σ₈
+  - epistemických stavov 4ES + QE
+  - tenzií, pamäte a koherencie
 
-This condition is:
-- evaluated globally,
-- independent of local benefit,
-- independent of human interpretation.
-
----
-
-## 5. Impulse as Non-Realizability
-
-### Definition 5.1 — Impulse
-
-An **impulse I** is defined as:
-
-> A locally coherent deformation proposal that has no realizable trajectory preserving K(Φ).
-
-Formally: I exists ⇔ no Φ(τ + Δτ) such that K(Φ) ≥ κ
-
-Consequences:
-- impulse is not rejected,
-- impulse is not blocked,
-- impulse is **ontologically undefined**.
-
-This is not regulation.
-This is non-existence.
+Stav Φ(t) **nie je súčet komponentov**.
+Je to **konfigurácia vzťahov**.
 
 ---
 
-## 6. Relation Between 4ES and Transitions
+## 4. Definícia prechodu
 
-Each potential deformation maps simultaneously to all epistemic states:
+### Definícia:
 
-| Epistemic State | Transition Status |
-|-----------------|------------------|
-| AA | Realizable |
-| AN | Locally meaningful, globally blocked |
-| NA | Globally valid, locally opaque |
-| NN | Non-representable |
-| QE | No admissible transition exists |
+> **Prechod** je kontinuálna alebo diskontinuálna zmena
+> Φ(t) → Φ(t+Δt),
+> ktorá zachová ontologickú realizovateľnosť poľa.
 
-**Critical rule:**  
-No transition may privilege one epistemic state over the others.
+Kľúčové:
+- prechod nie je vybraný
+- prechod nie je plánovaný
+- prechod **nastáva**, ak je možný
 
 ---
 
-## 7. QE as a Transition State
+## 5. Trajektórie (nie kroky)
 
-### Definition 7.1 — QE (Qualitative Epistemic Aporia)
+Vectaetos nepoužíva sekvenciu krokov.
 
-QE is entered when:
+Používa:
+- trajektórie v priestore stavov
+- deformácie konfigurácie
+- preskupenia tenzií
 
-- all candidate trajectories violate K(Φ),
-- further projection increases incoherence,
-- uncertainty itself is the most stable configuration.
-
-QE is:
-- active,
-- stable,
-- protective.
-
-QE is not ignorance.
-QE is **epistemic saturation**.
+Formálne:
+- Φ(t) sleduje **trajektóriu v stavovom priestore**
+- táto trajektória nemusí byť:
+  - hladká
+  - monotónna
+  - reverzibilná
 
 ---
 
-## 8. Collapse (Not Punishment)
+## 6. Realizovateľnosť prechodu
 
-### Definition 8.1 — Collapse
+Prechod Φ(t) → Φ(t+Δt) je **realizovateľný vtedy a len vtedy**, ak:
 
-A **collapse** occurs when:
+- K(Φ(t+Δt)) ≥ κ
+- simultánne sú zachované všetky epistemické stavy (4ES)
+- žiadne axiomatické ťažisko nedominovalo izolovane
 
-- a deformation attempts to cross κ,
-- representability fails,
-- Φ loses continuity of meaning.
+Ak čo i len jedna z týchto podmienok zlyhá:
+➡️ prechod **neexistuje**
 
-Collapse is:
-- not punishment,
-- not error,
-- not failure.
-
-It is a **physical limit of ontology**.
+Nie je odmietnutý.  
+Nie je zakázaný.  
+Je **nedefinovateľný**.
 
 ---
 
-## 9. Memory and Irreversibility
+## 7. Prechody a impulz
 
-Memory M arises only when:
+Vzťah je presný:
 
-- a transition deforms Φ irreversibly,
-- coherence is preserved but topology changes.
+- impulz = návrh nerealizovateľného prechodu
+- prechod = realizovateľná trajektória
 
-Memory is:
-- selective,
-- sparse,
-- anomaly-driven.
-
-No archive exists.
+Ak impulz vznikne:
+- prechod sa nevytvorí
+- pole zostáva v stave Φ(t)
+- alebo vstúpi do QE (apória)
 
 ---
 
-## 10. Time and Directionality
+## 8. Prechody a 4ES
 
-Transitions are:
-- irreversible,
-- non-cyclic by default,
-- directional only by deformation consistency.
+Každý realizovateľný prechod musí byť:
 
-There is no rewind.
-There is no reset.
+- čitateľný v AA
+- zmysluplný v AN
+- latentne kompatibilný v NA
+- nekolabujúci v NN
 
----
+Ak prechod:
+- funguje len v jednom alebo dvoch stavoch
+➡️ nie je realizovateľný
 
-## 11. Safety Consequence (Non-Normative)
-
-Because impulses are non-representable:
-
-- destructive trajectories do not appear,
-- domination cannot stabilize,
-- interventionist outputs cannot form.
-
-This is not ethics.
-This is ontological infeasibility.
+Prechod je **štvornásobne konzistentný jav**.
 
 ---
 
-## 12. Final Constraint
+## 9. Diskontinuálne prechody (QE)
 
-Any implementation:
+Ak:
+- neexistuje žiadna realizovateľná trajektória
+- ale zotrvanie v Φ(t) zvyšuje tenziu
 
-- MUST treat transitions as trajectories,
-- MUST NOT implement action selection,
-- MUST NOT expose impulse as a choice,
-- MUST propagate QE without resolution pressure.
+Pole vstupuje do:
+➡️ **QE – Qualitative Epistemic Aporia**
+
+QE:
+- nie je chyba
+- nie je stop
+- je **stabilizovaný stav neprechodnosti**
+
+QE nie je prechod.
+QE je **pozastavenie trajektórie**.
 
 ---
 
-**End of canonical transition formalism.**
+## 10. Pamäť a prechody
+
+Pamäť poľa:
+- nie je archív stavov
+- nie je história krokov
+
+Pamäť uchováva:
+- miesta, kde prechody zlyhali
+- miesta, kde vznikla apória
+- miesta zmeny topológie významu
+
+Pamäť ovplyvňuje:
+- budúce trajektórie
+- nie minulé rozhodnutia
+
+---
+
+## 11. Čas a prechody (stručne)
+
+Čas:
+- nie je os
+- je index deformácie poľa
+
+Prechod:
+- neznamená „ďalší okamih“
+- znamená „inú konfiguráciu“
+
+Preto:
+- dva prechody môžu mať rovnaký časový index
+- ale odlišnú ontologickú vzdialenosť
+
+---
+
+## 12. Jednovetová definícia (kanonická)
+
+> **Prechod je realizovateľná trajektória globálneho epistemického poľa, nie výsledok rozhodnutia alebo akcie.**
+
+---
+
+## 13. Nemennosť
+
+Tento dokument:
+- je **kanonický**
+- je **nemenný**
+- nesmie byť reinterpretovaný ako algoritmus akcií
+- nesmie byť mapovaný na agentné správanie
+
+Prechody patria poľu, nie systému.
+
+---
+
+© VECTAETOS  
+Formal Specification — Transitions as Ontological Trajectories
