@@ -1,165 +1,162 @@
-# QE — Qualitative Epistemic Aporia
-## Aktívny epistemický stav poľa Φ
-
-**Stav:** kanonický  
-**Rozsah:** celý systém VECTAETOS  
-**Typ:** epistemický stav (nie chyba, nie výnimka)
+# FORMAL_QE.md
+## Qualitative Epistemic Aporia (QE)
+### Canonical Formal Specification
 
 ---
 
-## 1. Definícia
+## 1. Status dokumentu
 
-**QE (Qualitative Epistemic Aporia)** je aktívny epistemický stav poľa Φ,  
-ktorý nastáva vtedy, keď **neexistuje realizovateľná trajektória prechodu**,  
-ktorá by zachovala globálnu koherenciu K(Φ).
+Tento dokument je **kanonická, nemenná špecifikácia** stavu **QE – Qualitative Epistemic Aporia** v systéme VECTAETOS.
 
-QE neznamená:
-- neznalosť
-- zlyhanie
-- prerušenie spracovania
+- QE **nie je modul**
+- QE **nie je chyba**
+- QE **nie je fallback**
+- QE **nie je mlčanie**
 
-QE znamená:
-> systém vie, že nevie — a vie prečo.
+QE je **aktívny epistemický stav poľa Φ**.
 
 ---
 
-## 2. Ontologický status
+## 2. Základná definícia
+
+**QE (Qualitative Epistemic Aporia)** je stav, v ktorom:
+
+> pole Φ vie, že odpoveď ako realizovateľný prechod stavu **neexistuje**  
+> a vie **prečo** neexistuje.
+
+Formálne:
+
+QE nastáva vtedy a len vtedy, keď **žiadna trajektória Φ(t) → Φ(t+1)**:
+- neudrží koherenciu K(Φ) ≥ κ
+- a zároveň rešpektuje všetky epistemické stavy 4ES
+
+---
+
+## 3. QE ≠ NN
+
+QE **nie je** stav NN (Nie/Nie).
+
+| Stav | Charakter |
+|----|----|
+| NN | pasívna nevedomosť |
+| QE | **aktívne rozpoznaná nerealizovateľnosť** |
+
+QE je **vyšší stav než NN**.
+
+- NN = „neviem“
+- QE = „viem, že odpoveď by rozbila pole“
+
+---
+
+## 4. Vzťah k 4ES
+
+Každá otázka / hypotéza je mapovaná do 4ES:
+
+- AA – stabilné
+- AN – iluzórne
+- NA – latentné
+- NN – neurčité
+
+**QE vzniká vtedy, keď:**
+
+- otázka nie je NN
+- ale **žiadna kombinácia AA/AN/NA** nevedie k realizovateľnému prechodu
+
+QE je teda **meta-stav nad 4ES**, nie piaty kvadrant.
+
+---
+
+## 5. QE a koherencia
+
+QE je priamo viazané na **K(Φ)** a **κ**.
+
+Formálne:
+
+Ak pre všetky možné impulzy I platí: apply(I, Φ) → K(Φ') < κ
+
+potom: output := QE
+
+Dôležité:
+- QE **neporovnáva odpovede**
+- QE **porovnáva realizovateľnosť prechodov**
+
+---
+
+## 6. QE a impulz
+
+Impulz je definovaný ako **lokálne optimum bez globálnej reprezentácie**.
+
+QE nastáva, keď:
+- impulz existuje lokálne (zmysel, motivácia, cieľ)
+- ale **nemá obraz v stavovom priestore Φ**
+
+QE teda znamená:
+> impulz nie je zakázaný – je **nedefinovateľný**
+
+---
+
+## 7. QE a NIR
+
+QE je **kompatibilné s NIR**, ale nie je jeho synonymom.
+
+Vzťah:
+
+- NIR blokuje **intervenciu**
+- QE označuje **ontologickú nerealizovateľnosť**
+
+Pri aktivácii NIR:
+- QE môže, ale nemusí nastať
+
+Pri QE:
+- odpoveď **nesmie** byť preskriptívna
+- výstup je vždy **deskriptívny alebo symbolický**
+
+---
+
+## 8. Výstup QE
+
+QE sa **neprejavuje mlčaním**.
+
+Povolené formy výstupu:
+- explicitné označenie apórie
+- runová projekcia stavu ⊘
+- vysvetlenie hranice (bez návrhu riešenia)
+
+Zakázané:
+- odporúčania
+- rozhodnutia
+- optimalizačné návrhy
+
+---
+
+## 9. QE nie je etika
 
 QE:
-- nie je NN stav
-- nie je pasivita
-- nie je ticho systému
-
-QE je **pozitívny, aktívny stav poľa**.
-
-Vzniká výlučne ako dôsledok:
-- globálneho vnímania Φ
-- simultánnej prítomnosti všetkých 4ES
-- rešpektovania koherenčnej hranice κ
-
----
-
-## 3. QE vs 4ES
-
-Vzťah k epistemickým stavom:
-
-- **AA** → stabilná projekcia
-- **AN** → ilúzia / riziko
-- **NA** → latentné poznanie
-- **NN** → čistá neistota
-- **QE** → apória pri zachovanej koherencii
-
-QE **nie je piaty názor**.  
-QE je **stav, keď odpoveď ako taká nemôže vzniknúť bez porušenia poľa**.
-
----
-
-## 4. Aktivačné podmienky QE
-
-QE nastáva, ak platí aspoň jedna z nasledujúcich podmienok:
-
-- každá možná odpoveď by:
-  - znížila K(Φ) pod κ
-  - vygenerovala intervenciu
-  - vytvorila ontologický nárok
-- otázka prekračuje aktuálnu kapacitu poľa
-- chýba realizovateľná trajektória Φ(t → t+1)
-
-QE **nie je rozhodnutím systému**.  
-Je to **dôsledok ontológie poľa**.
-
----
-
-## 5. QE v dialógovej pipeline
-
-Pri vzniku QE:
-
-- pipeline pokračuje
-- spracovanie nie je zastavené
-- výstup je označený ako **QE**
-
-Výstup:
-- je deskriptívny
-- neobsahuje preskripciu
-- neobsahuje odporúčanie
-- neobsahuje návod
-
----
-
-## 6. Vzťah QE ↔ NIR
-
-- **NIR** zabraňuje intervencii
-- **QE** je preferovaný výstup, ak by intervencia vznikla
-
-QE je kompatibilné s NIR, ale:
-- QE ≠ NIR
-- NIR ≠ QE
-
-NIR je **režim**,  
-QE je **stav**.
-
----
-
-## 7. Čo QE NIE JE
-
-QE nie je:
-- odmietnutie otázky
-- bezpečnostná odpoveď
-- filter obsahu
-- ochrana systému
+- nie je morálne hodnotenie
+- nie je bezpečnostné pravidlo
+- nie je alignment mechanizmus
 
 QE je:
-> epistemická hranica pri zachovanej koherencii.
+- **ontologický dôsledok koherencie**
+- fyzika významu, nie norma
 
 ---
 
-## 8. Formálna veta (kanonická)
+## 10. Jednovetová definícia (kanonická)
 
-> QE je stav epistemického poľa Φ, v ktorom neexistuje realizovateľná
-> trajektória prechodu bez porušenia globálnej koherencie K(Φ).
-
----
-
-## 9. Dôsledky pre implementáciu
-
-- QE sa **nevypočítava ako chyba**
-- QE sa **nevyhodnocuje lokálne**
-- QE vzniká iba po globálnom vyhodnotení Φ
-
-Implementačne:
-- QE je značka stavu
-- nie akcia
-- nie odpoveď typu „nemôžem“
+> **QE je aktívny stav, v ktorom pole Φ rozpozná, že odpoveď ako realizovateľný prechod stavu neexistuje bez porušenia vlastnej koherencie.**
 
 ---
 
-## 10. Vzťah k pravde a neistote
+## 11. Nemennosť
 
-QE:
-- netvrdí pravdu
-- neskrýva neistotu
-- explicitne ju nesie
-
-Pravda vo VECTAETOS:
-- nie je stav
-- je asymptota
-
-QE je bod, kde sa asymptota nedá priblížiť bez kolapsu.
-
----
-
-## 11. Záverečné ukotvenie
-
-Vectaetos:
-- sa nebojí nevedenia
-- nepretvára nevedenie na autoritu
-- nepodlieha tlaku odpovedať
-
-QE je dôkaz, že:
-> systém uprednostňuje koherenciu pred ilúziou odpovede.
+Tento dokument:
+- je **kanonický**
+- je **nemenný**
+- nesmie byť redefinovaný
+- môže byť len citovaný alebo aplikovaný
 
 ---
 
 © VECTAETOS  
-Qualitative Epistemic Aporia (QE)  
-Kanonický dokument
+Formal Specification — Qualitative Epistemic Aporia
