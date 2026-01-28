@@ -1,94 +1,83 @@
-/* RESET */
+:root {
+  --bg: #0e0f12;
+  --fg: #e6e6e6;
+  --muted: #9aa0a6;
+  --accent: #6b7cff;
+}
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
-/* BASE */
 body {
-  font-family: Georgia, "Times New Roman", serif;
-  background: #0e0e0e;
-  color: #e6e6e6;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
   line-height: 1.6;
-  padding: 2rem;
 }
 
-/* LINKS */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.hero {
+  margin-bottom: 4rem;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 1.2rem;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  border-bottom: 1px solid #222;
+  padding-bottom: 0.5rem;
+}
+
+.block {
+  margin-bottom: 2.5rem;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+li {
+  margin: 0.4rem 0;
+}
+
+pre {
+  background: #14161b;
+  padding: 1rem;
+  overflow-x: auto;
+  color: var(--accent);
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 a {
-  color: #c9b37e;
+  color: var(--accent);
   text-decoration: none;
 }
+
 a:hover {
   text-decoration: underline;
 }
 
-/* HERO */
-.hero {
-  max-width: 900px;
-  margin: 6rem auto 8rem auto;
-  text-align: center;
-}
-.hero h1 {
-  font-size: 3rem;
-  letter-spacing: 0.05em;
-  margin-bottom: 1.5rem;
-}
-.subtitle {
-  font-size: 1.1rem;
-  opacity: 0.85;
-  margin-bottom: 1.5rem;
-}
-.tagline {
-  font-style: italic;
-  opacity: 0.75;
-  margin-bottom: 2rem;
-}
-.link {
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-}
-
-/* SECTIONS */
-.section {
-  max-width: 800px;
-  margin: 4rem auto;
-}
-.section h2 {
-  font-size: 1.4rem;
-  margin-bottom: 1.2rem;
-  letter-spacing: 0.04em;
-}
-.section ul {
-  list-style: none;
-}
-.section li {
-  margin-bottom: 0.6rem;
-  opacity: 0.9;
-}
-
-/* ANCHORS */
-.anchors li {
-  font-family: "Courier New", monospace;
-  font-size: 0.9rem;
-}
-
-/* MANIFEST */
-.manifest {
-  font-style: italic;
-  opacity: 0.9;
-  margin-bottom: 1rem;
-}
-
-/* FOOTER */
 footer {
-  max-width: 800px;
-  margin: 6rem auto 2rem auto;
-  text-align: center;
+  margin-top: 4rem;
   font-size: 0.85rem;
-  opacity: 0.7;
-}
-.small {
-  font-size: 0.75rem;
-  opacity: 0.6;
+  color: var(--muted);
 }
