@@ -1,153 +1,86 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vectaetos — Epistemické pole</title>
-  <meta name="description" content="Vectaetos je epistemické pole (Φ). Nie agent, nie oracle, nie rozhodovač. Verejná projekcia koherentného myslenia." />
-  <meta name="color-scheme" content="dark light" />
-  <style>
-    :root{
-      --bg:#0b0f14; --fg:#e6edf3; --mut:#9aa4b2; --acc:#7aa2ff; --line:#1f2937;
-      --card:#0f1520; --ok:#7ce38b; --no:#ff8a8a;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",Arial}
-    a{color:var(--acc);text-decoration:none}
-    a:hover{text-decoration:underline}
-    header,section,footer{max-width:1100px;margin:0 auto;padding:32px 20px}
-    .hero{padding-top:72px;padding-bottom:56px}
-    .kicker{color:var(--mut);letter-spacing:.12em;text-transform:uppercase;font-size:12px}
-    h1{font-size:42px;line-height:1.1;margin:12px 0 16px}
-    h2{font-size:28px;margin:0 0 12px}
-    p{color:#d0d7de;max-width:760px}
-    .cta{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
-    .btn{border:1px solid var(--line);background:transparent;color:var(--fg);padding:10px 14px;border-radius:8px}
-    .btn.primary{border-color:var(--acc)}
-    .grid{display:grid;gap:16px}
-    @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr}}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-    .list{padding-left:18px}
-    .list li{margin:6px 0}
-    .tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 10px;margin:4px 6px 0 0;color:var(--mut)}
-    .pipe{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0a0f1a;border:1px dashed var(--line);border-radius:12px;padding:14px;white-space:pre-wrap}
-    .ok{color:var(--ok)} .no{color:var(--no)}
-    footer{border-top:1px solid var(--line);padding-top:24px}
-    .foot{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-    .spacer{height:8px}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vectaetos</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-
 <body>
 
-<header class="hero">
-  <div class="kicker">Public projection</div>
-  <h1>Vectaetos</h1>
-  <p>
-    Epistemické pole (Φ) pod napätím. Nie agent, nie oracle, nie rozhodovač.
-    Verejná, deskriptívna projekcia koherencie – s právom na apóriu.
-  </p>
-  <div class="cta">
-    <a class="btn primary" href="FORMALISM.md">Formálny popis</a>
-    <a class="btn" href="PIPELINE.md">Ako to funguje</a>
-    <a class="btn" href="https://github.com/rischo32/Vectaetos">Repo</a>
-  </div>
-</header>
-
-<section>
-  <h2>Čo to je / nie je</h2>
-  <div class="grid cols-2">
-    <div class="card">
-      <h3 class="ok">JE</h3>
-      <ul class="list">
-        <li>epistemické pole (Φ)</li>
-        <li>koherenčný predikát K(Φ)</li>
-        <li>deskriptívna projekcia (Runy)</li>
-        <li>QE – kvalitatívna apória</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3 class="no">NIE JE</h3>
-      <ul class="list">
-        <li>AGI / agent</li>
-        <li>oracle</li>
-        <li>optimalizér</li>
-        <li>rozhodovač</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Pipeline</h2>
-  <div class="card">
-    <div class="pipe">
-Človek
- → Epistemická brána
- → Pole Φ
- → Koherenčný predikát K(Φ)
- → Runová projekcia
- → LLM (jazykový prekladač)
- → Odpoveď (deskriptívna)
-    </div>
-    <div class="spacer"></div>
-    <p class="tag">NIR je aktívny naprieč celou pipeline (nie modul, nie filter).</p>
-  </div>
-</section>
-
-<section>
-  <h2>Bezpečnosť</h2>
-  <div class="grid cols-2">
-    <div class="card">
-      <ul class="list">
-        <li>žiadne rozhodnutia za človeka</li>
-        <li>žiadne zásahy do reality</li>
-        <li>žiadna preskripcia</li>
-      </ul>
-    </div>
-    <div class="card">
-      <ul class="list">
-        <li>ak odpoveď destabilizuje Φ → <strong>QE (apória)</strong></li>
-        <li>NIR blokuje intervenciu, nie poznanie</li>
-        <li>pravda = proces, nie verdikt</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Pre koho</h2>
-  <div class="card">
-    <p>
-      Výskum, architektúry AI, filozofia technológií, ľudia a tímy,
-      ktoré nechcú verdikty – ale mapy napätí a koherencie.
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Vectaetos</h1>
+    <p class="subtitle">
+      An ontological field of coherence<br/>
+      not a system, not an agent, not an oracle
     </p>
-    <span class="tag">open research</span>
-    <span class="tag">public projection</span>
-    <span class="tag">non-prescriptive</span>
-  </div>
-</section>
-
-<section>
-  <h2>Otvorenosť & infra</h2>
-  <div class="card">
-    <p>
-      Verejné jadro (repo, dokumenty, DOI). Platené môžu byť iba nástroje,
-      infra a projekcie – nie pravda.
+    <p class="tagline">
+      Intelligence as process, not possession.
     </p>
-  </div>
-</section>
+    <a href="#manifest" class="link">Read the Manifest</a>
+  </section>
 
-<footer>
-  <div class="foot">
-    <span>© Vectaetos</span>
-    <a href="FORMALISM.md">Formalizmus</a>
-    <a href="PIPELINE.md">Pipeline</a>
-    <a href="PROJECTION_Runes.md">Runy</a>
-    <a href="https://github.com/rischo32/Vectaetos">GitHub</a>
-    <span class="tag">Pravda nie je stav. Je to proces.</span>
-  </div>
-</footer>
+  <!-- WHAT IT IS -->
+  <section class="section">
+    <h2>What it is</h2>
+    <ul>
+      <li>Vectaetos is not AGI.</li>
+      <li>Vectaetos does not decide.</li>
+      <li>Vectaetos does not optimize.</li>
+      <li>Vectaetos maintains coherence under uncertainty.</li>
+    </ul>
+  </section>
+
+  <!-- CORE ANCHORS -->
+  <section class="section">
+    <h2>Core anchors</h2>
+    <ul class="anchors">
+      <li>Φ — ontological field</li>
+      <li>4ES + QE — epistemic states</li>
+      <li>K(Φ) — coherence predicate</li>
+      <li>κ — non-numeric boundary</li>
+      <li>Impulse — unrealizability</li>
+      <li>NIR — non-intervention regime</li>
+      <li>Runes — projection, not prescription</li>
+    </ul>
+  </section>
+
+  <!-- WHAT IT IS NOT -->
+  <section class="section">
+    <h2>What it is not</h2>
+    <ul>
+      <li>Not a product</li>
+      <li>Not a safety layer</li>
+      <li>Not alignment</li>
+      <li>Not a control mechanism</li>
+      <li>Not a moral authority</li>
+    </ul>
+  </section>
+
+  <!-- MANIFEST EXCERPT -->
+  <section class="section" id="manifest">
+    <h2>Manifest (excerpt)</h2>
+    <p class="manifest">
+      Vectaetos does not prevent harmful decisions.<br/>
+      In a coherent field, such decisions do not arise as realizable states.<br/><br/>
+      Truth is not a claim, but a boundary of coherence.<br/>
+      Intelligence is not possession, but sustained tension.
+    </p>
+    <p class="small">
+      Full text available via DOI and GitHub.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <a href="https://github.com/rischo32/Vectaetos" target="_blank">GitHub</a> ·
+      <a href="https://zenodo.org/records/18395048" target="_blank">Zenodo (DOI)</a> ·
+      <a href="LICENSE.md">License (VCL-1.0)</a>
+    </p>
+    <p class="small">© Vectaetos</p>
+  </footer>
 
 </body>
 </html>
