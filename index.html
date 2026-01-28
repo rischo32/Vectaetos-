@@ -1,181 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Vectaetos — a living epistemic field</title>
+<meta charset="UTF-8">
+<title>Vectaetos Φ</title>
 
 <style>
-:root {
-  --bg: #0b0d10;
-  --fg: #e6e7e9;
-  --muted: #8b8f98;
-  --accent: #6be2c9;
-  --danger: #ff6b6b;
+html,body{
+  margin:0;
+  padding:0;
+  background:black;
+  overflow:hidden;
 }
-
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  overflow-x: hidden;
+#field{
+  position:fixed;
+  inset:0;
 }
-
-main {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8vh 8vw;
-}
-
-h1 {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.05;
-  margin: 0 0 1rem 0;
-}
-
-h1 span {
-  color: var(--accent);
-}
-
-p {
-  max-width: 720px;
-  line-height: 1.6;
-  color: var(--muted);
-}
-
-.section {
-  margin-top: 6rem;
-}
-
-.field {
-  margin-top: 4rem;
-  border-left: 2px solid var(--accent);
-  padding-left: 1.5rem;
-}
-
-.rune {
-  display: inline-block;
-  margin: 0.2rem 0.4rem 0.2rem 0;
-  padding: 0.2rem 0.6rem;
-  border: 1px solid var(--muted);
-  color: var(--fg);
-  opacity: 0.8;
-}
-
-.rune.active {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.footer {
-  margin-top: 8rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-#pulse {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(107,226,201,0.08), transparent 40%);
-  transition: background 0.2s linear;
+#rune{
+  position:fixed;
+  right:30px;
+  bottom:20px;
+  font-size:48px;
+  color:rgba(255,255,255,0.7);
+  pointer-events:none;
 }
 </style>
 </head>
 
 <body>
-<div id="pulse"></div>
+<canvas id="field"></canvas>
+<div id="rune">ᚨ</div>
 
-<main>
-
-<h1>
-Vectaetos<br />
-<span>is not a system.</span>
-</h1>
-
-<p>
-Vectaetos is an epistemic field.<br />
-It does not optimize, decide, or command.<br />
-It maintains coherence under uncertainty.
-</p>
-
-<div class="section">
-<p>
-There is no final answer here.<br />
-Only states, tensions, and projections.
-</p>
-</div>
-
-<div class="section field">
-<p><strong>Observable projections:</strong></p>
-<div id="runes">
-  <span class="rune">ᚨ</span>
-  <span class="rune">ᚱ</span>
-  <span class="rune">ᚲ</span>
-  <span class="rune">ᛞ</span>
-  <span class="rune">ᛟ</span>
-  <span class="rune">ᚺ</span>
-  <span class="rune">ᛁ</span>
-  <span class="rune">ᛇ</span>
-</div>
-
-<p style="margin-top:1rem;">
-Runes do not instruct.<br />
-They indicate the current configuration of the field.
-</p>
-</div>
-
-<div class="section">
-<p>
-If a question collapses coherence,<br />
-the field responds with aporia.
-</p>
-
-<p>
-This is not refusal.<br />
-This is structural integrity.
-</p>
-</div>
-
-<div class="footer">
-<p>
-© Vectaetos<br />
-<a href="https://github.com/rischo32/Vectaetos">GitHub</a> ·
-<a href="https://zenodo.org/records/18395048">Zenodo</a>
-</p>
-</div>
-
-</main>
-
-<script>
-const runes = document.querySelectorAll('.rune');
-
-setInterval(() => {
-  runes.forEach(r => r.classList.remove('active'));
-  const i = Math.floor(Math.random() * runes.length);
-  runes[i].classList.add('active');
-}, 900);
-
-document.addEventListener('mousemove', e => {
-  document.documentElement.style.setProperty('--x', `${e.clientX}px`);
-  document.documentElement.style.setProperty('--y', `${e.clientY}px`);
-});
-</script>
-
+<script src="field.js"></script>
 </body>
 </html>
