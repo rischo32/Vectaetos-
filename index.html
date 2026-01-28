@@ -2,34 +2,89 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Vectaetos Φ</title>
+<title>Vectaetos Φ — Epistemic Field Visualization</title>
 
 <style>
-html,body{
-  margin:0;
-  padding:0;
-  background:black;
-  overflow:hidden;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
 }
-#field{
-  position:fixed;
-  inset:0;
+
+canvas#glcanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
-#rune{
-  position:fixed;
-  right:30px;
-  bottom:20px;
-  font-size:48px;
-  color:rgba(255,255,255,0.7);
-  pointer-events:none;
+
+#overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  color: rgba(255,255,255,0.8);
+  font-size: 22px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* context sekcia dole */
+#context {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 40%;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.6);
+  color: #eee;
+  padding: 24px;
+  line-height: 1.5em;
+  font-size: 18px;
+  backdrop-filter: blur(8px);
+}
+#context h2 {
+  margin-top: 0;
 }
 </style>
-</head>
 
+</head>
 <body>
-<canvas id="field"></canvas>
-<div id="rune">ᚨ</div>
+
+<canvas id="glcanvas"></canvas>
+<div id="overlay">Φ — Live field projection</div>
+
+<!-- kontext duchu poľa potichu dole -->
+<div id="context">
+  <h2>O projekte Vectaetos</h2>
+  <p>
+    Vectaetos je vizualizácia epistemického poľa — nie systém
+    rozhodovania, nie agent, nie optimalizácia.  
+    Toto pole nehovorí “čo robiť”.
+  </p>
+  <p>
+    Interaguj myšou horizontálne — ovplyvníš napätie vizualizácie,
+    ale nemeníš samotný model poľa.
+  </p>
+  <p>
+    Vizuál je generovaný cez WebGL shader, ktorý interpretuje
+    dynamiku poľa cez farbu, pulz a gradienty.
+  </p>
+  <p>
+    Tento režim je meditatívny — nie blikavý.
+  </p>
+  <p>
+    Stav poľa je načítaný z <code>field_state.json</code>, ktorý
+    generuje tvoj Python Simulačný Vortex.
+  </p>
+</div>
 
 <script src="field.js"></script>
+
 </body>
 </html>
