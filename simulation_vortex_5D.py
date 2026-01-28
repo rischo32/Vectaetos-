@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # =========================================
-# VECTAETOS – SIMULATION VORTEX Φ (5D)
-# Canonical / Non-decisional / Termux-safe
+# VECTAETOS — Simulation Vortex Φ (5D)
+# Descriptive, non-decisional, non-agent
+# Termux compatible (pure Python)
 # =========================================
 
 import random
@@ -9,169 +10,161 @@ import math
 import time
 
 # -----------------------------------------
-# CONFIG
+# CONFIGURATION
 # -----------------------------------------
-STEPS = 12000
-POLES = 8                 # Σ₁ … Σ₈
-PRINT_EVERY = 600
-
-# dynamics
+STEPS = 3000
+POLES = 8              # Σ₁ … Σ₈
 DT = 0.05
-ENERGY_FLOW = 0.08
-TENSION_GAIN = 0.04
-COHERENCE_DISSIPATION = 0.015
 
-# memory & entropy
-MEMORY_GAIN = 0.02
-MEMORY_DECAY = 0.995
-ENTROPY_GAIN = 0.01
-ENTROPY_DECAY = 0.998
+# Dynamics coefficients
+ALPHA_E = 0.08         # energy flow
+BETA_C  = 0.06         # coherence sensitivity
+GAMMA_T = 0.04         # tension decay
+LAMBDA_M = 0.98        # memory retention
+DELTA_S = 0.03         # entropy growth
 
-# stagnation detection
-STAGNATION_WINDOW = 150
-STAGNATION_THRESHOLD = 1e-4
+NOISE = 0.01           # stochastic background
 
-# noise
-NOISE_LEVEL = 0.01
-
-random.seed(42)
+PRINT_EVERY = 200
 
 # -----------------------------------------
-# SIGMA STRUCTURE (5D)
-# σ = (E, C, T, M, S)
+# STATE DEFINITION
 # -----------------------------------------
-def new_sigma():
-    return {
-        "E": random.uniform(0.4, 0.9),   # Energy
-        "C": random.uniform(0.4, 0.9),   # Coherence
-        "T": random.uniform(0.05, 0.4),  # Tension
-        "M": 0.0,                        # Memory (anomaly resonance)
-        "S": random.uniform(0.0, 0.1),   # Entropy / Strain
-        "last": None                     # last snapshot (for stagnation)
-    }
+class Sigma:
+    def __init__(self):
+        self.E = random.uniform(0.4, 0.8)   # Energy
+        self.C = random.uniform(0.4, 0.9)   # Coherence
+        self.T = random.uniform(0.05, 0.3)  # Tension
+        self.M = random.uniform(0.0, 0.2)   # Memory
+        self.S = random.uniform(0.0, 0.1)   # Entropy
 
-sigmas = [new_sigma() for _ in range(POLES)]
+    def vector(self):
+        return (self.E, self.C, self.T, self.M, self.S)
 
-stagnation_counter = 0
+# -----------------------------------------
+# INITIAL FIELD Φ
+# -----------------------------------------
+sigmas = [Sigma() for _ in range(POLES)]
+
+# Relation matrix R (0..1)
+R = [[1.0 if i == j else random.uniform(0.2, 0.8)
+      for j in range(POLES)] for i in range(POLES)]
 
 # -----------------------------------------
 # HELPERS
 # -----------------------------------------
-def clamp_sigma(s):
-    s["E"] = max(0.0, min(1.5, s["E"]))
-    s["C"] = max(0.0, min(1.0, s["C"]))
-    s["T"] = max(0.0, min(1.0, s["T"]))
-    s["M"] = max(0.0, s["M"])
-    s["S"] = max(0.0, min(1.0, s["S"]))
+def clamp(x, lo, hi):
+    return max(lo, min(hi, x))
 
-def snapshot(s):
-    return (
-        round(s["E"], 4),
-        round(s["C"], 4),
-        round(s["T"], 4),
-        round(s["M"], 4),
-        round(s["S"], 4),
-    )
+def mean(values):
+    return sum(values) / len(values)
+
+def field_snapshot():
+    return tuple(round(s.E + s.C + s.T + s.M - s.S, 4) for s in sigmas)
 
 # -----------------------------------------
-# CORE DYNAMICS (VORTEX PROPOSAL)
+# VORTEX DYNAMICS (NO DECISIONS)
 # -----------------------------------------
-def redistribute_energy():
+def step_vortex():
+    global sigmas, R
+
+    # Pairwise energy-tension exchange
     for i in range(POLES):
-        for j in range(i + 1, POLES):
-            si = sigmas[i]
-            sj = sigmas[j]
+        for j in range(POLES):
+            if i == j:
+                continue
 
-            grad_T = sj["T"] - si["T"]
-            grad_C = sj["C"] - si["C"]
+            si, sj = sigmas[i], sigmas[j]
+            grad_T = sj.T - si.T
+            flow = ALPHA_E * grad_T * R[i][j]
 
-            flow = ENERGY_FLOW * grad_T * grad_C
-            flow *= (1.0 + si["M"])
+            si.E += flow * DT
+            sj.E -= flow * DT
 
-            si["E"] += flow * DT
-            sj["E"] -= flow * DT
+            si.M += abs(flow) * 0.01
+            sj.M += abs(flow) * 0.01
 
-            # memory reacts only to meaningful flow
-            if abs(flow) > 0.001:
-                si["M"] += MEMORY_GAIN * abs(flow)
-                sj["M"] += MEMORY_GAIN * abs(flow)
-
-def update_tension():
+    # Local evolution
     for s in sigmas:
-        s["T"] += TENSION_GAIN * (1.0 - s["C"]) * DT
+        # Coherence reacts to tension and energy
+        dC = BETA_C * (s.E - s.T) - DELTA_S * s.S
+        # Tension relaxes but never vanishes
+        dT = -GAMMA_T * s.T + NOISE * random.uniform(-1, 1)
+        # Memory decays slowly
+        dM = - (1 - LAMBDA_M) * s.M
+        # Entropy accumulates
+        dS = DELTA_S * abs(s.T) + NOISE * random.random()
 
-def dissipate_coherence():
-    for s in sigmas:
-        s["C"] -= COHERENCE_DISSIPATION * s["T"] * DT
+        s.C += dC * DT
+        s.T += dT * DT
+        s.M += dM * DT
+        s.S += dS * DT
 
-def apply_memory_entropy():
-    for s in sigmas:
-        s["M"] *= MEMORY_DECAY
-        s["S"] += ENTROPY_GAIN * s["T"]
-        s["S"] *= ENTROPY_DECAY
+        # Clamp physical ranges
+        s.E = clamp(s.E, 0.0, 1.5)
+        s.C = clamp(s.C, 0.0, 1.0)
+        s.T = clamp(s.T, 0.0, 1.0)
+        s.M = clamp(s.M, 0.0, 1.0)
+        s.S = clamp(s.S, 0.0, 1.0)
 
-def inject_noise():
-    for s in sigmas:
-        s["E"] += random.uniform(-NOISE_LEVEL, NOISE_LEVEL)
-        s["C"] += random.uniform(-NOISE_LEVEL, NOISE_LEVEL)
-        s["T"] += random.uniform(-NOISE_LEVEL, NOISE_LEVEL)
+    # Relations slowly decay (no attractors)
+    for i in range(POLES):
+        for j in range(POLES):
+            if i != j:
+                R[i][j] *= 0.999
 
 # -----------------------------------------
-# STAGNATION → ENTROPIC RESPONSE
+# RUN SIMULATION
 # -----------------------------------------
-def detect_stagnation():
-    global stagnation_counter
-    snaps = [snapshot(s) for s in sigmas]
-    if all(s["last"] == snap for s, snap in zip(sigmas, snaps)):
-        stagnation_counter += 1
-    else:
-        stagnation_counter = 0
-    for s, snap in zip(sigmas, snaps):
-        s["last"] = snap
+print("Starting VECTAETOS Simulation Vortex Φ (5D)")
+print("POLES:", POLES, "STEPS:", STEPS)
+print("-" * 50)
 
-def entropic_perturbation():
-    for s in sigmas:
-        s["T"] += random.uniform(0.0, 0.05)
-        s["S"] += random.uniform(0.05, 0.1)
-
-# -----------------------------------------
-# MAIN LOOP
-# -----------------------------------------
-print("Starting VECTAETOS Simulation Vortex Φ (5D)...\n")
+history = []
+last = None
+stagnation = 0
 
 for step in range(1, STEPS + 1):
-    redistribute_energy()
-    update_tension()
-    dissipate_coherence()
-    apply_memory_entropy()
-    inject_noise()
+    step_vortex()
+    snap = field_snapshot()
 
-    detect_stagnation()
-    if stagnation_counter > STAGNATION_WINDOW:
-        entropic_perturbation()
+    if snap == last:
+        stagnation += 1
+    else:
+        stagnation = 0
 
-    for s in sigmas:
-        clamp_sigma(s)
+    last = snap
+    history.append(snap)
+
+    # Anti-stagnation micro-perturbation
+    if stagnation > 80:
+        k = random.randint(0, POLES - 1)
+        sigmas[k].T += 0.1
+        stagnation = 0
 
     if step % PRINT_EVERY == 0:
-        avgE = sum(s["E"] for s in sigmas) / POLES
-        avgC = sum(s["C"] for s in sigmas) / POLES
-        avgT = sum(s["T"] for s in sigmas) / POLES
-        avgM = sum(s["M"] for s in sigmas) / POLES
-        avgS = sum(s["S"] for s in sigmas) / POLES
+        avgE = mean([s.E for s in sigmas])
+        avgC = mean([s.C for s in sigmas])
+        avgT = mean([s.T for s in sigmas])
+        avgS = mean([s.S for s in sigmas])
 
         print(
-            f"step={step:5d} | "
-            f"E={avgE:.3f} C={avgC:.3f} "
-            f"T={avgT:.3f} M={avgM:.3f} S={avgS:.3f} "
-            f"stagnation={stagnation_counter}"
+            f"step={step:4d} | "
+            f"E={avgE:.3f} "
+            f"C={avgC:.3f} "
+            f"T={avgT:.3f} "
+            f"S={avgS:.3f}"
         )
 
-print("\n--- SIMULATION COMPLETE ---")
-print("Final poles:")
+print("-" * 50)
+print("Simulation finished.")
+print("Final state:")
 for i, s in enumerate(sigmas):
     print(
         f"Σ{i+1}: "
-        f"E={s['E']:.3f}, C={s['C']:.3f}, "
-        f"T={s['T']:.3f}, M={s['M']:.3f}, S={s['S']:.3f}"
+        f"E={s.E:.3f} "
+        f"C={s.C:.3f} "
+        f"T={s.T:.3f} "
+        f"M={s.M:.3f} "
+        f"S={s.S:.3f}"
     )
