@@ -1,5 +1,6 @@
 
 # VECTAETOS © — Public Projection Repository  📁
+DOI: https://doi.org/10.5281/zenodo.18395048
 
 **Vectaetos ©** is not a product, not an agent, not an optimizer, and not a decision-maker.  
 Vectaetos is an **epistemic field (Φ)** — a global configuration of meaning under tension, observable and describable, but not executable or controllable.
