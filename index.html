@@ -1,90 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Vectaetos Φ — Epistemic Field Visualization</title>
+  <meta charset="UTF-8" />
+  <title>Vectaetos Φ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-}
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: system-ui, sans-serif;
+      color: #cfd8ff;
+    }
 
-canvas#glcanvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
+    #overlay {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 10;
+      max-width: 520px;
+      line-height: 1.4;
+      pointer-events: none;
+    }
 
-#overlay {
-  position: absolute;
-  bottom: 20px;
-  left: 24px;
-  color: rgba(255,255,255,0.8);
-  font-size: 22px;
-  pointer-events: none;
-  z-index: 2;
-}
+    #overlay h1 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
 
-/* context sekcia dole */
-#context {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-height: 40%;
-  overflow-y: auto;
-  background: rgba(0,0,0,0.6);
-  color: #eee;
-  padding: 24px;
-  line-height: 1.5em;
-  font-size: 18px;
-  backdrop-filter: blur(8px);
-}
-#context h2 {
-  margin-top: 0;
-}
-</style>
+    #overlay p {
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.7;
+    }
 
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
+
 <body>
 
-<canvas id="glcanvas"></canvas>
-<div id="overlay">Φ — Live field projection</div>
+  <div id="overlay">
+    <h1>VECTAETOS Φ</h1>
+    <p>Epistemic field projection · non-interventional · no verdicts</p>
+  </div>
 
-<!-- kontext duchu poľa potichu dole -->
-<div id="context">
-  <h2>O projekte Vectaetos</h2>
-  <p>
-    Vectaetos je vizualizácia epistemického poľa — nie systém
-    rozhodovania, nie agent, nie optimalizácia.  
-    Toto pole nehovorí “čo robiť”.
-  </p>
-  <p>
-    Interaguj myšou horizontálne — ovplyvníš napätie vizualizácie,
-    ale nemeníš samotný model poľa.
-  </p>
-  <p>
-    Vizuál je generovaný cez WebGL shader, ktorý interpretuje
-    dynamiku poľa cez farbu, pulz a gradienty.
-  </p>
-  <p>
-    Tento režim je meditatívny — nie blikavý.
-  </p>
-  <p>
-    Stav poľa je načítaný z <code>field_state.json</code>, ktorý
-    generuje tvoj Python Simulačný Vortex.
-  </p>
-</div>
+  <!-- TOTO TAM PREDTÝM CHÝBALO -->
+  <canvas id="glcanvas"></canvas>
 
-<script src="field.js"></script>
-
+  <script src="field.js"></script>
 </body>
 </html>
