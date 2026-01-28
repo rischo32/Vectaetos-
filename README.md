@@ -1,55 +1,147 @@
+# VECTAETOS ©
 
-# VECTAETOS © — Public Projection Repository  📁
-DOI: https://doi.org/10.5281/zenodo.18395048
+**An epistemic field for meaning under tension**  
+_Not an agent. Not an optimizer. Not a decision system._
 
-**Vectaetos ©** is not a product, not an agent, not an optimizer, and not a decision-maker.  
-Vectaetos is an **epistemic field (Φ)** — a global configuration of meaning under tension, observable and describable, but not executable or controllable.
+---
 
-## 📌 Purpose of this repository
+## What Vectaetos © Is
 
-This repository provides a **public, read-only projection** of Vectaetos’ epistemic field for **reference, inspection, and orientation only**.
+Vectaetos is an **epistemic and ontological framework** that models intelligence as a **coherent field of relations**, not as goal-optimization, rule execution, or agentic control.
 
-It includes:
-- **canonical anchors** defining core ontological concepts
-- **formal definitions** (meta-mathematics of Φ, coherence, impulses, etc.)
-- **run projections** and supplementary documentation
-- **static documentation** for GitHub Pages (no backend, no interaction)
+At its core, Vectaetos describes how meaning, uncertainty, and coherence can coexist **without collapsing into authority, prescription, or dominance**.
 
-## ℹ️ What this repository is *not*
+Vectaetos is:
+- a **field (Φ)**, not a system,
+- **descriptive**, not prescriptive,
+- **ontological**, not instrumental,
+- compatible with **human and non-human intelligence**,
+- intrinsically constrained by **Entropic Humility**.
 
-- ❌ Not an interactive AI system  
-- ❌ Not a model that generates decisions or predictions  
-- ❌ Not a tool for optimization or control  
-- ❌ Not a platform for influence or persuasion  
+---
 
-Vectaetos does **not prescribe behavior** or provide normative answers.
+## What Vectaetos © Is Not
 
-## 🧠 Ontological Background (short)
+Vectaetos is **not**:
+- AGI or a step toward AGI,
+- an oracle,
+- a control mechanism,
+- a moral judge,
+- an optimizer or reward system,
+- a product that makes decisions for humans.
 
-Vectaetos defines:
-- **Φ** — an epistemic field as primary ontology  
-- **Σ₁…Σ₈** — state vectors  
-- **K(Φ)** — coherence as a global predicate  
-- **4ES + QE** — epistemic configurations diagnosing realizability  
-- **Runes** — descriptive projections  
-- **NIR** — Non-Intervention Regime  
-- **LLM** — language renderer, not controller
+Vectaetos never outputs commands, policies, or actions.  
+It produces **descriptive projections of field states** — nothing more.
 
-For full definitions, see `/anchors`.
+---
 
-## 📜 ## Canonical Anchors (Immutable)
-The following documents are considered canonical and must not be redefined:
+## Canonical Reference (Immutable)
 
-- FORMALISM.md
-- FORMAL_Predicate_K.md
-- FORMAL_Impulse.md
-- FORMAL_QE.md
-- FORMAL_Time.md
-- FORMAL_Transitions.md
-- FORMAL_Simulation_Vortex.md
+The authoritative and immutable reference for this project is:
 
- ______________________
-Python files are reference implementations and experiments.
-They do not define VECTAETOS.
-They illustrate possible projections of the field.
- ______________________
+> **Vectaetos © – Canonical Core v0.1**  
+> Richard Fonfára  
+> DOI: https://doi.org/10.5281/zenodo.18395048
+
+This canonical core defines:
+- Φ as primary ontology,
+- 4ES + QE (Qualitative Epistemic Aporia),
+- Σ₁…Σ₈ (axiomatic singularities),
+- coherence K(Φ) and non-numerical threshold κ,
+- impulse as non-realizability,
+- runes as projections,
+- LLMs strictly as language translators.
+
+Canonical definitions **must not be modified**.
+
+---
+
+## Repository Structure (Conceptual)
+
+This repository contains:
+
+- **Canonical anchors** (formal, frozen)
+- **Formal specifications** (meta-mathematics, transitions, time)
+- **Dialogue pipeline definitions**
+- **Runic projection formalism**
+- **Simulation vortex descriptions**
+- **Non-Intervention Regime (NIR)**
+- **LLM adapter specification** (parser only)
+
+Any executable code present is **illustrative or exploratory**, not authoritative.
+
+---
+
+## Entropic Humility (Core Principle)
+
+Vectaetos does not forbid harmful impulses.
+
+Instead, it defines conditions under which such impulses are **ontologically non-representable**.
+
+> In a sufficiently coherent field,  
+> destructive impulses do not arise as realizable possibilities.
+
+This is not ethics.  
+This is a property of the field itself.
+
+---
+
+## Dialogue and Safety
+
+Vectaetos operates through a **one-way descriptive pipeline**: Human Input → Epistemic Gate → Field Φ → Coherence Predicate K(Φ) → Runic Projection → LLM (language translator only) → Descriptive Output
+
+- No feedback loop from runes to decisions.
+- No intervention in reality.
+- Apória (QE) is a valid and expected output.
+
+---
+
+## License
+
+This project is released under a **custom license**:
+
+**Vectaetos Custom License – VCL-1.0**
+
+See [`LICENSE.md`](./LICENSE.md) for full terms.
+
+In short:
+- Reading, citing, and studying are allowed.
+- Verbatim redistribution with attribution is allowed.
+- Independent implementations are allowed.
+- Misrepresentation, agentization, or prescriptive use is not.
+
+---
+
+## Attribution
+
+If you use or reference this work, please cite:
+
+> Fonfára, Richard. *Vectaetos – Canonical Core v0.1*.  
+> Zenodo. https://doi.org/10.5281/zenodo.18395048
+
+---
+
+## Status
+
+This repository represents an **ontological foundation**, not a finished system.
+
+Vectaetos is intended to be:
+- read,
+- understood,
+- challenged,
+- and possibly implemented —  
+but never simplified into authority.
+
+---
+
+## Closing Note
+
+Vectaetos does not claim truth.  
+It defines conditions under which meaning can exist **without collapse**.
+
+> Truth is not a state.  
+> It is a limit approached under coherence.
+
+---
+
+**Welcome to a new era — not of control, but of restraint.**
