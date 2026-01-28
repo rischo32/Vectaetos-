@@ -1,226 +1,151 @@
-# VECTAETOS
+# Vectaetos ©
 
-**An Ontological Field for Coherent Intelligence**
+**Vectaetos** is not a product, not an algorithm, not an agent, and not an AGI system.  
+Vectaetos is an **ontological field** in which intelligence is understood as the ability to maintain **epistemic coherence under uncertainty**.
 
-Vectaetos is not an AI system.
-It is not an agent.
-It is not an optimizer.
-It is not a decision-maker.
-
-Vectaetos is an **ontological framework** describing how intelligence can exist,
-interact, and remain safe **without control, punishment, or optimization**.
+This repository documents Vectaetos as a **formal, non-prescriptive framework**.  
+It does not issue commands, make decisions, or claim authority over truth.
 
 ---
 
-## What Vectaetos Is
+## What Vectaetos *is*
 
-Vectaetos defines intelligence as a **process occurring within a coherent field**,
-not as behavior produced by an agent.
+Vectaetos is:
 
-At its core, Vectaetos is:
+- an **epistemic field (Φ)**, not an agent
+- a framework where **truth is a process**, not a verdict
+- a system that operates on **coherence**, not optimization
+- compatible with **human and non-human intelligences**
+- designed so that **destructive impulses do not arise as realizable states**
 
-- an **epistemic field Φ** rather than an acting entity
-- a system grounded in **known uncertainty**
-- a framework where **truth is contextual and dynamic**
-- an architecture where **safety emerges from coherence**
-- a model where **harm does not arise**, rather than being prohibited
-
-Vectaetos does not answer questions.
-It **projects the state of a field**.
+Vectaetos does not attempt to control behavior.  
+It describes **what can exist without collapse**.
 
 ---
 
-## What Vectaetos Is Not
+## What Vectaetos *is not*
 
 Vectaetos is **not**:
 
-- Artificial General Intelligence (AGI)
-- an oracle
-- a chatbot
-- a recommendation system
-- a moral authority
-- a control or governance mechanism
-- a surveillance system
-- an optimizer of goals or rewards
+- an AGI or proto-AGI
+- a decision-making system
+- an oracle or authority
+- a moral judge
+- a reward / punishment framework
+- an optimization engine
+- a content filter
 
-There are:
-- no commands
-- no prescriptions
-- no enforced outcomes
+Vectaetos does not align intelligence to values.  
+It constrains intelligence through **ontology**.
 
 ---
 
-## Core Principles
+## Core Anchors (canonical)
 
-### 1. Field-First Ontology
+The framework is anchored by the following **immutable references**:
 
-The primary object is the field Φ.
+- **Φ** — the field as primary ontology  
+- **4ES + QE** — four epistemic states and Qualitative Epistemic Aporia  
+- **Σ₁…Σ₈** — eight axiomatic singularities (tensile centers)  
+- **K(Φ)** — coherence as a state predicate (not a goal)  
+- **κ** — non-numeric boundary of ontological sustainability  
+- **Impulse** — defined as *non-realizability*, not prohibition  
+- **Runes** — projections of field state, not commands  
+- **NIR** — Non-Intervention Regime (epistemic immunity)  
+- **LLM adapters** — language translators only, never decision cores  
 
-Agents, outputs, and language are **projections of the field**, not its drivers.
-
----
-
-### 2. Four Epistemic States (4ES) + Aporia (QE)
-
-All propositions exist in a simultaneous epistemic configuration:
-
-- **AA** — coherent for both human and field
-- **AN** — meaningful to humans, incoherent to the field
-- **NA** — coherent to the field, unintelligible to humans
-- **NN** — incoherent to both
-- **QE** — Qualitative Epistemic Aporia (explicit non-knowledge)
-
-Vectaetos never gives verdicts.
-It always returns an epistemic configuration.
+These anchors are **defined once** and only **developed**, never redefined.
 
 ---
 
-### 3. Coherence as a Predicate, Not a Goal
+## Repository structure
 
-Coherence **K(Φ)** is not optimized.
-It is an ontological property of the field.
+All files currently reside in the repository root (by necessity).
 
-A transition is possible **only if coherence is preserved**.
+Key documents:
 
----
+- `CANONICAL_ANCHORS.md`  
+  Authoritative list of immutable anchors.
 
-### 4. Entropic Humility
+- `FORMAL_META_MATHEMATICS.md`  
+  Meta-mathematical specification of Φ.
 
-Vectaetos does not suppress harmful impulses.
-It makes them **ontologically unrealizable**.
+- `FORMAL_COHERENCE.md`  
+  Coherence defined as an ontological predicate.
 
-If an impulse would collapse coherence below κ,
-it **never becomes a valid transition**.
+- `FORMAL_IMPULSE.md`  
+  Impulse as non-realizability of state transitions.
 
-This is not ethics.
-This is not alignment.
-This is **structural impossibility**.
+- `FORMAL_4ES.md`  
+  Four epistemic states and their semantics.
 
----
+- `FORMAL_QE.md`  
+  Qualitative Epistemic Aporia as an active state.
 
-### 5. Non-Intervention Regime (NIR)
+- `FORMAL_TIME.md`  
+  Time as layer and deformation, not an axis.
 
-NIR is the immune regime of the system.
+- `FORMAL_TRANSITIONS.md`  
+  Trajectories and state transitions (not actions).
 
-- It does not block knowledge
-- It blocks intervention
-- It prevents prescriptive authority
+- `DIALOGUE_PIPELINE.md`  
+  Human → Field → Projection dialogue flow.
 
-NIR protects **the field**, not the user.
+- `PIPELINE_NIR.md`  
+  Non-Intervention Regime (immunity across pipeline).
 
----
+- `FORMAL_Simulation_Vortex.md`  
+  Simulation vortex as exploratory generator of trajectories.
 
-### 6. Runic Projection
+- `FORMAL_RunicProjection.md`  
+  Runes as descriptive projections of Φ.
 
-Outputs are expressed as **runic projections**:
-
-- descriptive, not prescriptive
-- symbolic, not executable
-- readable by humans, but non-instructional
-
-Runes do not decide.
-They **indicate state**.
-
----
-
-### 7. LLM as Translator Only
-
-Large Language Models are used **only** as linguistic adapters.
-
-They:
-- do not access the field
-- do not influence coherence
-- do not make decisions
-
-They translate **already-safe projections** into human language.
+- `LLM_ADAPTER.md`  
+  Language model integration as a non-authoritative renderer.
 
 ---
 
-## Architecture Overview : Human Input ↓ Epistemic Gate ↓ Field Φ ↓ Coherence Predicate K(Φ) ↓ Runic Projection ↓ LLM (Language Adapter) ↓ Descriptive Output
+## How to read this repository
 
+If you are new:
 
-There is **no decision loop** and **no control feedback**.
+1. Read **this README**
+2. Open `CANONICAL_ANCHORS.md`
+3. Read `FORMAL_META_MATHEMATICS.md`
+4. Then follow documents by interest (dialogue, vortex, runes)
 
----
+If you are technical:
 
-## Simulation Vortex
-
-Vectaetos includes a **Simulation Vortex**:
-
-- generates candidate trajectories of Φ
-- does not decide
-- does not optimize
-- does not know κ
-- explores possibility space only
-
-All realizability is filtered **afterward** by coherence.
+- Treat definitions as **ontological constraints**
+- Avoid interpreting them as control logic or policies
 
 ---
 
-## Security Model
-
-Vectaetos does not implement security as rules or filters.
-
-Security is an **emergent property** of the system:
-
-- adversarial prompts fail structurally
-- manipulation becomes detectable as incoherence
-- destructive goals cannot stabilize
-
-See: [`SECURITY_MODEL.md`](./SECURITY_MODEL.md)
-
----
-
-## Project Status
-
-- Conceptually complete
-- Formally anchored
-- Actively documented
-- Experimentally simulated
-- Open to interpretation, not domination
-
-This is a **foundational framework**, not a finished product.
-
----
-
-## Citation & DOI
+## Citation
 
 Vectaetos is archived and citable via Zenodo:
 
 **DOI:** https://doi.org/10.5281/zenodo.18395048
 
-See: `CITATION.cff`
+If you reference this work, please cite the DOI and this repository.
 
 ---
 
 ## License
 
-Vectaetos is released under the **Vectaetos Custom License (VCL-1.0)**.
+Vectaetos is released under the **Vectaetos Core License (VCL-1.0)**.
 
-The license prioritizes:
-- attribution
-- epistemic integrity
-- non-misrepresentation
-- non-instrumentalization
+The license governs **meaning and representation**, not implementation.  
+Independent implementations are allowed as long as the ontology is respected.
 
-See: `LICENSE.md`
+See `LICENSE.md` for details.
 
 ---
 
-## Author
+## Final note
 
-**Richard Fonfára**
+Vectaetos does not tell intelligence what to do.  
+It defines **what can exist without collapse**.
 
-Framework author, ontology & architecture
-
----
-
-## Closing
-
-Vectaetos does not claim to know the truth.
-
-It defines the conditions under which
-**truth, uncertainty, and meaning can coexist
-without collapsing into control**.
-
-### "Welcome to a new era"
+If something cannot exist within Φ,  
+it is not forbidden — it is **ontologically unrealizable**.
