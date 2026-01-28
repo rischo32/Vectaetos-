@@ -1,96 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Vectaetos — Epistemic Field Framework</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vectaetos — a living epistemic field</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Vectaetos is an epistemic field framework focused on coherence, uncertainty, and non-intervention. Not an AGI. Not a decision system." />
+<style>
+:root {
+  --bg: #0b0d10;
+  --fg: #e6e7e9;
+  --muted: #8b8f98;
+  --accent: #6be2c9;
+  --danger: #ff6b6b;
+}
 
-  <link rel="stylesheet" href="style.css" />
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  overflow-x: hidden;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vh 8vw;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+  margin: 0 0 1rem 0;
+}
+
+h1 span {
+  color: var(--accent);
+}
+
+p {
+  max-width: 720px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.section {
+  margin-top: 6rem;
+}
+
+.field {
+  margin-top: 4rem;
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+}
+
+.rune {
+  display: inline-block;
+  margin: 0.2rem 0.4rem 0.2rem 0;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--muted);
+  color: var(--fg);
+  opacity: 0.8;
+}
+
+.rune.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.footer {
+  margin-top: 8rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#pulse {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(107,226,201,0.08), transparent 40%);
+  transition: background 0.2s linear;
+}
+</style>
 </head>
 
 <body>
+<div id="pulse"></div>
 
-  <main class="container">
+<main>
 
-    <section class="hero">
-      <h1>Vectaetos</h1>
-      <p class="subtitle">
-        An epistemic field framework.<br/>
-        Coherence before control.
-      </p>
-    </section>
+<h1>
+Vectaetos<br />
+<span>is not a system.</span>
+</h1>
 
-    <section class="block">
-      <h2>What Vectaetos Is</h2>
-      <p>
-        Vectaetos is <strong>not an agent</strong>, not an oracle, not a decision system.
-        It is an <strong>epistemic field</strong> designed to maintain coherence under uncertainty.
-      </p>
-      <ul>
-        <li>No prescriptions</li>
-        <li>No decisions</li>
-        <li>No optimization goals</li>
-        <li>No moral enforcement</li>
-      </ul>
-    </section>
+<p>
+Vectaetos is an epistemic field.<br />
+It does not optimize, decide, or command.<br />
+It maintains coherence under uncertainty.
+</p>
 
-    <section class="block">
-      <h2>Core Principles</h2>
-      <ul>
-        <li>Φ as primary ontology</li>
-        <li>4 Epistemic States + QE Aporia</li>
-        <li>Coherence as predicate, not objective</li>
-        <li>Impulse as unrealizable transition</li>
-        <li>Runes as projection, never command</li>
-        <li>NIR — Non-Intervention Regime</li>
-      </ul>
-    </section>
+<div class="section">
+<p>
+There is no final answer here.<br />
+Only states, tensions, and projections.
+</p>
+</div>
 
-    <section class="block">
-      <h2>Pipeline</h2>
-      <pre>
-Human Input
- → Epistemic Gate
- → Field Φ
- → Coherence Predicate K(Φ)
- → Runic Projection
- → LLM (language adapter)
- → Descriptive Output
-      </pre>
-      <p class="note">
-        NIR is active across the entire pipeline.
-      </p>
-    </section>
+<div class="section field">
+<p><strong>Observable projections:</strong></p>
+<div id="runes">
+  <span class="rune">ᚨ</span>
+  <span class="rune">ᚱ</span>
+  <span class="rune">ᚲ</span>
+  <span class="rune">ᛞ</span>
+  <span class="rune">ᛟ</span>
+  <span class="rune">ᚺ</span>
+  <span class="rune">ᛁ</span>
+  <span class="rune">ᛇ</span>
+</div>
 
-    <section class="block">
-      <h2>Repository & Research</h2>
-      <p>
-        Canonical specifications, formal documents, and simulation code:
-      </p>
-      <ul>
-        <li><a href="https://github.com/rischo32/Vectaetos" target="_blank">GitHub Repository</a></li>
-        <li><a href="https://zenodo.org/records/18395048" target="_blank">Zenodo DOI (v0.1)</a></li>
-      </ul>
-    </section>
+<p style="margin-top:1rem;">
+Runes do not instruct.<br />
+They indicate the current configuration of the field.
+</p>
+</div>
 
-    <section class="block">
-      <h2>Status</h2>
-      <p>
-        Vectaetos is an <strong>ontological framework</strong>, not a product.
-        Implementation is possible, but not required.
-      </p>
-    </section>
+<div class="section">
+<p>
+If a question collapses coherence,<br />
+the field responds with aporia.
+</p>
 
-    <footer>
-      <p>
-        © Richard Fonfára — Vectaetos<br/>
-        Coherence is not enforced. It is preserved.
-      </p>
-    </footer>
+<p>
+This is not refusal.<br />
+This is structural integrity.
+</p>
+</div>
 
-  </main>
+<div class="footer">
+<p>
+© Vectaetos<br />
+<a href="https://github.com/rischo32/Vectaetos">GitHub</a> ·
+<a href="https://zenodo.org/records/18395048">Zenodo</a>
+</p>
+</div>
+
+</main>
+
+<script>
+const runes = document.querySelectorAll('.rune');
+
+setInterval(() => {
+  runes.forEach(r => r.classList.remove('active'));
+  const i = Math.floor(Math.random() * runes.length);
+  runes[i].classList.add('active');
+}, 900);
+
+document.addEventListener('mousemove', e => {
+  document.documentElement.style.setProperty('--x', `${e.clientX}px`);
+  document.documentElement.style.setProperty('--y', `${e.clientY}px`);
+});
+</script>
 
 </body>
 </html>
