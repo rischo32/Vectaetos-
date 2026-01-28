@@ -1,8 +1,0 @@
-name = "vectaetos-api"
-main = "worker.js"
-compatibility_date = "2026-01-21"
-
-# ⚠️ POUŽI ZONE_ID, NIE zone_name
-routes = [
-  { pattern = "vectaetos.eu/api/*", zone_id = "TVOJ_ZONE_ID" }
-]
