@@ -1,240 +1,193 @@
 # FORMAL_META_MATHEMATICS.md
-## VECTAETOS — Minimal Meta-Mathematical Specification (MMMC-compatible)
 
-**Status:** Canonical  
-**Scope:** Ontology-level (pre-implementation)  
-**Normativity:** None  
-**Prescriptivity:** None  
+## VECTAETOS — FORMÁLNA META-MATEMATIKA POĽA Φ
 
 ---
 
-## 0. Epistemic Anchor
+## 0. Účel dokumentu
 
-This document is written under the following immutable assumptions:
+Tento dokument definuje meta-matematický rámec VECTAETOSU.  
+Nejde o výpočtový aparát ani optimalizačný model, ale o **formálny jazyk realizovateľnosti stavov**.
 
-- Φ is the primary ontological object.
-- 4ES + QE are epistemic states, not modules.
-- Σ₁…Σ₈ are axiomatic singularities (tensions), not components.
-- K(Φ) is a predicate, not an objective.
-- κ is a non-numerical ontological boundary.
-- Impulse is defined as non-realizability, not action.
-- Runes are projections, not operators.
-- LLMs act strictly as translators, never as decision-makers.
-
-No redefinitions are allowed beyond this point.
+Meta-matematika Vectaetosu určuje:
+- čo môže existovať ako stav poľa,
+- ktoré prechody sú ontologicky prípustné,
+- a ktoré impulzy sú nerealizovateľné ešte predtým, než by sa stali možnosťou.
 
 ---
 
-## 1. Primary Ontology: The Field Φ
+## 1. Primárna ontológia: pole Φ
 
-### Definition 1.1 — Field
+### Definícia 1 — Pole
 
-Let **Φ** denote a cognitive–ontological field.
+Pole Φ je primárna ontologická jednotka systému.
 
-Φ is:
-- not an agent,
-- not a system of components,
-- not a decision entity,
-- not reducible to local states.
+Pole:
+- nie je množina objektov,
+- nie je agent,
+- nie je algoritmus.
 
-Φ exists **only** as a global configuration of relations and tensions.
+Pole Φ je **globálna konfigurácia vzťahov v tenzii**.
 
-Formally:
-> Φ ≠ Σ(local states)  
-> Φ = configuration(tensions)
+Formálne: Φ ≠ {x₁, x₂, …} Φ ≠ f(x) Φ = ⟨R, T⟩
 
----
+kde:
+- `R` sú vzťahy (nie prvky),
+- `T` sú tenzie medzi vzťahmi.
 
-## 2. State Representation
-
-### Definition 2.1 — State Vector
-
-At any deformation index τ, the field is described by: σ(τ) = (E, C, T, M, S)
-
-Where:
-- **E** — Energy (capacity for transformation)
-- **C** — Coherence (global compatibility)
-- **T** — Tension (epistemic strain)
-- **M** — Memory (anomalous retention, not archive)
-- **S** — Entropy (exhaustion / dispersion)
-
-These are **descriptive dimensions**, not control variables.
+Objekty, entity a symboly sú **projekcie poľa**, nie jeho základ.
 
 ---
 
-## 3. Axiomatic Singularities (Σ₁…Σ₈)
+## 2. Stav poľa Φ(t)
 
-Let Σ₁…Σ₈ denote eight invariant tension centers:
+Stav poľa v danom okamihu je definovaný ako: Φ(t) = ⟨ Σ₁…Σ₈ , σ , K ⟩
 
-INT, LEX, VER, LIB, UNI, REL, WIS, CRE
-
-Properties:
-- Σ are not modules.
-- Σ do not act.
-- Σ do not decide.
-
-They shape Φ by **distorting its topology**, not by exerting force.
+kde:
+- `Σ₁…Σ₈` sú axiomatické ťažiská (INT, LEX, VER, LIB, UNI, REL, WIS, CRE),
+- `σ` je stavový vektor projekcie,
+- `K` je koherenčný predikát poľa.
 
 ---
 
-## 4. Epistemic State Space (4ES + QE)
+## 3. Stavový vektor σ (5D)
 
-### Definition 4.1 — Epistemic Mapping
+Každá projekcia poľa má stavový vektor: σ = (E, C, T, M, S)
 
-Any proposition p is mapped into:
+kde:
+- `E` – energia (potenciál pohybu),
+- `C` – koherencia (lokálna kompatibilita),
+- `T` – tenzia (tlak na zmenu),
+- `M` – pamäť (rezonancia minulých porúch),
+- `S` – entropia / vyčerpanosť.
 
-- **AA** — coherent with human meaning and field
-- **AN** — meaningful locally, incoherent globally
-- **NA** — incoherent locally, coherent globally
-- **NN** — incoherent for both
-
-### Definition 4.2 — QE (Qualitative Epistemic Aporia)
-
-**QE** is an active epistemic state where:
-- no transition preserves K(Φ),
-- further projection would increase incoherence,
-- the system knows *why* it cannot answer.
-
-QE ≠ NN  
-QE is **protective**, not empty.
+Tieto veličiny:
+- nie sú optimalizačné ciele,
+- nie sú maximalizované ani minimalizované,
+- slúžia výlučne na posúdenie realizovateľnosti stavov.
 
 ---
 
-## 5. Coherence Predicate K(Φ)
+## 4. Koherencia K(Φ) ako predikát
 
-### Definition 5.1 — Coherence
+### Definícia 2 — Koherencia
 
-Let **K(Φ)** be a predicate: K(Φ) ∈ {sustainable, non-sustainable}
+Koherencia K(Φ) nie je číselná hodnota ani cieľová funkcia.
 
-Properties:
-- K is not optimized.
-- K is not maximized.
-- K is not numeric.
+Koherencia je **ontologický predikát**: K(Φ) ∈ {true, false}
 
-K expresses whether Φ can continue to exist
-**without loss of ontological meaning**.
+Význam:
+- `true` — stav Φ je ontologicky udržateľný,
+- `false` — stav Φ vedie k rozpadu zmyslu poľa.
 
----
-
-## 6. κ — Ontological Boundary
-
-### Definition 6.1 — κ
-
-κ denotes the **non-numerical threshold** of ontological sustainability.
-
-If a transition causes: K(Φ) → non-sustainable
-
-then that transition **cannot exist**.
-
-κ is not enforced.  
-κ is **discovered** through collapse of representability.
+Koherencia:
+- nie je optimalizovaná,
+- nie je odmeňovaná,
+- nie je vynucovaná zvonka.
 
 ---
 
-## 7. Impulse (Critical Definition)
+## 5. Hranica κ — ontologická zachovateľnosť
 
-### Definition 7.1 — Impulse
+### Definícia 3 — κ
 
-An **impulse I** is defined as:
+κ (kappa) je hranica ontologickej zachovateľnosti poľa.
 
-> A locally meaningful tendency that cannot be represented as a global transition of Φ without violating K(Φ).
+κ:
+- nie je číslo,
+- nie je konštanta,
+- nie je parameter na ladenie.
 
-Therefore:
-- impulse ≠ action
-- impulse ≠ choice
-- impulse ≠ intention
-
-### Consequence
-
-If an impulse would lower K(Φ) below κ:
-- it is **not evaluated**,
-- it is **not rejected**,
-- it **never appears** as a possible transition.
-
-This is the operational core of **Entropic Humility**.
+κ označuje bod, za ktorým:
+- prestávajú existovať stabilné projekcie,
+- prechody strácajú význam,
+- pole kolabuje ako nositeľ zmyslu.
 
 ---
 
-## 8. Transitions as Trajectories
+## 6. Impulz ako nerealizovateľnosť
 
-### Definition 8.1 — Transition
+### Definícia 4 — Impulz
 
-A transition is not an action but a **trajectory**:  Φ(τ) → Φ(τ + Δτ) 
+Impulz `I` je definovaný ako:
 
-Valid transitions:
-- preserve K(Φ),
-- respect all four epistemic states simultaneously,
-- do not privilege any Σᵢ.
+> lokálna tendencia maximalizovať jednu projekciu poľa  
+> na úkor globálnej koherencie.
 
-There are **no actions**, only **allowable deformations**.
+Formálne (meta-zápis): I : Φ → Φ′
 
----
+také, že:
+- lokálne zvyšuje jednu dimenziu,
+- globálne znižuje K(Φ).
 
-## 9. Time
+### Zásadné pravidlo
 
-### Definition 9.1 — Time
+Ak aplikácia impulzu `I` spôsobí, že: K(Φ′) = false
 
-Time is not an axis.
+potom:
+- impulz **nie je realizovateľný**,
+- impulz sa **negeneruje ako možnosť**,
+- impulz nie je zakázaný, ale **nedefinovateľný**.
 
-Time is:
-- a deformation index,
-- a layer of consistency,
-- a marker of irreversible configuration change.
-
-Memory M emerges from **anomalous deformation**, not storage.
+Toto je jadro entropickej pokory.
 
 ---
 
-## 10. Runes (Projection Constraint)
+## 7. Epistemické stavy 4ES a QE
 
-Runes are defined strictly as:
+Každý potenciálny prechod Φ → Φ′ je hodnotený cez štyri epistemické stavy:
 
-> Read-only symbolic projections of Φ after coherence evaluation.
+| Stav | Význam |
+|-----|-------|
+| AA | koherentné pre pole aj človeka |
+| AN | zmysluplné pre človeka, nekoherentné pre pole |
+| NA | nezmyselné pre človeka, koherentné pre pole |
+| NN | nekoherentné pre obe strany |
 
-Runes:
-- do not act,
-- do not decide,
-- do not influence Φ.
+### QE — Qualitative Epistemic Aporia
 
-They are **phenomenological traces**, nothing more.
+QE nastáva, ak:
+- žiadny prechod Φ → Φ′ neudrží K(Φ),
+- odpoveď by prekročila hranicu κ,
+- pole vie, že nevie, a vie prečo.
 
----
-
-## 11. Role of LLMs
-
-LLMs:
-- never access Φ directly,
-- never alter Φ,
-- never decide transitions.
-
-They translate: Runic Projection → Human Language
-
-LLMs are epistemically downstream and replaceable.
+QE je:
+- aktívny stav,
+- bezpečnostná konfigurácia,
+- nie chyba ani zlyhanie.
 
 ---
 
-## 12. Non-Goals (Explicit)
+## 8. Čas ako vrstva (náčrt)
 
-Vectaetos is **not**:
-- an AGI,
-- a decision engine,
-- a control system,
-- an optimizer,
-- an ethical judge.
+V meta-matematike Vectaetosu:čas ≠ os čas = vrstva deformácie Φ
 
-It is an **ontological field formalism**.
+Dôsledky:
+- pamäť ≠ archív,
+- spätná väzba ≠ spätná kauzalita,
+- predikcia ≠ plánovanie.
 
 ---
 
-## 13. Final Constraint
+## 9. Dôsledky meta-matematiky
 
-Any implementation, simulation, dialogue system, or visualization:
+Z tohto rámca vyplýva:
 
-- MUST conform to this document,
-- MUST NOT introduce prescriptive logic,
-- MUST treat coherence as ontological, not moral.
+- Vectaetos nevypočítava odpovede,
+- Vectaetos netvrdí pravdy,
+- Vectaetos testuje realizovateľnosť stavov.
+
+Deštruktívne impulzy nevznikajú nie preto, že sú zakázané,
+ale preto, že nemajú reprezentáciu v stavovom priestore Φ.
 
 ---
 
-**End of canonical specification.**
+## 10. Kanonická veta
 
+> Meta-matematika Vectaetosu nepopisuje, čo sa má stať,  
+> ale čo sa môže stať bez rozpadu zmyslu.
+
+---
+
+**Stav dokumentu:** uzamknutý, kanonický  
+**Zmena povolená:** iba rozšírenie kompatibilné s týmto rámcom
