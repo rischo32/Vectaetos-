@@ -1,69 +1,98 @@
-const canvas = document.getElementById("field");
-const ctx = canvas.getContext("2d");
-const runeEl = document.getElementById("rune");
+const canvas = document.getElementById("glcanvas");
+const gl = canvas.getContext("webgl");
+if (!gl) alert("WebGL neni podporované");
 
+// Resize canvas
 function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  gl.viewport(0,0,canvas.width,canvas.height);
 }
 window.addEventListener("resize", resize);
 resize();
 
-// vstupný stav ako vektor
-let state = {
-  E: 0.5,
-  C: 0.5,
-  T: 0.3,
-  M: 0.2,
-  S: 0.25,
-  rune: "ᚨ"
-};
+// Stav poľa zo servera
+let state = { C:0.5, T:0.5, S:0.3, E:0.6 };
 
-// pomocná funkcia pre jemný prechod
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
+// Interakčný filter (myš)
+let interactiveT = 0.0;
+let interactiveFactor = 0.0;
 
-function drawField() {
-  // jemné pozadie (fade)
-  ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+canvas.addEventListener("mousemove", (e) => {
+  // horizontálna pozícia myši [0,1]
+  let normX = e.clientX / canvas.width;
+  interactiveT = normX;
+  // vertikálna pozícia myši ako jemný filter
+  let normY = e.clientY / canvas.height;
+  interactiveFactor = 1.0 - normY;
+});
 
-  // vypočítaj farebné zóny
-  const baseHue = lerp(180, 260, state.C);       // modré k fialovej
-  const tensionHue = lerp(0, 60, state.T);       // červené žlté ako kontrast
-  const entropyAlpha = Math.min(0.3 + state.S * 0.7, 1.0);
-
-  // jemne kresli polia
-  for (let i = 0; i < 100; i++) {
-    const x = (Math.sin(i + state.M * 10) + 1) * canvas.width / 2;
-    const y = (Math.cos(i + state.M * 7) + 1) * canvas.height / 2;
-
-    // mix farieb
-    const hue = (baseHue * (1 - state.T)) + (tensionHue * state.T);
-    const saturation = 50 + 50 * state.C;
-    const lightness = 30 + 20 * (1 - state.S);
-
-    ctx.beginPath();
-    ctx.arc(x, y, 60 * (0.3 + state.C * 0.7), 0, Math.PI * 2);
-    ctx.fillStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, ${entropyAlpha})`;
-    ctx.fill();
-  }
-
-  // runa (stav poľa)
-  runeEl.textContent = state.rune;
-}
-
+// Poll server pre stav
 async function fetchState() {
   try {
-    const res = await fetch("field_state.json?" + Date.now());
+    const res = await fetch("field_state.json?"+Date.now());
     const data = await res.json();
-    state = { ...data.phi, rune: data.rune };
-  } catch (e) {
-    // ignoruj chyby (napr. keď JSON nie je pripravený)
+    state = data.phi;
+  } catch(e){}
+}
+setInterval(fetchState, 300);
+
+// Shader pomocné funkcie
+async function compileShader(type, source) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, source);
+  gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+    console.error(gl.getShaderInfoLog(s));
+    return null;
   }
+  return s;
 }
 
-// updaty s pomalšou frekvenciou
-setInterval(fetchState, 400);
-setInterval(drawField, 100);
+async function initShaders() {
+  const vSrc = await (await fetch('shaders/vertex.glsl')).text();
+  const fSrc = await (await fetch('shaders/fragment.glsl')).text();
+
+  const vShader = await compileShader(gl.VERTEX_SHADER, vSrc);
+  const fShader = await compileShader(gl.FRAGMENT_SHADER, fSrc);
+
+  const program = gl.createProgram();
+  gl.attachShader(program, vShader);
+  gl.attachShader(program, fShader);
+  gl.linkProgram(program);
+  gl.useProgram(program);
+
+  return program;
+}
+
+function main() {
+  initShaders().then(program => {
+    const resLoc = gl.getUniformLocation(program, "u_resolution");
+    const stateLoc = gl.getUniformLocation(program, "u_state");
+    const interLoc = gl.getUniformLocation(program, "u_inter");
+
+    function render() {
+      gl.clear(gl.COLOR_BUFFER_BIT);
+
+      gl.uniform2f(resLoc, canvas.width, canvas.height);
+
+      // kombinujeme stav simulácie so vstupom myši
+      let combinedT = (state.T * 0.6) + (interactiveT * 0.4);
+      let combinedC = state.C * (0.7 + interactiveFactor * 0.3);
+
+      // u_state = (C, T_modified, S, E)
+      gl.uniform4f(stateLoc, combinedC, combinedT, state.S, state.E);
+
+      // uniform pre filter intenzity myši
+      gl.uniform1f(interLoc, interactiveFactor);
+
+      // draw full-screen quad
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+      requestAnimationFrame(render);
+    }
+    render();
+  });
+}
+
+main();
