@@ -10,7 +10,7 @@ abstract: >
 authors:
   - family-names: "Fonfára"
     given-names: "Richard"
-    orcid: ""   # optional, leave empty if none
+    orcid: "https://orcid.org/0009-0008-5980-8940"
 version: "0.1"
 date-released: 2026-01-01
 doi: "10.5281/zenodo.18395048"
