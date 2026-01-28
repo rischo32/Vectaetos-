@@ -1,8 +1,38 @@
 cff-version: 1.2.0
-title: "Vectaetos"
+message: "If you use, study, or reference this work, please cite it as below."
+title: "Vectaetos – Canonical Core v0.1"
+abstract: >
+  Vectaetos is an epistemic and ontological framework describing intelligence
+  as a coherent field of relations rather than an agentic or optimization-based system.
+  It introduces concepts such as Entropic Humility, epistemic field Φ,
+  non-numerical coherence thresholds, and qualitative epistemic aporia (QE),
+  offering a non-prescriptive foundation for human and non-human intelligences.
 authors:
-  - family-names: Fonfára
-    given-names: Richard
-doi: 10.5281/zenodo.18076787
-version: 1.0.0
-date-released: 2026-01-03
+  - family-names: "Fonfára"
+    given-names: "Richard"
+    orcid: ""   # optional, leave empty if none
+version: "0.1"
+date-released: 2026-01-01
+doi: "10.5281/zenodo.18395048"
+license: "Vectaetos Custom License (VCL-1.0)"
+repository-code: "https://github.com/rischo32/Vectaetos"
+url: "https://vectaetos.eu"
+keywords:
+  - epistemic fields
+  - entropic humility
+  - coherence
+  - non-agentic intelligence
+  - AI safety
+  - ontology
+  - meta-mathematics
+  - runic projection
+  - qualitative epistemic aporia
+preferred-citation:
+  type: report
+  authors:
+    - family-names: "Fonfára"
+      given-names: "Richard"
+  title: "Vectaetos – Canonical Core v0.1"
+  year: 2026
+  doi: "10.5281/zenodo.18395048"
+  publisher: "Zenodo"
