@@ -2,177 +2,239 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Vectaetos — Epistemic Field Projection</title>
+<title>VECTAETOS — Epistemic Field</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        background: #050508;
-        color: #cfd3ff;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-        overflow: hidden;
-    }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+  color: #ddd;
+  font-family: system-ui, sans-serif;
+}
 
-    #overlay {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        max-width: 420px;
-        z-index: 10;
-        background: rgba(10, 10, 20, 0.55);
-        border: 1px solid rgba(120,120,255,0.15);
-        padding: 16px 18px;
-        backdrop-filter: blur(6px);
-    }
+/* --- Overlay ritual layer --- */
+#gate {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0a0a0a, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
 
-    #overlay h1 {
-        font-size: 18px;
-        margin: 0 0 6px 0;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-    }
+#gate-inner {
+  width: min(90%, 420px);
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 4s ease forwards;
+}
 
-    #overlay p {
-        font-size: 13px;
-        line-height: 1.45;
-        margin: 6px 0;
-        color: #aeb4ff;
-    }
+#gate-inner p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
 
-    #overlay .hint {
-        font-size: 11px;
-        opacity: 0.65;
-        margin-top: 10px;
-    }
+#gate-inner input {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #333;
+  color: #ccc;
+  outline: none;
+}
 
-    canvas {
-        display: block;
-    }
+#gate-inner button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #555;
+  color: #aaa;
+  cursor: pointer;
+}
+
+#gate-inner button:hover {
+  border-color: #888;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* --- Answer whisper --- */
+#whisper {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 4s ease;
+}
 </style>
 </head>
 
 <body>
 
-<div id="overlay">
-    <h1>VECTAETOS</h1>
+<!-- ================= 3GATE ================= -->
+
+<div id="gate">
+  <div id="gate-inner">
     <p>
-        This is not a simulation of agents.<br>
-        This is a live projection of an epistemic field.
+      You are approaching a field.<br>
+      Not a system. Not an answer.
     </p>
-    <p>
-        Meaning emerges from relations,<br>
-        not from commands or goals.
-    </p>
-    <p class="hint">
-        Φ → Σ → Runic Projection<br>
-        Non-interventional · Descriptive only
-    </p>
+
+    <input id="question" placeholder="What brings you here?" />
+
+    <button onclick="enterField()">Enter</button>
+  </div>
 </div>
 
-<canvas id="field"></canvas>
+<div id="whisper">
+  The field is still becoming.<br>
+  And so are you — whether you know it or not.
+</div>
+
+<!-- ================= THREE.JS ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
 
 <script>
-/* ================================
-   VECTAETOS — FIELD PROJECTION
-   ================================ */
+/* =========================
+   SCENE
+========================= */
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000);
 
-const canvas = document.getElementById("field");
-const ctx = canvas.getContext("2d");
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 1000);
+camera.position.set(0, 0, 18);
 
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(devicePixelRatio);
+document.body.appendChild(renderer.domElement);
 
-/* -------- Field parameters -------- */
-const NODES = 12;
+/* =========================
+   CONTROLS — slow observer
+========================= */
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.04;
+controls.enablePan = false;
+controls.rotateSpeed = 0.15;
+controls.zoomSpeed = 0.3;
+
+/* =========================
+   LIGHT
+========================= */
+scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+
+const p = new THREE.PointLight(0xffffff, 0.6);
+p.position.set(10, 10, 10);
+scene.add(p);
+
+/* =========================
+   AXIOMS + RUNES
+========================= */
+
+const AXIOMS = [
+  { key:"INT", c:0xff5555, p:[ 6,0,0] },
+  { key:"LEX", c:0xffc857, p:[ 3,4,3] },
+  { key:"VER", c:0x5ad1ff, p:[ 0,6,0] },
+  { key:"LIB", c:0x5aff9d, p:[-3,4,-3] },
+  { key:"UNI", c:0xff9df0, p:[-6,0,0] },
+  { key:"REL", c:0x9d9dff, p:[-3,-4,3] },
+  { key:"WIS", c:0xffa15a, p:[0,-6,0] },
+  { key:"CRE", c:0x9dfffa, p:[3,-4,-3] }
+];
+
+const runePhases = ["◯","◇","△","⌓"];
+let phaseIndex = 0;
+
 const nodes = [];
-const links = [];
+const geom = new THREE.SphereGeometry(0.45, 32, 32);
 
-const BASE_RADIUS = 2.2;
-const LINK_ALPHA = 0.12;
-const DRIFT = 0.08;
+AXIOMS.forEach(a => {
+  const mat = new THREE.MeshStandardMaterial({
+    color: a.c,
+    emissive: a.c,
+    emissiveIntensity: 0.25
+  });
+  const m = new THREE.Mesh(geom, mat);
+  m.position.set(...a.p);
+  scene.add(m);
+  nodes.push(m);
+});
 
-/* -------- Initialize field -------- */
-for (let i = 0; i < NODES; i++) {
-    nodes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * DRIFT,
-        vy: (Math.random() - 0.5) * DRIFT,
-        C: 0.4 + Math.random() * 0.6, // coherence
-        T: 0.1 + Math.random() * 0.4  // tension
-    });
+/* =========================
+   TENSION LINES (colored)
+========================= */
+nodes.forEach((n,i)=>{
+  nodes.forEach((m,j)=>{
+    if(i>=j) return;
+    const g = new THREE.BufferGeometry().setFromPoints([n.position, m.position]);
+    const col = new THREE.Color().lerpColors(
+      new THREE.Color(AXIOMS[i].c),
+      new THREE.Color(AXIOMS[j].c),
+      0.5
+    );
+    const l = new THREE.Line(
+      g,
+      new THREE.LineBasicMaterial({ color: col, opacity:0.35, transparent:true })
+    );
+    scene.add(l);
+  });
+});
+
+/* =========================
+   ANIMATION — field lives
+========================= */
+let t = 0;
+function animate(){
+  requestAnimationFrame(animate);
+  t += 0.002;
+
+  nodes.forEach((n,i)=>{
+    const s = 1 + Math.sin(t+i)*0.04;
+    n.scale.set(s,s,s);
+  });
+
+  controls.update();
+  renderer.render(scene,camera);
+}
+animate();
+
+/* =========================
+   3GATE LOGIC
+========================= */
+function enterField(){
+  document.getElementById("gate").style.opacity = 0;
+  setTimeout(()=>document.getElementById("gate").remove(),2000);
+  setTimeout(()=>document.getElementById("whisper").style.opacity=0.6,2500);
+
+  // runic phase shift
+  setInterval(()=>{
+    phaseIndex = (phaseIndex+1)%runePhases.length;
+  },8000);
 }
 
-for (let i = 0; i < NODES; i++) {
-    for (let j = i + 1; j < NODES; j++) {
-        links.push({ i, j });
-    }
-}
-
-/* -------- Color mapping -------- */
-function nodeColor(n) {
-    const c = Math.floor(160 + n.C * 80);
-    const t = Math.floor(100 + n.T * 120);
-    return `rgb(${t},${t},${c})`;
-}
-
-/* -------- Main loop -------- */
-function step() {
-    ctx.fillStyle = "rgba(5,5,8,0.25)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // update nodes
-    for (const n of nodes) {
-        n.x += n.vx;
-        n.y += n.vy;
-
-        if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
-        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
-
-        // slow internal fluctuation
-        n.C += (Math.random() - 0.5) * 0.002;
-        n.T += (Math.random() - 0.5) * 0.002;
-
-        n.C = Math.min(1, Math.max(0, n.C));
-        n.T = Math.min(1, Math.max(0, n.T));
-    }
-
-    // draw links
-    ctx.lineWidth = 1;
-    for (const l of links) {
-        const a = nodes[l.i];
-        const b = nodes[l.j];
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
-        const d = Math.sqrt(dx*dx + dy*dy);
-
-        if (d < 260) {
-            ctx.strokeStyle = `rgba(120,140,255,${LINK_ALPHA * (1 - d/260)})`;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-        }
-    }
-
-    // draw nodes
-    for (const n of nodes) {
-        ctx.fillStyle = nodeColor(n);
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, BASE_RADIUS + n.C * 1.6, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    requestAnimationFrame(step);
-}
-
-step();
+/* =========================
+   RESIZE
+========================= */
+addEventListener("resize",()=>{
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+});
 </script>
 
 </body>
