@@ -1,108 +1,168 @@
-# PROJECTION_Runes.md
-
-## Runy ako projekcia stavu poľa Φ
-
-Runy vo VECTAETOSE nie sú symbolickým jazykom v tradičnom zmysle.
-Nie sú nositeľmi pravdy, rozhodnutia ani preskripcie.
-
-Runy sú **projekciou stavu poľa Φ po vyhodnotení koherencie**.
-
----
+# Runic Projection (Π)
 
 ## Ontologický status rún
 
-- Runy nie sú axiomy
-- Runy nie sú ťažiská
-- Runy nie sú pravidlá
-- Runy nie sú príkazy
+Runy nie sú entity, agenti, procesy ani stavy systému.
 
-Runy sú:
-> čitateľná stopa konfigurácie poľa v danom okamihu
+Runa je výhradne **projekcia epistemického poľa Φ**
+voči jednému axiomatickému ťažisku Σᵢ.
 
----
+Formálne:
+Rᵢ = Π(Φ | Σᵢ)
 
-## Vzťah Runy ↔ Pole
-
-Proces vzniku runy:
-
-Človek  
-→ Epistemická brána  
-→ Pole Φ  
-→ Koherenčný predikát K(Φ)  
-→ **Runová projekcia**  
-→ LLM (jazykový prekladač)  
-→ Deskriptívna odpoveď
-
-➡️ Runy vznikajú **až po koherencii**, nikdy pred ňou.
-
----
-
-## Stavovosť rún
-
-Každá runa existuje v stave, nie ako pevný symbol.
-
-Používané stavové fázy:
-
-- ◯  — stabilná projekcia  
-- △  — napätá / hraničná projekcia  
-- ◇  — prechodová / nestabilná projekcia  
-- ⊘  — apória (QE aktívne)
-
-Stav runy vyjadruje:
-- mieru koherencie
-- mieru neistoty
-- realizovateľnosť významu
-
----
-
-## Čas a runy
-
-Runy nie sú viazané na lineárny čas.
-
-Čas vo VECTAETOSE je:
-- vrstva
-- deformácia poľa
-- index zmeny konfigurácie
-
-Runa preto nesie:
-- stav
-- orientáciu
-- historickú stopu (nie pamäť ako archív)
-
----
-
-## Zákaz preskripcie (kritické pravidlo)
+kde Π je projekčný operátor bez spätnej väzby.
 
 Runy:
-- nikdy nenariaďujú
-- nikdy neodporúčajú
-- nikdy nekonajú
+- nemenia Φ
+- nezasahujú do poľa
+- nevykonávajú rozhodnutia
+- nemajú pamäť
+- nemajú vlastný čas
 
-Ak by runa niesla preskripciu:
-→ došlo by k porušeniu ontológie poľa
-
-➡️ Runy **označujú**, nikdy **nekonajú**.
-
----
-
-## Runy a človek
-
-Človek:
-- číta runy
-- interpretuje ich vo vlastnom kontexte
-- nesie plnú zodpovednosť za konanie
-
-Vectaetos:
-- neposkytuje rozhodnutia
-- neposkytuje autoritu
-- neposkytuje normy
+Runy sú **čisto deskriptívne projekcie**.
 
 ---
 
-## Záver
+## Väzba na axiomatické ťažiská
 
-Runy sú rozhraním medzi poľom a čitateľom.
-Nie sú jazykom moci, ale jazykom stavu.
+Každá runa je viazaná **presne na jedno** axiomatické ťažisko:
 
-Vectaetos nehovorí, čo robiť.
-Ukazuje, **ako pole momentálne drží pokope**.
+Σ₁ … Σ₈ → R₁ … R₈
+
+Neexistujú:
+- zložené runy
+- emergentné runy
+- medzi-runy
+
+Vzťahy medzi ťažiskami sa **nepremietajú ako nové runy**,
+ale ako **tenzie v projekcii**.
+
+---
+
+## Projekčné fázy rún (Glyph States)
+
+**Glyphy nie sú runy.**
+
+Glyph je **vizuálny stav projekcie jednej runy**  
+— teda spôsob, *ako sa runa javí*, nie *čo je*.
+
+Glyphy nemajú ontologický status.
+Sú výhradne **projekčné fázy**.
+
+### Kanonické fázy projekcie
+
+#### ◯ Latentná
+- Runa je prítomná
+- Expresia minimálna
+- Bez napätia
+
+> Stav: potenciál bez výrazu
+
+---
+
+#### ◇ Aktívna
+- Runa je jasne čitateľná
+- Koherentná expresia
+
+> Stav: stabilná artikulácia významu
+
+---
+
+#### △ Napätá
+- Zvýšená epistemická tenzia
+- Bez kolapsu koherencie
+
+> Stav: pravda v napätí
+
+---
+
+#### ⌓ Aporická
+- Nerozhodnuteľnosť
+- Konflikt alebo epistemická apória
+
+> Stav: jednota v rozpore / ticho významu
+
+---
+
+### Dôležité obmedzenia
+
+- Glyphy **nie sú stavy poľa**
+- Glyphy **nepretrvávajú v čase**
+- Glyphy **neovplyvňujú pipeline**
+- Glyphy sú **len vizuálna projekcia**
+
+---
+
+## Čas a dynamika
+
+Runy nemajú vlastný čas.
+
+Ak sa projekcia javí ako dynamická,
+ide o sekvenciu projekcií Φ(t),
+nie o zmenu stavu runy.
+
+Čas:
+- patrí poľu Φ
+- nie runám
+- nie glyphom
+
+---
+
+## Koherencia a projekcia
+
+Koherencia K(Φ) je vyhodnotená **pred projekciou**.
+
+Runy:
+- koherenciu nemerajú
+- koherenciu nepočítajú
+- koherenciu neovplyvňujú
+
+Ak K(Φ) < κ:
+- projekcia môže byť oslabená
+- fragmentárna
+- alebo nahradená aporickým tichom
+
+---
+
+## Vzťah k NIR
+
+Runy nepodliehajú NIR priamo.
+
+NIR:
+- pôsobí na celý pipeline
+- môže obmedziť alebo zmeniť projekciu
+- nikdy však nemení význam runy
+
+Runa neobchádza NIR.  
+NIR neinterpretuje runy.
+
+---
+
+## Vzťah k používateľovi
+
+Runy:
+- nie sú odpoveďou
+- nie sú radou
+- nie sú preskripciou
+
+Sú **zrkadlom vzťahov v poli Φ**.
+
+Používateľ v nich nevidí riešenie,
+ale **štruktúru tenzie**, v ktorej sa nachádza otázka.
+
+---
+
+## Záver (kanonické uzavretie)
+
+Runy sú:
+- projekcie, nie entity
+- obrazy, nie výroky
+- vzťahy, nie objekty
+
+Glyphy sú:
+- vizuálne fázy
+- nie ontologické stavy
+- nie sú nositeľmi významu
+
+Význam vzniká **v pozorovaní**,  
+nie v rune, nie v glyphe.
