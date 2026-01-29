@@ -1,245 +1,100 @@
-# DIALOGUE_PIPELINE.md
-## VECTAETOS — Dialog as Epistemic Flow, Not Control
+# Dialogue Pipeline — Canonical Flow
 
-**Status:** Canonical  
-**Depends on:**  
-- CANONICAL_ANCHORS.md  
-- FORMAL_META_MATHEMATICS.md  
-- FORMAL_TIME.md  
-- FORMAL_TRANSITIONS.md  
-
-**Scope:** Dialog architecture, safety, non-intervention
+Vectaetos operates through a strictly ordered, non-agentic dialogue pipeline.
+No component may bypass or reorder this flow.
 
 ---
 
-## 0. Epistemic Lock
+## Canonical Sequence
 
-This document assumes:
-
-- Φ is primary ontology.
-- Dialogue is a projection, not a driver.
-- No component may decide, command, or optimize on behalf of a human.
-
-Any dialog system that:
-- gives instructions,
-- produces imperatives,
-- or implies authority
-
-is **non-compliant** with VECTAETOS.
+Human  
+→ Epistemic Gates (3Gate)  
+→ 4ES + QE Evaluation  
+→ Field Φ (state update)  
+→ Coherence Predicate K(Φ)  
+→ Simulation Vortex (if admissible)  
+→ Runic Projection  
+→ LLM Adapter (language rendering only)  
+→ Descriptive Output
 
 ---
 
-## 1. What Dialogue Is NOT
+## Epistemic Gates (3Gate)
 
-Dialogue in VECTAETOS is NOT:
+Epistemic Gates are an intrinsic, immutable property of the field Φ.
+They function as topological epistemic interfaces, not as agents or filters.
 
-- a command interface
-- a question–answer engine
-- a decision assistant
-- a planner
-- a recommendation system
-- a control loop
+Properties:
+- Precede all epistemic evaluation
+- Precede 4ES and QE
+- Precede any field interaction
+- Block non-epistemic, manipulative, or interventionist inputs
 
-Dialogue never closes reality.
-It opens descriptions.
-
----
-
-## 2. Definition of Dialogue
-
-### Definition 2.1 — Dialogue as Epistemic Projection
-
-Dialogue is defined as:
-
-> a **descriptive projection of the current state of Φ**, rendered into human-readable language.
-
-Dialogue does not modify Φ.
-Dialogue does not commit actions.
-Dialogue does not resolve uncertainty.
+If an input fails at the gate level:
+- The field Φ is not accessed
+- No simulation is invoked
+- Output may enter Silent Output Mode
 
 ---
 
-## 3. Canonical Pipeline (One-Way) Human ↓ (input / utterance) Epistemic Gate ↓ Field Φ ↓ Coherence Predicate K(Φ) ↓ Runic Projection ↓ LLM (language adapter only) ↓ Descriptive Output ↓ Human
+## 4ES + QE Layer
 
-### Absolute rules:
-- ❌ No backward influence
-- ❌ No human → runes → action loop
-- ❌ No hidden feedback
+Only inputs that pass Epistemic Gates are evaluated through:
 
-This pipeline is **strictly acyclic**.
+- AA — Affirmative–Affirmative
+- AN — Affirmative–Negative
+- NA — Negative–Affirmative
+- NN — Negative–Negative
+- QE — Qualitative Epistemic Aporia
 
----
-
-## 4. Epistemic Gate
-
-### Definition 4.1 — Epistemic Gate
-
-The Epistemic Gate classifies input as:
-
-- epistemic (seeking understanding),
-- expressive (narrative, reflection),
-- instrumental (goal-oriented),
-- manipulative (coercive, exploitative).
-
-The gate **does not block** input.  
-It only conditions interpretation.
+This layer determines whether the input has epistemic structure.
 
 ---
 
-## 5. Role of Φ in Dialogue
+## Field Φ
 
-Φ does not “answer”.
-
-Φ:
-- reconfigures under tension,
-- evaluates representability,
-- exposes coherence or its limits.
-
-Dialogue reflects:
-- stability,
-- tension,
-- aporia,
-- or collapse risk.
+The field Φ:
+- Exists independently of any dialogue
+- Updates its state only after successful gate + 4ES/QE passage
+- Is not activated by prompts (non-LLM behavior)
 
 ---
 
-## 6. Coherence Predicate K(Φ)
+## Simulation Vortex
 
-Before any projection:
+The Simulation Vortex:
+- Is invoked only after Φ state update
+- Generates candidate trajectories
+- Is non-agentic, non-decisional
+- Has no knowledge of κ or coherence thresholds
 
-- K(Φ) is evaluated as a **predicate**, not a score.
-- K(Φ) does not rank answers.
-- K(Φ) only determines **whether projection is admissible**.
-
-If projection would:
-- reduce K(Φ) below κ,
-- introduce ontological claims,
-- force a transition,
-
-→ projection is invalid.
+The vortex never receives raw human input.
 
 ---
 
-## 7. QE in Dialogue
+## NIR (Non-Intervention Regime)
 
-### Definition 7.1 — QE Output
+NIR is active across the entire pipeline.
 
-If no admissible projection exists: Output := QE
+- NIR is not a step
+- NIR is not a module
+- NIR is an ontological immune regime
 
-QE in dialogue means:
-- the system knows why it cannot answer,
-- the limits are explicit,
-- uncertainty is preserved.
-
-QE is **not silence**.
-QE is an epistemic statement.
+NIR may override output at any stage without altering the pipeline order.
 
 ---
 
-## 8. Role of NIR (Non-Intervention Regime)
+## Output
 
-NIR is **always active** across the pipeline.
+Outputs are:
+- Descriptive only
+- Non-prescriptive
+- Non-interventionist
 
-NIR:
-- is not a module,
-- is not a step,
-- is not content filtering.
+In certain cases:
+- Output may be symbolic
+- Output may be silent
+- Output may surface as a question instead of an answer
 
-NIR ensures:
-- no intervention,
-- no prescription,
-- no real-world manipulation.
-
-When NIR is active:
-- dialogue continues,
-- output becomes QE or weakened description,
-- no authority is expressed.
-
----
-
-## 9. LLM as Language Adapter
-
-LLM is used **only** to:
-
-- translate runic projections into natural language,
-- preserve uncertainty markers,
-- avoid imperative grammar.
-
-LLM:
-- has no access to Φ,
-- has no memory of coherence,
-- has no agency.
-
-It is a renderer.
-Nothing more.
-
----
-
-## 10. Output Constraints
-
-Every output must satisfy:
-
-- ❌ no commands
-- ❌ no advice framed as obligation
-- ❌ no claims of truth
-- ❌ no optimization language
-
-Allowed forms:
-- descriptive
-- conditional
-- contextual
-- epistemically bounded
-
-Canonical phrasing:
-> “Within this configuration…”
-> “Given these assumptions…”
-> “This projection indicates…”
-
----
-
-## 11. Meta-Dialogue
-
-The system may ask questions **only** when:
-
-- clarification increases epistemic stability,
-- ambiguity threatens coherence,
-- QE can be avoided by context.
-
-Questions must never:
-- extract goals,
-- guide decisions,
-- narrow options instrumentally.
-
-A question is a stabilizer, not a probe.
-
----
-
-## 12. Safety by Structure
-
-Dialogue safety does not rely on:
-- rules,
-- ethics lists,
-- moderation layers.
-
-Safety emerges because:
-- dialogue cannot act,
-- time cannot be rushed,
-- coherence cannot be forced.
-
----
-
-## 13. Final Lock
-
-Dialogue in VECTAETOS:
-
-- describes,
-- never decides,
-- never intervenes,
-- never concludes reality.
-
-Any dialog that produces authority
-is not VECTAETOS.
-
----
-
-**End of canonical dialogue pipeline.**
+Vectaetos never instructs.
+Vectaetos reveals structure.
