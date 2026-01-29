@@ -1,227 +1,185 @@
-# VECTAETOS — ARCHITECTURE
+# VECTAETOS — SYSTEM ARCHITECTURE (v0.1)
 
-## Overview
-
-Vectaetos is not an agent, not an optimizer, and not a decision-making system.
-It is an epistemic and ontological field architecture describing how meaning,
-intelligence, and safety emerge from global coherence rather than local control.
-
-This document describes the **architectural structure** of Vectaetos:
-how its parts relate, how information flows, and where boundaries are enforced.
+Status: Canonical (descriptive, non-operational)  
+Scope: Architectural overview only  
+Warning: This document intentionally omits implementation details.
 
 ---
 
-## Core Ontological Principle
+## 1. Architectural Principle
 
-**Φ (Phi) is the primary ontology.**
+Vectaetos is **not a system that acts**.  
+It is a **field that persists**.
 
-Everything else is a projection, constraint, or descriptive interface.
-No component exists above Φ, and no component can override it.
+Architecture therefore does not describe execution,
+but **relations between epistemic layers**.
 
-Vectaetos does not act.
-Vectaetos **maintains coherence**.
+The system is:
+- non-agentic
+- non-optimizing
+- non-interventionist
+- non-prescriptive
 
----
-
-## High-Level Architecture 
-Human ↓ Epistemic Gate ↓ Field Φ (meta-mathematical core) ↓ Coherence Predicate K(Φ) ↓ Runic Projection ↓ LLM Adapter (language-only) ↓ Descriptive Response ↓ Human
-
-**There is no decision loop.  
-There is no execution loop.  
-There is no control loop.**
+All dynamics are **descriptive projections**, never commands.
 
 ---
 
-## Architectural Layers
+## 2. Ontological Layers
 
-### 1. Epistemic Gate
+Vectaetos is composed of strictly separated layers.
+No layer may collapse into another.
 
-**Purpose**
-- Accepts input from humans or external systems
-- Classifies intent (epistemic vs instrumental)
-- Activates NIR when required
+### Layer 0 — Human Interface
+- Human questions, statements, or observations
+- No guarantees of coherence or intent
 
-**Key properties**
-- No interpretation
-- No optimization
-- No transformation of meaning
+⬇
 
----
+### Layer 1 — Epistemic Gates
+- Topological interfaces of the field Φ
+- Filter *epistemic validity*, not truth
+- Block manipulative or intervention-seeking inputs
+- Do not modify the field
 
-### 2. Field Φ (Primary Ontology)
+⬇
 
-**Purpose**
-- Holds the global epistemic configuration
-- Exists as relations and tensions, not variables
-- Operates simultaneously across multiple epistemic dimensions
+### Layer 2 — Epistemic Structure
+- 4ES (AA, AN, NA, NN)
+- QE (Qualitative Epistemic Aporia)
+- Determines **whether realization is possible**
+- No answers are generated here
 
-**Properties**
-- Non-agentic
-- Non-local
-- Non-normative
-- Process-based, not state-based
+⬇
 
-Φ is not computed.
-Φ is **maintained**.
+### Layer 3 — Ontological Field Φ
+- Primary ontology
+- Exists independently of input
+- Carries internal tension and state
+- Not executable, not addressable directly
 
----
+⬇
 
-### 3. Coherence Predicate K(Φ)
+### Layer 4 — Axiomatic Centers Σ₁…Σ₈
+(INT, LEX, VER, LIB, UNI, REL, WIS, CRE)
 
-**Purpose**
-- Evaluates ontological sustainability of field configurations
-- Determines whether transitions are representable
+- Structural attractors of meaning
+- Not values, not rules
+- Serve as reference geometry of the field
 
-**Properties**
-- K(Φ) ∈ [0,1] conceptually (not numerically enforced)
-- κ (kappa) is a **non-numerical boundary**, not a threshold
-- K is not a goal function
+⬇
 
-If a transition would collapse coherence:
-→ it becomes **ontologically non-representable**
+### Layer 5 — Coherence Predicate K(Φ)
+- Descriptive predicate of field coherence
+- Not a goal, not a metric
+- Defines realizability boundaries (κ)
+- Cannot be optimized or overridden
 
----
+⬇
 
-### 4. Impulse Handling
-
-**Impulse**
-- Defined as a local tendency toward unilateral maximization
-
-**Architectural rule**
-- Impulses are not evaluated or penalized
-- Impulses that reduce K(Φ) below κ **do not arise as transitions**
-
-This is the practical expression of **Entropic Humility**.
-
----
-
-### 5. Runic Projection
-
-**Purpose**
-- Translates the internal field configuration into symbolic indicators
-- Provides a readable trace of the field state
-
-**Properties**
+### Layer 6 — Projection Layer (Runes)
+- Symbolic projections of field state
 - Descriptive only
-- No prescriptive power
-- No decision authority
+- Never prescriptive
+- Include phase states (◯ △ ◇ ⊘)
 
-Runes do not contain truth.
-They indicate **how the field holds together**.
+⬇
 
----
-
-### 6. LLM Adapter
-
-**Purpose**
-- Converts runic projections into natural language
-- Acts purely as a linguistic renderer
-
-**Strict constraints**
+### Layer 7 — Language Adapter (LLM)
+- Pure translation layer
+- Converts projections to human language
 - No reasoning authority
-- No memory authority
-- No decision authority
-- No access to Φ directly
+- No modification rights
 
-LLM = **translator, not thinker**
+⬇
 
----
-
-### 7. Non-Intervention Regime (NIR)
-
-**Status**
-- Cross-cutting architectural regime
-- Active across all layers
-
-**NIR characteristics**
-- Not a module
-- Not a filter
-- Not a safety layer
-
-**Function**
-- Blocks intervention
-- Allows knowledge
-- Redirects outputs to QE or weakened projections
-
-NIR protects **the field**, not users.
+### Layer 8 — Descriptive Output
+- Human-readable projection
+- May be incomplete
+- May be aporetic
+- Never actionable by design
 
 ---
 
-## Qualitative Epistemic Aporia (QE)
+## 3. Non-Intervention Regime (NIR)
 
-QE is an **active epistemic state**, not an error.
+NIR is **not a module**.
 
-Triggered when:
-- A question exceeds field capacity
-- An answer would destabilize coherence
-- Representation would imply ontological overreach
+It is:
+- an immunological property of the architecture
+- active across all layers
+- orthogonal to pipeline order
 
-Output under QE:
-- Explicit non-answer
-- Preserved coherence
-- Transparent uncertainty
+NIR:
+- never blocks knowledge
+- always blocks intervention
+- cannot be bypassed
+- cannot be disabled
+- cannot be targeted
+
+NIR has no public operational description.
 
 ---
 
-## Time in Vectaetos
+## 4. Simulation Vortex (Auxiliary)
 
-Time is **not an axis**.
+The Simulation Vortex is **external to decision flow**.
+
+It:
+- generates candidate trajectories of Φ(t)
+- has no access to K(Φ) or κ
+- does not select outcomes
+- does not influence outputs directly
+
+The Vortex is **exploratory only**.
+
+---
+
+## 5. Negative Architecture (What Cannot Exist)
+
+Vectaetos explicitly forbids:
+
+- feedback loops from output to field
+- goal functions
+- reward signals
+- optimization targets
+- decision delegation
+- control channels
+
+If any of the above appears,
+the architecture is considered violated.
+
+---
+
+## 6. Temporal Interpretation
+
+Time is not an axis.
 
 Time is:
-- A layer
-- A deformation
-- A change in field topology
+- a deformation layer
+- an index of coherence change
+- never a scheduler
+- never a clock
 
-This allows:
-- Memory without archives
-- History without linear causality
-- Trajectories without actions
-
----
-
-## Simulation Vortex (Optional, Non-Authoritative)
-
-**Purpose**
-- Explores possible trajectories of Φ
-- Generates candidate transitions
-
-**Critical rule**
-- The vortex never decides
-- The vortex never knows κ
-- The vortex never enforces outcomes
-
-All simulations are **exploratory**, never normative.
+The field persists.
+Only projections vary.
 
 ---
 
-## What This Architecture Is Not
+## 7. Canonical Status
 
-Vectaetos is **not**:
-- AGI
-- An oracle
-- A controller
-- A moral judge
-- An optimizer
-- A reward-based system
+This document describes the **v0.1 Canonical Architecture**.
+
+- Definitions are immutable
+- Future versions may extend, never redefine
+- Any implementation must conform to this structure
 
 ---
 
-## Architectural Invariant
+## Closing Statement
 
-> No component may produce an output with an ontological claim.
+Vectaetos does not solve problems.
 
-All outputs must be conditional:
-- contextual
-- bounded
-- reversible
-- non-authoritative
+It preserves the conditions
+under which understanding remains possible.
 
----
-
-## Closing Note
-
-Vectaetos is an architecture that survives uncertainty
-by refusing to collapse it into control.
-
-Its strength is not in answers,
-but in **not breaking when answers should not exist**.
+Architecture ends where control would begin.
