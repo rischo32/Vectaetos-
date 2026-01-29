@@ -1,241 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>VECTAETOS — Epistemic Field</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <title>Vectaetos — Epistemic Field</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: #000;
-  color: #ddd;
-  font-family: system-ui, sans-serif;
-}
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #e6e6e6;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
-/* --- Overlay ritual layer --- */
-#gate {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #0a0a0a, #000);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      display: block;
+    }
 
-#gate-inner {
-  width: min(90%, 420px);
-  text-align: center;
-  opacity: 0;
-  animation: fadeIn 4s ease forwards;
-}
+    #overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      pointer-events: none;
+    }
 
-#gate-inner p {
-  font-size: 14px;
-  line-height: 1.6;
-  opacity: 0.8;
-}
+    #whisper {
+      opacity: 0.6;
+      font-size: 13px;
+      margin-bottom: 22px;
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
 
-#gate-inner input {
-  width: 100%;
-  margin-top: 20px;
-  padding: 10px;
-  background: transparent;
-  border: 1px solid #333;
-  color: #ccc;
-  outline: none;
-}
-
-#gate-inner button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: transparent;
-  border: 1px solid #555;
-  color: #aaa;
-  cursor: pointer;
-}
-
-#gate-inner button:hover {
-  border-color: #888;
-  color: #fff;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* --- Answer whisper --- */
-#whisper {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 13px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 4s ease;
-}
-</style>
+    #gate {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      opacity: 0.35;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ================= 3GATE ================= -->
+  <div id="gate">⟁ 3GATE ACTIVE ⟁</div>
 
-<div id="gate">
-  <div id="gate-inner">
-    <p>
-      You are approaching a field.<br>
-      Not a system. Not an answer.
-    </p>
-
-    <input id="question" placeholder="What brings you here?" />
-
-    <button onclick="enterField()">Enter</button>
+  <div id="overlay">
+    <div id="whisper">
+      The field is still becoming.<br/>
+      And so are you — whether you know it or not.
+    </div>
   </div>
-</div>
 
-<div id="whisper">
-  The field is still becoming.<br>
-  And so are you — whether you know it or not.
-</div>
+  <!-- THREE.JS (primary + fallback) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script>
+    if (typeof THREE === "undefined") {
+      const s = document.createElement("script");
+      s.src = "https://unpkg.com/three@0.160.0/build/three.min.js";
+      document.head.appendChild(s);
+    }
+  </script>
 
-<!-- ================= THREE.JS ================= -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    // --------------------
+    // BASIC SCENE SETUP
+    // --------------------
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
 
-<script>
-/* =========================
-   SCENE
-========================= */
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
-
-const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 1000);
-camera.position.set(0, 0, 18);
-
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(devicePixelRatio);
-document.body.appendChild(renderer.domElement);
-
-/* =========================
-   CONTROLS — slow observer
-========================= */
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.04;
-controls.enablePan = false;
-controls.rotateSpeed = 0.15;
-controls.zoomSpeed = 0.3;
-
-/* =========================
-   LIGHT
-========================= */
-scene.add(new THREE.AmbientLight(0xffffff, 0.25));
-
-const p = new THREE.PointLight(0xffffff, 0.6);
-p.position.set(10, 10, 10);
-scene.add(p);
-
-/* =========================
-   AXIOMS + RUNES
-========================= */
-
-const AXIOMS = [
-  { key:"INT", c:0xff5555, p:[ 6,0,0] },
-  { key:"LEX", c:0xffc857, p:[ 3,4,3] },
-  { key:"VER", c:0x5ad1ff, p:[ 0,6,0] },
-  { key:"LIB", c:0x5aff9d, p:[-3,4,-3] },
-  { key:"UNI", c:0xff9df0, p:[-6,0,0] },
-  { key:"REL", c:0x9d9dff, p:[-3,-4,3] },
-  { key:"WIS", c:0xffa15a, p:[0,-6,0] },
-  { key:"CRE", c:0x9dfffa, p:[3,-4,-3] }
-];
-
-const runePhases = ["◯","◇","△","⌓"];
-let phaseIndex = 0;
-
-const nodes = [];
-const geom = new THREE.SphereGeometry(0.45, 32, 32);
-
-AXIOMS.forEach(a => {
-  const mat = new THREE.MeshStandardMaterial({
-    color: a.c,
-    emissive: a.c,
-    emissiveIntensity: 0.25
-  });
-  const m = new THREE.Mesh(geom, mat);
-  m.position.set(...a.p);
-  scene.add(m);
-  nodes.push(m);
-});
-
-/* =========================
-   TENSION LINES (colored)
-========================= */
-nodes.forEach((n,i)=>{
-  nodes.forEach((m,j)=>{
-    if(i>=j) return;
-    const g = new THREE.BufferGeometry().setFromPoints([n.position, m.position]);
-    const col = new THREE.Color().lerpColors(
-      new THREE.Color(AXIOMS[i].c),
-      new THREE.Color(AXIOMS[j].c),
-      0.5
+    const camera = new THREE.PerspectiveCamera(
+      55,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
     );
-    const l = new THREE.Line(
-      g,
-      new THREE.LineBasicMaterial({ color: col, opacity:0.35, transparent:true })
-    );
-    scene.add(l);
-  });
-});
+    camera.position.set(0, 0, 12);
 
-/* =========================
-   ANIMATION — field lives
-========================= */
-let t = 0;
-function animate(){
-  requestAnimationFrame(animate);
-  t += 0.002;
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.body.appendChild(renderer.domElement);
 
-  nodes.forEach((n,i)=>{
-    const s = 1 + Math.sin(t+i)*0.04;
-    n.scale.set(s,s,s);
-  });
+    // --------------------
+    // CONTROLS
+    // --------------------
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.minDistance = 6;
+    controls.maxDistance = 30;
 
-  controls.update();
-  renderer.render(scene,camera);
-}
-animate();
+    // --------------------
+    // LIGHTING (MOBILE SAFE)
+    // --------------------
+    scene.add(new THREE.AmbientLight(0xffffff, 0.35));
 
-/* =========================
-   3GATE LOGIC
-========================= */
-function enterField(){
-  document.getElementById("gate").style.opacity = 0;
-  setTimeout(()=>document.getElementById("gate").remove(),2000);
-  setTimeout(()=>document.getElementById("whisper").style.opacity=0.6,2500);
+    const keyLight = new THREE.PointLight(0xffffff, 1.2);
+    keyLight.position.set(6, 6, 6);
+    scene.add(keyLight);
 
-  // runic phase shift
-  setInterval(()=>{
-    phaseIndex = (phaseIndex+1)%runePhases.length;
-  },8000);
-}
+    // --------------------
+    // AXIOMATIC CENTERS
+    // --------------------
+    const axioms = [
+      { key: "INT", color: 0xff7777, pos: [6, 0, 0] },
+      { key: "LEX", color: 0xffd166, pos: [3, 5, 0] },
+      { key: "VER", color: 0x4dd6ff, pos: [-3, 5, 0] },
+      { key: "LIB", color: 0x6ae3a1, pos: [-6, 0, 0] },
+      { key: "REL", color: 0x9b5de5, pos: [-3, -5, 0] },
+      { key: "WIS", color: 0xf94144, pos: [0, -7, 0] },
+      { key: "CRE", color: 0xf15bb5, pos: [3, -5, 0] },
+      { key: "UNI", color: 0xffa600, pos: [0, 0, 6] }
+    ];
 
-/* =========================
-   RESIZE
-========================= */
-addEventListener("resize",()=>{
-  camera.aspect = innerWidth/innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);
-});
-</script>
+    const spheres = [];
+
+    axioms.forEach(a => {
+      const geo = new THREE.SphereGeometry(0.35, 24, 24);
+      const mat = new THREE.MeshStandardMaterial({
+        color: a.color,
+        emissive: a.color,
+        emissiveIntensity: 0.6
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(...a.pos);
+      scene.add(mesh);
+      spheres.push(mesh);
+    });
+
+    // --------------------
+    // RUNIC TENSION LINES
+    // --------------------
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.15
+    });
+
+    for (let i = 0; i < spheres.length; i++) {
+      for (let j = i + 1; j < spheres.length; j++) {
+        const pts = [
+          spheres[i].position,
+          spheres[j].position
+        ];
+        const geo = new THREE.BufferGeometry().setFromPoints(pts);
+        const line = new THREE.Line(geo, lineMat);
+        scene.add(line);
+      }
+    }
+
+    // --------------------
+    // ANIMATION LOOP
+    // --------------------
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // --------------------
+    // RESIZE HANDLER
+    // --------------------
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
 
 </body>
 </html>
