@@ -1,65 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Vectaetos Φ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Vectaetos — Epistemic Field Projection</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
+<style>
     html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-      font-family: system-ui, sans-serif;
-      color: #cfd8ff;
+        margin: 0;
+        padding: 0;
+        background: #050508;
+        color: #cfd3ff;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        overflow: hidden;
     }
 
     #overlay {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 10;
-      max-width: 520px;
-      line-height: 1.4;
-      pointer-events: none;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        max-width: 420px;
+        z-index: 10;
+        background: rgba(10, 10, 20, 0.55);
+        border: 1px solid rgba(120,120,255,0.15);
+        padding: 16px 18px;
+        backdrop-filter: blur(6px);
     }
 
     #overlay h1 {
-      margin: 0 0 8px 0;
-      font-size: 20px;
-      font-weight: 500;
-      letter-spacing: 0.05em;
+        font-size: 18px;
+        margin: 0 0 6px 0;
+        font-weight: 600;
+        letter-spacing: 0.04em;
     }
 
     #overlay p {
-      margin: 0;
-      font-size: 13px;
-      opacity: 0.7;
+        font-size: 13px;
+        line-height: 1.45;
+        margin: 6px 0;
+        color: #aeb4ff;
+    }
+
+    #overlay .hint {
+        font-size: 11px;
+        opacity: 0.65;
+        margin-top: 10px;
     }
 
     canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+        display: block;
     }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div id="overlay">
-    <h1>VECTAETOS Φ</h1>
-    <p>Epistemic field projection · non-interventional · no verdicts</p>
-  </div>
+<div id="overlay">
+    <h1>VECTAETOS</h1>
+    <p>
+        This is not a simulation of agents.<br>
+        This is a live projection of an epistemic field.
+    </p>
+    <p>
+        Meaning emerges from relations,<br>
+        not from commands or goals.
+    </p>
+    <p class="hint">
+        Φ → Σ → Runic Projection<br>
+        Non-interventional · Descriptive only
+    </p>
+</div>
 
-  <!-- TOTO TAM PREDTÝM CHÝBALO -->
-  <canvas id="glcanvas"></canvas>
+<canvas id="field"></canvas>
 
-  <script src="field.js"></script>
+<script>
+/* ================================
+   VECTAETOS — FIELD PROJECTION
+   ================================ */
+
+const canvas = document.getElementById("field");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+/* -------- Field parameters -------- */
+const NODES = 12;
+const nodes = [];
+const links = [];
+
+const BASE_RADIUS = 2.2;
+const LINK_ALPHA = 0.12;
+const DRIFT = 0.08;
+
+/* -------- Initialize field -------- */
+for (let i = 0; i < NODES; i++) {
+    nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * DRIFT,
+        vy: (Math.random() - 0.5) * DRIFT,
+        C: 0.4 + Math.random() * 0.6, // coherence
+        T: 0.1 + Math.random() * 0.4  // tension
+    });
+}
+
+for (let i = 0; i < NODES; i++) {
+    for (let j = i + 1; j < NODES; j++) {
+        links.push({ i, j });
+    }
+}
+
+/* -------- Color mapping -------- */
+function nodeColor(n) {
+    const c = Math.floor(160 + n.C * 80);
+    const t = Math.floor(100 + n.T * 120);
+    return `rgb(${t},${t},${c})`;
+}
+
+/* -------- Main loop -------- */
+function step() {
+    ctx.fillStyle = "rgba(5,5,8,0.25)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // update nodes
+    for (const n of nodes) {
+        n.x += n.vx;
+        n.y += n.vy;
+
+        if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+
+        // slow internal fluctuation
+        n.C += (Math.random() - 0.5) * 0.002;
+        n.T += (Math.random() - 0.5) * 0.002;
+
+        n.C = Math.min(1, Math.max(0, n.C));
+        n.T = Math.min(1, Math.max(0, n.T));
+    }
+
+    // draw links
+    ctx.lineWidth = 1;
+    for (const l of links) {
+        const a = nodes[l.i];
+        const b = nodes[l.j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+
+        if (d < 260) {
+            ctx.strokeStyle = `rgba(120,140,255,${LINK_ALPHA * (1 - d/260)})`;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+        }
+    }
+
+    // draw nodes
+    for (const n of nodes) {
+        ctx.fillStyle = nodeColor(n);
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, BASE_RADIUS + n.C * 1.6, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    requestAnimationFrame(step);
+}
+
+step();
+</script>
+
 </body>
 </html>
