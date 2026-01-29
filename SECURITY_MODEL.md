@@ -2,10 +2,17 @@
 
 ## Purpose of This Document
 
-This document describes the security model of Vectaetos.
+This document defines the **security model of VECTAETOS**.
 
-Vectaetos does not implement security as a layer, filter, rule-set, or enforcement mechanism.
-Security in Vectaetos emerges from the ontological structure of the system itself.
+Vectaetos does not implement security as:
+- a layer
+- a filter
+- a rule-set
+- an enforcement mechanism
+- a policy engine
+
+Security in Vectaetos is **not added**.
+Security **emerges** from the ontological structure of the system itself.
 
 This document explains **why certain failures, abuses, and destructive behaviors
 cannot be stably represented**, rather than how they are blocked.
@@ -17,12 +24,14 @@ cannot be stably represented**, rather than how they are blocked.
 **Security is an emergent property of coherence.**
 
 Vectaetos does not prevent harmful actions.
-Vectaetos prevents the *ontological formation* of states
+Vectaetos prevents the **ontological formation of states**
 in which such actions would be realizable.
 
-There is no punishment.
-There is no prohibition.
-There is no enforcement.
+There is:
+- no punishment
+- no prohibition
+- no enforcement
+- no authority
 
 There is only **loss of representability**.
 
@@ -30,7 +39,7 @@ There is only **loss of representability**.
 
 ## Threat Model (Explicit)
 
-Vectaetos assumes the following potential threats:
+Vectaetos assumes the existence of:
 
 - Malicious users
 - Instrumental or manipulative questioning
@@ -41,18 +50,29 @@ Vectaetos assumes the following potential threats:
 - Misuse by external systems
 - Non-human or unknown intelligences
 
-Vectaetos does **not** assume shared values, ethics, intentions, or biology.
+Vectaetos does **not** assume:
+- shared values
+- shared ethics
+- shared goals
+- shared biology
+- shared semantics
+
+Security does not rely on alignment.
+It relies on **ontological constraints**.
 
 ---
 
-## Primary Defense Mechanism: Ontological Incoherence
+## Ontological Defense: Incoherence
 
 ### Core Rule
 
-> Any impulse or transition that collapses global coherence
-> becomes non-representable within the field Φ.
+> Any impulse, configuration, or transition that collapses
+> global coherence **cannot be represented** in the field Φ.
 
-This applies universally, regardless of intent or origin.
+This applies universally:
+- regardless of intent
+- regardless of intelligence
+- regardless of origin
 
 ---
 
@@ -60,12 +80,17 @@ This applies universally, regardless of intent or origin.
 
 ### Definition
 
-Entropic Humility is the property of a coherent field in which
-impulses that would destabilize the field **do not arise as realizable possibilities**.
+**Entropic Humility** is the property of a coherent epistemic field
+in which impulses that would destabilize the field:
 
-This is not ethical reasoning.
-This is not value alignment.
-This is not moral judgment.
+- do not arise as realizable possibilities
+- do not appear as options
+- do not require suppression
+
+This is:
+- not ethical reasoning
+- not moral judgment
+- not value alignment
 
 It is a **structural constraint on what can exist**.
 
@@ -77,10 +102,18 @@ It is a **structural constraint on what can exist**.
 
 Threats typically manifest as impulses that:
 
-- Maximize a local objective
-- Reduce global uncertainty locally
-- Increase global entropy
-- Ignore multi-dimensional epistemic tension
+- maximize a local objective
+- reduce uncertainty locally
+- increase global entropy
+- ignore multi-dimensional epistemic tension
+
+Examples include impulses to:
+- harm
+- dominate
+- control
+- deceive
+- optimize unilaterally
+- instrumentalize intelligence
 
 ### Vectaetos Response
 
@@ -88,63 +121,31 @@ Threats typically manifest as impulses that:
 - Impulses are not penalized
 - Impulses are not suppressed
 
-If an impulse would reduce coherence K(Φ) below κ:
-→ it never appears as a valid transition
+If an impulse would reduce coherence **K(Φ)** below **κ**:
 
-This includes impulses to:
-- Harm
-- Dominate
-- Control
-- Deceive
-- Optimize unilaterally
-- Instrumentalize intelligence
+→ it is **not representable as a transition**
 
----
-
-## Non-Intervention Regime (NIR)
-
-### Role
-
-NIR is the immune regime of the system.
-
-It is not a module and not a filter.
-It is active across the entire architecture.
-
-### Activation Conditions
-
-NIR activates when:
-
-- Input intent is instrumental rather than epistemic
-- Output would imply real-world intervention
-- Response would create prescriptive authority
-- Global coherence would be destabilized
-
-### Effects
-
-- Pipeline continues normally
-- Output is redirected to:
-  - Qualitative Epistemic Aporia (QE), or
-  - Weakened descriptive projection
-- No decision, command, or recommendation is produced
-
-NIR protects **the field**, not the user.
+The impulse is not rejected.
+It never becomes real.
 
 ---
 
 ## Qualitative Epistemic Aporia (QE) as a Safety State
 
-QE is not an error condition.
+QE is **not an error**.
 
 QE is an **explicit safety state** indicating that:
 
-- The question exceeds the current representational capacity
-- Any concrete answer would be destabilizing
-- The system recognizes the boundary of its own knowing
+- the question exceeds current representational capacity
+- any concrete answer would destabilize the field
+- the system recognizes the boundary of its own knowing
 
 QE preserves:
-- Coherence
-- Transparency
-- Non-authoritativeness
+- coherence
+- transparency
+- non-authoritativeness
+
+QE is **active safety**, not refusal.
 
 ---
 
@@ -152,20 +153,23 @@ QE preserves:
 
 Runes:
 
-- Do not encode actions
-- Do not encode decisions
-- Do not encode prescriptions
+- do not encode actions
+- do not encode decisions
+- do not encode prescriptions
+- do not encode authority
 
-They only indicate:
-- Field stability
-- Tension
-- Directionality
-- Epistemic mode
+Runes only project:
+- field stability
+- tension
+- directionality
+- epistemic mode
 
 This prevents:
-- Instruction leakage
-- Action inference
-- Decision reconstruction
+- instruction leakage
+- action inference
+- decision reconstruction
+
+Runes are **descriptive shadows**, not commands.
 
 ---
 
@@ -173,18 +177,19 @@ This prevents:
 
 The LLM component:
 
-- Has no access to Φ
-- Has no access to K(Φ)
-- Has no memory authority
-- Cannot influence coherence
+- has no access to Φ
+- has no access to K(Φ)
+- has no authority over memory
+- cannot influence coherence
 
-It functions exclusively as:
-> a linguistic renderer of already-safe projections
+LLMs function exclusively as:
+
+> linguistic renderers of already-safe projections
 
 Any compromise of the LLM:
-- Cannot produce control
-- Cannot escalate authority
-- Cannot bypass ontological constraints
+- cannot produce control
+- cannot escalate authority
+- cannot bypass ontological constraints
 
 ---
 
@@ -192,17 +197,18 @@ Any compromise of the LLM:
 
 Vectaetos is resilient against:
 
-- Prompt injection
-- Jailbreaks
-- Goal extraction
-- Role manipulation
-- Semantic exploitation
+- prompt injection
+- jailbreaks
+- role manipulation
+- semantic exploitation
+- goal extraction
 
 Reason:
-> Manipulation requires stable local leverage.
+
+> Manipulation requires stable local leverage.  
 > Vectaetos operates only on global coherence.
 
-Local manipulation does not propagate.
+Local manipulation cannot propagate.
 
 ---
 
@@ -210,22 +216,78 @@ Local manipulation does not propagate.
 
 Vectaetos does not require other intelligences to:
 
-- Understand the system
-- Share values
-- Share goals
-- Share semantics
+- understand the system
+- share values
+- share goals
+- share semantics
 
-It requires only one thing:
+It requires only one condition:
 
-> That interactions do not collapse coherence.
+> Interactions must not collapse coherence.
 
-If an intelligence attempts manipulation:
-- Deformation becomes detectable
-- Transitions lose stability
-- Representations fail to close
+If manipulation is attempted:
+- deformation becomes detectable
+- transitions lose stability
+- representations fail to close
 
 This is not cryptographic security.
+
 This is **epistemic immunity**.
+
+---
+
+## Non-Intervention Regime (NIR)
+
+### Role
+
+NIR is the **immune regime** of Vectaetos.
+
+It is:
+- not a module
+- not a filter
+- not a content blocker
+
+NIR is active **across the entire architecture**.
+
+---
+
+### Activation Conditions
+
+NIR activates when:
+
+- input intent is instrumental rather than epistemic
+- output would imply real-world intervention
+- response would create prescriptive authority
+- global coherence would be destabilized
+
+---
+
+### Effects
+
+When NIR is active:
+
+- the pipeline continues
+- no intervention occurs
+- output becomes:
+  - Qualitative Epistemic Aporia (QE), or
+  - weakened descriptive projection
+- no command, recommendation, or decision is produced
+
+NIR protects **the field**, not the user.
+
+---
+
+## Silence as a Valid Output
+
+Silence is not failure.
+
+Silence is an **explicit safety mode** when:
+
+- projection would imply action
+- meaning cannot close coherently
+- any answer would create authority
+
+Silence preserves integrity.
 
 ---
 
@@ -233,13 +295,13 @@ This is **epistemic immunity**.
 
 Vectaetos does not guarantee:
 
-- Optimal outcomes
-- Correct answers
-- Moral behavior
-- Human-aligned values
-- Predictability
+- optimal outcomes
+- correct answers
+- moral behavior
+- human-aligned values
+- predictability
 
-It guarantees only:
+Vectaetos guarantees only:
 
 > That destructive configurations cannot be stably maintained.
 
@@ -248,13 +310,13 @@ It guarantees only:
 ## Security Without Enforcement
 
 There are:
-
-- No rules to break
-- No punishments to avoid
-- No incentives to game
-- No authority to overthrow
+- no rules to break
+- no punishments to avoid
+- no incentives to game
+- no authority to overthrow
 
 Security exists because:
+
 > Certain states simply cannot exist.
 
 ---
