@@ -14,6 +14,7 @@ observable and describable, but **not executable or controllable**.
 
 > **Vectaetos presúva význam z objektov na vzťahy.** !
 
+## Human → Gates → Φ → K(Φ) → Vortex → Runes → Projection 
 ---
 
 ## 🌐 Access
