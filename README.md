@@ -1,6 +1,13 @@
 # VECTAETOS ©
 **Public Projection of an Epistemic Field**
 
+Vectaetos © is not software.
+It is an epistemic field formalism with descriptive projections.
+The repository contains representations, not implementations.
+
+Vectaetos © is published as software for archival and citation purposes only.
+Ontologically, it is not a software system, not an agent, and not an executable intelligence.
+
 Vectaetos is not a product.  
 Not an agent.  
 Not an optimizer.  
