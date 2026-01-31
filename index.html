@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Vectaetos — Epistemic Field</title>
+<title>Vectaetos — Epistemic Tension Field</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
@@ -20,26 +20,32 @@ canvas {
   display: block;
 }
 
-#hint {
+#ask {
   position: fixed;
-  bottom: 14px;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 11px;
-  color: #aaa;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #888;
   opacity: 0.6;
-  pointer-events: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+#ask:hover {
+  opacity: 1;
 }
 </style>
 </head>
 
 <body>
-<div id="hint">The field exists. You may disturb it.</div>
+<div id="ask">ask to the field</div>
 
 <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 <script>
 /* ================================
-   BASIC SCENE SETUP
+   SCENE
    ================================ */
 
 const scene = new THREE.Scene();
@@ -59,25 +65,25 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 document.body.appendChild(renderer.domElement);
 
 /* ================================
-   LIGHT
+   LIGHT (MINIMAL)
    ================================ */
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+scene.add(new THREE.AmbientLight(0xffffff, 0.25));
 
-const keyLight = new THREE.PointLight(0xffffff, 1.1, 50);
-keyLight.position.set(10, 10, 10);
-scene.add(keyLight);
+const pointLight = new THREE.PointLight(0xffffff, 0.6, 50);
+pointLight.position.set(8, 8, 8);
+scene.add(pointLight);
 
 /* ================================
-   FIELD NODES (AXIOMS)
+   NODES — NEHMOTNÉ ŤAŽISKÁ
    ================================ */
 
 const nodes = [];
 const basePositions = [];
 
-const geometry = new THREE.SphereGeometry(0.55, 24, 24);
+const nodeGeometry = new THREE.RingGeometry(0.25, 0.38, 40);
 
-const axioms = [
+const positions = [
   [ 6,  0,  0],
   [ 3,  5,  1],
   [-3,  5, -1],
@@ -88,14 +94,17 @@ const axioms = [
   [ 0,  0,  6]
 ];
 
-axioms.forEach((pos, i) => {
-  const material = new THREE.MeshStandardMaterial({
-    color: new THREE.Color().setHSL(i / axioms.length, 0.7, 0.55),
-    emissive: 0x000000
+positions.forEach((p, i) => {
+  const material = new THREE.MeshBasicMaterial({
+    color: new THREE.Color().setHSL(i / positions.length, 0.55, 0.6),
+    transparent: true,
+    opacity: 0.55,
+    side: THREE.DoubleSide
   });
 
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(pos[0], pos[1], pos[2]);
+  const mesh = new THREE.Mesh(nodeGeometry, material);
+  mesh.position.set(p[0], p[1], p[2]);
+  mesh.rotation.x = Math.PI / 2;
 
   scene.add(mesh);
   nodes.push(mesh);
@@ -103,9 +112,35 @@ axioms.forEach((pos, i) => {
 
   mesh.userData = {
     phase: Math.random() * Math.PI * 2,
-    drift: 0.12 + Math.random() * 0.08
+    drift: 0.1 + Math.random() * 0.06
   };
 });
+
+/* ================================
+   TENSION LINES — VZŤAHY
+   ================================ */
+
+const lines = [];
+
+for (let i = 0; i < nodes.length; i++) {
+  for (let j = i + 1; j < nodes.length; j++) {
+    const material = new THREE.LineBasicMaterial({
+      color: 0x444466,
+      transparent: true,
+      opacity: 0.25
+    });
+
+    const geometry = new THREE.BufferGeometry().setFromPoints([
+      nodes[i].position,
+      nodes[j].position
+    ]);
+
+    const line = new THREE.Line(geometry, material);
+    scene.add(line);
+
+    lines.push({ line, i, j });
+  }
+}
 
 /* ================================
    TIME & IMPULSE
@@ -114,13 +149,12 @@ axioms.forEach((pos, i) => {
 let t = 0;
 let impulse = 0;
 
-/* ================================
-   INTERACTION
-   ================================ */
-
-window.addEventListener("pointerdown", () => {
+function disturb() {
   impulse = 1.2;
-});
+}
+
+window.addEventListener("pointerdown", disturb);
+document.getElementById("ask").addEventListener("click", disturb);
 
 /* ================================
    ANIMATION LOOP
@@ -130,8 +164,9 @@ function animate() {
   requestAnimationFrame(animate);
 
   t += 0.003;
-  impulse *= 0.96; // return to equilibrium
+  impulse *= 0.94;
 
+  // --- nodes: vnútorný dych ---
   nodes.forEach((node, i) => {
     const base = basePositions[i];
     const d = node.userData.drift + impulse * 0.35;
@@ -140,8 +175,23 @@ function animate() {
     node.position.x = base.x + Math.sin(t + p) * d;
     node.position.y = base.y + Math.cos(t * 0.9 + p) * d;
     node.position.z = base.z + Math.sin(t * 0.7 + p) * d;
+
+    node.material.opacity =
+      0.4 +
+      Math.sin(t * 1.4 + p) * 0.15 +
+      impulse * 0.25;
   });
 
+  // --- tension lines ---
+  lines.forEach(obj => {
+    const a = nodes[obj.i].position;
+    const b = nodes[obj.j].position;
+
+    obj.line.geometry.setFromPoints([a, b]);
+    obj.line.material.opacity = 0.15 + impulse * 0.35;
+  });
+
+  // --- camera ---
   camera.position.x = Math.sin(t * 0.4) * 6;
   camera.position.y = Math.cos(t * 0.3) * 3;
   camera.lookAt(0, 0, 0);
