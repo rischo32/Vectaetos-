@@ -7,120 +7,61 @@
 
 <style>
 :root {
-  --bg: #000;
-  --fg: #eaeaea;
-  --border: #333;
-  --font: system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
+  --bg:#000;
+  --fg:#eaeaea;
+  --border:#333;
+  --font:system-ui,-apple-system,BlinkMacSystemFont,
+         "Segoe UI",Roboto,Ubuntu,Arial,sans-serif;
 }
-
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font);
-  overflow: hidden;
+*{box-sizing:border-box}
+html,body{
+  margin:0;padding:0;
+  width:100%;height:100%;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font);
+  overflow:hidden;
 }
-
-canvas {
-  position: fixed;
-  inset: 0;
-  display: block;
-  z-index: 0;
-}
+canvas{position:fixed;inset:0;z-index:0}
 
 /* UI */
-
-.ui {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
+.ui{position:fixed;inset:0;pointer-events:none;z-index:2}
+.top{
+  position:absolute;top:1rem;left:50%;
+  transform:translateX(-50%);
+  font-size:.7rem;letter-spacing:.18em;opacity:.55
 }
-
-.top {
-  position: absolute;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  opacity: 0.55;
+.bottom{
+  position:absolute;bottom:1.6rem;left:50%;
+  transform:translateX(-50%);
+  text-align:center;font-size:.7rem;line-height:1.6;opacity:.75
 }
-
-.bottom {
-  position: absolute;
-  bottom: 1.6rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  font-size: 0.7rem;
-  line-height: 1.6;
-  opacity: 0.75;
+.mode{margin-top:.4rem;font-size:.6rem;opacity:.5}
+.cta{
+  pointer-events:auto;margin-top:.8rem;
+  padding:.4rem 1.1rem;border:1px solid var(--border);
+  background:transparent;color:var(--fg);
+  font-size:.65rem;letter-spacing:.12em;cursor:pointer
 }
-
-.mode {
-  margin-top: 0.4rem;
-  font-size: 0.6rem;
-  opacity: 0.5;
-}
-
-.cta {
-  pointer-events: auto;
-  margin-top: 0.8rem;
-  padding: 0.4rem 1.1rem;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--fg);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  cursor: pointer;
-}
-
-.cta:hover {
-  background: #111;
-}
+.cta:hover{background:#111}
 
 /* Impulse */
-
-.impulse {
-  position: absolute;
-  bottom: 5.2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  max-width: 520px;
-  pointer-events: auto;
-  display: none;
+.impulse{
+  position:absolute;bottom:5.2rem;left:50%;
+  transform:translateX(-50%);
+  width:80%;max-width:520px;
+  pointer-events:auto;display:none
 }
-
-.impulse textarea {
-  width: 100%;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--fg);
-  padding: 0.7rem;
-  resize: none;
-  font-size: 0.8rem;
-  line-height: 1.6;
+.impulse textarea{
+  width:100%;background:transparent;
+  border:1px solid var(--border);color:var(--fg);
+  padding:.7rem;resize:none;font-size:.8rem;line-height:1.6
 }
+.impulse textarea:focus{outline:none;border-color:#777}
 
-.impulse textarea:focus {
-  outline: none;
-  border-color: #777;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0.4rem;
-  right: 0.6rem;
-  font-size: 0.55rem;
-  opacity: 0.35;
+.footer{
+  position:absolute;bottom:.4rem;right:.6rem;
+  font-size:.55rem;opacity:.35
 }
 </style>
 </head>
@@ -142,9 +83,7 @@ canvas {
       Tento priestor neponúka odpovede.<br>
       Ukazuje dôsledky otázok.
     </div>
-
     <button class="cta" id="supportBtn">Podporiť pole</button>
-
     <div class="mode" id="modeInfo">MODE: OBSERVE</div>
   </div>
 
@@ -155,118 +94,114 @@ canvas {
 /* =========================================================
    FIELD MODE (PAYWALL AS STATE)
    ========================================================= */
-
 let FIELD_MODE = localStorage.getItem("vectaetos_mode") || "OBSERVE";
 
 const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
 
-function resize() {
+function resize(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-window.addEventListener("resize", resize);
+window.addEventListener("resize",resize);
 resize();
 
 const impulseBox = document.getElementById("impulseBox");
-const modeInfo = document.getElementById("modeInfo");
+const modeInfo   = document.getElementById("modeInfo");
 const supportBtn = document.getElementById("supportBtn");
 
-function updateModeUI() {
+function updateModeUI(){
   modeInfo.textContent = "MODE: " + FIELD_MODE;
-  if (FIELD_MODE === "IMPULSE") {
-    impulseBox.style.display = "block";
-    supportBtn.style.display = "none";
-  } else {
-    impulseBox.style.display = "none";
-    supportBtn.style.display = "inline-block";
-  }
+  impulseBox.style.display = FIELD_MODE==="IMPULSE" ? "block":"none";
+  supportBtn.style.display = FIELD_MODE==="IMPULSE" ? "none":"inline-block";
 }
 updateModeUI();
 
-supportBtn.onclick = () => {
-  FIELD_MODE = "IMPULSE";
-  localStorage.setItem("vectaetos_mode", "IMPULSE");
+supportBtn.onclick = ()=>{
+  FIELD_MODE="IMPULSE";
+  localStorage.setItem("vectaetos_mode","IMPULSE");
   updateModeUI();
 };
 
 /* =========================================================
    AXIOMATIC ORIENTATIONS Σ₁…Σ₈
+   (with basal tension = field exists)
    ========================================================= */
-
-const AXIOMS = [
-  { id:"INT", angle:0, tension:0 },
-  { id:"LEX", angle:Math.PI/4, tension:0 },
-  { id:"VER", angle:Math.PI/2, tension:0 },
-  { id:"LIB", angle:3*Math.PI/4, tension:0 },
-  { id:"UNI", angle:Math.PI, tension:0 },
-  { id:"REL", angle:5*Math.PI/4, tension:0 },
-  { id:"WIS", angle:3*Math.PI/2, tension:0 },
-  { id:"CRE", angle:7*Math.PI/4, tension:0 }
+const AXIOMS=[
+  {id:"INT",angle:0,tension:.08},
+  {id:"LEX",angle:Math.PI/4,tension:.06},
+  {id:"VER",angle:Math.PI/2,tension:.07},
+  {id:"LIB",angle:3*Math.PI/4,tension:.05},
+  {id:"UNI",angle:Math.PI,tension:.06},
+  {id:"REL",angle:5*Math.PI/4,tension:.07},
+  {id:"WIS",angle:3*Math.PI/2,tension:.05},
+  {id:"CRE",angle:7*Math.PI/4,tension:.06}
 ];
 
 /* =========================================================
    IMPULSE → TENSION
    ========================================================= */
-
-function generateImpulse(text) {
-  const len = text.length;
-  const entropy = new Set(text).size / Math.max(1, len);
-  return {
-    magnitude: Math.min(1, len / 120),
-    direction: (entropy * Math.PI * 2) % (Math.PI * 2)
+function generateImpulse(text){
+  const len=text.length;
+  const entropy=new Set(text).size/Math.max(1,len);
+  return{
+    magnitude:Math.min(1,len/120),
+    direction:(entropy*Math.PI*2)%(Math.PI*2)
   };
 }
-
-function applyImpulse(impulse) {
-  AXIOMS.forEach(a => {
-    const delta = Math.abs(
+function applyImpulse(imp){
+  AXIOMS.forEach(a=>{
+    const delta=Math.abs(
       Math.atan2(
-        Math.sin(impulse.direction - a.angle),
-        Math.cos(impulse.direction - a.angle)
+        Math.sin(imp.direction-a.angle),
+        Math.cos(imp.direction-a.angle)
       )
     );
-    a.tension = impulse.magnitude * Math.max(0, 1 - delta / Math.PI);
+    a.tension += imp.magnitude*Math.max(0,1-delta/Math.PI);
+    a.tension=Math.min(a.tension,.6);
   });
 }
 
 /* =========================================================
-   RENDER: RELATIONAL TENSION FIELD
+   RENDER LOOP — RELATIONAL TENSION FIELD
    ========================================================= */
-
-function drawField() {
+function drawField(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
-  const R = Math.min(cx,cy) * 0.55;
+  const cx=canvas.width/2;
+  const cy=canvas.height/2;
+  const R=Math.min(cx,cy)*0.55;
 
-  for (let i=0;i<AXIOMS.length;i++) {
-    for (let j=i+1;j<AXIOMS.length;j++) {
+  for(let i=0;i<AXIOMS.length;i++){
+    for(let j=i+1;j<AXIOMS.length;j++){
+      const a=AXIOMS[i], b=AXIOMS[j];
+      const t=(a.tension+b.tension)/2;
+      if(t<0.02) continue;
 
-      const a = AXIOMS[i];
-      const b = AXIOMS[j];
-      const t = (a.tension + b.tension) / 2;
-      if (t < 0.01) continue;
+      const ax=cx+Math.cos(a.angle)*R;
+      const ay=cy+Math.sin(a.angle)*R;
+      const bx=cx+Math.cos(b.angle)*R;
+      const by=cy+Math.sin(b.angle)*R;
 
-      const ax = cx + Math.cos(a.angle) * R;
-      const ay = cy + Math.sin(a.angle) * R;
-      const bx = cx + Math.cos(b.angle) * R;
-      const by = cy + Math.sin(b.angle) * R;
-
-      const mx = (ax + bx)/2 + Math.sin(t*6) * R * 0.15 * t;
-      const my = (ay + by)/2 - Math.cos(t*6) * R * 0.15 * t;
+      const mx=(ax+bx)/2 + Math.sin(t*6)*R*0.18*t;
+      const my=(ay+by)/2 - Math.cos(t*6)*R*0.18*t;
 
       ctx.beginPath();
       ctx.moveTo(ax,ay);
       ctx.quadraticCurveTo(mx,my,bx,by);
-      ctx.strokeStyle = `rgba(255,255,255,${0.12 + t*0.6})`;
-      ctx.lineWidth = 0.5 + t*2;
+      ctx.strokeStyle=`rgba(255,255,255,${0.12+t*0.65})`;
+      ctx.lineWidth=0.5+t*2;
       ctx.stroke();
     }
   }
 
-  AXIOMS.forEach(a => a.tension *= 0.985);
+  /* Entropic return + autonomous drift */
+  AXIOMS.forEach(a=>{
+    a.tension*=0.985;
+    a.tension+=(Math.random()-.5)*0.002;
+    a.tension=Math.max(.02,Math.min(.12,a.tension));
+  });
+
   requestAnimationFrame(drawField);
 }
 drawField();
@@ -274,13 +209,12 @@ drawField();
 /* =========================================================
    INPUT (IMPULSE ONLY)
    ========================================================= */
-
-const impulseInput = document.getElementById("impulseInput");
-impulseInput.addEventListener("keydown", e => {
-  if (e.key === "Enter" && e.ctrlKey && FIELD_MODE === "IMPULSE") {
-    const text = impulseInput.value.trim();
-    impulseInput.value = "";
-    if (text.length) applyImpulse(generateImpulse(text));
+const impulseInput=document.getElementById("impulseInput");
+impulseInput.addEventListener("keydown",e=>{
+  if(e.key==="Enter" && e.ctrlKey && FIELD_MODE==="IMPULSE"){
+    const text=impulseInput.value.trim();
+    impulseInput.value="";
+    if(text) applyImpulse(generateImpulse(text));
   }
 });
 </script>
