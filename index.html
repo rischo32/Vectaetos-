@@ -1,276 +1,289 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-  <meta charset="UTF-8" />
-  <title>VECTAETOS — Epistemic Field</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>VECTAETOS — Epistemic Field</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    /* =========================================================
-       VECTAETOS — FIELD CORE
-       One page. One field. One tension.
-       ========================================================= */
+<style>
+:root {
+  --bg: #000;
+  --fg: #eaeaea;
+  --border: #333;
+  --font: system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
+}
 
-    :root {
-      --bg: #000;
-      --fg: #eaeaea;
-      --muted: #9a9a9a;
-      --border: #333;
-      --accent: #eaeaea;
-      --font: system-ui, -apple-system, BlinkMacSystemFont,
-              "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
-    }
+* { box-sizing: border-box; }
 
-    * {
-      box-sizing: border-box;
-    }
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  overflow: hidden;
+}
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--font);
-      overflow: hidden;
-    }
+canvas {
+  position: fixed;
+  inset: 0;
+  display: block;
+  z-index: 0;
+}
 
-    canvas {
-      position: fixed;
-      inset: 0;
-      display: block;
-      z-index: 0;
-    }
+/* UI */
 
-    /* ---------- UI LAYER ---------- */
+.ui {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
 
-    .ui {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
-    }
+.top {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  opacity: 0.55;
+}
 
-    .top {
-      position: absolute;
-      top: 1.2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      opacity: 0.55;
-    }
+.bottom {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  opacity: 0.75;
+}
 
-    .bottom {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      font-size: 0.75rem;
-      opacity: 0.7;
-      line-height: 1.6;
-    }
+.mode {
+  margin-top: 0.4rem;
+  font-size: 0.6rem;
+  opacity: 0.5;
+}
 
-    .mode {
-      margin-top: 0.5rem;
-      font-size: 0.65rem;
-      opacity: 0.5;
-    }
+.cta {
+  pointer-events: auto;
+  margin-top: 0.8rem;
+  padding: 0.4rem 1.1rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
 
-    .cta {
-      pointer-events: auto;
-      margin-top: 1rem;
-      padding: 0.45rem 1.1rem;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--fg);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-    }
+.cta:hover {
+  background: #111;
+}
 
-    .cta:hover {
-      background: #111;
-    }
+/* Impulse */
 
-    /* ---------- IMPULSE INPUT ---------- */
+.impulse {
+  position: absolute;
+  bottom: 5.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 520px;
+  pointer-events: auto;
+  display: none;
+}
 
-    .impulse {
-      position: absolute;
-      bottom: 5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      max-width: 520px;
-      pointer-events: auto;
-      display: none;
-    }
+.impulse textarea {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 0.7rem;
+  resize: none;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
 
-    .impulse textarea {
-      width: 100%;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--fg);
-      padding: 0.7rem;
-      resize: none;
-      font-size: 0.8rem;
-      line-height: 1.6;
-    }
+.impulse textarea:focus {
+  outline: none;
+  border-color: #777;
+}
 
-    .impulse textarea:focus {
-      outline: none;
-      border-color: #777;
-    }
-
-    /* ---------- FOOTER ---------- */
-
-    .footer {
-      position: absolute;
-      bottom: 0.5rem;
-      right: 0.8rem;
-      font-size: 0.6rem;
-      opacity: 0.35;
-    }
-
-  </style>
+.footer {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.6rem;
+  font-size: 0.55rem;
+  opacity: 0.35;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =======================================================
-       FIELD CANVAS (RELATIONAL SPACE)
-       ======================================================= -->
-  <canvas id="field"></canvas>
+<canvas id="field"></canvas>
 
-  <!-- =======================================================
-       UI LAYER (NON-INTRUSIVE)
-       ======================================================= -->
-  <div class="ui">
+<div class="ui">
+  <div class="top">VECTAETOS © — epistemic field</div>
 
-    <div class="top">
-      VECTAETOS © — epistemic field
-    </div>
-
-    <div class="impulse" id="impulseBox">
-      <textarea id="impulseInput" rows="3"
-        placeholder="Formuluj impulz. Odpoveď nebude textová."></textarea>
-    </div>
-
-    <div class="bottom">
-      <div>
-        Tento priestor neponúka odpovede.<br/>
-        Ukazuje dôsledky otázok.
-      </div>
-
-      <button class="cta" id="supportBtn">
-        Podporiť pole
-      </button>
-
-      <div class="mode" id="modeInfo">
-        MODE: OBSERVE
-      </div>
-    </div>
-
-    <div class="footer">
-      © 2026 Richard Fonfára
-    </div>
-
+  <div class="impulse" id="impulseBox">
+    <textarea id="impulseInput" rows="3"
+      placeholder="Formuluj impulz. Odpoveď nebude textová. (Ctrl + Enter)"></textarea>
   </div>
 
-  <!-- =======================================================
-       FIELD LOGIC
-       ======================================================= -->
-  <script>
-    /* =======================================================
-       FIELD STATE
-       ======================================================= */
+  <div class="bottom">
+    <div>
+      Tento priestor neponúka odpovede.<br>
+      Ukazuje dôsledky otázok.
+    </div>
 
-    let FIELD_MODE = localStorage.getItem("vectaetos_mode") || "OBSERVE";
+    <button class="cta" id="supportBtn">Podporiť pole</button>
 
-    const canvas = document.getElementById("field");
-    const ctx = canvas.getContext("2d");
+    <div class="mode" id="modeInfo">MODE: OBSERVE</div>
+  </div>
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+  <div class="footer">© 2026 Richard Fonfára</div>
+</div>
+
+<script>
+/* =========================================================
+   FIELD MODE (PAYWALL AS STATE)
+   ========================================================= */
+
+let FIELD_MODE = localStorage.getItem("vectaetos_mode") || "OBSERVE";
+
+const canvas = document.getElementById("field");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+const impulseBox = document.getElementById("impulseBox");
+const modeInfo = document.getElementById("modeInfo");
+const supportBtn = document.getElementById("supportBtn");
+
+function updateModeUI() {
+  modeInfo.textContent = "MODE: " + FIELD_MODE;
+  if (FIELD_MODE === "IMPULSE") {
+    impulseBox.style.display = "block";
+    supportBtn.style.display = "none";
+  } else {
+    impulseBox.style.display = "none";
+    supportBtn.style.display = "inline-block";
+  }
+}
+updateModeUI();
+
+supportBtn.onclick = () => {
+  FIELD_MODE = "IMPULSE";
+  localStorage.setItem("vectaetos_mode", "IMPULSE");
+  updateModeUI();
+};
+
+/* =========================================================
+   AXIOMATIC ORIENTATIONS Σ₁…Σ₈
+   ========================================================= */
+
+const AXIOMS = [
+  { id:"INT", angle:0, tension:0 },
+  { id:"LEX", angle:Math.PI/4, tension:0 },
+  { id:"VER", angle:Math.PI/2, tension:0 },
+  { id:"LIB", angle:3*Math.PI/4, tension:0 },
+  { id:"UNI", angle:Math.PI, tension:0 },
+  { id:"REL", angle:5*Math.PI/4, tension:0 },
+  { id:"WIS", angle:3*Math.PI/2, tension:0 },
+  { id:"CRE", angle:7*Math.PI/4, tension:0 }
+];
+
+/* =========================================================
+   IMPULSE → TENSION
+   ========================================================= */
+
+function generateImpulse(text) {
+  const len = text.length;
+  const entropy = new Set(text).size / Math.max(1, len);
+  return {
+    magnitude: Math.min(1, len / 120),
+    direction: (entropy * Math.PI * 2) % (Math.PI * 2)
+  };
+}
+
+function applyImpulse(impulse) {
+  AXIOMS.forEach(a => {
+    const delta = Math.abs(
+      Math.atan2(
+        Math.sin(impulse.direction - a.angle),
+        Math.cos(impulse.direction - a.angle)
+      )
+    );
+    a.tension = impulse.magnitude * Math.max(0, 1 - delta / Math.PI);
+  });
+}
+
+/* =========================================================
+   RENDER: RELATIONAL TENSION FIELD
+   ========================================================= */
+
+function drawField() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  const R = Math.min(cx,cy) * 0.55;
+
+  for (let i=0;i<AXIOMS.length;i++) {
+    for (let j=i+1;j<AXIOMS.length;j++) {
+
+      const a = AXIOMS[i];
+      const b = AXIOMS[j];
+      const t = (a.tension + b.tension) / 2;
+      if (t < 0.01) continue;
+
+      const ax = cx + Math.cos(a.angle) * R;
+      const ay = cy + Math.sin(a.angle) * R;
+      const bx = cx + Math.cos(b.angle) * R;
+      const by = cy + Math.sin(b.angle) * R;
+
+      const mx = (ax + bx)/2 + Math.sin(t*6) * R * 0.15 * t;
+      const my = (ay + by)/2 - Math.cos(t*6) * R * 0.15 * t;
+
+      ctx.beginPath();
+      ctx.moveTo(ax,ay);
+      ctx.quadraticCurveTo(mx,my,bx,by);
+      ctx.strokeStyle = `rgba(255,255,255,${0.12 + t*0.6})`;
+      ctx.lineWidth = 0.5 + t*2;
+      ctx.stroke();
     }
-    window.addEventListener("resize", resize);
-    resize();
+  }
 
-    const impulseBox = document.getElementById("impulseBox");
-    const modeInfo   = document.getElementById("modeInfo");
-    const supportBtn = document.getElementById("supportBtn");
+  AXIOMS.forEach(a => a.tension *= 0.985);
+  requestAnimationFrame(drawField);
+}
+drawField();
 
-    function updateModeUI() {
-      modeInfo.textContent = "MODE: " + FIELD_MODE;
+/* =========================================================
+   INPUT (IMPULSE ONLY)
+   ========================================================= */
 
-      if (FIELD_MODE === "IMPULSE") {
-        impulseBox.style.display = "block";
-        supportBtn.style.display = "none";
-      } else {
-        impulseBox.style.display = "none";
-        supportBtn.style.display = "inline-block";
-      }
-    }
-
-    updateModeUI();
-
-    supportBtn.addEventListener("click", () => {
-      FIELD_MODE = "IMPULSE";
-      localStorage.setItem("vectaetos_mode", "IMPULSE");
-      updateModeUI();
-    });
-
-    /* =======================================================
-       PLACEHOLDER FIELD RENDER
-       (TEMPORARY — WILL BE REPLACED)
-       ======================================================= */
-
-    let t = 0;
-
-    function drawPlaceholderField() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ctx.strokeStyle = "rgba(255,255,255,0.08)";
-      ctx.lineWidth = 1;
-
-      const count = FIELD_MODE === "IMPULSE" ? 120 : 60;
-
-      for (let i = 0; i < count; i++) {
-        const x1 = Math.sin(t * 0.001 + i) * canvas.width * 0.4 + canvas.width / 2;
-        const y1 = Math.cos(t * 0.001 + i * 1.3) * canvas.height * 0.4 + canvas.height / 2;
-        const x2 = Math.sin(t * 0.001 + i * 1.7 + 5) * canvas.width * 0.4 + canvas.width / 2;
-        const y2 = Math.cos(t * 0.001 + i * 0.9 + 5) * canvas.height * 0.4 + canvas.height / 2;
-
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-      }
-
-      t++;
-      requestAnimationFrame(drawPlaceholderField);
-    }
-
-    drawPlaceholderField();
-
-    /* =======================================================
-       IMPULSE CAPTURE (NO RESPONSE, NO TEXT)
-       ======================================================= */
-
-    const impulseInput = document.getElementById("impulseInput");
-
-    impulseInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && e.ctrlKey) {
-        impulseInput.value = "";
-        // Impulse will later trigger deformation
-        // No text response by design
-      }
-    });
-
-  </script>
+const impulseInput = document.getElementById("impulseInput");
+impulseInput.addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.ctrlKey && FIELD_MODE === "IMPULSE") {
+    const text = impulseInput.value.trim();
+    impulseInput.value = "";
+    if (text.length) applyImpulse(generateImpulse(text));
+  }
+});
+</script>
 
 </body>
 </html>
