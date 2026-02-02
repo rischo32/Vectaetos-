@@ -1,4 +1,4 @@
-## INFO: "Niektoré aktuálne súbory sa nezhodujú z ontologiou projektu, jedna sa čisto o experimentačno-implementačnú fazu, pre projekciu poľa na web stranke" !
+## INFO: "Niektoré aktuálne súbory sa nezhodujú z ontologiou projektu, jedna sa čisto o experimentačno-implementačnú fazu, pre projekciu poľa na web stranke" !!
 
 # VECTAETOS ©
 **Public Projection of an Epistemic Field**
