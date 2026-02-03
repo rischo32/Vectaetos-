@@ -23,44 +23,32 @@ body {
 
 .hero {
   position: relative;
-  min-height: 70vh;
+  min-height: 75vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 40px 20px;
 }
 
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(circle at 50% 50%, rgba(100,200,100,0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(100,200,100,0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
-.runic-container {
+.graph-container {
   position: relative;
-  width: 90%;
-  max-width: 600px;
+  width: 100%;
+  max-width: 650px;
   aspect-ratio: 1;
 }
 
-.runic-graph {
+#tension-graph {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  filter: brightness(0.9) contrast(1.1);
-  animation: pulseGlow 8s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-  0%, 100% { 
-    filter: brightness(0.9) contrast(1.1) drop-shadow(0 0 20px rgba(100,200,100,0.3));
-  }
-  50% { 
-    filter: brightness(1.0) contrast(1.15) drop-shadow(0 0 30px rgba(100,200,100,0.5));
-  }
 }
 
 .hero-overlay {
@@ -70,6 +58,7 @@ body {
   transform: translateX(-50%);
   text-align: center;
   z-index: 10;
+  pointer-events: none;
 }
 
 .hero-overlay h1 {
@@ -77,7 +66,7 @@ body {
   font-weight: 200;
   letter-spacing: 0.2em;
   margin-bottom: 12px;
-  text-shadow: 0 0 40px rgba(0,0,0,0.8);
+  text-shadow: 0 0 40px rgba(0,0,0,0.9);
 }
 
 .hero-overlay .tagline {
@@ -85,6 +74,7 @@ body {
   color: #888;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(0,0,0,0.9);
 }
 
 .container {
@@ -178,34 +168,6 @@ textarea::placeholder {
   color: #444;
 }
 
-.pricing {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  background: rgba(100,200,100,0.05);
-  border: 1px solid rgba(100,200,100,0.2);
-  border-radius: 12px;
-  margin-bottom: 24px;
-}
-
-.pricing-label .title {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 4px;
-}
-
-.pricing-label .desc {
-  font-size: 12px;
-  color: #888;
-}
-
-.pricing-amount {
-  font-size: 36px;
-  font-weight: 300;
-  color: #6c6;
-}
-
 button {
   width: 100%;
   padding: 18px;
@@ -254,25 +216,35 @@ button span {
   z-index: 1;
 }
 
-.payment-info {
+.projection-result {
   display: none;
-  padding: 24px;
-  background: rgba(255,200,100,0.05);
-  border: 1px solid rgba(255,200,100,0.2);
-  border-radius: 12px;
-  margin-top: 24px;
-  text-align: center;
+  margin-top: 60px;
+  padding: 40px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(100,200,100,0.2);
+  border-radius: 16px;
+  position: relative;
 }
 
-.payment-info.show {
+.projection-result::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(100,200,100,0.6), transparent);
+}
+
+.projection-result.show {
   display: block;
-  animation: slideIn 0.4s;
+  animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -280,34 +252,121 @@ button span {
   }
 }
 
-.payment-info .instruction-text {
-  color: #aaa;
-  margin-bottom: 16px;
-  line-height: 1.8;
+.projection-result h3 {
+  font-size: 28px;
+  font-weight: 300;
+  margin-bottom: 32px;
+  color: #6c6;
+  text-align: center;
 }
 
-.payment-info .revolut-link {
-  display: inline-block;
-  padding: 12px 24px;
-  background: rgba(100,200,100,0.15);
-  border: 1px solid rgba(100,200,100,0.3);
+.tension-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.tension-card {
+  padding: 20px;
+  background: rgba(255,255,255,0.02);
+  border-left: 3px solid;
   border-radius: 8px;
-  color: #6c6;
-  text-decoration: none;
-  font-weight: 500;
   transition: all 0.3s;
 }
 
-.payment-info .revolut-link:hover {
-  background: rgba(100,200,100,0.25);
-  border-color: rgba(100,200,100,0.5);
+.tension-card:hover {
+  background: rgba(255,255,255,0.04);
+  transform: translateX(4px);
 }
 
-.payment-info .note {
-  margin-top: 16px;
+.tension-card .name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.tension-card .label {
   font-size: 12px;
-  color: #666;
-  line-height: 1.6;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.tension-card .bar {
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tension-card .bar-fill {
+  height: 100%;
+  background: currentColor;
+  border-radius: 2px;
+  width: 0%;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projection-text {
+  padding: 32px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 12px;
+  border-left: 4px solid rgba(100,200,100,0.4);
+  margin-bottom: 24px;
+}
+
+.projection-text p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.projection-text p:last-child {
+  margin-bottom: 0;
+}
+
+.projection-text em {
+  color: #6c6;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.actions button.secondary {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.payment-notice {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(255,200,100,0.05);
+  border: 1px solid rgba(255,200,100,0.2);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.payment-notice strong {
+  color: #fff;
+}
+
+.payment-notice a {
+  color: #6c6;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(100,200,100,0.3);
+}
+
+.payment-notice a:hover {
+  border-bottom-color: #6c6;
 }
 
 footer {
@@ -364,10 +423,12 @@ footer .copyright {
     min-height: 50vh;
   }
   
-  .pricing {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
+  .tension-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .actions {
+    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -375,12 +436,70 @@ footer .copyright {
 <body>
 
 <section class="hero">
-  <div class="runic-container">
-    <img 
-      src="runic-tension-graph.webp" 
-      alt="VECTAETOS Runic Tension Graph" 
-      class="runic-graph"
-    >
+  <div class="graph-container">
+    <svg id="tension-graph" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      
+      <g id="connections"></g>
+      
+      <g id="nodes">
+        <g class="axiom-node" data-axiom="VER" data-x="300" data-y="50">
+          <circle cx="300" cy="50" r="15" class="glow-circle" fill="#33ccff" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="300" cy="50" r="10" class="main-circle" fill="#33ccff" opacity="0.6"/>
+          <text x="300" y="30" text-anchor="middle" fill="#33ccff" font-size="12" font-weight="600">VER</text>
+        </g>
+        
+        <g class="axiom-node" data-axiom="LEX" data-x="480" data-y="150">
+          <circle cx="480" cy="150" r="15" class="glow-circle" fill="#ffaa00" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="480" cy="150" r="10" class="main-circle" fill="#ffaa00" opacity="0.6"/>
+          <text x="510" y="155" text-anchor="start" fill="#ffaa00" font-size="12" font-weight="600">LEX</text>
+        </g>
+        
+        <g class="axiom-node" data-axiom="LIB" data-x="530" data-y="300">
+          <circle cx="530" cy="300" r="15" class="glow-circle" fill="#66ff66" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="530" cy="300" r="10" class="main-circle" fill="#66ff66" opacity="0.6"/>
+          <text x="555" y="305" text-anchor="start" fill="#66ff66" font-size="12" font-weight="600">LIB</text>
+        </g>
+        
+        <g class="axiom-node" data-axiom="CRE" data-x="480" data-y="450">
+          <circle cx="480" cy="450" r="15" class="glow-circle" fill="#ff8800" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="480" cy="450" r="10" class="main-circle" fill="#ff8800" opacity="0.6"/>
+          <text x="510" y="455" text-anchor="start" fill="#ff8800" font-size="12" font-weight="600">CRE</text>
+        </g>
+        
+        <g class="axiom-node" data-axiom="WIS" data-x="300" data-y="550">
+          <circle cx="300" cy="550" r="15" class="glow-circle" fill="#ff44aa" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="300" cy="550" r="10" class="main-circle" fill="#ff44aa" opacity="0.6"/>
+          <text x="300" y="575" text-anchor="middle" fill="#ff44aa" font-size="12" font-weight="600">WIS</text>
+        </g>
+        
+        <g class="axiom-node" data-axiom="REL" data-x="120" data-y="450">
+          <circle cx="120" cy="450" r="15" class="glow-circle" fill="#ff4444" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="120" cy="450" r="10" class="main-circle" fill="#ff4444" opacity="0.6"/>
+          <text x="90" y="455" text-anchor="end" fill="#ff4444" font-size="12" font-weight="600">REL</text>
+        </g>
+        
+        <g class="axiom-node" data-axiom="UNI" data-x="70" data-y="300">
+          <circle cx="70" cy="300" r="15" class="glow-circle" fill="#aa66ff" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="70" cy="300" r="10" class="main-circle" fill="#aa66ff" opacity="0.6"/>
+          <text x="45" y="305" text-anchor="end" fill="#aa66ff" font-size="12" font-weight="600">UNI</text>
+        </g>
+        
+        <g class="axiom-node" data-axiom="INT" data-x="120" data-y="150">
+          <circle cx="120" cy="150" r="15" class="glow-circle" fill="#ff5555" opacity="0.3" filter="url(#glow)"/>
+          <circle cx="120" cy="150" r="10" class="main-circle" fill="#ff5555" opacity="0.6"/>
+          <text x="90" y="155" text-anchor="end" fill="#ff5555" font-size="12" font-weight="600">INT</text>
+        </g>
+      </g>
+    </svg>
   </div>
   
   <div class="hero-overlay">
@@ -415,30 +534,36 @@ footer .copyright {
     ></textarea>
   </div>
 
-  <div class="pricing">
-    <div class="pricing-label">
-      <div class="title">Projekcia epistemického poľa</div>
-      <div class="desc">Tension map + Runic projection</div>
-    </div>
-    <div class="pricing-amount">€5</div>
-  </div>
-
   <button id="submit-btn">
-    <span>Pokračovať na platbu</span>
+    <span>Vložiť do poľa</span>
   </button>
 
-  <div id="payment-section" class="payment-info">
-    <p class="instruction-text">
-      <strong>1.</strong> Pošli <strong>€5</strong> na Revolut:<br>
-      <strong>2.</strong> Do správy napíš prvých <strong>30 znakov</strong> tvojho problému
-    </p>
-    <a href="https://revolut.me/fonfararichard" target="_blank" class="revolut-link">
-      💳 Otvoriť Revolut Payment
-    </a>
-    <p class="note">
-      Po potvrdení platby dostaneš projekciu poľa na email<br>
-      (zvyčajne do 24 hodín, často rýchlejšie)
-    </p>
+  <div id="projection-result" class="projection-result">
+    <h3>Projekcia poľa</h3>
+    
+    <div id="tension-cards" class="tension-cards">
+      <!-- Dynamically populated -->
+    </div>
+
+    <div id="projection-text" class="projection-text">
+      <!-- Dynamically populated -->
+    </div>
+
+    <div class="actions">
+      <button id="new-query-btn" class="secondary">
+        <span>🔄 Nová otázka</span>
+      </button>
+      <button id="download-btn">
+        <span>💾 Stiahnuť PDF</span>
+      </button>
+    </div>
+
+    <div class="payment-notice">
+      <p>
+        <strong>Páči sa ti projekcia?</strong> Podporte rozvoj VECTAETOS:<br>
+        <a href="https://revolut.me/fonfararichard" target="_blank">revolut.me/fonfararichard</a>
+      </p>
+    </div>
   </div>
 
 </div>
@@ -452,17 +577,258 @@ footer .copyright {
   
   <div class="references">
     <strong>Research & Citation:</strong><br>
-    DOI: <a href="https://doi.org/10.5281/zenodo.18395048" target="_blank">10.5281/zenodo.18395048</a><br>
-    License: AEPL-1.2-VECTAETOS (Custom AI Ethics & Public License)
+    DOI: <a href="https://doi.org/10.5281/zenodo.18395048" target="_blank">10.5281/zenodo.18395048</a>
   </div>
   
   <div class="copyright">
-    VECTAETOS © 2026 Richard Fonfára<br>
+    © 2026 Richard Fonfára. Vectaetos © Framework. All rights reserved.<br>
     Pole sa stále stáva. A ty tiež.
   </div>
 </footer>
 
 <script>
+// ========== AXIOM DATA ==========
+const AXIOMS = {
+  'VER': { color: '#33ccff', label: 'Verifikovateľnosť', x: 300, y: 50 },
+  'LEX': { color: '#ffaa00', label: 'Lexikálna koherencia', x: 480, y: 150 },
+  'LIB': { color: '#66ff66', label: 'Sloboda', x: 530, y: 300 },
+  'CRE': { color: '#ff8800', label: 'Kreativita', x: 480, y: 450 },
+  'WIS': { color: '#ff44aa', label: 'Múdrosť', x: 300, y: 550 },
+  'REL': { color: '#ff4444', label: 'Relačnosť', x: 120, y: 450 },
+  'UNI': { color: '#aa66ff', label: 'Univerzálnosť', x: 70, y: 300 },
+  'INT': { color: '#ff5555', label: 'Integrita', x: 120, y: 150 }
+};
+
+// ========== TENSION CALCULATION ==========
+function calculateTensions(queryText) {
+  const query = queryText.toLowerCase();
+  
+  let tensions = {
+    'INT': 0.50,
+    'LEX': 0.50,
+    'VER': 0.50,
+    'LIB': 0.50,
+    'UNI': 0.50,
+    'REL': 0.50,
+    'WIS': 0.50,
+    'CRE': 0.50
+  };
+  
+  // Uncertainty patterns
+  if (/(neviem|neistota|uncertain|don't know|confused)/i.test(query)) {
+    tensions.WIS = 0.85;
+    tensions.VER = 0.30;
+  }
+  
+  // Conflict/problem patterns
+  if (/(problém|konflikt|problem|issue|struggle|rozhodnutie)/i.test(query)) {
+    tensions.REL = 0.75;
+    tensions.INT = 0.65;
+  }
+  
+  // Business/work patterns
+  if (/(firma|business|práca|work|company|startup)/i.test(query)) {
+    tensions.CRE = 0.70;
+    tensions.LEX = 0.55;
+    tensions.LIB = 0.60;
+  }
+  
+  // Decision/choice patterns
+  if (/(rozhodnutie|decision|choice|voľba|choose)/i.test(query)) {
+    tensions.LIB = 0.80;
+    tensions.WIS = 0.75;
+  }
+  
+  // Relationship patterns
+  if (/(vzťah|relationship|ľudia|people|partner|rodina|family)/i.test(query)) {
+    tensions.REL = 0.85;
+    tensions.UNI = 0.70;
+  }
+  
+  // Identity/purpose patterns
+  if (/(kto som|who am i|identity|zmysel|meaning|purpose|poslanie)/i.test(query)) {
+    tensions.INT = 0.90;
+    tensions.UNI = 0.75;
+    tensions.WIS = 0.70;
+  }
+  
+  // Expression/communication patterns
+  if (/(vysvetliť|explain|povedať|say|komunikácia|communication)/i.test(query)) {
+    tensions.LEX = 0.80;
+    tensions.VER = 0.70;
+  }
+  
+  return tensions;
+}
+
+// ========== PROJECTION GENERATION ==========
+function generateProjection(queryText, tensions) {
+  const sorted = Object.entries(tensions).sort((a, b) => b[1] - a[1]);
+  const highest = sorted[0];
+  const lowest = sorted[sorted.length - 1];
+  const secondHighest = sorted[1];
+  
+  const highAxiom = AXIOMS[highest[0]];
+  const lowAxiom = AXIOMS[lowest[0]];
+  const secondAxiom = AXIOMS[secondHighest[0]];
+  
+  let lines = [];
+  
+  // Opening line
+  lines.push(
+    `Pole detekuje <em>silné napätie</em> medzi ${highAxiom.label.toUpperCase()} (${Math.round(highest[1]*100)}%) ` +
+    `a ${lowAxiom.label.toUpperCase()} (${Math.round(lowest[1]*100)}%).`
+  );
+  
+  // Interpretation based on highest tension
+  if (highest[0] === 'WIS' && lowest[0] === 'VER') {
+    lines.push(
+      'Vieš čo by si mal urobiť, ale nevieš ako to dokázať sebe alebo ostatným.'
+    );
+  } else if (highest[0] === 'INT' && tensions.UNI > 0.7) {
+    lines.push(
+      'Hľadáš autentickosť, ale nevieš kde patrí.'
+    );
+  } else if (highest[0] === 'REL') {
+    lines.push(
+      'Problém nie je v tebe. Je vo vzťahoch okolo teba.'
+    );
+  } else if (highest[0] === 'LIB') {
+    lines.push(
+      'Máš možnosti, ale nevieš sa rozhodnúť. Možno preto, lebo žiadna nie je tá pravá.'
+    );
+  } else if (highest[0] === 'LEX') {
+    lines.push(
+      'Problém nie je nejasný. Len nevieš ako ho pomenovať.'
+    );
+  } else if (highest[0] === 'CRE') {
+    lines.push(
+      'Existujúce riešenia ti nestačia. Potrebuješ vytvoriť nové.'
+    );
+  } else {
+    lines.push(
+      'Tvoj problém má viac vrstiev než sa zdá.'
+    );
+  }
+  
+  // Core insight
+  lines.push(
+    'Tvoj problém nie je v odpovedi. Je v otázke, ktorú si ešte nepoložil.'
+  );
+  
+  // Suggested reframe
+  const reframes = {
+    'WIS': '"Čo viem, ale bojím sa tomu veriť?"',
+    'VER': '"Ako môžem ukázať to, čo cítim?"',
+    'INT': '"Kedy som naposledy bol skutočne ja sám?"',
+    'REL': '"Čo by sa stalo, keby som odišiel?"',
+    'LEX': '"Ako by som to vysvetlil päťročnému dieťaťu?"',
+    'LIB': '"Čo by som urobil, keby nebol žiadny správny výber?"',
+    'CRE': '"A čo keby to vôbec nešlo tak ako doteraz?"',
+    'UNI': '"Kde je moje miesto v tomto všetkom?"'
+  };
+  
+  lines.push(
+    `Skús sa opýtať: <em>${reframes[highest[0]] || '"Prečo sa na to takto pozerám?"'}</em>`
+  );
+  
+  return lines;
+}
+
+// ========== GRAPH INITIALIZATION ==========
+function initGraph() {
+  const connectionsGroup = document.getElementById('connections');
+  const axiomKeys = Object.keys(AXIOMS);
+  
+  for (let i = 0; i < axiomKeys.length; i++) {
+    for (let j = i + 1; j < axiomKeys.length; j++) {
+      const a1 = AXIOMS[axiomKeys[i]];
+      const a2 = AXIOMS[axiomKeys[j]];
+      
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', a1.x);
+      line.setAttribute('y1', a1.y);
+      line.setAttribute('x2', a2.x);
+      line.setAttribute('y2', a2.y);
+      line.setAttribute('stroke', '#222');
+      line.setAttribute('stroke-width', '1');
+      line.setAttribute('opacity', '0.3');
+      
+      connectionsGroup.appendChild(line);
+    }
+  }
+}
+
+// ========== GRAPH UPDATE ==========
+function updateGraph(tensions) {
+  Object.keys(tensions).forEach(axiomKey => {
+    const node = document.querySelector(`.axiom-node[data-axiom="${axiomKey}"]`);
+    if (!node) return;
+    
+    const intensity = tensions[axiomKey];
+    const glowCircle = node.querySelector('.glow-circle');
+    const mainCircle = node.querySelector('.main-circle');
+    
+    glowCircle.setAttribute('r', 15 + intensity * 25);
+    glowCircle.setAttribute('opacity', 0.2 + intensity * 0.4);
+    
+    mainCircle.setAttribute('r', 10 + intensity * 8);
+    mainCircle.setAttribute('opacity', 0.5 + intensity * 0.5);
+    
+    glowCircle.style.transition = 'all 1s cubic-bezier(0.16, 1, 0.3, 1)';
+    mainCircle.style.transition = 'all 1s cubic-bezier(0.16, 1, 0.3, 1)';
+  });
+}
+
+// ========== DISPLAY RESULTS ==========
+function displayResults(tensions, projectionLines) {
+  // Show result container
+  const resultDiv = document.getElementById('projection-result');
+  resultDiv.classList.add('show');
+  
+  // Render tension cards
+  const cardsContainer = document.getElementById('tension-cards');
+  cardsContainer.innerHTML = '';
+  
+  Object.entries(tensions).forEach(([axiom, value]) => {
+    const axiomData = AXIOMS[axiom];
+    const card = document.createElement('div');
+    card.className = 'tension-card';
+    card.style.borderColor = axiomData.color;
+    card.style.color = axiomData.color;
+    
+    card.innerHTML = `
+      <div class="name">${axiom}</div>
+      <div class="label">${axiomData.label}</div>
+      <div class="bar">
+        <div class="bar-fill"></div>
+      </div>
+    `;
+    
+    cardsContainer.appendChild(card);
+    
+    // Animate bar
+    setTimeout(() => {
+      const fill = card.querySelector('.bar-fill');
+      fill.style.width = (value * 100) + '%';
+    }, 100);
+  });
+  
+  // Render projection text
+  const textContainer = document.getElementById('projection-text');
+  textContainer.innerHTML = '';
+  
+  projectionLines.forEach(line => {
+    const p = document.createElement('p');
+    p.innerHTML = line;
+    textContainer.appendChild(p);
+  });
+  
+  // Scroll to result
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ========== EVENT HANDLERS ==========
 document.getElementById('submit-btn').addEventListener('click', () => {
   const query = document.getElementById('query').value.trim();
   
@@ -471,19 +837,44 @@ document.getElementById('submit-btn').addEventListener('click', () => {
     return;
   }
   
-  if (query.length < 10) {
-    alert('Problém je príliš krátky. Napíš aspoň pár viet.');
+  if (query.length < 20) {
+    alert('Problém je príliš krátky. Napíš aspoň pár viet aby pole mohlo dobre reagovať.');
     return;
   }
   
-  // Show payment section
-  const paymentSection = document.getElementById('payment-section');
-  paymentSection.classList.add('show');
-  paymentSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Calculate tensions
+  const tensions = calculateTensions(query);
   
-  // Store query for email reference
-  localStorage.setItem('vectaetos_query', query);
-  localStorage.setItem('vectaetos_timestamp', new Date().toISOString());
+  // Generate projection
+  const projectionLines = generateProjection(query, tensions);
+  
+  // Update graph
+  updateGraph(tensions);
+  
+  // Display results
+  displayResults(tensions, projectionLines);
+  
+  // Store for later
+  localStorage.setItem('vectaetos_last_query', query);
+  localStorage.setItem('vectaetos_last_tensions', JSON.stringify(tensions));
+  localStorage.setItem('vectaetos_last_projection', JSON.stringify(projectionLines));
+});
+
+document.getElementById('new-query-btn').addEventListener('click', () => {
+  document.getElementById('query').value = '';
+  document.getElementById('projection-result').classList.remove('show');
+  document.getElementById('query').focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('download-btn').addEventListener('click', () => {
+  alert('PDF export funkcionalita príde čoskoro! Zatiaľ môžeš urobiť screenshot projekcie.');
+  // TODO: Implement PDF generation
+});
+
+// ========== INITIALIZE ==========
+window.addEventListener('DOMContentLoaded', () => {
+  initGraph();
 });
 </script>
 
