@@ -1,11 +1,12 @@
 /* =========================================
-   VECTAETOS — Field Visualization
+   VECTAETOS — Field Visualization (ALPHA dark)
    Canonical & Non-semantic
    ========================================= */
 
 import { drawRunes } from "./runes.js";
 
-// Canvas setup
+/* ---------- Canvas Setup ---------- */
+
 const canvas = document.getElementById("field-canvas");
 const ctx = canvas.getContext("2d");
 
@@ -16,18 +17,20 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-// Axiomatic points
+/* ---------- Axiomatic Points ---------- */
+
 const AXIOMS = Array.from({ length: 8 }, (_, i) => ({
-  x: canvas.width / 2 + Math.cos(i * Math.PI * 2 / 8) * 200,
-  y: canvas.height / 2 + Math.sin(i * Math.PI * 2 / 8) * 200,
-  vx: (Math.random() - 0.5) * 0.8,
-  vy: (Math.random() - 0.5) * 0.8
+  x: canvas.width / 2 + Math.cos(i * Math.PI * 2 / 8) * 180,
+  y: canvas.height / 2 + Math.sin(i * Math.PI * 2 / 8) * 180,
+  vx: (Math.random() - 0.5) * 0.5,
+  vy: (Math.random() - 0.5) * 0.5
 }));
 
 let tensionData = null;
 let runesData = [];
 
-// Exposed functions
+/* ---------- Exported Functions ---------- */
+
 export function applyTension(weights) {
   tensionData = weights || null;
   if (weights) {
@@ -40,24 +43,21 @@ export function clearTension() {
   runesData = [];
 }
 
-// Update motion
+/* ---------- Internal Updates ---------- */
+
 function updateAxioms() {
   AXIOMS.forEach(a => {
-    // random drift
-    a.vx += (Math.random() - 0.5) * 0.03;
-    a.vy += (Math.random() - 0.5) * 0.03;
+    a.vx += (Math.random() - 0.5) * 0.02;
+    a.vy += (Math.random() - 0.5) * 0.02;
 
-    // move
     a.x += a.vx;
     a.y += a.vy;
 
-    // bounds reflection
     if (a.x < 0 || a.x > canvas.width)  a.vx *= -1;
     if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
   });
 }
 
-// Draw connections + optional tension
 function drawConnections() {
   for (let i = 0; i < AXIOMS.length; i++) {
     for (let j = i + 1; j < AXIOMS.length; j++) {
@@ -65,15 +65,15 @@ function drawConnections() {
       const dy = AXIOMS[j].y - AXIOMS[i].y;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (dist < 350) {
-        let alpha = 0.14;
+      if (dist < 300) {
+        let alpha = 0.06;
 
         if (tensionData) {
           alpha *= (tensionData[i] + tensionData[j]) / 2;
         }
 
-        ctx.strokeStyle = `rgba(190, 190, 190, ${alpha})`;
-        ctx.lineWidth   = tensionData ? 1.5 : 1.0;
+        ctx.strokeStyle = `rgba(80, 80, 80, ${alpha})`; 
+        ctx.lineWidth = tensionData ? 1.2 : 0.9;
         ctx.beginPath();
         ctx.moveTo(AXIOMS[i].x, AXIOMS[i].y);
         ctx.lineTo(AXIOMS[j].x, AXIOMS[j].y);
@@ -83,38 +83,36 @@ function drawConnections() {
   }
 }
 
-// Draw axioms
 function drawAxioms() {
   AXIOMS.forEach(a => {
-    ctx.fillStyle = "#e6e6e6";
     ctx.beginPath();
-    ctx.arc(a.x, a.y, 3.4, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(120, 120, 120, 0.8)";
+    ctx.arc(a.x, a.y, 3.2, 0, Math.PI * 2);
     ctx.fill();
   });
 }
 
-// Main render loop
+/* ---------- Main Render Loop ---------- */
+
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // optionally draw runes
-  if (runesData && runesData.length) {
+  if (runesData.length) {
     runesData.forEach(r => {
       ctx.beginPath();
+      ctx.globalAlpha = r.alpha * 0.8;
       ctx.fillStyle = r.color;
-      ctx.globalAlpha = r.alpha;
       ctx.arc(r.x, r.y, r.size, 0, Math.PI * 2);
       ctx.fill();
-      ctx.globalAlpha = 1;
     });
+    ctx.globalAlpha = 1;
   }
 
   drawConnections();
   drawAxioms();
-
   updateAxioms();
+
   requestAnimationFrame(render);
 }
 
-// start animating
 render();
