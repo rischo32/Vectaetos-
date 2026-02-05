@@ -1,113 +1,98 @@
 /* =========================================
-   VECTAETOS — Main UI Orchestrator
-   File: main.js
-   Role: State coordination only
-
-   - no epistemic logic
-   - no interpretation
-   - no decision making
+   VECTAETOS — Main UI Logic
+   Canonical orchestration of states
    ========================================= */
 
-import { STATES, TRANSITIONS, TERMINAL_STATES } from "./states.js";
+import { STATES, TRANSITIONS } from "./states.js";
+import { deriveTensionVector } from "./tension.js";
+import { applyTension, clearTension } from "./field.js";
 
 /* ---------- DOM REFERENCES ---------- */
 
-const projectionStates = document.querySelectorAll(".projection-state");
+const projectionElements = document.querySelectorAll(".projection-state");
 const inputLayer = document.getElementById("input-layer");
 const inputField = document.getElementById("epistemic-input");
 
-/* ---------- STATE ---------- */
+/* ---------- CURRENT STATE ---------- */
 
-let currentState = STATES.IDLE;
+let currentState = STATES.INVITE;
 
-/* ---------- CORE FUNCTIONS ---------- */
+/* ---------- RENDER STATE ---------- */
 
-/**
- * Activate a visual state.
- * This function does not care WHY the state changes.
- */
 function renderState(state) {
-  projectionStates.forEach(el => {
-    el.classList.toggle(
-      "active",
-      el.dataset.state === state
-    );
+  projectionElements.forEach(el => {
+    el.classList.toggle("active", el.dataset.state === state);
   });
 
-  // Input layer visibility
+  inputLayer.hidden = state !== STATES.INPUT;
   if (state === STATES.INPUT) {
-    inputLayer.hidden = false;
     inputField.focus();
-  } else {
-    inputLayer.hidden = true;
     inputField.value = "";
   }
 
   currentState = state;
 }
 
-/**
- * Check whether a transition is allowed.
- * Purely topological.
- */
-function canTransition(toState) {
-  return TRANSITIONS[currentState]?.includes(toState);
-}
+/* ---------- HANDLE TRANSITION ---------- */
 
-/**
- * Transition handler.
- * No side effects beyond rendering.
- */
 function transitionTo(nextState) {
-  if (!canTransition(nextState)) return;
+  const allowed = TRANSITIONS[currentState] || [];
+  if (!allowed.includes(nextState)) return;
+
   renderState(nextState);
 
-  // Terminal states auto-return to IDLE
-  if (TERMINAL_STATES.includes(nextState)) {
-    setTimeout(() => {
-      renderState(STATES.IDLE);
-    }, 5000);
+  // If leaving MIRROR, clear tension
+  if (currentState === STATES.MIRROR && nextState === STATES.EXPLAIN) {
+    clearTension();
   }
 }
 
-/* ---------- EVENT BINDINGS ---------- */
+/* ---------- INITIAL LOAD ---------- */
 
-/* Initial orientation */
 window.addEventListener("load", () => {
   renderState(STATES.INVITE);
 });
 
-/* Click anywhere to move from INVITE → INPUT */
+/* ---------- CLICK ANYWHERE (INVITE → INPUT) ---------- */
+
 document.addEventListener("click", () => {
   if (currentState === STATES.INVITE) {
     transitionTo(STATES.INPUT);
   }
 });
 
-/* Input submission:
-   - ENTER submits
-   - content is discarded
-*/
+/* ---------- INPUT SUBMISSION ---------- */
+
 inputField.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
+
+    // derive tension from input text
+    const tensionVector = deriveTensionVector(inputField.value);
+
+    // go to gate
     transitionTo(STATES.GATE_1);
 
-    // Gate sequence timing (purely temporal, not logical)
-    setTimeout(() => transitionTo(STATES.GATE_2), 800);
-    setTimeout(() => transitionTo(STATES.GATE_3), 2000);
-
-    // Projection outcome:
-    // NOTE: no decision logic here
+    // short delay then mirror state
     setTimeout(() => {
+      if (tensionVector) {
+        applyTension(tensionVector);
+      }
       transitionTo(STATES.MIRROR);
-    }, 3000);
+    }, 900);
+
+    // after mirror, go to explanation
+    setTimeout(() => {
+      transitionTo(STATES.EXPLAIN);
+    }, 3800);
   }
 });
 
-/* Escape always returns to IDLE */
+/* ---------- ESC KEY ALWAYS RETURNS TO IDLE ---------- */
+
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     renderState(STATES.IDLE);
+    clearTension();
   }
 });
