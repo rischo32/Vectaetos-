@@ -1,59 +1,144 @@
 /* =========================================
-   VECTAETOS — UI State Machine Definition
-   Canonical & Declarative Only
+   VECTAETOS — UI State Machine
+   Canonical, Non-Agentic, Non-Persistent
    ========================================= */
 
 /*
-  Available states:
-  - IDLE     → init / neutral
-  - INVITE   → orientation
-  - INPUT    → epistemic gate (text entry)
-  - GATE_1   → stabilization
-  - MIRROR   → tension projection
-  - EXPLAIN  → optional explanation
+States:
+
+IDLE        — pole existuje, žiadna interakcia
+INVITE      — úvodná veta
+INPUT       — povolený jednorazový vstup
+GATE_1      — stabilizácia významu (vizuálna)
+MIRROR      — projekcia napätia (bez textu)
+SILENT      — ticho po projekcii
+PAYWALL     — kolaps poľa (riešené inde)
 */
 
-export const STATES = Object.freeze({
-  IDLE:    "IDLE",
-  INVITE:  "INVITE",
-  INPUT:   "INPUT",
-  GATE_1:  "GATE_1",
-  MIRROR:  "MIRROR",
-  EXPLAIN: "EXPLAIN"
+const STATES = {
+  IDLE: "IDLE",
+  INVITE: "INVITE",
+  INPUT: "INPUT",
+  GATE_1: "GATE_1",
+  MIRROR: "MIRROR",
+  SILENT: "SILENT",
+  PAYWALL: "PAYWALL"
+};
+
+let currentState = STATES.IDLE;
+
+/* ---------- DOM ---------- */
+
+const projectionStates = document.querySelectorAll(".projection-state");
+const inputLayer = document.getElementById("input-layer");
+
+/* ---------- Internal Flags ---------- */
+
+let interactionConsumed = false;
+
+/* ---------- Helpers ---------- */
+
+function showProjectionState(stateName) {
+  projectionStates.forEach(el => {
+    el.classList.toggle(
+      "active",
+      el.dataset.state === stateName
+    );
+  });
+}
+
+function hideAllProjections() {
+  projectionStates.forEach(el => el.classList.remove("active"));
+}
+
+/* ---------- State Transition ---------- */
+
+export function setState(nextState) {
+  if (currentState === nextState) return;
+
+  currentState = nextState;
+
+  switch (nextState) {
+
+    case STATES.IDLE:
+      hideAllProjections();
+      inputLayer.hidden = true;
+      break;
+
+    case STATES.INVITE:
+      showProjectionState("INVITE");
+      inputLayer.hidden = true;
+      break;
+
+    case STATES.INPUT:
+      hideAllProjections();
+      inputLayer.hidden = false;
+      break;
+
+    case STATES.GATE_1:
+      showProjectionState("GATE_1");
+      inputLayer.hidden = true;
+      break;
+
+    case STATES.MIRROR:
+      hideAllProjections();
+      inputLayer.hidden = true;
+      interactionConsumed = true;
+      break;
+
+    case STATES.SILENT:
+      hideAllProjections();
+      inputLayer.hidden = true;
+      break;
+
+    case STATES.PAYWALL:
+      hideAllProjections();
+      inputLayer.hidden = true;
+      break;
+  }
+}
+
+/* ---------- Public Queries ---------- */
+
+export function getState() {
+  return currentState;
+}
+
+export function isInteractionConsumed() {
+  return interactionConsumed;
+}
+
+/* ---------- Canonical Flow ---------- */
+
+/*
+Initial boot sequence:
+IDLE → INVITE (after short delay)
+*/
+
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    setState(STATES.INVITE);
+  }, 1200);
 });
 
 /*
-  Allowed transitions between states.
-  This topology defines what FOLLOWING state is permitted
-  given the current state. There is NO logic about why;
-  only a descriptive topology.
+User intent to interact:
+INVITE → INPUT
+Handled externally (main.js)
 */
 
-export const TRANSITIONS = Object.freeze({
+/*
+After input submission:
+INPUT → GATE_1 → MIRROR → SILENT
+Timing handled externally
+*/
 
-  [STATES.IDLE]: [
-    STATES.INVITE
-  ],
+/*
+Any interaction attempt after SILENT:
+→ PAYWALL
+Handled externally
+*/
 
-  [STATES.INVITE]: [
-    STATES.INPUT
-  ],
+/* ---------- Export States ---------- */
 
-  [STATES.INPUT]: [
-    STATES.GATE_1
-  ],
-
-  [STATES.GATE_1]: [
-    STATES.MIRROR
-  ],
-
-  [STATES.MIRROR]: [
-    STATES.EXPLAIN,
-    STATES.IDLE
-  ],
-
-  [STATES.EXPLAIN]: [
-    STATES.IDLE
-  ]
-
-});
+export { STATES };
