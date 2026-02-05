@@ -1,121 +1,120 @@
 /* =========================================
-   VECTAETOS — Epistemic Field Projection
-   File: field.js
-   Role: Pure visual geometry (no semantics)
-
-   - no meaning
-   - no interpretation
-   - no decision logic
-   - no data persistence
+   VECTAETOS — Field Visualization
+   Canonical & Non-semantic
    ========================================= */
 
-/* ---------- Canvas Setup ---------- */
+import { drawRunes } from "./runes.js";
 
+// Canvas setup
 const canvas = document.getElementById("field-canvas");
 const ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
-  canvas.width = window.innerWidth;
+  canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-/* ---------- Field Configuration ---------- */
+// Axiomatic points
+const AXIOMS = Array.from({ length: 8 }, (_, i) => ({
+  x: canvas.width / 2 + Math.cos(i * Math.PI * 2 / 8) * 200,
+  y: canvas.height / 2 + Math.sin(i * Math.PI * 2 / 8) * 200,
+  vx: (Math.random() - 0.5) * 0.8,
+  vy: (Math.random() - 0.5) * 0.8
+}));
 
-const AXIOM_COUNT = 8;
-const CENTER_PULL = 0.0005;
-const DRIFT = 0.15;
-const NOISE = 0.2;
-const CONNECTION_DISTANCE = 260;
+let tensionData = null;
+let runesData = [];
 
-/* ---------- Axiom Initialization ---------- */
-
-const axioms = [];
-
-for (let i = 0; i < AXIOM_COUNT; i++) {
-  const angle = (Math.PI * 2 / AXIOM_COUNT) * i;
-  const radius = Math.min(canvas.width, canvas.height) * 0.25;
-
-  axioms.push({
-    x: canvas.width / 2 + Math.cos(angle) * radius,
-    y: canvas.height / 2 + Math.sin(angle) * radius,
-    vx: (Math.random() - 0.5) * DRIFT,
-    vy: (Math.random() - 0.5) * DRIFT
-  });
+// Exposed functions
+export function applyTension(weights) {
+  tensionData = weights || null;
+  if (weights) {
+    runesData = drawRunes(weights, AXIOMS);
+  }
 }
 
-/* ---------- Utility ---------- */
-
-function distance(a, b) {
-  const dx = a.x - b.x;
-  const dy = a.y - b.y;
-  return Math.sqrt(dx * dx + dy * dy);
+export function clearTension() {
+  tensionData = null;
+  runesData = [];
 }
 
-/* ---------- Update Dynamics ---------- */
+// Update motion
+function updateAxioms() {
+  AXIOMS.forEach(a => {
+    // random drift
+    a.vx += (Math.random() - 0.5) * 0.03;
+    a.vy += (Math.random() - 0.5) * 0.03;
 
-function updateField() {
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
-
-  axioms.forEach(a => {
-    // Gentle drift
-    a.vx += (Math.random() - 0.5) * NOISE * 0.01;
-    a.vy += (Math.random() - 0.5) * NOISE * 0.01;
-
-    // Soft pull toward center (coherence)
-    a.vx += (cx - a.x) * CENTER_PULL;
-    a.vy += (cy - a.y) * CENTER_PULL;
-
+    // move
     a.x += a.vx;
     a.y += a.vy;
 
-    // Boundary reflection (non-escaping)
-    if (a.x < 0 || a.x > canvas.width) a.vx *= -1;
+    // bounds reflection
+    if (a.x < 0 || a.x > canvas.width)  a.vx *= -1;
     if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
   });
 }
 
-/* ---------- Rendering ---------- */
-
+// Draw connections + optional tension
 function drawConnections() {
-  for (let i = 0; i < AXIOM_COUNT; i++) {
-    for (let j = i + 1; j < AXIOM_COUNT; j++) {
-      const d = distance(axioms[i], axioms[j]);
-      if (d < CONNECTION_DISTANCE) {
-        const alpha = 1 - d / CONNECTION_DISTANCE;
-        ctx.strokeStyle = `rgba(180, 180, 180, ${alpha * 0.25})`;
-        ctx.lineWidth = 1;
+  for (let i = 0; i < AXIOMS.length; i++) {
+    for (let j = i + 1; j < AXIOMS.length; j++) {
+      const dx = AXIOMS[j].x - AXIOMS[i].x;
+      const dy = AXIOMS[j].y - AXIOMS[i].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < 350) {
+        let alpha = 0.14;
+
+        if (tensionData) {
+          alpha *= (tensionData[i] + tensionData[j]) / 2;
+        }
+
+        ctx.strokeStyle = `rgba(190, 190, 190, ${alpha})`;
+        ctx.lineWidth   = tensionData ? 1.5 : 1.0;
         ctx.beginPath();
-        ctx.moveTo(axioms[i].x, axioms[i].y);
-        ctx.lineTo(axioms[j].x, axioms[j].y);
+        ctx.moveTo(AXIOMS[i].x, AXIOMS[i].y);
+        ctx.lineTo(AXIOMS[j].x, AXIOMS[j].y);
         ctx.stroke();
       }
     }
   }
 }
 
+// Draw axioms
 function drawAxioms() {
-  axioms.forEach(a => {
-    ctx.beginPath();
-    ctx.arc(a.x, a.y, 3.5, 0, Math.PI * 2);
+  AXIOMS.forEach(a => {
     ctx.fillStyle = "#e6e6e6";
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, 3.4, 0, Math.PI * 2);
     ctx.fill();
   });
 }
 
-/* ---------- Animation Loop ---------- */
-
-function animate() {
+// Main render loop
+function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  updateField();
+  // optionally draw runes
+  if (runesData && runesData.length) {
+    runesData.forEach(r => {
+      ctx.beginPath();
+      ctx.fillStyle = r.color;
+      ctx.globalAlpha = r.alpha;
+      ctx.arc(r.x, r.y, r.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+  }
+
   drawConnections();
   drawAxioms();
 
-  requestAnimationFrame(animate);
+  updateAxioms();
+  requestAnimationFrame(render);
 }
 
-animate();
+// start animating
+render();
