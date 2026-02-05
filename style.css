@@ -1,21 +1,43 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* =================================================
+   VECTAETOS — DEEP BLACK FIELD CSS
+   Maximálne tmavá estetika
+   ================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 html, body {
   width: 100%;
   height: 100%;
-  background: #0b0d10;
-  color: #e0e0e0;
-  font-family: system-ui, sans-serif;
+  background: #000000;   /* Pure black */
+  color: #bbbbbb;        /* Soft grey */
+  font-family: 'Inter', sans-serif;
   overflow: hidden;
 }
 
-#app { width: 100%; height: 100%; position: relative; }
+/* ---------- ROOT CONTAINER ---------- */
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- CANVAS ---------- */
 
 #field-canvas {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;  /* Pure black canvas */
   z-index: 1;
 }
+
+/* ---------- OVERLAY LAYER ---------- */
 
 #overlay {
   position: absolute;
@@ -24,12 +46,29 @@ html, body {
   pointer-events: none;
 }
 
+/* Identity (corner text) */
+
 #identity {
   position: absolute;
-  top: 20px;
-  left: 24px;
-  opacity: 0.7;
+  top: 16px;
+  left: 22px;
+  opacity: 0.75;
 }
+
+#identity .label {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #aaaaaa;
+  text-transform: uppercase;
+}
+
+#identity .sub {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #666666;
+}
+
+/* ---------- PROJECTION TEXT ---------- */
 
 #projection {
   position: absolute;
@@ -40,58 +79,118 @@ html, body {
   text-align: center;
 }
 
-.projection-state { display: none; max-width: 520px; }
-.projection-state.active { display: block; }
+.projection-state {
+  display: none;
+  max-width: 600px;
+  padding: 16px;
+}
 
-.whisper { font-size: 16px; color: #b0b0b0; }
-.prompt { font-size: 20px; }
-.status { font-size: 14px; color: #888; }
-.mirror { font-size: 17px; }
-.axiom { font-weight: 600; }
-.explain { font-size: 14px; color: #c0c0c0; }
-.closing { margin-top: 12px; font-size: 12px; color: #888; }
+.projection-state.active {
+  display: block;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Text variants */
+
+.whisper {
+  font-size: 16px;
+  color: #9d9d9d;
+}
+
+.prompt {
+  font-size: 20px;
+  color: #d0d0d0;
+}
+
+.status {
+  font-size: 13px;
+  color: #717171;
+}
+
+.mirror {
+  font-size: 17px;
+  color: #e2e2e2;
+}
+
+.axiom {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+}
+
+.explain {
+  font-size: 14px;
+  color: #c2c2c2;
+}
+
+.closing {
+  margin-top: 10px;
+  font-size: 11px;
+  color: #737373;
+}
+
+/* ---------- INPUT LAYER ---------- */
 
 #input-layer {
   position: absolute;
   inset: 0;
-  background: rgba(10,12,16,0.85);
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.9);  /* very dark overlay */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 3;
 }
 
 #epistemic-input {
-  width: 70%;
-  max-width: 520px;
-  min-height: 120px;
+  width: 74%;
+  max-width: 600px;
+  min-height: 140px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #666;
-  color: #fff;
+  border-bottom: 1px solid #444444;
+  color: #dddddd;
   font-size: 15px;
   outline: none;
   resize: none;
 }
 
-.input-hint {
-  margin-top: 14px;
-  font-size: 12px;
-  color: #888;
+#epistemic-input:focus {
+  border-bottom-color: #777777;
 }
+
+.input-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6f6f6f;
+  text-align: center;
+}
+
+/* ---------- FOOTER ---------- */
 
 #footer {
   position: absolute;
-  bottom: 16px;
+  bottom: 18px;
   right: 24px;
   font-size: 11px;
+  letter-spacing: 0.04em;
   opacity: 0.6;
   z-index: 2;
 }
 
 #footer a {
-  color: #aaa;
+  color: #7a7a7a;
   text-decoration: none;
   margin-left: 12px;
+}
+
+#footer a:hover {
+  color: #9a9a9a;
+}
+
+/* ---------- ANIMATION ---------- */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
