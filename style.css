@@ -1,84 +1,35 @@
-/* =========================================
-   VECTAETOS — Web Artefact Styles
-   Canonical minimalist visual layer
-   ========================================= */
-
-/* ---------- Root & Reset ---------- */
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
   width: 100%;
   height: 100%;
   background: #0b0d10;
-  color: #d6d6d6;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-weight: 300;
+  color: #e0e0e0;
+  font-family: system-ui, sans-serif;
   overflow: hidden;
 }
 
-/* ---------- App Container ---------- */
-
-#app {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-/* ---------- Canvas Layer ---------- */
+#app { width: 100%; height: 100%; position: relative; }
 
 #field-canvas {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-    circle at center,
-    #10141a 0%,
-    #0b0d10 70%
-  );
   z-index: 1;
 }
-
-/* ---------- Overlay Layer ---------- */
 
 #overlay {
   position: absolute;
   inset: 0;
-  pointer-events: none;
   z-index: 2;
+  pointer-events: none;
 }
-
-/* ---------- Identity (corner) ---------- */
 
 #identity {
   position: absolute;
-  top: 24px;
-  left: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  opacity: 0.75;
+  top: 20px;
+  left: 24px;
+  opacity: 0.7;
 }
-
-#identity .label {
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #e2e2e2;
-}
-
-#identity .sub {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: #9a9a9a;
-}
-
-/* ---------- Projection Text ---------- */
 
 #projection {
   position: absolute;
@@ -89,72 +40,26 @@ html, body {
   text-align: center;
 }
 
-.projection-state {
-  display: none;
-  max-width: 520px;
-  padding: 24px;
-}
+.projection-state { display: none; max-width: 520px; }
+.projection-state.active { display: block; }
 
-.projection-state.active {
-  display: block;
-}
-
-/* ---------- Text Styles ---------- */
-
-.whisper {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #b5b5b5;
-}
-
-.prompt {
-  font-size: 20px;
-  line-height: 1.5;
-  color: #e0e0e0;
-}
-
-.status {
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  color: #8a8a8a;
-}
-
-.mirror {
-  font-size: 17px;
-  line-height: 1.6;
-  color: #e5e5e5;
-}
-
-.mirror .axiom {
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: #ffffff;
-}
-
-.explain {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #bdbdbd;
-  margin-bottom: 18px;
-}
-
-.closing {
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: #7a7a7a;
-}
-
-/* ---------- Input Layer ---------- */
+.whisper { font-size: 16px; color: #b0b0b0; }
+.prompt { font-size: 20px; }
+.status { font-size: 14px; color: #888; }
+.mirror { font-size: 17px; }
+.axiom { font-weight: 600; }
+.explain { font-size: 14px; color: #c0c0c0; }
+.closing { margin-top: 12px; font-size: 12px; color: #888; }
 
 #input-layer {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  background: rgba(10,12,16,0.85);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(11, 13, 16, 0.85);
+  z-index: 3;
 }
 
 #epistemic-input {
@@ -163,56 +68,30 @@ html, body {
   min-height: 120px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #555;
-  color: #e6e6e6;
+  border-bottom: 1px solid #666;
+  color: #fff;
   font-size: 15px;
-  line-height: 1.5;
-  resize: none;
   outline: none;
-}
-
-#epistemic-input:focus {
-  border-bottom-color: #aaa;
+  resize: none;
 }
 
 .input-hint {
   margin-top: 14px;
   font-size: 12px;
-  line-height: 1.4;
-  color: #8e8e8e;
-  text-align: center;
+  color: #888;
 }
-
-/* ---------- Footer ---------- */
 
 #footer {
   position: absolute;
-  bottom: 18px;
+  bottom: 16px;
   right: 24px;
-  display: flex;
-  gap: 16px;
   font-size: 11px;
-  letter-spacing: 0.06em;
   opacity: 0.6;
   z-index: 2;
 }
 
 #footer a {
-  color: #9a9a9a;
+  color: #aaa;
   text-decoration: none;
-}
-
-#footer a:hover {
-  color: #d0d0d0;
-}
-
-/* ---------- Subtle Motion (non-intrusive) ---------- */
-
-@keyframes slowFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.projection-state.active {
-  animation: slowFade 0.6s ease-out;
+  margin-left: 12px;
 }
