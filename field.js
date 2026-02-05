@@ -1,80 +1,121 @@
-// field.js — minimal living field (NO WebGL, guaranteed visible)
+/* =========================================
+   VECTAETOS — Epistemic Field Projection
+   File: field.js
+   Role: Pure visual geometry (no semantics)
 
-const canvas = document.getElementById("glcanvas");
+   - no meaning
+   - no interpretation
+   - no decision logic
+   - no data persistence
+   ========================================= */
+
+/* ---------- Canvas Setup ---------- */
+
+const canvas = document.getElementById("field-canvas");
 const ctx = canvas.getContext("2d");
 
-function resize() {
+function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-window.addEventListener("resize", resize);
-resize();
 
-// pole bodov (epistemické uzly)
-const NODES = 120;
-const nodes = [];
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 
-for (let i = 0; i < NODES; i++) {
-  nodes.push({
-    x: Math.random(),
-    y: Math.random(),
-    vx: (Math.random() - 0.5) * 0.0003,
-    vy: (Math.random() - 0.5) * 0.0003,
-    phase: Math.random() * Math.PI * 2
+/* ---------- Field Configuration ---------- */
+
+const AXIOM_COUNT = 8;
+const CENTER_PULL = 0.0005;
+const DRIFT = 0.15;
+const NOISE = 0.2;
+const CONNECTION_DISTANCE = 260;
+
+/* ---------- Axiom Initialization ---------- */
+
+const axioms = [];
+
+for (let i = 0; i < AXIOM_COUNT; i++) {
+  const angle = (Math.PI * 2 / AXIOM_COUNT) * i;
+  const radius = Math.min(canvas.width, canvas.height) * 0.25;
+
+  axioms.push({
+    x: canvas.width / 2 + Math.cos(angle) * radius,
+    y: canvas.height / 2 + Math.sin(angle) * radius,
+    vx: (Math.random() - 0.5) * DRIFT,
+    vy: (Math.random() - 0.5) * DRIFT
   });
 }
 
-let time = 0;
+/* ---------- Utility ---------- */
 
-function step() {
-  time += 0.003;
+function distance(a, b) {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
 
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+/* ---------- Update Dynamics ---------- */
 
-  for (const n of nodes) {
-    // pomalý pohyb
-    n.x += n.vx;
-    n.y += n.vy;
+function updateField() {
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
 
-    if (n.x < 0 || n.x > 1) n.vx *= -1;
-    if (n.y < 0 || n.y > 1) n.vy *= -1;
+  axioms.forEach(a => {
+    // Gentle drift
+    a.vx += (Math.random() - 0.5) * NOISE * 0.01;
+    a.vy += (Math.random() - 0.5) * NOISE * 0.01;
 
-    n.phase += 0.01;
+    // Soft pull toward center (coherence)
+    a.vx += (cx - a.x) * CENTER_PULL;
+    a.vy += (cy - a.y) * CENTER_PULL;
 
-    const px = n.x * canvas.width;
-    const py = n.y * canvas.height;
+    a.x += a.vx;
+    a.y += a.vy;
 
-    const pulse = 0.5 + 0.5 * Math.sin(n.phase + time);
-    const r = 2 + pulse * 3;
+    // Boundary reflection (non-escaping)
+    if (a.x < 0 || a.x > canvas.width) a.vx *= -1;
+    if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
+  });
+}
 
-    ctx.beginPath();
-    ctx.arc(px, py, r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(120,180,255,${0.15 + pulse * 0.25})`;
-    ctx.fill();
-  }
+/* ---------- Rendering ---------- */
 
-  // jemné prepojenia (tenzie)
-  for (let i = 0; i < NODES; i++) {
-    for (let j = i + 1; j < NODES; j++) {
-      const a = nodes[i];
-      const b = nodes[j];
-
-      const dx = (a.x - b.x) * canvas.width;
-      const dy = (a.y - b.y) * canvas.height;
-      const d = Math.sqrt(dx * dx + dy * dy);
-
-      if (d < 140) {
-        ctx.strokeStyle = `rgba(80,140,220,${0.04})`;
+function drawConnections() {
+  for (let i = 0; i < AXIOM_COUNT; i++) {
+    for (let j = i + 1; j < AXIOM_COUNT; j++) {
+      const d = distance(axioms[i], axioms[j]);
+      if (d < CONNECTION_DISTANCE) {
+        const alpha = 1 - d / CONNECTION_DISTANCE;
+        ctx.strokeStyle = `rgba(180, 180, 180, ${alpha * 0.25})`;
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(a.x * canvas.width, a.y * canvas.height);
-        ctx.lineTo(b.x * canvas.width, b.y * canvas.height);
+        ctx.moveTo(axioms[i].x, axioms[i].y);
+        ctx.lineTo(axioms[j].x, axioms[j].y);
         ctx.stroke();
       }
     }
   }
-
-  requestAnimationFrame(step);
 }
 
-step();
+function drawAxioms() {
+  axioms.forEach(a => {
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#e6e6e6";
+    ctx.fill();
+  });
+}
+
+/* ---------- Animation Loop ---------- */
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  updateField();
+  drawConnections();
+  drawAxioms();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
