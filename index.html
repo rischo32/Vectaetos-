@@ -3,74 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <title>Vectaetos — Epistemic Field</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vectaetos is not an answer system. It is an epistemic field." />
+
+  <!-- Canonical black field stylesheet -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+
+  <!-- ROOT CONTAINER -->
   <div id="app">
 
+    <!-- FIELD CANVAS (primary visual layer) -->
     <canvas id="field-canvas"></canvas>
 
+    <!-- OVERLAY (non-interactive epistemic layer) -->
     <div id="overlay">
 
+      <!-- IDENTITY / SIGNATURE -->
       <div id="identity">
-        <div class="label">Vectaetos</div>
+        <div class="label">VECTAETOS</div>
         <div class="sub">Epistemic Field</div>
       </div>
 
+      <!-- PROJECTION STATES -->
       <div id="projection">
 
+        <!-- INVITE -->
         <div class="projection-state" data-state="INVITE">
-          <p class="whisper">Neodpovedáme.<br>Ukazujeme, kde je napätie.</p>
+          <p class="whisper">
+            Neodpovedáme.<br />
+            Ukazujeme, kde je napätie.
+          </p>
         </div>
 
+        <!-- INPUT PROMPT (visual only, input layer is separate) -->
         <div class="projection-state" data-state="INPUT">
-          <p class="prompt">Čo sa ti rúca,<br>aj keď máš všetky informácie?</p>
+          <p class="prompt">
+            Čo sa ti rúca,<br />
+            aj keď máš všetky informácie?
+          </p>
         </div>
 
+        <!-- GATE -->
         <div class="projection-state" data-state="GATE_1">
-          <p class="status">Stabilizácia významu…</p>
+          <p class="status">
+            Stabilizácia významu…
+          </p>
         </div>
 
+        <!-- MIRROR -->
         <div class="projection-state" data-state="MIRROR">
           <p class="mirror">
-            Napätie nie je v odpovedi.<br>
+            Napätie nie je v odpovedi.<br />
             Je medzi <span class="axiom">Σᵢ</span> a <span class="axiom">Σⱼ</span>.
           </p>
         </div>
 
+        <!-- EXPLANATION (optional, minimal) -->
         <div class="projection-state" data-state="EXPLAIN">
           <p class="explain">
-            Jedno ťažisko drží stabilitu.<br>
-            Druhé vyžaduje zmenu.<br>
+            Jedno ťažisko drží stabilitu.<br />
+            Druhé vyžaduje zmenu.<br />
             Pole ich nedokáže zosúladiť bez straty koherencie.
           </p>
-          <p class="closing">Pole sa zatvára.</p>
+          <p class="closing">
+            Pole sa zatvára.
+          </p>
         </div>
 
       </div>
-
     </div>
 
+    <!-- INPUT LAYER (epistemic gate, temporary) -->
     <div id="input-layer" hidden>
-      <textarea id="epistemic-input"></textarea>
+      <textarea
+        id="epistemic-input"
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+      ></textarea>
+
       <div class="input-hint">
-        Nepíš riešenie.<br>
+        Nepíš riešenie.<br />
         Popíš stav.
       </div>
     </div>
 
+    <!-- FOOTER / REFERENCES -->
     <div id="footer">
-      <a href="https://github.com/rischo32/Vectaetos" target="_blank">GitHub</a>
-      <a href="https://zenodo.org" target="_blank">Zenodo</a>
+      <a href="https://github.com/rischo32/Vectaetos" target="_blank" rel="noopener">
+        GitHub
+      </a>
+      <a href="https://zenodo.org" target="_blank" rel="noopener">
+        Zenodo
+      </a>
     </div>
 
   </div>
 
+  <!-- SCRIPTS (strict order, no inline logic) -->
   <script type="module" src="states.js"></script>
   <script type="module" src="field.js"></script>
   <script type="module" src="tension.js"></script>
+  <script type="module" src="runes.js"></script>
   <script type="module" src="main.js"></script>
+
 </body>
 </html>
