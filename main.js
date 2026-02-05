@@ -1,6 +1,6 @@
 /* =========================================
    VECTAETOS — Main UI Logic
-   Canonical orchestration of states
+   Apple-style smooth orchestration
    ========================================= */
 
 import { STATES, TRANSITIONS } from "./states.js";
@@ -15,19 +15,24 @@ const inputField = document.getElementById("epistemic-input");
 
 /* ---------- CURRENT STATE ---------- */
 
-let currentState = STATES.INVITE;
+let currentState = STATES.IDLE;
+let isTransitioning = false;
 
 /* ---------- RENDER STATE ---------- */
 
 function renderState(state) {
+  if (isTransitioning) return;
+  
   projectionElements.forEach(el => {
     el.classList.toggle("active", el.dataset.state === state);
   });
 
   inputLayer.hidden = state !== STATES.INPUT;
   if (state === STATES.INPUT) {
-    inputField.focus();
-    inputField.value = "";
+    setTimeout(() => {
+      inputField.focus();
+      inputField.value = "";
+    }, 100);
   }
 
   currentState = state;
@@ -41,7 +46,7 @@ function transitionTo(nextState) {
 
   renderState(nextState);
 
-  // If leaving MIRROR, clear tension
+  // Clear tension when leaving MIRROR
   if (currentState === STATES.MIRROR && nextState === STATES.EXPLAIN) {
     clearTension();
   }
@@ -55,8 +60,14 @@ window.addEventListener("load", () => {
 
 /* ---------- CLICK ANYWHERE (INVITE → INPUT) ---------- */
 
-document.addEventListener("click", () => {
-  if (currentState === STATES.INVITE) {
+let hasClickedOnce = false;
+
+document.addEventListener("click", (e) => {
+  // Ignore clicks on input layer
+  if (e.target.closest('#input-layer')) return;
+  
+  if (currentState === STATES.INVITE && !hasClickedOnce) {
+    hasClickedOnce = true;
     transitionTo(STATES.INPUT);
   }
 });
@@ -64,35 +75,51 @@ document.addEventListener("click", () => {
 /* ---------- INPUT SUBMISSION ---------- */
 
 inputField.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && !e.shiftKey) {
+  if (e.key === "Enter" && !e.shiftKey && !isTransitioning) {
     e.preventDefault();
 
-    // derive tension from input text
-    const tensionVector = deriveTensionVector(inputField.value);
+    const text = inputField.value.trim();
+    if (text.length < 10) {
+      return; // Too short, ignore
+    }
 
-    // go to gate
+    isTransitioning = true;
+
+    // Derive tension from input
+    const tensionVector = deriveTensionVector(text);
+
+    // Go to gate
     transitionTo(STATES.GATE_1);
 
-    // short delay then mirror state
+    // Stabilization delay → Mirror
     setTimeout(() => {
       if (tensionVector) {
         applyTension(tensionVector);
       }
       transitionTo(STATES.MIRROR);
-    }, 900);
+    }, 1200);
 
-    // after mirror, go to explanation
+    // Mirror → Explanation
     setTimeout(() => {
       transitionTo(STATES.EXPLAIN);
-    }, 3800);
+    }, 4500);
+
+    // Explanation → IDLE (ready for next)
+    setTimeout(() => {
+      transitionTo(STATES.IDLE);
+      isTransitioning = false;
+      hasClickedOnce = false;
+    }, 7500);
   }
 });
 
-/* ---------- ESC KEY ALWAYS RETURNS TO IDLE ---------- */
+/* ---------- ESC KEY RETURNS TO IDLE ---------- */
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     renderState(STATES.IDLE);
     clearTension();
+    isTransitioning = false;
+    hasClickedOnce = false;
   }
 });
