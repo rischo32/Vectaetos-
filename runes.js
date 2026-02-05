@@ -1,39 +1,78 @@
 /* =========================================
-   VECTAETOS — Rune Projection (ALPHA dark)
-   Canonical & non-semantic
+   VECTAETOS — Rune Projection Module
+   Descriptive, Ephemeral, Non-Semantic
    ========================================= */
 
-const RUNE_BASE_COLORS = [
-  "rgba(110, 110, 150,",
-  "rgba(150, 110, 130,",
-  "rgba(130, 150, 110,",
-  "rgba(110, 150, 150,",
-  "rgba(150, 130, 110,",
-  "rgba(130, 110, 150,",
-  "rgba(150, 150, 110,",
-  "rgba(110, 130, 150,"
+/*
+RUNES:
+- are NOT symbols with meaning
+- are NOT icons
+- are NOT readable language
+
+Runes are:
+- short-lived projections of relational stress
+- spatial traces near axiomatic centers
+- visual indicators of phase, not content
+*/
+
+/* ---------- Configuration ---------- */
+
+const MAX_RUNES = 32;
+
+/*
+Color palette is intentionally muted.
+No color encodes value, truth, or judgment.
+Only relational variance.
+*/
+
+const RUNE_COLORS = [
+  "rgba(120, 120, 150, 0.6)",
+  "rgba(100, 130, 140, 0.6)",
+  "rgba(140, 110, 130, 0.6)",
+  "rgba(110, 140, 120, 0.6)"
 ];
 
-export function drawRunes(tensionWeights, axioms) {
-  if (!tensionWeights || !axioms) return [];
+/* ---------- Helpers ---------- */
 
+function randomBetween(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+/* ---------- Rune Generation ---------- */
+
+/*
+Input:
+- tensionWeights: array[8] normalized
+- axioms: spatial positions of Σ₁…Σ₈
+
+Output:
+- array of ephemeral rune objects
+*/
+
+export function drawRunes(tensionWeights, axioms) {
   const runes = [];
 
   for (let i = 0; i < axioms.length; i++) {
-    const a = axioms[i];
-    const weight = tensionWeights[i] || 0.15;
-    const count = Math.max(1, Math.floor(weight * 6));
+    const weight = tensionWeights[i];
 
-    for (let j = 0; j < count; j++) {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 6 + Math.random() * (10 * weight);
+    // Only generate runes for meaningful tension
+    if (weight < 0.15) continue;
+
+    const runeCount = Math.floor(weight * 4);
+
+    for (let r = 0; r < runeCount; r++) {
+      if (runes.length >= MAX_RUNES) break;
+
+      const angle = randomBetween(0, Math.PI * 2);
+      const radius = randomBetween(8, 26);
 
       runes.push({
-        x: a.x + Math.cos(angle) * radius,
-        y: a.y + Math.sin(angle) * radius,
-        size: 1 + weight * 2,
-        alpha: 0.3 + weight * 0.4,
-        color: `${RUNE_BASE_COLORS[i % RUNE_BASE_COLORS.length]} ${0.25 + weight * 0.35})`
+        x: axioms[i].x + Math.cos(angle) * radius,
+        y: axioms[i].y + Math.sin(angle) * radius,
+        size: randomBetween(1.2, 2.8),
+        alpha: randomBetween(0.2, 0.6),
+        color: RUNE_COLORS[i % RUNE_COLORS.length],
+        life: randomBetween(40, 90) // frames
       });
     }
   }
