@@ -1,83 +1,218 @@
-:root {
-  --bg: #0e0f12;
-  --fg: #e6e6e6;
-  --muted: #9aa0a6;
-  --accent: #6b7cff;
-}
+/* =========================================
+   VECTAETOS — Web Artefact Styles
+   Canonical minimalist visual layer
+   ========================================= */
+
+/* ---------- Root & Reset ---------- */
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--fg);
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #0b0d10;
+  color: #d6d6d6;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 300;
+  overflow: hidden;
+}
+
+/* ---------- App Container ---------- */
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Canvas Layer ---------- */
+
+#field-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    #10141a 0%,
+    #0b0d10 70%
+  );
+  z-index: 1;
+}
+
+/* ---------- Overlay Layer ---------- */
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---------- Identity (corner) ---------- */
+
+#identity {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0.75;
+}
+
+#identity .label {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e2e2e2;
+}
+
+#identity .sub {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #9a9a9a;
+}
+
+/* ---------- Projection Text ---------- */
+
+#projection {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.projection-state {
+  display: none;
+  max-width: 520px;
+  padding: 24px;
+}
+
+.projection-state.active {
+  display: block;
+}
+
+/* ---------- Text Styles ---------- */
+
+.whisper {
+  font-size: 16px;
   line-height: 1.6;
+  color: #b5b5b5;
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
+.prompt {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #e0e0e0;
 }
 
-.hero {
-  margin-bottom: 4rem;
+.status {
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: #8a8a8a;
 }
 
-h1 {
-  font-size: 3rem;
-  margin: 0;
+.mirror {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #e5e5e5;
 }
 
-.subtitle {
-  color: var(--muted);
-  font-size: 1.2rem;
+.mirror .axiom {
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #ffffff;
 }
 
-h2 {
-  margin-top: 2.5rem;
-  border-bottom: 1px solid #222;
-  padding-bottom: 0.5rem;
+.explain {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #bdbdbd;
+  margin-bottom: 18px;
 }
 
-.block {
-  margin-bottom: 2.5rem;
+.closing {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #7a7a7a;
 }
 
-ul {
-  padding-left: 1.2rem;
+/* ---------- Input Layer ---------- */
+
+#input-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 13, 16, 0.85);
 }
 
-li {
-  margin: 0.4rem 0;
+#epistemic-input {
+  width: 70%;
+  max-width: 520px;
+  min-height: 120px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #555;
+  color: #e6e6e6;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
 }
 
-pre {
-  background: #14161b;
-  padding: 1rem;
-  overflow-x: auto;
-  color: var(--accent);
+#epistemic-input:focus {
+  border-bottom-color: #aaa;
 }
 
-.note {
-  color: var(--muted);
-  font-size: 0.9rem;
+.input-hint {
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #8e8e8e;
+  text-align: center;
 }
 
-a {
-  color: var(--accent);
+/* ---------- Footer ---------- */
+
+#footer {
+  position: absolute;
+  bottom: 18px;
+  right: 24px;
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+#footer a {
+  color: #9a9a9a;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+#footer a:hover {
+  color: #d0d0d0;
 }
 
-footer {
-  margin-top: 4rem;
-  font-size: 0.85rem;
-  color: var(--muted);
+/* ---------- Subtle Motion (non-intrusive) ---------- */
+
+@keyframes slowFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.projection-state.active {
+  animation: slowFade 0.6s ease-out;
 }
