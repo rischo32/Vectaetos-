@@ -1,125 +1,105 @@
 /* =========================================
-   VECTAETOS — Main UI Logic
-   Apple-style smooth orchestration
+   VECTAETOS — Main Control Logic
+   Orchestration only (no meaning, no answers)
    ========================================= */
 
-import { STATES, TRANSITIONS } from "./states.js";
-import { deriveTensionVector } from "./tension.js";
-import { applyTension, clearTension } from "./field.js";
+import { STATES, setState, getState, isInteractionConsumed } from "./states.js";
+import { computeTension } from "./tension.js";
+import { applyTension, clearTension, collapseField } from "./field.js";
 
-/* ---------- DOM REFERENCES ---------- */
+/* ---------- DOM ---------- */
 
-const projectionElements = document.querySelectorAll(".projection-state");
 const inputLayer = document.getElementById("input-layer");
 const inputField = document.getElementById("epistemic-input");
+const paywall = document.getElementById("paywall");
 
-/* ---------- CURRENT STATE ---------- */
+/* ---------- Internal Flags ---------- */
 
-let currentState = STATES.IDLE;
-let isTransitioning = false;
+let gateLocked = false;
 
-/* ---------- RENDER STATE ---------- */
+/* ---------- Helpers ---------- */
 
-function renderState(state) {
-  if (isTransitioning) return;
-  
-  projectionElements.forEach(el => {
-    el.classList.toggle("active", el.dataset.state === state);
-  });
-
-  inputLayer.hidden = state !== STATES.INPUT;
-  if (state === STATES.INPUT) {
-    setTimeout(() => {
-      inputField.focus();
-      inputField.value = "";
-    }, 100);
-  }
-
-  currentState = state;
+function openInput() {
+  inputLayer.hidden = false;
+  inputField.value = "";
+  inputField.focus();
 }
 
-/* ---------- HANDLE TRANSITION ---------- */
-
-function transitionTo(nextState) {
-  const allowed = TRANSITIONS[currentState] || [];
-  if (!allowed.includes(nextState)) return;
-
-  renderState(nextState);
-
-  // Clear tension when leaving MIRROR
-  if (currentState === STATES.MIRROR && nextState === STATES.EXPLAIN) {
-    clearTension();
-  }
+function closeInput() {
+  inputLayer.hidden = true;
+  inputField.blur();
 }
 
-/* ---------- INITIAL LOAD ---------- */
+/* ---------- Initial Flow ---------- */
 
-window.addEventListener("load", () => {
-  renderState(STATES.INVITE);
-});
+/*
+INVITE → INPUT
+User signals intent by click
+*/
 
-/* ---------- CLICK ANYWHERE (INVITE → INPUT) ---------- */
+document.addEventListener("click", () => {
+  const state = getState();
 
-let hasClickedOnce = false;
+  // First interaction: allow input
+  if (state === STATES.INVITE) {
+    setState(STATES.INPUT);
+    openInput();
+    return;
+  }
 
-document.addEventListener("click", (e) => {
-  // Ignore clicks on input layer
-  if (e.target.closest('#input-layer')) return;
-  
-  if (currentState === STATES.INVITE && !hasClickedOnce) {
-    hasClickedOnce = true;
-    transitionTo(STATES.INPUT);
+  // Any further interaction after SILENT → collapse + paywall
+  if (isInteractionConsumed() && state !== STATES.PAYWALL) {
+    triggerCollapseAndPaywall();
   }
 });
 
-/* ---------- INPUT SUBMISSION ---------- */
+/* ---------- Input Handling ---------- */
 
 inputField.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && !e.shiftKey && !isTransitioning) {
-    e.preventDefault();
+  if (e.key !== "Enter") return;
+  e.preventDefault();
 
-    const text = inputField.value.trim();
-    if (text.length < 10) {
-      return; // Too short, ignore
-    }
+  if (gateLocked) return;
 
-    isTransitioning = true;
+  const text = inputField.value.trim();
+  if (!text) return;
 
-    // Derive tension from input
-    const tensionVector = deriveTensionVector(text);
+  gateLocked = true;
+  closeInput();
 
-    // Go to gate
-    transitionTo(STATES.GATE_1);
-
-    // Stabilization delay → Mirror
-    setTimeout(() => {
-      if (tensionVector) {
-        applyTension(tensionVector);
-      }
-      transitionTo(STATES.MIRROR);
-    }, 1200);
-
-    // Mirror → Explanation
-    setTimeout(() => {
-      transitionTo(STATES.EXPLAIN);
-    }, 4500);
-
-    // Explanation → IDLE (ready for next)
-    setTimeout(() => {
-      transitionTo(STATES.IDLE);
-      isTransitioning = false;
-      hasClickedOnce = false;
-    }, 7500);
-  }
+  runGateSequence(text);
 });
 
-/* ---------- ESC KEY RETURNS TO IDLE ---------- */
+/* ---------- Gate Sequence ---------- */
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    renderState(STATES.IDLE);
-    clearTension();
-    isTransitioning = false;
-    hasClickedOnce = false;
-  }
-});
+function runGateSequence(text) {
+  // GATE 1 — Linear stabilization
+  setState(STATES.GATE_1);
+
+  setTimeout(() => {
+    // MIRROR — project tension
+    const tension = computeTension(text);
+    applyTension(tension);
+    setState(STATES.MIRROR);
+
+    // SILENT — withdraw projection
+    setTimeout(() => {
+      clearTension();
+      setState(STATES.SILENT);
+    }, 2200);
+
+  }, 900);
+}
+
+/* ---------- Collapse + Paywall ---------- */
+
+function triggerCollapseAndPaywall() {
+  setState(STATES.PAYWALL);
+
+  collapseField();
+
+  // allow visual collapse to finish before showing paywall
+  setTimeout(() => {
+    paywall.hidden = false;
+  }, 2400);
+}
