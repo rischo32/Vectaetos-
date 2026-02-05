@@ -1,882 +1,155 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>VECTAETOS — Epistemické Pole</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="VECTAETOS - Projekcia epistemického poľa. Nie odpoveď, ale lepšia otázka.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗿</text></svg>">
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-body {
-  background: #0a0a0a;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  min-height: 100vh;
-  line-height: 1.6;
-}
+  <title>VECTAETOS — Epistemic Field</title>
 
-.hero {
-  position: relative;
-  min-height: 75vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 40px 20px;
-}
+  <!-- Canonical minimalism -->
+  <meta name="description" content="Vectaetos is not a system that answers. It is a field that reveals tension." />
+  <meta name="robots" content="noindex, noarchive" />
 
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(100,200,100,0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
+  <!-- Typography: neutral, quiet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
-.graph-container {
-  position: relative;
-  width: 100%;
-  max-width: 650px;
-  aspect-ratio: 1;
-}
-
-#tension-graph {
-  width: 100%;
-  height: 100%;
-}
-
-.hero-overlay {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.hero-overlay h1 {
-  font-size: clamp(32px, 8vw, 56px);
-  font-weight: 200;
-  letter-spacing: 0.2em;
-  margin-bottom: 12px;
-  text-shadow: 0 0 40px rgba(0,0,0,0.9);
-}
-
-.hero-overlay .tagline {
-  font-size: 14px;
-  color: #888;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(0,0,0,0.9);
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 60px 20px;
-}
-
-.instruction {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 48px;
-  position: relative;
-  overflow: hidden;
-}
-
-.instruction::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(100,200,100,0.5), transparent);
-}
-
-.instruction h2 {
-  font-size: 24px;
-  font-weight: 300;
-  margin-bottom: 20px;
-  color: #6c6;
-}
-
-.instruction p {
-  color: #aaa;
-  margin-bottom: 16px;
-}
-
-.instruction strong {
-  color: #fff;
-  font-weight: 500;
-}
-
-.highlight {
-  display: inline-block;
-  padding: 2px 8px;
-  background: rgba(100,200,100,0.1);
-  border-radius: 4px;
-  color: #6c6;
-  font-weight: 500;
-}
-
-.query-section {
-  margin-bottom: 40px;
-}
-
-.query-label {
-  display: block;
-  margin-bottom: 12px;
-  color: #888;
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-textarea {
-  width: 100%;
-  min-height: 140px;
-  padding: 20px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  color: #fff;
-  font-size: 16px;
-  font-family: inherit;
-  line-height: 1.6;
-  resize: vertical;
-  transition: all 0.3s;
-}
-
-textarea:focus {
-  outline: none;
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(100,200,100,0.4);
-  box-shadow: 0 0 0 3px rgba(100,200,100,0.1);
-}
-
-textarea::placeholder {
-  color: #444;
-}
-
-button {
-  width: 100%;
-  padding: 18px;
-  background: rgba(100,200,100,0.15);
-  border: 1px solid rgba(100,200,100,0.3);
-  border-radius: 12px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(100,200,100,0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-button:hover:not(:disabled)::before {
-  width: 300%;
-  height: 300%;
-}
-
-button:hover:not(:disabled) {
-  border-color: rgba(100,200,100,0.5);
-  box-shadow: 0 0 20px rgba(100,200,100,0.2);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-button span {
-  position: relative;
-  z-index: 1;
-}
-
-.projection-result {
-  display: none;
-  margin-top: 60px;
-  padding: 40px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(100,200,100,0.2);
-  border-radius: 16px;
-  position: relative;
-}
-
-.projection-result::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(100,200,100,0.6), transparent);
-}
-
-.projection-result.show {
-  display: block;
-  animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.projection-result h3 {
-  font-size: 28px;
-  font-weight: 300;
-  margin-bottom: 32px;
-  color: #6c6;
-  text-align: center;
-}
-
-.tension-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.tension-card {
-  padding: 20px;
-  background: rgba(255,255,255,0.02);
-  border-left: 3px solid;
-  border-radius: 8px;
-  transition: all 0.3s;
-}
-
-.tension-card:hover {
-  background: rgba(255,255,255,0.04);
-  transform: translateX(4px);
-}
-
-.tension-card .name {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: 0.05em;
-}
-
-.tension-card .label {
-  font-size: 12px;
-  color: #888;
-  margin-bottom: 12px;
-}
-
-.tension-card .bar {
-  height: 4px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.tension-card .bar-fill {
-  height: 100%;
-  background: currentColor;
-  border-radius: 2px;
-  width: 0%;
-  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.projection-text {
-  padding: 32px;
-  background: rgba(0,0,0,0.4);
-  border-radius: 12px;
-  border-left: 4px solid rgba(100,200,100,0.4);
-  margin-bottom: 24px;
-}
-
-.projection-text p {
-  font-size: 16px;
-  line-height: 1.9;
-  color: #ccc;
-  margin-bottom: 16px;
-}
-
-.projection-text p:last-child {
-  margin-bottom: 0;
-}
-
-.projection-text em {
-  color: #6c6;
-  font-style: normal;
-  font-weight: 500;
-}
-
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.actions button.secondary {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.15);
-}
-
-.payment-notice {
-  margin-top: 24px;
-  padding: 20px;
-  background: rgba(255,200,100,0.05);
-  border: 1px solid rgba(255,200,100,0.2);
-  border-radius: 12px;
-  text-align: center;
-  font-size: 14px;
-  color: #aaa;
-}
-
-.payment-notice strong {
-  color: #fff;
-}
-
-.payment-notice a {
-  color: #6c6;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(100,200,100,0.3);
-}
-
-.payment-notice a:hover {
-  border-bottom-color: #6c6;
-}
-
-footer {
-  text-align: center;
-  padding: 60px 20px;
-  color: #444;
-  font-size: 13px;
-}
-
-footer a {
-  color: #666;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-footer a:hover {
-  color: #6c6;
-}
-
-footer .links {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-footer .references {
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  font-size: 12px;
-  color: #555;
-  line-height: 1.8;
-}
-
-footer .references a {
-  color: #666;
-  border-bottom: 1px solid rgba(100,100,100,0.3);
-}
-
-footer .references a:hover {
-  color: #6c6;
-  border-bottom-color: #6c6;
-}
-
-footer .copyright {
-  opacity: 0.5;
-  margin-top: 16px;
-}
-
-@media (max-width: 768px) {
-  .hero {
-    min-height: 50vh;
-  }
-  
-  .tension-cards {
-    grid-template-columns: 1fr;
-  }
-  
-  .actions {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-<section class="hero">
-  <div class="graph-container">
-    <svg id="tension-graph" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-      
-      <g id="connections"></g>
-      
-      <g id="nodes">
-        <g class="axiom-node" data-axiom="VER" data-x="300" data-y="50">
-          <circle cx="300" cy="50" r="15" class="glow-circle" fill="#33ccff" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="300" cy="50" r="10" class="main-circle" fill="#33ccff" opacity="0.6"/>
-          <text x="300" y="30" text-anchor="middle" fill="#33ccff" font-size="12" font-weight="600">VER</text>
-        </g>
-        
-        <g class="axiom-node" data-axiom="LEX" data-x="480" data-y="150">
-          <circle cx="480" cy="150" r="15" class="glow-circle" fill="#ffaa00" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="480" cy="150" r="10" class="main-circle" fill="#ffaa00" opacity="0.6"/>
-          <text x="510" y="155" text-anchor="start" fill="#ffaa00" font-size="12" font-weight="600">LEX</text>
-        </g>
-        
-        <g class="axiom-node" data-axiom="LIB" data-x="530" data-y="300">
-          <circle cx="530" cy="300" r="15" class="glow-circle" fill="#66ff66" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="530" cy="300" r="10" class="main-circle" fill="#66ff66" opacity="0.6"/>
-          <text x="555" y="305" text-anchor="start" fill="#66ff66" font-size="12" font-weight="600">LIB</text>
-        </g>
-        
-        <g class="axiom-node" data-axiom="CRE" data-x="480" data-y="450">
-          <circle cx="480" cy="450" r="15" class="glow-circle" fill="#ff8800" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="480" cy="450" r="10" class="main-circle" fill="#ff8800" opacity="0.6"/>
-          <text x="510" y="455" text-anchor="start" fill="#ff8800" font-size="12" font-weight="600">CRE</text>
-        </g>
-        
-        <g class="axiom-node" data-axiom="WIS" data-x="300" data-y="550">
-          <circle cx="300" cy="550" r="15" class="glow-circle" fill="#ff44aa" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="300" cy="550" r="10" class="main-circle" fill="#ff44aa" opacity="0.6"/>
-          <text x="300" y="575" text-anchor="middle" fill="#ff44aa" font-size="12" font-weight="600">WIS</text>
-        </g>
-        
-        <g class="axiom-node" data-axiom="REL" data-x="120" data-y="450">
-          <circle cx="120" cy="450" r="15" class="glow-circle" fill="#ff4444" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="120" cy="450" r="10" class="main-circle" fill="#ff4444" opacity="0.6"/>
-          <text x="90" y="455" text-anchor="end" fill="#ff4444" font-size="12" font-weight="600">REL</text>
-        </g>
-        
-        <g class="axiom-node" data-axiom="UNI" data-x="70" data-y="300">
-          <circle cx="70" cy="300" r="15" class="glow-circle" fill="#aa66ff" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="70" cy="300" r="10" class="main-circle" fill="#aa66ff" opacity="0.6"/>
-          <text x="45" y="305" text-anchor="end" fill="#aa66ff" font-size="12" font-weight="600">UNI</text>
-        </g>
-        
-        <g class="axiom-node" data-axiom="INT" data-x="120" data-y="150">
-          <circle cx="120" cy="150" r="15" class="glow-circle" fill="#ff5555" opacity="0.3" filter="url(#glow)"/>
-          <circle cx="120" cy="150" r="10" class="main-circle" fill="#ff5555" opacity="0.6"/>
-          <text x="90" y="155" text-anchor="end" fill="#ff5555" font-size="12" font-weight="600">INT</text>
-        </g>
-      </g>
-    </svg>
-  </div>
-  
-  <div class="hero-overlay">
-    <h1>VECTAETOS</h1>
-    <div class="tagline">Kde prestávajú slová, sú vzťahy</div>
-  </div>
-</section>
+  <!-- =========================
+       ROOT CONTAINER
+       ========================= -->
+  <div id="app">
 
-<div class="container">
-  
-  <div class="instruction">
-    <h2>Toto nie je AI chatbot</h2>
-    <p>
-      Toto je <span class="highlight">projekcia epistemického poľa</span> 
-      vo vzťahu k tvojej otázke.
-    </p>
-    <p>
-      Neplatíš za odpoveď.<br>
-      Platíš za <strong>videnie napätia</strong> medzi axiómami poľa a tvojím problémom.
-    </p>
-    <p>
-      Často najlepšia odpoveď nie je riešenie —<br>
-      je to <strong>lepšia otázka</strong>.
-    </p>
-  </div>
+    <!-- =========================
+         CANVAS LAYER
+         Primary epistemic projection
+         ========================= -->
+    <canvas id="field-canvas"></canvas>
 
-  <div class="query-section">
-    <label class="query-label">Sem vpíšte svoj problém</label>
-    <textarea 
-      id="query" 
-      placeholder="..."
-    ></textarea>
-  </div>
+    <!-- =========================
+         OVERLAY LAYER
+         Text is secondary, never central
+         ========================= -->
+    <div id="overlay">
 
-  <button id="submit-btn">
-    <span>Vložiť do poľa</span>
-  </button>
-
-  <div id="projection-result" class="projection-result">
-    <h3>Projekcia poľa</h3>
-    
-    <div id="tension-cards" class="tension-cards">
-      <!-- Dynamically populated -->
-    </div>
-
-    <div id="projection-text" class="projection-text">
-      <!-- Dynamically populated -->
-    </div>
-
-    <div class="actions">
-      <button id="new-query-btn" class="secondary">
-        <span>🔄 Nová otázka</span>
-      </button>
-      <button id="download-btn">
-        <span>💾 Stiahnuť PDF</span>
-      </button>
-    </div>
-
-    <div class="payment-notice">
-      <p>
-        <strong>Páči sa ti projekcia?</strong> Podporte rozvoj VECTAETOS:<br>
-        <a href="https://revolut.me/fonfararichard" target="_blank">revolut.me/fonfararichard</a>
-      </p>
-    </div>
-  </div>
-
-</div>
-
-<footer>
-  <div class="links">
-    <a href="https://github.com/rischo32/Vectaetos" target="_blank">GitHub</a>
-    <a href="docs.html">Dokumentácia</a>
-    <a href="mailto:contact@vectaetos.eu">Kontakt</a>
-  </div>
-  
-  <div class="references">
-    <strong>Research & Citation:</strong><br>
-    DOI: <a href="https://doi.org/10.5281/zenodo.18395048" target="_blank">10.5281/zenodo.18395048</a>
-  </div>
-  
-  <div class="copyright">
-    © 2026 Richard Fonfára. Vectaetos © Framework. All rights reserved.<br>
-    Pole sa stále stáva. A ty tiež.
-  </div>
-</footer>
-
-<script>
-// ========== AXIOM DATA ==========
-const AXIOMS = {
-  'VER': { color: '#33ccff', label: 'Verifikovateľnosť', x: 300, y: 50 },
-  'LEX': { color: '#ffaa00', label: 'Lexikálna koherencia', x: 480, y: 150 },
-  'LIB': { color: '#66ff66', label: 'Sloboda', x: 530, y: 300 },
-  'CRE': { color: '#ff8800', label: 'Kreativita', x: 480, y: 450 },
-  'WIS': { color: '#ff44aa', label: 'Múdrosť', x: 300, y: 550 },
-  'REL': { color: '#ff4444', label: 'Relačnosť', x: 120, y: 450 },
-  'UNI': { color: '#aa66ff', label: 'Univerzálnosť', x: 70, y: 300 },
-  'INT': { color: '#ff5555', label: 'Integrita', x: 120, y: 150 }
-};
-
-// ========== TENSION CALCULATION ==========
-function calculateTensions(queryText) {
-  const query = queryText.toLowerCase();
-  
-  let tensions = {
-    'INT': 0.50,
-    'LEX': 0.50,
-    'VER': 0.50,
-    'LIB': 0.50,
-    'UNI': 0.50,
-    'REL': 0.50,
-    'WIS': 0.50,
-    'CRE': 0.50
-  };
-  
-  // Uncertainty patterns
-  if (/(neviem|neistota|uncertain|don't know|confused)/i.test(query)) {
-    tensions.WIS = 0.85;
-    tensions.VER = 0.30;
-  }
-  
-  // Conflict/problem patterns
-  if (/(problém|konflikt|problem|issue|struggle|rozhodnutie)/i.test(query)) {
-    tensions.REL = 0.75;
-    tensions.INT = 0.65;
-  }
-  
-  // Business/work patterns
-  if (/(firma|business|práca|work|company|startup)/i.test(query)) {
-    tensions.CRE = 0.70;
-    tensions.LEX = 0.55;
-    tensions.LIB = 0.60;
-  }
-  
-  // Decision/choice patterns
-  if (/(rozhodnutie|decision|choice|voľba|choose)/i.test(query)) {
-    tensions.LIB = 0.80;
-    tensions.WIS = 0.75;
-  }
-  
-  // Relationship patterns
-  if (/(vzťah|relationship|ľudia|people|partner|rodina|family)/i.test(query)) {
-    tensions.REL = 0.85;
-    tensions.UNI = 0.70;
-  }
-  
-  // Identity/purpose patterns
-  if (/(kto som|who am i|identity|zmysel|meaning|purpose|poslanie)/i.test(query)) {
-    tensions.INT = 0.90;
-    tensions.UNI = 0.75;
-    tensions.WIS = 0.70;
-  }
-  
-  // Expression/communication patterns
-  if (/(vysvetliť|explain|povedať|say|komunikácia|communication)/i.test(query)) {
-    tensions.LEX = 0.80;
-    tensions.VER = 0.70;
-  }
-  
-  return tensions;
-}
-
-// ========== PROJECTION GENERATION ==========
-function generateProjection(queryText, tensions) {
-  const sorted = Object.entries(tensions).sort((a, b) => b[1] - a[1]);
-  const highest = sorted[0];
-  const lowest = sorted[sorted.length - 1];
-  const secondHighest = sorted[1];
-  
-  const highAxiom = AXIOMS[highest[0]];
-  const lowAxiom = AXIOMS[lowest[0]];
-  const secondAxiom = AXIOMS[secondHighest[0]];
-  
-  let lines = [];
-  
-  // Opening line
-  lines.push(
-    `Pole detekuje <em>silné napätie</em> medzi ${highAxiom.label.toUpperCase()} (${Math.round(highest[1]*100)}%) ` +
-    `a ${lowAxiom.label.toUpperCase()} (${Math.round(lowest[1]*100)}%).`
-  );
-  
-  // Interpretation based on highest tension
-  if (highest[0] === 'WIS' && lowest[0] === 'VER') {
-    lines.push(
-      'Vieš čo by si mal urobiť, ale nevieš ako to dokázať sebe alebo ostatným.'
-    );
-  } else if (highest[0] === 'INT' && tensions.UNI > 0.7) {
-    lines.push(
-      'Hľadáš autentickosť, ale nevieš kde patrí.'
-    );
-  } else if (highest[0] === 'REL') {
-    lines.push(
-      'Problém nie je v tebe. Je vo vzťahoch okolo teba.'
-    );
-  } else if (highest[0] === 'LIB') {
-    lines.push(
-      'Máš možnosti, ale nevieš sa rozhodnúť. Možno preto, lebo žiadna nie je tá pravá.'
-    );
-  } else if (highest[0] === 'LEX') {
-    lines.push(
-      'Problém nie je nejasný. Len nevieš ako ho pomenovať.'
-    );
-  } else if (highest[0] === 'CRE') {
-    lines.push(
-      'Existujúce riešenia ti nestačia. Potrebuješ vytvoriť nové.'
-    );
-  } else {
-    lines.push(
-      'Tvoj problém má viac vrstiev než sa zdá.'
-    );
-  }
-  
-  // Core insight
-  lines.push(
-    'Tvoj problém nie je v odpovedi. Je v otázke, ktorú si ešte nepoložil.'
-  );
-  
-  // Suggested reframe
-  const reframes = {
-    'WIS': '"Čo viem, ale bojím sa tomu veriť?"',
-    'VER': '"Ako môžem ukázať to, čo cítim?"',
-    'INT': '"Kedy som naposledy bol skutočne ja sám?"',
-    'REL': '"Čo by sa stalo, keby som odišiel?"',
-    'LEX': '"Ako by som to vysvetlil päťročnému dieťaťu?"',
-    'LIB': '"Čo by som urobil, keby nebol žiadny správny výber?"',
-    'CRE': '"A čo keby to vôbec nešlo tak ako doteraz?"',
-    'UNI': '"Kde je moje miesto v tomto všetkom?"'
-  };
-  
-  lines.push(
-    `Skús sa opýtať: <em>${reframes[highest[0]] || '"Prečo sa na to takto pozerám?"'}</em>`
-  );
-  
-  return lines;
-}
-
-// ========== GRAPH INITIALIZATION ==========
-function initGraph() {
-  const connectionsGroup = document.getElementById('connections');
-  const axiomKeys = Object.keys(AXIOMS);
-  
-  for (let i = 0; i < axiomKeys.length; i++) {
-    for (let j = i + 1; j < axiomKeys.length; j++) {
-      const a1 = AXIOMS[axiomKeys[i]];
-      const a2 = AXIOMS[axiomKeys[j]];
-      
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', a1.x);
-      line.setAttribute('y1', a1.y);
-      line.setAttribute('x2', a2.x);
-      line.setAttribute('y2', a2.y);
-      line.setAttribute('stroke', '#222');
-      line.setAttribute('stroke-width', '1');
-      line.setAttribute('opacity', '0.3');
-      
-      connectionsGroup.appendChild(line);
-    }
-  }
-}
-
-// ========== GRAPH UPDATE ==========
-function updateGraph(tensions) {
-  Object.keys(tensions).forEach(axiomKey => {
-    const node = document.querySelector(`.axiom-node[data-axiom="${axiomKey}"]`);
-    if (!node) return;
-    
-    const intensity = tensions[axiomKey];
-    const glowCircle = node.querySelector('.glow-circle');
-    const mainCircle = node.querySelector('.main-circle');
-    
-    glowCircle.setAttribute('r', 15 + intensity * 25);
-    glowCircle.setAttribute('opacity', 0.2 + intensity * 0.4);
-    
-    mainCircle.setAttribute('r', 10 + intensity * 8);
-    mainCircle.setAttribute('opacity', 0.5 + intensity * 0.5);
-    
-    glowCircle.style.transition = 'all 1s cubic-bezier(0.16, 1, 0.3, 1)';
-    mainCircle.style.transition = 'all 1s cubic-bezier(0.16, 1, 0.3, 1)';
-  });
-}
-
-// ========== DISPLAY RESULTS ==========
-function displayResults(tensions, projectionLines) {
-  // Show result container
-  const resultDiv = document.getElementById('projection-result');
-  resultDiv.classList.add('show');
-  
-  // Render tension cards
-  const cardsContainer = document.getElementById('tension-cards');
-  cardsContainer.innerHTML = '';
-  
-  Object.entries(tensions).forEach(([axiom, value]) => {
-    const axiomData = AXIOMS[axiom];
-    const card = document.createElement('div');
-    card.className = 'tension-card';
-    card.style.borderColor = axiomData.color;
-    card.style.color = axiomData.color;
-    
-    card.innerHTML = `
-      <div class="name">${axiom}</div>
-      <div class="label">${axiomData.label}</div>
-      <div class="bar">
-        <div class="bar-fill"></div>
+      <!-- Corner identity (persistent, quiet) -->
+      <div id="identity">
+        <span class="label">Vectaetos</span>
+        <span class="sub">Epistemic Field</span>
       </div>
-    `;
-    
-    cardsContainer.appendChild(card);
-    
-    // Animate bar
-    setTimeout(() => {
-      const fill = card.querySelector('.bar-fill');
-      fill.style.width = (value * 100) + '%';
-    }, 100);
-  });
-  
-  // Render projection text
-  const textContainer = document.getElementById('projection-text');
-  textContainer.innerHTML = '';
-  
-  projectionLines.forEach(line => {
-    const p = document.createElement('p');
-    p.innerHTML = line;
-    textContainer.appendChild(p);
-  });
-  
-  // Scroll to result
-  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
-// ========== EVENT HANDLERS ==========
-document.getElementById('submit-btn').addEventListener('click', () => {
-  const query = document.getElementById('query').value.trim();
-  
-  if (!query) {
-    alert('Prosím napíš svoj problém.');
-    return;
-  }
-  
-  if (query.length < 20) {
-    alert('Problém je príliš krátky. Napíš aspoň pár viet aby pole mohlo dobre reagovať.');
-    return;
-  }
-  
-  // Calculate tensions
-  const tensions = calculateTensions(query);
-  
-  // Generate projection
-  const projectionLines = generateProjection(query, tensions);
-  
-  // Update graph
-  updateGraph(tensions);
-  
-  // Display results
-  displayResults(tensions, projectionLines);
-  
-  // Store for later
-  localStorage.setItem('vectaetos_last_query', query);
-  localStorage.setItem('vectaetos_last_tensions', JSON.stringify(tensions));
-  localStorage.setItem('vectaetos_last_projection', JSON.stringify(projectionLines));
-});
+      <!-- Dynamic textual projection (state-driven) -->
+      <div id="projection">
 
-document.getElementById('new-query-btn').addEventListener('click', () => {
-  document.getElementById('query').value = '';
-  document.getElementById('projection-result').classList.remove('show');
-  document.getElementById('query').focus();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+        <!-- STATE: ORIENTATION -->
+        <div class="projection-state" data-state="IDLE">
+          <!-- intentionally empty -->
+        </div>
 
-document.getElementById('download-btn').addEventListener('click', () => {
-  alert('PDF export funkcionalita príde čoskoro! Zatiaľ môžeš urobiť screenshot projekcie.');
-  // TODO: Implement PDF generation
-});
+        <!-- STATE: INVITE -->
+        <div class="projection-state" data-state="INVITE">
+          <p class="whisper">
+            Neodpovedáme.<br />
+            Ukazujeme, kde je napätie.
+          </p>
+        </div>
 
-// ========== INITIALIZE ==========
-window.addEventListener('DOMContentLoaded', () => {
-  initGraph();
-});
-</script>
+        <!-- STATE: INPUT -->
+        <div class="projection-state" data-state="INPUT">
+          <p class="prompt">
+            Čo sa ti rúca,<br />
+            aj keď máš všetky informácie?
+          </p>
+        </div>
+
+        <!-- STATE: GATE_1 -->
+        <div class="projection-state" data-state="GATE_1">
+          <p class="status">
+            Stabilizácia významu…
+          </p>
+        </div>
+
+        <!-- STATE: GATE_2 -->
+        <div class="projection-state" data-state="GATE_2">
+          <!-- no text by design -->
+        </div>
+
+        <!-- STATE: GATE_3 -->
+        <div class="projection-state" data-state="GATE_3">
+          <!-- no text by design -->
+        </div>
+
+        <!-- STATE: MIRROR -->
+        <div class="projection-state" data-state="MIRROR">
+          <p class="mirror">
+            Napätie nie je v odpovedi.<br />
+            Je medzi <span class="axiom">Σᵢ</span> a <span class="axiom">Σⱼ</span>.
+          </p>
+        </div>
+
+        <!-- STATE: SILENT -->
+        <div class="projection-state" data-state="SILENT">
+          <!-- silence is a valid output -->
+        </div>
+
+        <!-- STATE: EXPLAIN (optional) -->
+        <div class="projection-state" data-state="EXPLAIN">
+          <p class="explain">
+            Jedno ťažisko drží stabilitu.<br />
+            Druhé vyžaduje zmenu.<br /><br />
+            Pole ich nedokáže zosúladiť<br />
+            bez straty koherencie.
+          </p>
+          <p class="closing">
+            Pole sa zatvára.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================
+         INPUT LAYER
+         Activated only once
+         ========================= -->
+    <div id="input-layer" hidden>
+      <textarea
+        id="epistemic-input"
+        rows="5"
+        maxlength="500"
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        placeholder=""
+      ></textarea>
+      <div class="input-hint">
+        Nepíš riešenie.<br />
+        Popíš stav.
+      </div>
+    </div>
+
+    <!-- =========================
+         FOOTER / EXIT
+         ========================= -->
+    <div id="footer">
+      <a href="https://github.com/rischo32/Vectaetos" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://zenodo.org" target="_blank" rel="noopener">Zenodo</a>
+    </div>
+
+  </div>
+
+  <!-- =========================
+       SCRIPTS (order matters)
+       ========================= -->
+  <script src="states.js"></script>
+  <script src="field.js"></script>
+  <script src="main.js"></script>
 
 </body>
 </html>
