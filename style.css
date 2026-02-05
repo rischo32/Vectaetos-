@@ -1,43 +1,45 @@
-/* =================================================
-   VECTAETOS — APPLE STYLE BLACK FIELD
-   Minimalist epistemic projection
-   ================================================= */
+/* =========================================
+   VECTAETOS — Global Styles
+   Black Field / Apple-like Typography
+   ========================================= */
 
-* {
+/* ---------- RESET ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-html, body {
+/* ---------- ROOT ---------- */
+
+html,
+body {
   width: 100%;
   height: 100%;
   background: #000000;
-  color: #e5e5e7;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif;
-  overflow: hidden;
-  
-  /* Apple-style font rendering */
+  color: #d0d0d0;
+  font-family: -apple-system, BlinkMacSystemFont,
+               "SF Pro Text", "SF Pro Display",
+               "Inter", "Helvetica Neue",
+               Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: "kern" 1;
-  font-kerning: normal;
+  overflow: hidden;
 }
 
-/* -------------------------------------------------
-   APP ROOT
-   ------------------------------------------------- */
+/* ---------- APP WRAPPER ---------- */
 
 #app {
   position: relative;
   width: 100%;
   height: 100%;
+  background: #000000;
 }
 
-/* -------------------------------------------------
-   CANVAS LAYER
-   ------------------------------------------------- */
+/* ---------- CANVAS ---------- */
 
 #field-canvas {
   position: absolute;
@@ -45,292 +47,204 @@ html, body {
   width: 100%;
   height: 100%;
   background: #000000;
-  z-index: 1;
+  z-index: 0;
 }
 
-/* -------------------------------------------------
-   OVERLAY LAYER
-   ------------------------------------------------- */
+/* ---------- OVERLAY LAYER ---------- */
 
 #overlay {
   position: absolute;
   inset: 0;
-  z-index: 2;
   pointer-events: none;
+  z-index: 2;
 }
 
-/* -------------------------------------------------
-   IDENTITY (corner signature)
-   ------------------------------------------------- */
+/* ---------- IDENTITY ---------- */
 
 #identity {
   position: absolute;
-  top: 28px;
-  left: 32px;
-  opacity: 0.65;
-  transition: opacity 0.3s ease;
-}
-
-#identity:hover {
-  opacity: 0.9;
+  top: 24px;
+  left: 28px;
+  line-height: 1.2;
 }
 
 #identity .label {
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: #d2d2d7;
-  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #b0b0b0;
 }
 
 #identity .sub {
   font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  color: #86868b;
-  margin-top: 2px;
+  letter-spacing: 0.12em;
+  color: #666666;
+  margin-top: 4px;
 }
 
-/* -------------------------------------------------
-   PROJECTION STATES
-   ------------------------------------------------- */
+/* ---------- PROJECTION STATES ---------- */
 
 #projection {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  padding: 0 24px;
+  max-width: 90%;
 }
 
 .projection-state {
   display: none;
-  max-width: 620px;
-  padding: 24px;
 }
 
 .projection-state.active {
   display: block;
-  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* -------------------------------------------------
-   TEXT VARIANTS
-   ------------------------------------------------- */
+/* ---------- TEXT STYLES ---------- */
 
 .whisper {
-  font-size: 19px;
-  font-weight: 400;
-  color: #a1a1a6;
+  font-size: 18px;
   line-height: 1.6;
-  letter-spacing: -0.01em;
+  color: #8a8a8a;
+  letter-spacing: 0.01em;
 }
 
 .prompt {
-  font-size: 24px;
-  font-weight: 500;
-  color: #f5f5f7;
+  font-size: 20px;
   line-height: 1.5;
-  letter-spacing: -0.02em;
+  color: #d6d6d6;
+  letter-spacing: 0.01em;
 }
 
 .status {
-  font-size: 15px;
-  font-weight: 400;
-  color: #86868b;
-  letter-spacing: 0.01em;
-}
-
-.mirror {
-  font-size: 20px;
-  font-weight: 500;
-  color: #f5f5f7;
-  line-height: 1.5;
-  letter-spacing: -0.015em;
-}
-
-.axiom {
-  font-weight: 600;
+  font-size: 14px;
+  color: #777777;
   letter-spacing: 0.04em;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 2px 8px;
-  border-radius: 4px;
 }
 
-.explain {
-  font-size: 16px;
-  font-weight: 400;
-  color: #c7c7cc;
-  line-height: 1.6;
-  letter-spacing: -0.01em;
-}
-
-.closing {
-  margin-top: 16px;
-  font-size: 13px;
-  font-weight: 400;
-  color: #86868b;
-  letter-spacing: 0.01em;
-}
-
-/* -------------------------------------------------
-   INPUT LAYER
-   ------------------------------------------------- */
+/* ---------- INPUT LAYER ---------- */
 
 #input-layer {
   position: absolute;
   inset: 0;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 24px;
-  transition: opacity 0.3s ease;
+  background: rgba(0, 0, 0, 0.65);
 }
 
 #epistemic-input {
-  width: 100%;
+  width: 80%;
   max-width: 640px;
-  min-height: 140px;
+  min-height: 120px;
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid #3a3a3c;
-  color: #f5f5f7;
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: -0.01em;
   outline: none;
   resize: none;
-  padding: 12px 0;
-  transition: border-color 0.3s ease;
-  
-  /* Apple textarea styling */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: #e0e0e0;
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: inherit;
+  text-align: center;
 }
 
-#epistemic-input::placeholder {
-  color: #6e6e73;
-}
-
-#epistemic-input:focus {
-  border-bottom-color: #86868b;
+#epistemic-input::selection {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .input-hint {
   margin-top: 16px;
-  font-size: 13px;
-  font-weight: 400;
-  color: #86868b;
+  font-size: 12px;
+  color: #6a6a6a;
+  letter-spacing: 0.04em;
   text-align: center;
-  letter-spacing: 0.01em;
 }
 
-/* -------------------------------------------------
-   FOOTER LINKS
-   ------------------------------------------------- */
+/* ---------- FOOTER ---------- */
 
 #footer {
   position: absolute;
-  bottom: 24px;
-  right: 32px;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  opacity: 0.5;
+  bottom: 18px;
+  right: 24px;
   z-index: 2;
-  transition: opacity 0.3s ease;
-}
-
-#footer:hover {
-  opacity: 0.8;
+  display: flex;
+  gap: 18px;
 }
 
 #footer a {
-  color: #86868b;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #666666;
   text-decoration: none;
-  margin-left: 16px;
-  transition: color 0.2s ease;
 }
 
 #footer a:hover {
-  color: #d2d2d7;
+  color: #aaaaaa;
 }
 
-/* -------------------------------------------------
-   ANIMATIONS
-   ------------------------------------------------- */
+/* ---------- PAYWALL ---------- */
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+#paywall {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* -------------------------------------------------
-   RESPONSIVE
-   ------------------------------------------------- */
+.paywall-content {
+  text-align: center;
+  max-width: 520px;
+  padding: 28px;
+}
 
-@media (max-width: 768px) {
-  #identity {
-    top: 20px;
-    left: 20px;
-  }
+.paywall-text {
+  font-size: 18px;
+  color: #d0d0d0;
+  margin-bottom: 12px;
+}
 
-  #identity .label {
-    font-size: 12px;
-  }
+.paywall-subtext {
+  font-size: 14px;
+  color: #8a8a8a;
+  margin-bottom: 28px;
+}
 
-  #identity .sub {
-    font-size: 10px;
-  }
+.paywall-link {
+  font-size: 16px;
+  color: #e6e6e6;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+}
 
-  .whisper {
+.paywall-link:hover {
+  color: #ffffff;
+}
+
+.paywall-footnote {
+  margin-top: 22px;
+  font-size: 11px;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 600px) {
+  .prompt {
     font-size: 17px;
   }
 
-  .prompt {
-    font-size: 21px;
-  }
-
-  .mirror {
-    font-size: 18px;
-  }
-
-  .explain {
-    font-size: 15px;
-  }
-
-  #epistemic-input {
+  .whisper {
     font-size: 16px;
   }
 
-  #footer {
-    bottom: 20px;
-    right: 20px;
-    font-size: 10px;
-  }
-}
-
-/* -------------------------------------------------
-   SAFARI-SPECIFIC OPTIMIZATIONS
-   ------------------------------------------------- */
-
-@supports (-webkit-backdrop-filter: blur(20px)) {
-  #input-layer {
-    background: rgba(0, 0, 0, 0.88);
+  #epistemic-input {
+    width: 90%;
+    font-size: 15px;
   }
 }
