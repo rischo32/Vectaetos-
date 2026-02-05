@@ -1,6 +1,6 @@
 /* =================================================
-   VECTAETOS — DEEP BLACK FIELD CSS
-   Maximálne tmavá estetika
+   VECTAETOS — APPLE STYLE BLACK FIELD
+   Minimalist epistemic projection
    ================================================= */
 
 * {
@@ -12,13 +12,22 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #000000;   /* Pure black */
-  color: #bbbbbb;        /* Soft grey */
-  font-family: 'Inter', sans-serif;
+  background: #000000;
+  color: #e5e5e7;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif;
   overflow: hidden;
+  
+  /* Apple-style font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
 }
 
-/* ---------- ROOT CONTAINER ---------- */
+/* -------------------------------------------------
+   APP ROOT
+   ------------------------------------------------- */
 
 #app {
   position: relative;
@@ -26,18 +35,22 @@ html, body {
   height: 100%;
 }
 
-/* ---------- CANVAS ---------- */
+/* -------------------------------------------------
+   CANVAS LAYER
+   ------------------------------------------------- */
 
 #field-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background: #000000;  /* Pure black canvas */
+  background: #000000;
   z-index: 1;
 }
 
-/* ---------- OVERLAY LAYER ---------- */
+/* -------------------------------------------------
+   OVERLAY LAYER
+   ------------------------------------------------- */
 
 #overlay {
   position: absolute;
@@ -46,29 +59,41 @@ html, body {
   pointer-events: none;
 }
 
-/* Identity (corner text) */
+/* -------------------------------------------------
+   IDENTITY (corner signature)
+   ------------------------------------------------- */
 
 #identity {
   position: absolute;
-  top: 16px;
-  left: 22px;
-  opacity: 0.75;
+  top: 28px;
+  left: 32px;
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+#identity:hover {
+  opacity: 0.9;
 }
 
 #identity .label {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: #aaaaaa;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #d2d2d7;
   text-transform: uppercase;
 }
 
 #identity .sub {
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
-  color: #666666;
+  color: #86868b;
+  margin-top: 2px;
 }
 
-/* ---------- PROJECTION TEXT ---------- */
+/* -------------------------------------------------
+   PROJECTION STATES
+   ------------------------------------------------- */
 
 #projection {
   position: absolute;
@@ -77,120 +102,235 @@ html, body {
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 0 24px;
 }
 
 .projection-state {
   display: none;
-  max-width: 600px;
-  padding: 16px;
+  max-width: 620px;
+  padding: 24px;
 }
 
 .projection-state.active {
   display: block;
-  animation: fadeIn 0.4s ease-out;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Text variants */
+/* -------------------------------------------------
+   TEXT VARIANTS
+   ------------------------------------------------- */
 
 .whisper {
-  font-size: 16px;
-  color: #9d9d9d;
+  font-size: 19px;
+  font-weight: 400;
+  color: #a1a1a6;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
 }
 
 .prompt {
-  font-size: 20px;
-  color: #d0d0d0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #f5f5f7;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
 }
 
 .status {
-  font-size: 13px;
-  color: #717171;
+  font-size: 15px;
+  font-weight: 400;
+  color: #86868b;
+  letter-spacing: 0.01em;
 }
 
 .mirror {
-  font-size: 17px;
-  color: #e2e2e2;
+  font-size: 20px;
+  font-weight: 500;
+  color: #f5f5f7;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
 }
 
 .axiom {
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
 }
 
 .explain {
-  font-size: 14px;
-  color: #c2c2c2;
+  font-size: 16px;
+  font-weight: 400;
+  color: #c7c7cc;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
 }
 
 .closing {
-  margin-top: 10px;
-  font-size: 11px;
-  color: #737373;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #86868b;
+  letter-spacing: 0.01em;
 }
 
-/* ---------- INPUT LAYER ---------- */
+/* -------------------------------------------------
+   INPUT LAYER
+   ------------------------------------------------- */
 
 #input-layer {
   position: absolute;
   inset: 0;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.9);  /* very dark overlay */
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0 24px;
+  transition: opacity 0.3s ease;
 }
 
 #epistemic-input {
-  width: 74%;
-  max-width: 600px;
+  width: 100%;
+  max-width: 640px;
   min-height: 140px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #444444;
-  color: #dddddd;
-  font-size: 15px;
+  border-bottom: 1.5px solid #3a3a3c;
+  color: #f5f5f7;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
   outline: none;
   resize: none;
+  padding: 12px 0;
+  transition: border-color 0.3s ease;
+  
+  /* Apple textarea styling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#epistemic-input::placeholder {
+  color: #6e6e73;
 }
 
 #epistemic-input:focus {
-  border-bottom-color: #777777;
+  border-bottom-color: #86868b;
 }
 
 .input-hint {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #6f6f6f;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #86868b;
   text-align: center;
+  letter-spacing: 0.01em;
 }
 
-/* ---------- FOOTER ---------- */
+/* -------------------------------------------------
+   FOOTER LINKS
+   ------------------------------------------------- */
 
 #footer {
   position: absolute;
-  bottom: 18px;
-  right: 24px;
+  bottom: 24px;
+  right: 32px;
   font-size: 11px;
-  letter-spacing: 0.04em;
-  opacity: 0.6;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  opacity: 0.5;
   z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+#footer:hover {
+  opacity: 0.8;
 }
 
 #footer a {
-  color: #7a7a7a;
+  color: #86868b;
   text-decoration: none;
-  margin-left: 12px;
+  margin-left: 16px;
+  transition: color 0.2s ease;
 }
 
 #footer a:hover {
-  color: #9a9a9a;
+  color: #d2d2d7;
 }
 
-/* ---------- ANIMATION ---------- */
+/* -------------------------------------------------
+   ANIMATIONS
+   ------------------------------------------------- */
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------- */
+
+@media (max-width: 768px) {
+  #identity {
+    top: 20px;
+    left: 20px;
+  }
+
+  #identity .label {
+    font-size: 12px;
+  }
+
+  #identity .sub {
+    font-size: 10px;
+  }
+
+  .whisper {
+    font-size: 17px;
+  }
+
+  .prompt {
+    font-size: 21px;
+  }
+
+  .mirror {
+    font-size: 18px;
+  }
+
+  .explain {
+    font-size: 15px;
+  }
+
+  #epistemic-input {
+    font-size: 16px;
+  }
+
+  #footer {
+    bottom: 20px;
+    right: 20px;
+    font-size: 10px;
+  }
+}
+
+/* -------------------------------------------------
+   SAFARI-SPECIFIC OPTIMIZATIONS
+   ------------------------------------------------- */
+
+@supports (-webkit-backdrop-filter: blur(20px)) {
+  #input-layer {
+    background: rgba(0, 0, 0, 0.88);
+  }
 }
