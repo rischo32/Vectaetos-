@@ -1,30 +1,19 @@
 /* =========================================
-   VECTAETOS — Rune Visual Projection
+   VECTAETOS — Rune Projection (ALPHA dark)
    Canonical & non-semantic
    ========================================= */
 
-/*
-  Runic visuals are not symbols with meaning.
-  They are simply ephemeral shapes distributed
-  around axiomatic positions to intensify
-  visual tension.
-*/
-
 const RUNE_BASE_COLORS = [
-  "rgba(220, 120, 255,",
-  "rgba(120, 220, 255,",
-  "rgba(255, 200, 120,",
-  "rgba(200, 120, 255,",
-  "rgba(120, 255, 180,",
-  "rgba(180, 120, 255,",
-  "rgba(255, 120, 180,",
-  "rgba(120, 180, 255,"
+  "rgba(110, 110, 150,",
+  "rgba(150, 110, 130,",
+  "rgba(130, 150, 110,",
+  "rgba(110, 150, 150,",
+  "rgba(150, 130, 110,",
+  "rgba(130, 110, 150,",
+  "rgba(150, 150, 110,",
+  "rgba(110, 130, 150,"
 ];
 
-/**
- * Generates a rune data list based on tension weights
- * and positions of axiomatic points.
- */
 export function drawRunes(tensionWeights, axioms) {
   if (!tensionWeights || !axioms) return [];
 
@@ -32,27 +21,19 @@ export function drawRunes(tensionWeights, axioms) {
 
   for (let i = 0; i < axioms.length; i++) {
     const a = axioms[i];
-    const weight = tensionWeights[i] || 0.2;
-
-    // number of runes around this point
-    const count = Math.max(2, Math.floor(weight * 8));
+    const weight = tensionWeights[i] || 0.15;
+    const count = Math.max(1, Math.floor(weight * 6));
 
     for (let j = 0; j < count; j++) {
       const angle = Math.random() * Math.PI * 2;
-      const radius = 6 + Math.random() * (12 * weight);
-
-      const x = a.x + Math.cos(angle) * radius;
-      const y = a.y + Math.sin(angle) * radius;
-
-      const colorIndex = i % RUNE_BASE_COLORS.length;
-      const base = RUNE_BASE_COLORS[colorIndex];
+      const radius = 6 + Math.random() * (10 * weight);
 
       runes.push({
-        x,
-        y,
-        size: 1.5 + weight * 2.5,
-        color: `${base} ${0.4 + weight * 0.4})`,
-        alpha: 1
+        x: a.x + Math.cos(angle) * radius,
+        y: a.y + Math.sin(angle) * radius,
+        size: 1 + weight * 2,
+        alpha: 0.3 + weight * 0.4,
+        color: `${RUNE_BASE_COLORS[i % RUNE_BASE_COLORS.length]} ${0.25 + weight * 0.35})`
       });
     }
   }
