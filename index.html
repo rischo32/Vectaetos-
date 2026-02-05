@@ -1,155 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
   <meta charset="UTF-8" />
+  <title>Vectaetos — Epistemic Field</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>VECTAETOS — Epistemic Field</title>
-
-  <!-- Canonical minimalism -->
-  <meta name="description" content="Vectaetos is not a system that answers. It is a field that reveals tension." />
-  <meta name="robots" content="noindex, noarchive" />
-
-  <!-- Typography: neutral, quiet -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-
-  <!-- =========================
-       ROOT CONTAINER
-       ========================= -->
   <div id="app">
 
-    <!-- =========================
-         CANVAS LAYER
-         Primary epistemic projection
-         ========================= -->
     <canvas id="field-canvas"></canvas>
 
-    <!-- =========================
-         OVERLAY LAYER
-         Text is secondary, never central
-         ========================= -->
     <div id="overlay">
 
-      <!-- Corner identity (persistent, quiet) -->
       <div id="identity">
-        <span class="label">Vectaetos</span>
-        <span class="sub">Epistemic Field</span>
+        <div class="label">Vectaetos</div>
+        <div class="sub">Epistemic Field</div>
       </div>
 
-      <!-- Dynamic textual projection (state-driven) -->
       <div id="projection">
 
-        <!-- STATE: ORIENTATION -->
-        <div class="projection-state" data-state="IDLE">
-          <!-- intentionally empty -->
-        </div>
-
-        <!-- STATE: INVITE -->
         <div class="projection-state" data-state="INVITE">
-          <p class="whisper">
-            Neodpovedáme.<br />
-            Ukazujeme, kde je napätie.
-          </p>
+          <p class="whisper">Neodpovedáme.<br>Ukazujeme, kde je napätie.</p>
         </div>
 
-        <!-- STATE: INPUT -->
         <div class="projection-state" data-state="INPUT">
-          <p class="prompt">
-            Čo sa ti rúca,<br />
-            aj keď máš všetky informácie?
-          </p>
+          <p class="prompt">Čo sa ti rúca,<br>aj keď máš všetky informácie?</p>
         </div>
 
-        <!-- STATE: GATE_1 -->
         <div class="projection-state" data-state="GATE_1">
-          <p class="status">
-            Stabilizácia významu…
-          </p>
+          <p class="status">Stabilizácia významu…</p>
         </div>
 
-        <!-- STATE: GATE_2 -->
-        <div class="projection-state" data-state="GATE_2">
-          <!-- no text by design -->
-        </div>
-
-        <!-- STATE: GATE_3 -->
-        <div class="projection-state" data-state="GATE_3">
-          <!-- no text by design -->
-        </div>
-
-        <!-- STATE: MIRROR -->
         <div class="projection-state" data-state="MIRROR">
           <p class="mirror">
-            Napätie nie je v odpovedi.<br />
+            Napätie nie je v odpovedi.<br>
             Je medzi <span class="axiom">Σᵢ</span> a <span class="axiom">Σⱼ</span>.
           </p>
         </div>
 
-        <!-- STATE: SILENT -->
-        <div class="projection-state" data-state="SILENT">
-          <!-- silence is a valid output -->
-        </div>
-
-        <!-- STATE: EXPLAIN (optional) -->
         <div class="projection-state" data-state="EXPLAIN">
           <p class="explain">
-            Jedno ťažisko drží stabilitu.<br />
-            Druhé vyžaduje zmenu.<br /><br />
-            Pole ich nedokáže zosúladiť<br />
-            bez straty koherencie.
+            Jedno ťažisko drží stabilitu.<br>
+            Druhé vyžaduje zmenu.<br>
+            Pole ich nedokáže zosúladiť bez straty koherencie.
           </p>
-          <p class="closing">
-            Pole sa zatvára.
-          </p>
+          <p class="closing">Pole sa zatvára.</p>
         </div>
 
       </div>
+
     </div>
 
-    <!-- =========================
-         INPUT LAYER
-         Activated only once
-         ========================= -->
     <div id="input-layer" hidden>
-      <textarea
-        id="epistemic-input"
-        rows="5"
-        maxlength="500"
-        spellcheck="false"
-        autocomplete="off"
-        autocorrect="off"
-        placeholder=""
-      ></textarea>
+      <textarea id="epistemic-input"></textarea>
       <div class="input-hint">
-        Nepíš riešenie.<br />
+        Nepíš riešenie.<br>
         Popíš stav.
       </div>
     </div>
 
-    <!-- =========================
-         FOOTER / EXIT
-         ========================= -->
     <div id="footer">
-      <a href="https://github.com/rischo32/Vectaetos" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://zenodo.org" target="_blank" rel="noopener">Zenodo</a>
+      <a href="https://github.com/rischo32/Vectaetos" target="_blank">GitHub</a>
+      <a href="https://zenodo.org" target="_blank">Zenodo</a>
     </div>
 
   </div>
 
-  <!-- =========================
-       SCRIPTS (order matters)
-       ========================= -->
-  <script src="states.js"></script>
-  <script src="field.js"></script>
-  <script src="main.js"></script>
-
+  <script type="module" src="states.js"></script>
+  <script type="module" src="field.js"></script>
+  <script type="module" src="tension.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
