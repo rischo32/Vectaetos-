@@ -5,41 +5,68 @@
   <title>Vectaetos — Epistemic Field</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Vectaetos is not an answer system. It is an epistemic field." />
+  <meta name="description" content="Vectaetos is an epistemic field. It does not answer. It projects tension." />
 
-  <!-- Canonical black field stylesheet -->
+  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
 
-  <!-- ROOT CONTAINER -->
+  <!-- ROOT APP -->
   <div id="app">
 
-    <!-- FIELD CANVAS (primary visual layer) -->
+    <!-- FIELD CANVAS -->
     <canvas id="field-canvas"></canvas>
 
-    <!-- OVERLAY (non-interactive epistemic layer) -->
+    <!-- PAYWALL OVERLAY (hidden by default) -->
+    <div id="paywall" hidden>
+      <div class="paywall-content">
+        <p class="paywall-text">
+          Pole už reagovalo.
+        </p>
+
+        <p class="paywall-subtext">
+          Ďalšia projekcia vyžaduje udržiavanie infraštruktúry.
+        </p>
+
+        <a
+          class="paywall-link"
+          href="https://revolut.me/fonfararichard"
+          target="_blank"
+          rel="noopener"
+        >
+          revolut.me/fonfararichard
+        </a>
+
+        <p class="paywall-footnote">
+          Podpora neznamená odpoveď.<br />
+          Umožňuje existenciu poľa.
+        </p>
+      </div>
+    </div>
+
+    <!-- OVERLAY (textual projection only) -->
     <div id="overlay">
 
-      <!-- IDENTITY / SIGNATURE -->
+      <!-- Identity -->
       <div id="identity">
         <div class="label">VECTAETOS</div>
         <div class="sub">Epistemic Field</div>
       </div>
 
-      <!-- PROJECTION STATES -->
+      <!-- Projection states -->
       <div id="projection">
 
         <!-- INVITE -->
-        <div class="projection-state" data-state="INVITE">
+        <div class="projection-state active" data-state="INVITE">
           <p class="whisper">
             Neodpovedáme.<br />
             Ukazujeme, kde je napätie.
           </p>
         </div>
 
-        <!-- INPUT PROMPT (visual only, input layer is separate) -->
+        <!-- INPUT PROMPT -->
         <div class="projection-state" data-state="INPUT">
           <p class="prompt">
             Čo sa ti rúca,<br />
@@ -54,30 +81,10 @@
           </p>
         </div>
 
-        <!-- MIRROR -->
-        <div class="projection-state" data-state="MIRROR">
-          <p class="mirror">
-            Napätie nie je v odpovedi.<br />
-            Je medzi <span class="axiom">Σᵢ</span> a <span class="axiom">Σⱼ</span>.
-          </p>
-        </div>
-
-        <!-- EXPLANATION (optional, minimal) -->
-        <div class="projection-state" data-state="EXPLAIN">
-          <p class="explain">
-            Jedno ťažisko drží stabilitu.<br />
-            Druhé vyžaduje zmenu.<br />
-            Pole ich nedokáže zosúladiť bez straty koherencie.
-          </p>
-          <p class="closing">
-            Pole sa zatvára.
-          </p>
-        </div>
-
       </div>
     </div>
 
-    <!-- INPUT LAYER (epistemic gate, temporary) -->
+    <!-- INPUT LAYER -->
     <div id="input-layer" hidden>
       <textarea
         id="epistemic-input"
@@ -93,23 +100,23 @@
       </div>
     </div>
 
-    <!-- FOOTER / REFERENCES -->
+    <!-- FOOTER -->
     <div id="footer">
       <a href="https://github.com/rischo32/Vectaetos" target="_blank" rel="noopener">
         GitHub
       </a>
-      <a href="https://zenodo.org" target="_blank" rel="noopener">
-        Zenodo
+      <a href="https://vectaetos.eu" target="_blank" rel="noopener">
+        Web
       </a>
     </div>
 
   </div>
 
-  <!-- SCRIPTS (strict order, no inline logic) -->
+  <!-- SCRIPTS (strict order) -->
   <script type="module" src="states.js"></script>
-  <script type="module" src="field.js"></script>
   <script type="module" src="tension.js"></script>
   <script type="module" src="runes.js"></script>
+  <script type="module" src="field.js"></script>
   <script type="module" src="main.js"></script>
 
 </body>
