@@ -1,48 +1,61 @@
 /* =========================================
-   VECTAETOS — RUNES VISUAL PROJECTION
-   File: runes.js
-   Role: Non-semantic visual pattern generator
+   VECTAETOS — Rune Visual Projection
+   Canonical & non-semantic
    ========================================= */
 
-const RUNE_COLORS = [
-  "#7bbaf7", "#f7a87b", "#baf77b", "#f77bbf",
-  "#7bf7ba", "#f7db7b", "#db7bf7", "#7bdff7"
+/*
+  Runic visuals are not symbols with meaning.
+  They are simply ephemeral shapes distributed
+  around axiomatic positions to intensify
+  visual tension.
+*/
+
+const RUNE_BASE_COLORS = [
+  "rgba(220, 120, 255,",
+  "rgba(120, 220, 255,",
+  "rgba(255, 200, 120,",
+  "rgba(200, 120, 255,",
+  "rgba(120, 255, 180,",
+  "rgba(180, 120, 255,",
+  "rgba(255, 120, 180,",
+  "rgba(120, 180, 255,"
 ];
 
-export function generateRunes(axioms, tensionWeights) {
+/**
+ * Generates a rune data list based on tension weights
+ * and positions of axiomatic points.
+ */
+export function drawRunes(tensionWeights, axioms) {
+  if (!tensionWeights || !axioms) return [];
+
   const runes = [];
 
-  axioms.forEach((a, i) => {
-    const intensity = tensionWeights ? tensionWeights[i] : 0.3;
-    const count = Math.floor(2 + intensity * 8);
+  for (let i = 0; i < axioms.length; i++) {
+    const a = axioms[i];
+    const weight = tensionWeights[i] || 0.2;
+
+    // number of runes around this point
+    const count = Math.max(2, Math.floor(weight * 8));
 
     for (let j = 0; j < count; j++) {
       const angle = Math.random() * Math.PI * 2;
-      const radius = 5 + Math.random() * 12 * intensity;
+      const radius = 6 + Math.random() * (12 * weight);
+
+      const x = a.x + Math.cos(angle) * radius;
+      const y = a.y + Math.sin(angle) * radius;
+
+      const colorIndex = i % RUNE_BASE_COLORS.length;
+      const base = RUNE_BASE_COLORS[colorIndex];
 
       runes.push({
-        x: a.x + Math.cos(angle) * radius,
-        y: a.y + Math.sin(angle) * radius,
-        alpha: 0.4 + intensity * 0.6,
-        color: RUNE_COLORS[i % RUNE_COLORS.length],
-        size: 1.5 + 2.5 * intensity
+        x,
+        y,
+        size: 1.5 + weight * 2.5,
+        color: `${base} ${0.4 + weight * 0.4})`,
+        alpha: 1
       });
     }
-  });
+  }
 
   return runes;
-}
-
-export function drawRunes(ctx, runes) {
-  if (!runes || !runes.length) return;
-
-  runes.forEach(r => {
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(${parseInt(r.color.slice(1,3), 16)}, 
-                         ${parseInt(r.color.slice(3,5), 16)}, 
-                         ${parseInt(r.color.slice(5,7), 16)}, 
-                         ${r.alpha})`;
-    ctx.arc(r.x, r.y, r.size, 0, Math.PI * 2);
-    ctx.fill();
-  });
 }
