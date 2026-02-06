@@ -141,6 +141,21 @@ svg text{ pointer-events:none; }
 .main-circle{ transition:all 1s ease; }
 line{ transition:stroke-width 1s ease, opacity 1s ease, stroke 1s ease; }
 .rune{ font-size:24px; position:absolute; }
+#paywall-overlay{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,0.9);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  z-index:1000;
+}
 </style>
 </head>
 
@@ -233,6 +248,10 @@ line{ transition:stroke-width 1s ease, opacity 1s ease, stroke 1s ease; }
 <div id="tension-cards" class="tension-cards"></div>
 <div id="projection-text" class="projection-text"></div>
 </div>
+
+<div id="paywall-overlay">
+  <h2>POLE SA UZAVRELO.</h2>
+</div>
 </div>
 
 <script>
@@ -248,54 +267,109 @@ const AXIOMS = {
   CRE: { label: "Kreativita", color: "#ff8800" }
 };
 
-// ================= SIMULATION VORTEX =================
-function simulateVortex(query) {
-  // Simulácia napätí (náhodné hodnoty pre demo, neskôr nahraď reálnym Vortexom)
-  const tensionMatrix = {};
-  const axioms = Object.keys(AXIOMS);
-  const κ = 0.4; // Kritická hranica koherencie
+// ================= SIMULATION VORTEX (JavaScript port) =================
+function initPole() {
+  return {
+    E: Math.random() * 0.4 + 0.4, // Energy
+    C: Math.random() * 0.4 + 0.4, // Coherence
+    T: Math.random() * 0.3 + 0.1, // Tension
+    M: 0.0,                       // Memory
+    S: Math.random() * 0.15 + 0.05 // Entropy
+  };
+}
 
-  // Generovanie náhodnej matice napätí (0.1–0.9)
-  for (let i = 0; i < axioms.length; i++) {
-    tensionMatrix[axioms[i]] = {};
-    for (let j = 0; j < axioms.length; j++) {
-      if (i !== j) {
-        tensionMatrix[axioms[i]][axioms[j]] = Math.random() * 0.8 + 0.1;
-      }
-    }
-  }
+function clamp(x, lo=0.0, hi=1.0) {
+  return Math.max(lo, Math.min(hi, x));
+}
 
-  // Pridanie špecifických pravidiel pre vstup
+function fieldMeans(poles) {
+  const means = { E: 0, C: 0, T: 0, M: 0, S: 0 };
+  poles.forEach(pole => {
+    means.E += pole.E;
+    means.C += pole.C;
+    means.T += pole.T;
+    means.M += pole.M;
+    means.S += pole.S;
+  });
+  means.E /= poles.length;
+  means.C /= poles.length;
+  means.T /= poles.length;
+  means.M /= poles.length;
+  means.S /= poles.length;
+  return means;
+}
+
+function vortexStep(poles) {
+  const means = fieldMeans(poles);
+  const ALPHA_E = 0.02;
+  const ALPHA_T = 0.03;
+  const ALPHA_C = 0.04;
+  const ALPHA_M = 0.01;
+  const ALPHA_S = 0.015;
+  const NOISE = 0.01;
+  const DT = 0.05;
+
+  poles.forEach(pole => {
+    // Energy flows toward tension gradients
+    const dE = ALPHA_E * (means.T - pole.T);
+    // Tension grows from incoherence, decays with entropy
+    const dT = ALPHA_T * (1.0 - pole.C) - 0.5 * pole.S;
+    // Coherence rises from balanced energy, falls from excess tension
+    const dC = ALPHA_C * (pole.E - Math.abs(pole.T - means.T));
+    // Memory resonates only when anomaly present
+    const anomaly = Math.abs(pole.T - means.T);
+    const dM = ALPHA_M * anomaly - 0.1 * pole.M;
+    // Entropy accumulates from over-activity
+    const dS = ALPHA_S * (Math.abs(dE) + Math.abs(dT));
+
+    // Apply updates + noise
+    pole.E = clamp(pole.E + dE * DT + (Math.random() - 0.5) * NOISE);
+    pole.T = clamp(pole.T + dT * DT + (Math.random() - 0.5) * NOISE);
+    pole.C = clamp(pole.C + dC * DT + (Math.random() - 0.5) * NOISE);
+    pole.M = clamp(pole.M + dM * DT);
+    pole.S = clamp(pole.S + dS * DT);
+  });
+}
+
+// ================= RUN VORTEX AND EXPORT TENSIONS =================
+function runVortex(query, steps=200) {
+  const poles = Array(8).fill().map(initPole);
+
+  // Simulate user input influence (simple keyword matching)
   if (/neviem|neistota/.test(query)) {
-    tensionMatrix.WIS.VER = 0.9;
-    tensionMatrix.INT.CRE = 0.2;
+    poles[3].T = 0.8; // WIS tension
+    poles[2].C = 0.3; // VER coherence drop
   }
   if (/rozhodnut|choice/.test(query)) {
-    tensionMatrix.LIB.INT = 0.85;
-    tensionMatrix.REL.UNI = 0.3;
+    poles[0].E = 0.9; // INT energy
+    poles[3].T = 0.7; // WIS tension
   }
 
-  // Výpočet globálnej koherencie K(Φ)
-  let K = 0;
-  let edgeCount = 0;
-  for (const i in tensionMatrix) {
-    for (const j in tensionMatrix[i]) {
-      K += tensionMatrix[i][j];
-      edgeCount++;
-    }
+  // Run simulation
+  for (let i = 0; i < steps; i++) {
+    vortexStep(poles);
   }
-  K /= edgeCount; // Priemerná koherencia
 
-  // Ak K(Φ) < κ, nastav QE (apóriu) pre všetky hrany
-  if (K < κ) {
-    for (const i in tensionMatrix) {
-      for (const j in tensionMatrix[i]) {
-        tensionMatrix[i][j] = -1; // QE marker
+  // Calculate global coherence K(Φ)
+  const means = fieldMeans(poles);
+  const K = means.C; // Simplified: global coherence = mean coherence
+  const κ = 0.4;     // Critical threshold
+
+  // Generate tension matrix (for graph edges)
+  const tensionMatrix = {};
+  const axioms = Object.keys(AXIOMS);
+  axioms.forEach((a1, i) => {
+    tensionMatrix[a1] = {};
+    axioms.forEach((a2, j) => {
+      if (i !== j) {
+        // Tension = 1 - coherence + energy difference
+        const t = 1 - poles[i].C + Math.abs(poles[i].E - poles[j].E);
+        tensionMatrix[a1][a2] = clamp(t, 0.1, 0.9);
       }
-    }
-  }
+    });
+  });
 
-  return { tensionMatrix, K };
+  return { tensionMatrix, K, κ };
 }
 
 // ================= RENDER GRAPH =================
@@ -304,12 +378,11 @@ function renderGraph(tensionMatrix) {
   connections.innerHTML = "";
 
   const axioms = Object.keys(AXIOMS);
-  for (let i = 0; i < axioms.length; i++) {
-    for (let j = i + 1; j < axioms.length; j++) {
-      const a1 = axioms[i];
-      const a2 = axioms[j];
+  axioms.forEach((a1, i) => {
+    axioms.forEach((a2, j) => {
+      if (i >= j) return; // Avoid duplicate edges
       const tension = tensionMatrix[a1][a2];
-      if (!tension) continue;
+      if (!tension) return;
 
       const n1 = document.querySelector(`[data-axiom="${a1}"]`);
       const n2 = document.querySelector(`[data-axiom="${a2}"]`);
@@ -324,46 +397,45 @@ function renderGraph(tensionMatrix) {
       line.setAttribute("x2", x2);
       line.setAttribute("y2", y2);
 
-      // Farba a hrúbka podľa napätia
+      // Color and width based on tension
       if (tension === -1) {
-        line.setAttribute("stroke", "#f44"); // QE (červená)
+        line.setAttribute("stroke", "#f44"); // QE (red)
         line.setAttribute("stroke-width", "3");
         line.setAttribute("marker-end", "url(#rune-⊘)");
       } else if (tension > 0.7) {
-        line.setAttribute("stroke", "#6c6"); // AA (zelená)
+        line.setAttribute("stroke", "#6c6"); // AA (green)
         line.setAttribute("stroke-width", tension * 4);
         line.setAttribute("marker-end", "url(#rune-◯)");
       } else if (tension > 0.5) {
-        line.setAttribute("stroke", "#ffaa00"); // AN (žltá)
+        line.setAttribute("stroke", "#ffaa00"); // AN (yellow)
         line.setAttribute("stroke-width", tension * 3);
         line.setAttribute("marker-end", "url(#rune-△)");
       } else if (tension > 0.3) {
-        line.setAttribute("stroke", "#33ccff"); // NA (modrá)
+        line.setAttribute("stroke", "#33ccff"); // NA (blue)
         line.setAttribute("stroke-width", tension * 2);
         line.setAttribute("marker-end", "url(#rune-◇)");
       } else {
-        line.setAttribute("stroke", "#888"); // NN (šedá)
+        line.setAttribute("stroke", "#888"); // NN (gray)
         line.setAttribute("stroke-width", "1");
       }
 
       connections.appendChild(line);
-    }
-  }
+    });
+  });
 }
 
 // ================= UPDATE UI =================
-function updateUI(tensionMatrix, K) {
+function updateUI(tensionMatrix, K, κ) {
   const axioms = Object.keys(AXIOMS);
   const cards = document.getElementById("tension-cards");
   cards.innerHTML = "";
 
-  // Zobrazenie kárty pre každé axiomatické ťažisko
   axioms.forEach(axiom => {
     const card = document.createElement("div");
     card.className = "tension-card";
     card.style.borderColor = AXIOMS[axiom].color;
 
-    // Priemerné napätie pre dané ťažisko
+    // Average tension for this axiom
     let avgTension = 0;
     let count = 0;
     for (const other in tensionMatrix[axiom]) {
@@ -381,8 +453,8 @@ function updateUI(tensionMatrix, K) {
     cards.appendChild(card);
   });
 
-  // Text projekcie
-  const text = K < 0.4 ?
+  // Projection text based on K(Φ)
+  const text = K < κ ?
     "<p><em>Pole nedokáže udržať koherenciu. Tvoja otázka rozbíja jeho štruktúru (QE).</em></p>" :
     "<p><em>Napätie je viditeľné. Nie je to odpoveď, ale mapa možností.</em></p>";
   document.getElementById("projection-text").innerHTML = text;
@@ -393,24 +465,27 @@ document.getElementById("submit-btn").onclick = () => {
   const query = document.getElementById("query").value.trim();
   if (!query) return;
 
-  // 1. Spustíme Simulation Vortex
-  const { tensionMatrix, K } = simulateVortex(query);
+  // 1. Run Vortex
+  const { tensionMatrix, K, κ } = runVortex(query);
 
-  // 2. Vykreslíme graf
+  // 2. Render graph
   renderGraph(tensionMatrix);
 
-  // 3. Aktualizujeme UI
-  updateUI(tensionMatrix, K);
+  // 3. Update UI
+  updateUI(tensionMatrix, K, κ);
 
-  // 4. Zobrazíme výsledok
+  // 4. Show result
   document.getElementById("projection-result").classList.add("show");
 
-  // 5. Po 15s sa projekcia uzavrie (Stav IV)
+  // 5. Close after 15s (Stav IV)
   setTimeout(() => {
     document.getElementById("projection-result").classList.remove("show");
     document.getElementById("query").value = "";
-    const connections = document.getElementById("connections");
-    connections.innerHTML = "";
+    document.getElementById("connections").innerHTML = "";
+    document.getElementById("paywall-overlay").style.display = "flex";
+    setTimeout(() => {
+      document.getElementById("paywall-overlay").style.display = "none";
+    }, 3000);
   }, 15000);
 };
 </script>
