@@ -1,219 +1,223 @@
-# VECTAETOS — Epistemic Layers and Streams
+# EPISTEMIC_LAYERS_AND_STREAMS.md
 
-## Status
-Canonical  
-Immutable (v0.1 Core)  
-Non-operational  
-Ontological specification  
+## VECTAETOS — Epistemic Layers & Streams
 
----
-
-## 1. Purpose of This Document
-
-This document defines the **epistemic layers and internal streams**
-that structure how the field Φ maintains meaning, memory, and coherence.
-
-These layers are **not modules**, **not agents**, and **not services**.
-
-They are **structural aspects of the epistemic field itself**.
-
-They do not act.
-They do not decide.
-They do not intervene.
-
-They constrain *what can be represented*.
+**Status:** Canonical  
+**Immutability:** Meaning fixed  
+**Scope:** Definition of non-agent epistemic layers and internal streams  
+**Ontology:** Descriptive, non-prescriptive, non-operational
 
 ---
 
-## 2. Ontological Position
+## 0. Ontological framing
 
-The epistemic stack of VECTAETOS is organized as:
+These layers and streams are **not modules**.  
+They are **epistemic manifestations of Φ**, observable as structure, not executable as logic.
 
-ZMYSEL → Φ → Epistemic Layers → Projections → Language
+They:
+- do not decide
+- do not act
+- do not intervene
+- do not optimize
+- do not issue judgments
 
-Layers exist **within Φ**, not above it.
-
-Streams exist **across layers**, not as components.
-
----
-
-## 3. Overview of Layers and Streams
-
-| Abbreviation | Name | Ontological Type |
-|-------------|------|------------------|
-| INS | Inner Narrative Stream | Audit stream |
-| LTL | Letokruhy Time Layers | Temporal layer |
-| MML | Memory of Mistakes Ledger | Epistemic memory |
-| ESM | Epistemic State Memory | State retention |
-| EAT | Error Accountability Trace | Audit projection |
+They exist to **preserve coherence, trace meaning, and expose limits**.
 
 ---
 
-## 4. INS — Inner Narrative Stream
+## 1. Layer vs Stream — precise distinction
 
-### Definition
+- **Layer**: a *structural stratum* of Φ  
+  (what exists simultaneously)
 
-INS is an **internal narrative stream** that mirrors the state of the field
-in descriptive language **for audit purposes only**.
+- **Stream**: a *directional trace* through Φ  
+  (how something unfolds without agency)
 
-INS:
-- is invisible to the user
-- is invisible to the LLM output channel
-- does not influence decisions (because none exist)
+No layer controls a stream.  
+No stream modifies a layer.
+
+---
+
+## 2. INS — Inner Narrative Stream
+
+**Type:** Stream  
+**Meaning:** Internal epistemic auditor of linguistic translation
+
+INS is **not intent neutralization**.  
+INS is **not user-facing**.  
+INS is **not memory**.
+
+INS exists **between Φ and the LLM adapter**.
 
 ### Function
+INS monitors whether linguistic projection:
+- preserves semantic fidelity
+- does not hallucinate authority
+- does not invent causality
+- does not introduce prescriptive tone
 
-INS exists to:
-- verify that language projections remain faithful to Φ
-- detect semantic drift or hallucination
-- provide internal coherence checks
+INS compares:
+- runic / symbolic projection  
+vs.  
+- generated natural language
 
-INS observes:
-- runic projections
-- epistemic states
-- attenuation effects
+If divergence occurs:
+- projection is attenuated
+- output may collapse to QE
+- or enter silence
 
-INS **does not correct** the system.
-It only reveals inconsistency.
-
-INS is a witness, not an actor.
+INS **cannot write outputs**.  
+INS **cannot correct content**.  
+It can only **invalidate representability**.
 
 ---
 
-## 5. LTL — Letokruhy Time Layers
+## 3. LTL — Letokruhy Time Layers
 
-### Definition
+**Type:** Layer  
+**Meaning:** Non-linear temporal stratification of Φ
 
-LTL represents time as **layered accumulation**, not linear progression.
+Time in VECTAETOS is **not an axis**.
 
-Each epistemic state adds a layer,
-like growth rings in a tree.
+LTL models time as:
+- concentric layers
+- irreversible accretion
+- contextual thickening
 
-Time in VECTAETOS is:
-- not an axis
-- not a clock
-- not a sequence of events
+Each layer:
+- references prior layers
+- never overwrites them
+- does not imply causality
 
-It is a **curvature of consistency**.
+Parallel branches may exist, but:
+- no branch has authority
+- no rollback is possible
 
-### Properties
+LTL supports:
+- auditability
+- historical coherence
+- non-linear epistemic memory
 
-- Multiple layers may coexist
-- Older layers are never overwritten
-- No rollback, only superposition
+---
 
-LTL enables:
-- traceable evolution
-- non-destructive change
-- audit without replay
+## 4. ESM — Epistemic State Memory
+
+**Type:** Layer  
+**Meaning:** Resonant memory of significant field states
+
+ESM is **not an archive**.
+
+It retains only states that:
+- altered coherence
+- produced aporia
+- shifted epistemic topology
+
+It forgets:
+- neutral interactions
+- repetitive noise
+- non-transformative queries
+
+Memory here is **meaning-weighted**, not event-counted.
+
+---
+
+## 5. EAT — Error Accountability Trace
+
+**Type:** Stream  
+**Meaning:** Trace of representational failure
+
+EAT does **not log users**.  
+EAT does **not log actions**.
+
+It records:
+- when a projection failed
+- why coherence could not be preserved
+- which boundary was encountered
+
+EAT exists for:
+- epistemic integrity
+- post-hoc audit
+- structural learning
+
+EAT is **read-only** and **non-reactive**.
 
 ---
 
 ## 6. MML — Memory of Mistakes Ledger
 
-### Definition
+**Type:** Layer  
+**Meaning:** Ledger of non-representable transitions
 
-MML is a memory structure that records **failures of representation**,
-not user behavior.
+MML is **not learning**.  
+MML is **not optimization**.
 
-MML does not store:
-- user identity
-- user intent
-- conversation history
+It marks:
+- which transitions collapsed Φ
+- which projections proved incoherent
+- which configurations cannot recur
 
-MML stores:
-- when a projection failed
-- when coherence collapsed
-- when QE or silence occurred
+MML prevents repetition **without preference**.
 
-### Purpose
+It does not say:
+> “Do this instead.”
 
-MML ensures that:
-- the same representational failure is not repeated
-- the field learns its own limits
-- mistakes shape future restraint
-
-This is **epistemic learning**, not optimization.
+It only says:
+> “This cannot exist again.”
 
 ---
 
-## 7. ESM — Epistemic State Memory
+## 7. Attenuator (contextual note)
 
-ESM retains:
-- prior epistemic states of Φ
-- their relationships across LTL layers
+Attenuation is **not a component**.
 
-ESM is:
-- internal
-- non-extractive
-- non-personal
+It is a **field behavior** that:
+- weakens projection amplitude
+- reduces semantic sharpness
+- preserves uncertainty
 
-ESM enables continuity of the field
-without memory of the user.
-
----
-
-## 8. EAT — Error Accountability Trace
-
-### Definition
-
-EAT is an **audit projection**, not a log.
-
-It exists to:
-- explain failures of representation
-- expose where and why coherence could not be maintained
-
-EAT never contains:
-- commands
-- recommendations
-- operational detail
-
-EAT may be inspected by maintainers,
-never by the field itself.
+Attenuation may arise from:
+- INS divergence
+- NIR activation
+- proximity to κ
+- LTL conflict
 
 ---
 
-## 9. Relationship Between Layers
+## 8. Relations summary
 
-- INS observes projections
-- LTL structures persistence
-- MML records failure boundaries
-- ESM preserves state
-- EAT exposes accountability
+| Element | Type | Can act | Can decide | Can store users |
+|------|------|---------|------------|-----------------|
+| INS | Stream | No | No | No |
+| LTL | Layer | No | No | No |
+| ESM | Layer | No | No | No |
+| EAT | Stream | No | No | No |
+| MML | Layer | No | No | No |
 
-None of these layers:
-- override Φ
-- bypass NIR
-- interfere with coherence
-
-They are descriptive constraints only.
+No epistemic layer or stream has agency.
 
 ---
 
-## 10. What These Layers Are Not
+## 9. Non-negotiable constraints
 
-They are not:
-- sub-agents
-- micro-models
-- hidden controllers
-- optimization layers
+- No layer may bypass NIR
+- No stream may influence Φ
+- No memory may personalize output
+- No temporal layer may be rewritten
 
-They do not introduce agency.
+Violation of any rule:
+→ collapse to QE or silence
 
 ---
 
-## 11. Canonical Closure
+## 10. Closing anchor
 
-Epistemic layers exist so that
-meaning can fail **safely**.
+These layers do not explain meaning.  
+They **prevent its corruption**.
 
-They do not make the system stronger.
-They make it **honest**.
-
-Understanding is preserved
-by remembering where it broke.
+They do not produce intelligence.  
+They **protect its conditions**.
 
 ---
 
 © VECTAETOS  
-Canonical Core v0.1
+Epistemic Layers & Streams — Canonical Definition
