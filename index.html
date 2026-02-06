@@ -1,123 +1,418 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-  <meta charset="UTF-8" />
-  <title>Vectaetos — Epistemic Field</title>
+<meta charset="UTF-8">
+<title>VECTAETOS — Epistemické Pole</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="VECTAETOS - Projekcia epistemického poľa. Nie odpoveď, ale lepšia otázka.">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Vectaetos is an epistemic field. It does not answer. It projects tension." />
+<link rel="icon" href="data:image/svg+xml,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+<text y='.9em' font-size='90'>🗿</text>
+</svg>">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body{
+  background:#0a0a0a;
+  color:#fff;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI";
+  line-height:1.6;
+}
+.hero{
+  position:relative;
+  min-height:75vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  padding:40px 20px;
+}
+.graph-container{
+  width:100%;
+  max-width:650px;
+  aspect-ratio:1;
+}
+.hero-overlay{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+  pointer-events:none;
+}
+.hero-overlay h1{
+  font-size:clamp(32px,8vw,56px);
+  font-weight:200;
+  letter-spacing:0.2em;
+  text-shadow:0 0 40px rgba(0,0,0,.9);
+}
+.hero-overlay .tagline{
+  font-size:14px;
+  color:#888;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.container{
+  max-width:800px;
+  margin:auto;
+  padding:60px 20px;
+}
+.instruction{
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:32px;
+  margin-bottom:48px;
+}
+.instruction h2{
+  color:#6c6;
+  font-weight:300;
+  margin-bottom:20px;
+}
+.highlight{
+  color:#6c6;
+  background:rgba(100,200,100,.1);
+  padding:2px 6px;
+  border-radius:4px;
+}
+textarea{
+  width:100%;
+  min-height:140px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:20px;
+  color:#fff;
+  font-size:16px;
+}
+button{
+  width:100%;
+  margin-top:20px;
+  padding:18px;
+  background:rgba(100,200,100,.15);
+  border:1px solid rgba(100,200,100,.3);
+  border-radius:12px;
+  cursor:pointer;
+}
+button:hover{
+  background:rgba(100,200,100,.25);
+}
+.projection-result{
+  display:none;
+  margin-top:60px;
+  padding:40px;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(100,200,100,.2);
+  border-radius:16px;
+}
+.projection-result.show{
+  display:block;
+}
+.tension-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+  margin-bottom:32px;
+}
+.tension-card{
+  padding:16px;
+  background:rgba(255,255,255,.02);
+  border-left:4px solid;
+}
+.bar{
+  height:4px;
+  background:rgba(255,255,255,.1);
+  margin-top:8px;
+}
+.bar-fill{
+  height:100%;
+  width:0%;
+  background:currentColor;
+  transition:width 1s ease;
+}
+.projection-text{
+  background:rgba(0,0,0,.4);
+  padding:24px;
+  border-left:4px solid rgba(100,200,100,.4);
+}
+svg text{ pointer-events:none; }
+.glow-circle{ transition:all 1s ease; }
+.main-circle{ transition:all 1s ease; }
+line{ transition:stroke-width 1s ease, opacity 1s ease, stroke 1s ease; }
+.rune{ font-size:24px; position:absolute; }
+</style>
 </head>
 
 <body>
+<section class="hero">
+<div class="graph-container">
+<svg id="tension-graph" viewBox="0 0 600 600">
+<defs>
+<filter id="glow">
+<feGaussianBlur stdDeviation="3"/>
+</filter>
+<marker id="rune-◯" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<circle cx="10" cy="10" r="8" fill="#6c6" opacity="0.7"/>
+</marker>
+<marker id="rune-△" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<polygon points="10,2 18,18 2,18" fill="#f88" opacity="0.7"/>
+</marker>
+<marker id="rune-◇" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<rect x="5" y="5" width="10" height="10" transform="rotate(45 10 10)" fill="#8cf" opacity="0.7"/>
+</marker>
+<marker id="rune-⊘" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<circle cx="10" cy="10" r="8" fill="none" stroke="#f44" stroke-width="2" opacity="0.7"/>
+</marker>
+</defs>
 
-  <!-- ROOT APP -->
-  <div id="app">
+<g id="connections"></g>
+<g id="nodes">
+<!-- AXIOM NODES -->
+<g class="axiom-node" data-axiom="VER" data-x="300" data-y="50">
+<circle cx="300" cy="50" r="15" class="glow-circle" fill="#33ccff" opacity=".3" filter="url(#glow)"/>
+<circle cx="300" cy="50" r="10" class="main-circle" fill="#33ccff"/>
+<text x="300" y="30" text-anchor="middle" fill="#33ccff">VER</text>
+</g>
+<g class="axiom-node" data-axiom="LEX" data-x="480" data-y="150">
+<circle cx="480" cy="150" r="15" class="glow-circle" fill="#ffaa00" opacity=".3" filter="url(#glow)"/>
+<circle cx="480" cy="150" r="10" class="main-circle" fill="#ffaa00"/>
+<text x="510" y="155" fill="#ffaa00">LEX</text>
+</g>
+<g class="axiom-node" data-axiom="LIB" data-x="530" data-y="300">
+<circle cx="530" cy="300" r="15" class="glow-circle" fill="#66ff66" opacity=".3" filter="url(#glow)"/>
+<circle cx="530" cy="300" r="10" class="main-circle" fill="#66ff66"/>
+<text x="555" y="305" fill="#66ff66">LIB</text>
+</g>
+<g class="axiom-node" data-axiom="CRE" data-x="480" data-y="450">
+<circle cx="480" cy="450" r="15" class="glow-circle" fill="#ff8800" opacity=".3" filter="url(#glow)"/>
+<circle cx="480" cy="450" r="10" class="main-circle" fill="#ff8800"/>
+<text x="510" y="455" fill="#ff8800">CRE</text>
+</g>
+<g class="axiom-node" data-axiom="WIS" data-x="300" data-y="550">
+<circle cx="300" cy="550" r="15" class="glow-circle" fill="#ff44aa" opacity=".3" filter="url(#glow)"/>
+<circle cx="300" cy="550" r="10" class="main-circle" fill="#ff44aa"/>
+<text x="300" y="575" text-anchor="middle" fill="#ff44aa">WIS</text>
+</g>
+<g class="axiom-node" data-axiom="REL" data-x="120" data-y="450">
+<circle cx="120" cy="450" r="15" class="glow-circle" fill="#ff4444" opacity=".3" filter="url(#glow)"/>
+<circle cx="120" cy="450" r="10" class="main-circle" fill="#ff4444"/>
+<text x="90" y="455" text-anchor="end" fill="#ff4444">REL</text>
+</g>
+<g class="axiom-node" data-axiom="UNI" data-x="70" data-y="300">
+<circle cx="70" cy="300" r="15" class="glow-circle" fill="#aa66ff" opacity=".3" filter="url(#glow)"/>
+<circle cx="70" cy="300" r="10" class="main-circle" fill="#aa66ff"/>
+<text x="45" y="305" text-anchor="end" fill="#aa66ff">UNI</text>
+</g>
+<g class="axiom-node" data-axiom="INT" data-x="120" data-y="150">
+<circle cx="120" cy="150" r="15" class="glow-circle" fill="#ff5555" opacity=".3" filter="url(#glow)"/>
+<circle cx="120" cy="150" r="10" class="main-circle" fill="#ff5555"/>
+<text x="90" y="155" text-anchor="end" fill="#ff5555">INT</text>
+</g>
+</g>
+</svg>
+</div>
+<div class="hero-overlay">
+<h1>VECTAETOS</h1>
+<div class="tagline">Kde prestávajú slová, sú vzťahy</div>
+</div>
+</section>
 
-    <!-- FIELD CANVAS -->
-    <canvas id="field-canvas"></canvas>
+<div class="container">
+<div class="instruction">
+<h2>Toto nie je AI chatbot</h2>
+<p>Toto je <span class="highlight">projekcia epistemického poľa</span>.</p>
+<p>Neplatíš za odpoveď. Platíš za <strong>videnie napätia</strong>.</p>
+</div>
 
-    <!-- PAYWALL OVERLAY (hidden by default) -->
-    <div id="paywall" hidden>
-      <div class="paywall-content">
-        <p class="paywall-text">
-          Pole už reagovalo.
-        </p>
+<textarea id="query" placeholder="Sem napíš svoj problém…"></textarea>
+<button id="submit-btn">Vložiť do poľa</button>
 
-        <p class="paywall-subtext">
-          Ďalšia projekcia vyžaduje udržiavanie infraštruktúry.
-        </p>
+<div id="projection-result" class="projection-result">
+<h3>Projekcia poľa</h3>
+<div id="tension-cards" class="tension-cards"></div>
+<div id="projection-text" class="projection-text"></div>
+</div>
+</div>
 
-        <a
-          class="paywall-link"
-          href="https://revolut.me/fonfararichard"
-          target="_blank"
-          rel="noopener"
-        >
-          revolut.me/fonfararichard
-        </a>
+<script>
+// ================= AXIOMS =================
+const AXIOMS = {
+  INT: { label: "Integrita", color: "#ff5555" },
+  LEX: { label: "Lexikálna koherencia", color: "#ffaa00" },
+  VER: { label: "Verifikovateľnosť", color: "#33ccff" },
+  LIB: { label: "Sloboda", color: "#66ff66" },
+  UNI: { label: "Univerzálnosť", color: "#aa66ff" },
+  REL: { label: "Relačnosť", color: "#ff4444" },
+  WIS: { label: "Múdrosť", color: "#ff44aa" },
+  CRE: { label: "Kreativita", color: "#ff8800" }
+};
 
-        <p class="paywall-footnote">
-          Podpora neznamená odpoveď.<br />
-          Umožňuje existenciu poľa.
-        </p>
+// ================= SIMULATION VORTEX =================
+function simulateVortex(query) {
+  // Simulácia napätí (náhodné hodnoty pre demo, neskôr nahraď reálnym Vortexom)
+  const tensionMatrix = {};
+  const axioms = Object.keys(AXIOMS);
+  const κ = 0.4; // Kritická hranica koherencie
+
+  // Generovanie náhodnej matice napätí (0.1–0.9)
+  for (let i = 0; i < axioms.length; i++) {
+    tensionMatrix[axioms[i]] = {};
+    for (let j = 0; j < axioms.length; j++) {
+      if (i !== j) {
+        tensionMatrix[axioms[i]][axioms[j]] = Math.random() * 0.8 + 0.1;
+      }
+    }
+  }
+
+  // Pridanie špecifických pravidiel pre vstup
+  if (/neviem|neistota/.test(query)) {
+    tensionMatrix.WIS.VER = 0.9;
+    tensionMatrix.INT.CRE = 0.2;
+  }
+  if (/rozhodnut|choice/.test(query)) {
+    tensionMatrix.LIB.INT = 0.85;
+    tensionMatrix.REL.UNI = 0.3;
+  }
+
+  // Výpočet globálnej koherencie K(Φ)
+  let K = 0;
+  let edgeCount = 0;
+  for (const i in tensionMatrix) {
+    for (const j in tensionMatrix[i]) {
+      K += tensionMatrix[i][j];
+      edgeCount++;
+    }
+  }
+  K /= edgeCount; // Priemerná koherencia
+
+  // Ak K(Φ) < κ, nastav QE (apóriu) pre všetky hrany
+  if (K < κ) {
+    for (const i in tensionMatrix) {
+      for (const j in tensionMatrix[i]) {
+        tensionMatrix[i][j] = -1; // QE marker
+      }
+    }
+  }
+
+  return { tensionMatrix, K };
+}
+
+// ================= RENDER GRAPH =================
+function renderGraph(tensionMatrix) {
+  const connections = document.getElementById("connections");
+  connections.innerHTML = "";
+
+  const axioms = Object.keys(AXIOMS);
+  for (let i = 0; i < axioms.length; i++) {
+    for (let j = i + 1; j < axioms.length; j++) {
+      const a1 = axioms[i];
+      const a2 = axioms[j];
+      const tension = tensionMatrix[a1][a2];
+      if (!tension) continue;
+
+      const n1 = document.querySelector(`[data-axiom="${a1}"]`);
+      const n2 = document.querySelector(`[data-axiom="${a2}"]`);
+      const x1 = parseFloat(n1.dataset.x);
+      const y1 = parseFloat(n1.dataset.y);
+      const x2 = parseFloat(n2.dataset.x);
+      const y2 = parseFloat(n2.dataset.y);
+
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", x1);
+      line.setAttribute("y1", y1);
+      line.setAttribute("x2", x2);
+      line.setAttribute("y2", y2);
+
+      // Farba a hrúbka podľa napätia
+      if (tension === -1) {
+        line.setAttribute("stroke", "#f44"); // QE (červená)
+        line.setAttribute("stroke-width", "3");
+        line.setAttribute("marker-end", "url(#rune-⊘)");
+      } else if (tension > 0.7) {
+        line.setAttribute("stroke", "#6c6"); // AA (zelená)
+        line.setAttribute("stroke-width", tension * 4);
+        line.setAttribute("marker-end", "url(#rune-◯)");
+      } else if (tension > 0.5) {
+        line.setAttribute("stroke", "#ffaa00"); // AN (žltá)
+        line.setAttribute("stroke-width", tension * 3);
+        line.setAttribute("marker-end", "url(#rune-△)");
+      } else if (tension > 0.3) {
+        line.setAttribute("stroke", "#33ccff"); // NA (modrá)
+        line.setAttribute("stroke-width", tension * 2);
+        line.setAttribute("marker-end", "url(#rune-◇)");
+      } else {
+        line.setAttribute("stroke", "#888"); // NN (šedá)
+        line.setAttribute("stroke-width", "1");
+      }
+
+      connections.appendChild(line);
+    }
+  }
+}
+
+// ================= UPDATE UI =================
+function updateUI(tensionMatrix, K) {
+  const axioms = Object.keys(AXIOMS);
+  const cards = document.getElementById("tension-cards");
+  cards.innerHTML = "";
+
+  // Zobrazenie kárty pre každé axiomatické ťažisko
+  axioms.forEach(axiom => {
+    const card = document.createElement("div");
+    card.className = "tension-card";
+    card.style.borderColor = AXIOMS[axiom].color;
+
+    // Priemerné napätie pre dané ťažisko
+    let avgTension = 0;
+    let count = 0;
+    for (const other in tensionMatrix[axiom]) {
+      avgTension += tensionMatrix[axiom][other];
+      count++;
+    }
+    avgTension /= count;
+
+    card.innerHTML = `
+      <strong>${axiom}</strong>
+      <div class="bar">
+        <div class="bar-fill" style="width:${avgTension * 100}%;color:${AXIOMS[axiom].color}"></div>
       </div>
-    </div>
+    `;
+    cards.appendChild(card);
+  });
 
-    <!-- OVERLAY (textual projection only) -->
-    <div id="overlay">
+  // Text projekcie
+  const text = K < 0.4 ?
+    "<p><em>Pole nedokáže udržať koherenciu. Tvoja otázka rozbíja jeho štruktúru (QE).</em></p>" :
+    "<p><em>Napätie je viditeľné. Nie je to odpoveď, ale mapa možností.</em></p>";
+  document.getElementById("projection-text").innerHTML = text;
+}
 
-      <!-- Identity -->
-      <div id="identity">
-        <div class="label">VECTAETOS</div>
-        <div class="sub">Epistemic Field</div>
-      </div>
+// ================= MAIN LOGIC =================
+document.getElementById("submit-btn").onclick = () => {
+  const query = document.getElementById("query").value.trim();
+  if (!query) return;
 
-      <!-- Projection states -->
-      <div id="projection">
+  // 1. Spustíme Simulation Vortex
+  const { tensionMatrix, K } = simulateVortex(query);
 
-        <!-- INVITE -->
-        <div class="projection-state active" data-state="INVITE">
-          <p class="whisper">
-            Neodpovedáme.<br />
-            Ukazujeme, kde je napätie.
-          </p>
-        </div>
+  // 2. Vykreslíme graf
+  renderGraph(tensionMatrix);
 
-        <!-- INPUT PROMPT -->
-        <div class="projection-state" data-state="INPUT">
-          <p class="prompt">
-            Čo sa ti rúca,<br />
-            aj keď máš všetky informácie?
-          </p>
-        </div>
+  // 3. Aktualizujeme UI
+  updateUI(tensionMatrix, K);
 
-        <!-- GATE -->
-        <div class="projection-state" data-state="GATE_1">
-          <p class="status">
-            Stabilizácia významu…
-          </p>
-        </div>
+  // 4. Zobrazíme výsledok
+  document.getElementById("projection-result").classList.add("show");
 
-      </div>
-    </div>
-
-    <!-- INPUT LAYER -->
-    <div id="input-layer" hidden>
-      <textarea
-        id="epistemic-input"
-        spellcheck="false"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-      ></textarea>
-
-      <div class="input-hint">
-        Nepíš riešenie.<br />
-        Popíš stav.
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div id="footer">
-      <a href="https://github.com/rischo32/Vectaetos" target="_blank" rel="noopener">
-        GitHub
-      </a>
-      <a href="https://vectaetos.eu" target="_blank" rel="noopener">
-        Web
-      </a>
-    </div>
-
-  </div>
-
-  <!-- SCRIPTS (strict order) -->
-  <script type="module" src="states.js"></script>
-  <script type="module" src="tension.js"></script>
-  <script type="module" src="runes.js"></script>
-  <script type="module" src="field.js"></script>
-  <script type="module" src="main.js"></script>
-
+  // 5. Po 15s sa projekcia uzavrie (Stav IV)
+  setTimeout(() => {
+    document.getElementById("projection-result").classList.remove("show");
+    document.getElementById("query").value = "";
+    const connections = document.getElementById("connections");
+    connections.innerHTML = "";
+  }, 15000);
+};
+</script>
 </body>
 </html>
