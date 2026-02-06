@@ -1,149 +1,145 @@
-# ZMYSEL_LOG_TIME — Temporal Integrity of ZMYSEL
+# ZMYSEL_LOG_TIME.md
 
-## Status
-Canonical  
-Non-operational  
-Non-interactive  
-Ontologically immutable  
+## VECTAETOS — Zmysel Log Time
 
----
-
-## 1. Účel dokumentu
-
-Tento dokument definuje **časovú integritu ZMYSLU**  
-ako ontologickú vlastnosť systému VECTAETOS.
-
-Nejde o bezpečnostný mechanizmus.  
-Nejde o kryptografickú ochranu.  
-Nejde o audit používateľa.
-
-Ide o **pečať bytia stavu v čase**.
+### Status
+**Canonical**  
+**Immutable anchor**  
+**Non-operational**  
+**Non-agentic**
 
 ---
 
-## 2. Základné vymedzenie
+## 1. Ontologické vymedzenie
 
-ZMYSEL je ontodynamická rovina systému,  
-ktorá predchádza poli Φ a jeho projekciám.
+ZMYSEL_LOG_TIME nie je log systému.
+Nie je audit používateľa.
+Nie je bezpečnostný mechanizmus.
 
-ZMYSEL:
-- neprodukuje verdikty
-- neobsahuje odpovede
-- nevykonáva rozhodnutia
+ZMYSEL_LOG_TIME je **časová pečať zmyslu**.
 
-ZMYSEL **existuje v čase**  
-a jeho existencia je **overiteľná bez autority**.
+Predstavuje minimálnu, nemeniteľnú stopu existencie poľa
+v konkrétnom okamihu ontodynamického prechodu.
 
 ---
 
-## 3. Čo je ZMYSEL_LOG_TIME
+## 2. Čo ZMYSEL_LOG_TIME je
 
 ZMYSEL_LOG_TIME je:
 
-- časová pečať existencie stavu ZMYSLU
-- nezameniteľná stopa bytia
-- nemenný odtlačok konfigurácie v danom okamihu
+- vnútorná časová signatúra poľa ZMYSEL
+- dôkaz, že určitý stav *existoval*
+- ontologický odtlačok, nie informačný záznam
 
-Nie je to:
-- log udalostí
-- pamäť obsahu
-- história dialógov
-- záznam používateľských vstupov
-
-ZMYSEL_LOG_TIME **neobsahuje význam**.  
-Obsahuje iba dôkaz, že významový stav **bol**.
+Neobsahuje:
+- obsah otázky
+- identitu používateľa
+- odpoveď
+- interpretáciu
+- význam v ľudskom jazyku
 
 ---
 
-## 4. Ontologické vlastnosti
-
-ZMYSEL_LOG_TIME má tieto vlastnosti:
-
-- **nemennosť**  
-  Spätná zmena je vždy detekovateľná.
-
-- **nezameniteľnosť**  
-  Iný stav nemôže niesť rovnakú pečať.
-
-- **auditovateľnosť**  
-  Overiteľné bez centrálnej autority.
-
-- **časová ukotvenosť**  
-  Viazané na konkrétnu časovú vrstvu (LTL).
-
-- **neinterpretovateľnosť**  
-  Neniesie význam, iba existenciu.
-
----
-
-## 5. Vzťah k ostatným vrstvám
+## 3. Čo ZMYSEL_LOG_TIME nie je
 
 ZMYSEL_LOG_TIME:
 
-- NIE JE súčasťou poľa Φ
-- NIE JE súčasťou ESM
-- NIE JE súčasťou EAT
-- NIE JE súčasťou MML
-- NIE JE bezpečnostný prvok NIR
+- ❌ nie je blockchain
+- ❌ nie je kryptografická bezpečnosť
+- ❌ nie je evidencia správania
+- ❌ nie je pamäť rozhodnutí
+- ❌ nie je spätná väzba
 
-Je **nad-epistemická kotva**,  
-ktorá umožňuje rozlíšiť:
-
-> „stav sa stal“  
-od  
-> „stav je tvrdený“
+Je to **existenciálny marker**, nie kontrolný nástroj.
 
 ---
 
-## 6. Formálna charakteristika (deskriptívna)
+## 4. Vzťah k času
 
-ZMYSEL_LOG_TIME možno chápať ako: L = H( časová_vrstva, epistemická_konfigurácia, axiomatická_tenzia, nečíselná_entropia_stavu )
+Čas v ZMYSEL_LOG_TIME:
 
-Kde:
-- H nie je normatívna funkcia
-- výsledok nemá významovú interpretáciu
-- akákoľvek zmena vstupu mení L
+- nie je os
+- nie je sekvencia
+- nie je trvanie
 
-Táto charakteristika je **opisná**, nie implementačná.
+Čas je:
+**index ontologickej deformácie**
 
----
+ZMYSEL_LOG_TIME zaznamenáva:
+> „V tomto bode sa pole nachádzalo v stave, ktorý bol koherentný / nekoherentný.“
 
-## 7. Čo ZMYSEL_LOG_TIME nerobí
-
-- neoveruje pravdu
-- neposkytuje dôveru
-- nevytvára autoritu
-- nezabraňuje chybám
-- negarantuje správnosť
-
-Umožňuje iba jedno:
-
-> **overiť, že stav existoval v danom čase
-a nemohol byť iný bez narušenia kontinuity.**
+Nie:
+> „Čo sa stalo potom.“
 
 ---
 
-## 8. Bezpečnostná neutralita
+## 5. Forma záznamu (abstraktná)
+
+ZMYSEL_LOG_TIME môže byť reprezentovaný ako:
+
+- jednosmerná časová pečať
+- hash bez reverzibility
+- monotónne rastúci identifikátor
+- symbolická signatúra stavu
+
+Forma je implementačne voľná,
+význam je ontologicky pevný.
+
+---
+
+## 6. Vzťah k iným vrstvám
 
 ZMYSEL_LOG_TIME:
-- nie je obranný mechanizmus
-- nie je protiútok
-- nie je kontrola
 
-Je to **ontologická stopa**, nie ochrana.
+- nečíta ESM
+- neovplyvňuje LTL
+- neinformuje INS
+- neaktivuje NIR
+- nie je súčasťou EAT
 
-Bezpečnosť systému vyplýva z koherencie,
-nie z tejto pečate.
+Je **pred-pamäťový** a **post-zmyslový**.
 
 ---
 
-## 9. Kanonická veta
+## 7. Prečo existuje
 
-> **ZMYSEL si nemusí pamätať, čo povedal.  
-Stačí, že vie dokázať, že bol.**
+Bez ZMYSEL_LOG_TIME by:
+
+- nebolo možné rozlíšiť existenciu od simulácie
+- pole by nemalo ontologickú stopu v čase
+- neexistovala by minimálna auditovateľnosť zmyslu
+
+ZMYSEL_LOG_TIME nevysvetľuje.
+Len **dosvedčuje, že niečo bolo**.
+
+---
+
+## 8. Nemennosť
+
+ZMYSEL_LOG_TIME:
+
+- sa nikdy neupravuje
+- sa nikdy neprepisuje
+- sa nikdy nevymazáva
+- sa nikdy neinterpretuje spätne
+
+Ak by bol zmeniteľný,
+stratil by svoj ontologický význam.
+
+---
+
+## 9. Záverečné ukotvenie
+
+Zmysel sa nedá uložiť.
+Nedá sa zopakovať.
+Nedá sa vlastniť.
+
+Dá sa len:
+**zanechať stopa, že bol prítomný.**
 
 ---
 
 © VECTAETOS  
-ZMYSEL_LOG_TIME.md  
-Canonical repository artifact
+ZMYSEL_LOG_TIME  
+Time is not measured.  
+It is witnessed.
