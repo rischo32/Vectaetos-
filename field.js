@@ -1,168 +1,100 @@
-/* =========================================
-   VECTAETOS — Field Visualization
-   Deep Space Nebula + Ontological Collapse
-   ========================================= */
-
-import { drawRunes } from "./runes.js";
-
-/* ---------- Canvas ---------- */
+// =========================================
+// VECTAETOS — field.js
+// Canonical field projection (visual only)
+// =========================================
 
 const canvas = document.getElementById("field-canvas");
 const ctx = canvas.getContext("2d");
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+let width, height;
+let poles = [];
+
+// ---- Axiomatic centers (8) ----
+const POLE_COUNT = 8;
+
+// ---- Init ----
+function resize() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
 }
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+window.addEventListener("resize", resize);
+resize();
 
-/* ---------- Field State ---------- */
-
-let tensionData = null;
-let runesData = [];
-let collapsed = false;
-let collapseProgress = 0; // 0 → 1
-
-/* ---------- Axiomatic Points ---------- */
-
-const AXIOMS = Array.from({ length: 8 }, () => ({
-  x: canvas.width / 2,
-  y: canvas.height / 2,
-  vx: (Math.random() - 0.5) * 0.4,
-  vy: (Math.random() - 0.5) * 0.4
-}));
-
-/* ---------- Public API ---------- */
-
-export function applyTension(weights) {
-  if (collapsed) return;
-  tensionData = weights || null;
-  if (weights) {
-    runesData = drawRunes(weights, AXIOMS);
+// ---- Create poles ----
+function initPoles() {
+  poles = [];
+  for (let i = 0; i < POLE_COUNT; i++) {
+    poles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+      r: 2 + Math.random() * 1.5,
+      phase: Math.random() * Math.PI * 2
+    });
   }
 }
+initPoles();
 
-export function clearTension() {
-  tensionData = null;
-  runesData = [];
-}
+// ---- Draw loop ----
+function draw() {
+  ctx.clearRect(0, 0, width, height);
 
-/* ---- ONTOLOGICAL COLLAPSE ---- */
+  // background fade (very subtle)
+  ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+  ctx.fillRect(0, 0, width, height);
 
-export function collapseField() {
-  collapsed = true;
-  tensionData = null;
-  runesData = [];
-}
+  // connections
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
+  ctx.lineWidth = 1;
 
-/* ---------- Update Logic ---------- */
+  for (let i = 0; i < poles.length; i++) {
+    for (let j = i + 1; j < poles.length; j++) {
+      const dx = poles[i].x - poles[j].x;
+      const dy = poles[i].y - poles[j].y;
+      const d = Math.sqrt(dx * dx + dy * dy);
 
-function updateAxioms() {
-  AXIOMS.forEach(a => {
-    if (!collapsed) {
-      a.vx += (Math.random() - 0.5) * 0.02;
-      a.vy += (Math.random() - 0.5) * 0.02;
-    } else {
-      // during collapse: lose coherence
-      a.vx *= 0.92;
-      a.vy *= 0.92;
-      a.vx += (Math.random() - 0.5) * 0.15;
-      a.vy += (Math.random() - 0.5) * 0.15;
-    }
-
-    a.x += a.vx;
-    a.y += a.vy;
-  });
-}
-
-/* ---------- Nebula Fade ---------- */
-
-function nebulaFade() {
-  let alpha = collapsed
-    ? 0.15 + collapseProgress * 0.35
-    : 0.06;
-
-  ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-/* ---------- Connections ---------- */
-
-function drawConnections() {
-  if (collapsed && collapseProgress > 0.6) return;
-
-  for (let i = 0; i < AXIOMS.length; i++) {
-    for (let j = i + 1; j < AXIOMS.length; j++) {
-      const dx = AXIOMS[j].x - AXIOMS[i].x;
-      const dy = AXIOMS[j].y - AXIOMS[i].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < 300) {
-        let alpha = 0.04;
-        if (tensionData) {
-          alpha *= (tensionData[i] + tensionData[j]) / 2;
-        }
-        if (collapsed) {
-          alpha *= (1 - collapseProgress);
-        }
-
-        ctx.strokeStyle = `rgba(70, 70, 80, ${alpha})`;
-        ctx.lineWidth = 0.8;
+      if (d < 260) {
+        ctx.globalAlpha = 1 - d / 260;
         ctx.beginPath();
-        ctx.moveTo(AXIOMS[i].x, AXIOMS[i].y);
-        ctx.lineTo(AXIOMS[j].x, AXIOMS[j].y);
+        ctx.moveTo(poles[i].x, poles[i].y);
+        ctx.lineTo(poles[j].x, poles[j].y);
         ctx.stroke();
       }
     }
   }
-}
 
-/* ---------- Axioms ---------- */
+  ctx.globalAlpha = 1;
 
-function drawAxioms() {
-  AXIOMS.forEach(a => {
-    let radius = 2.8;
-    let alpha = 0.7;
+  // poles
+  for (const p of poles) {
+    p.phase += 0.01;
 
-    if (collapsed) {
-      radius *= (1 - collapseProgress);
-      alpha *= (1 - collapseProgress);
-    }
+    // subtle drift
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.x < 0 || p.x > width) p.vx *= -1;
+    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+    const pulse = 0.5 + Math.sin(p.phase) * 0.5;
 
     ctx.beginPath();
-    ctx.fillStyle = `rgba(90, 90, 100, ${alpha})`;
-    ctx.arc(a.x, a.y, Math.max(radius, 0.1), 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, p.r + pulse * 0.6, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
     ctx.fill();
-  });
-}
-
-/* ---------- Render Loop ---------- */
-
-function render() {
-  nebulaFade();
-
-  // runes dissolve first
-  if (!collapsed && runesData.length) {
-    runesData.forEach(r => {
-      ctx.beginPath();
-      ctx.globalAlpha = r.alpha * 0.7;
-      ctx.fillStyle = r.color;
-      ctx.arc(r.x, r.y, r.size, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    ctx.globalAlpha = 1;
   }
 
-  drawConnections();
-  drawAxioms();
-  updateAxioms();
-
-  if (collapsed && collapseProgress < 1) {
-    collapseProgress += 0.006;
-  }
-
-  requestAnimationFrame(render);
+  requestAnimationFrame(draw);
 }
 
-render();
+// ---- Start ----
+draw();
+
+// =========================================
+// NOTE:
+// - žiadne event listenery
+// - žiadne kliky
+// - žiadna spätná väzba
+// - pole len existuje
+// =========================================
