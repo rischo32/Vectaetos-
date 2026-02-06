@@ -1,94 +1,541 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>VECTAETOS — Epistemické Pole</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="VECTAETOS - Projekcia epistemického poľa. Nie odpoveď, ale lepšia otázka.">
 
-  <title>Vectaetos — Epistemic Field</title>
+<link rel="icon" href="data:image/svg+xml,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+<text y='.9em' font-size='90'>🗿</text>
+</svg>">
 
-  <!-- Fonts (Apple-like smoothing) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body{
+  background:#0a0a0a;
+  color:#fff;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI";
+  line-height:1.6;
+}
+.hero{
+  position:relative;
+  min-height:75vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  padding:40px 20px;
+}
+.graph-container{
+  width:100%;
+  max-width:650px;
+  aspect-ratio:1;
+}
+.hero-overlay{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+  pointer-events:none;
+}
+.hero-overlay h1{
+  font-size:clamp(32px,8vw,56px);
+  font-weight:200;
+  letter-spacing:0.2em;
+  text-shadow:0 0 40px rgba(0,0,0,.9);
+}
+.hero-overlay .tagline{
+  font-size:14px;
+  color:#888;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.container{
+  max-width:800px;
+  margin:auto;
+  padding:60px 20px;
+}
+.instruction{
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:32px;
+  margin-bottom:48px;
+}
+.instruction h2{
+  color:#6c6;
+  font-weight:300;
+  margin-bottom:20px;
+}
+.highlight{
+  color:#6c6;
+  background:rgba(100,200,100,.1);
+  padding:2px 6px;
+  border-radius:4px;
+}
+textarea{
+  width:100%;
+  min-height:140px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:20px;
+  color:#fff;
+  font-size:16px;
+}
+button{
+  width:100%;
+  margin-top:20px;
+  padding:18px;
+  background:rgba(100,200,100,.15);
+  border:1px solid rgba(100,200,100,.3);
+  border-radius:12px;
+  cursor:pointer;
+}
+button:hover{
+  background:rgba(100,200,100,.25);
+}
+.projection-result{
+  display:none;
+  margin-top:60px;
+  padding:40px;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(100,200,100,.2);
+  border-radius:16px;
+}
+.projection-result.show{
+  display:block;
+}
+.tension-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+  margin-bottom:32px;
+}
+.tension-card{
+  padding:16px;
+  background:rgba(255,255,255,.02);
+  border-left:4px solid;
+}
+.bar{
+  height:4px;
+  background:rgba(255,255,255,.1);
+  margin-top:8px;
+}
+.bar-fill{
+  height:100%;
+  width:0%;
+  background:currentColor;
+  transition:width 1s ease;
+}
+.projection-text{
+  background:rgba(0,0,0,.4);
+  padding:24px;
+  border-left:4px solid rgba(100,200,100,.4);
+}
+svg text{ pointer-events:none; }
+.glow-circle{ transition:all 1s ease; }
+.main-circle{ transition:all 1s ease; }
+line{ transition:stroke-width 1s ease, opacity 1s ease, stroke 1s ease; }
+.rune{ font-size:24px; position:absolute; }
+#paywall-overlay{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,0.9);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  z-index:1000;
+}
+.gates-container {
+  margin: 40px 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(100, 200, 100, 0.2);
+  border-radius: 16px;
+  padding: 30px;
+}
+.gate {
+  margin-bottom: 30px;
+}
+.gate h3 {
+  color: #6c6;
+  margin-bottom: 10px;
+}
+.gate p {
+  color: #aaa;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+#next-gate-btn {
+  background: rgba(100, 200, 100, 0.2);
+  border: 1px solid rgba(100, 200, 100, 0.3);
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+</style>
 </head>
 
 <body>
+<section class="hero">
+<div class="graph-container">
+<svg id="tension-graph" viewBox="0 0 600 600">
+<defs>
+<filter id="glow">
+<feGaussianBlur stdDeviation="3"/>
+</filter>
+<marker id="rune-◯" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<circle cx="10" cy="10" r="8" fill="#6c6" opacity="0.7"/>
+</marker>
+<marker id="rune-△" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<polygon points="10,2 18,18 2,18" fill="#f88" opacity="0.7"/>
+</marker>
+<marker id="rune-◇" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<rect x="5" y="5" width="10" height="10" transform="rotate(45 10 10)" fill="#8cf" opacity="0.7"/>
+</marker>
+<marker id="rune-⊘" viewBox="0 0 20 20" refX="10" refY="10" markerWidth="20" markerHeight="20">
+<circle cx="10" cy="10" r="8" fill="none" stroke="#f44" stroke-width="2" opacity="0.7"/>
+</marker>
+</defs>
 
-  <!-- ================================= -->
-  <!-- FIELD CANVAS (PRIMARY REALITY) -->
-  <!-- ================================= -->
-  <canvas id="field-canvas"></canvas>
+<g id="connections"></g>
+<g id="nodes">
+<g class="axiom-node" data-axiom="VER" data-x="300" data-y="50">
+<circle cx="300" cy="50" r="15" class="glow-circle" fill="#33ccff" opacity=".3" filter="url(#glow)"/>
+<circle cx="300" cy="50" r="10" class="main-circle" fill="#33ccff"/>
+<text x="300" y="30" text-anchor="middle" fill="#33ccff">VER</text>
+</g>
+<g class="axiom-node" data-axiom="LEX" data-x="480" data-y="150">
+<circle cx="480" cy="150" r="15" class="glow-circle" fill="#ffaa00" opacity=".3" filter="url(#glow)"/>
+<circle cx="480" cy="150" r="10" class="main-circle" fill="#ffaa00"/>
+<text x="510" y="155" fill="#ffaa00">LEX</text>
+</g>
+<g class="axiom-node" data-axiom="LIB" data-x="530" data-y="300">
+<circle cx="530" cy="300" r="15" class="glow-circle" fill="#66ff66" opacity=".3" filter="url(#glow)"/>
+<circle cx="530" cy="300" r="10" class="main-circle" fill="#66ff66"/>
+<text x="555" y="305" fill="#66ff66">LIB</text>
+</g>
+<g class="axiom-node" data-axiom="CRE" data-x="480" data-y="450">
+<circle cx="480" cy="450" r="15" class="glow-circle" fill="#ff8800" opacity=".3" filter="url(#glow)"/>
+<circle cx="480" cy="450" r="10" class="main-circle" fill="#ff8800"/>
+<text x="510" y="455" fill="#ff8800">CRE</text>
+</g>
+<g class="axiom-node" data-axiom="WIS" data-x="300" data-y="550">
+<circle cx="300" cy="550" r="15" class="glow-circle" fill="#ff44aa" opacity=".3" filter="url(#glow)"/>
+<circle cx="300" cy="550" r="10" class="main-circle" fill="#ff44aa"/>
+<text x="300" y="575" text-anchor="middle" fill="#ff44aa">WIS</text>
+</g>
+<g class="axiom-node" data-axiom="REL" data-x="120" data-y="450">
+<circle cx="120" cy="450" r="15" class="glow-circle" fill="#ff4444" opacity=".3" filter="url(#glow)"/>
+<circle cx="120" cy="450" r="10" class="main-circle" fill="#ff4444"/>
+<text x="90" y="455" text-anchor="end" fill="#ff4444">REL</text>
+</g>
+<g class="axiom-node" data-axiom="UNI" data-x="70" data-y="300">
+<circle cx="70" cy="300" r="15" class="glow-circle" fill="#aa66ff" opacity=".3" filter="url(#glow)"/>
+<circle cx="70" cy="300" r="10" class="main-circle" fill="#aa66ff"/>
+<text x="45" y="305" text-anchor="end" fill="#aa66ff">UNI</text>
+</g>
+<g class="axiom-node" data-axiom="INT" data-x="120" data-y="150">
+<circle cx="120" cy="150" r="15" class="glow-circle" fill="#ff5555" opacity=".3" filter="url(#glow)"/>
+<circle cx="120" cy="150" r="10" class="main-circle" fill="#ff5555"/>
+<text x="90" y="155" text-anchor="end" fill="#ff5555">INT</text>
+</g>
+</g>
+</svg>
+</div>
+<div class="hero-overlay">
+<h1>VECTAETOS</h1>
+<div class="tagline">Kde prestávajú slová, sú vzťahy</div>
+</div>
+</section>
 
-  <!-- ================================= -->
-  <!-- OVERLAY: IDLE / INVITE / INPUT -->
-  <!-- ================================= -->
-  <div id="input-layer" aria-hidden="false">
+<div class="container">
+<div class="instruction">
+<h2>Toto nie je AI chatbot</h2>
+<p>Toto je <span class="highlight">projekcia epistemického poľa</span>.</p>
+<p>Neplatíš za odpoveď. Platíš za <strong>videnie napätia</strong>.</p>
+</div>
 
-    <div class="corner-label">
-      Vectaetos — Epistemic Field
-    </div>
+<div class="gates-container">
+  <div class="gate" id="gate1">
+    <h3>1. Lineárna brána</h3>
+    <p>Čo sa snažíš pochopiť?</p>
+    <textarea id="gate1-input" placeholder="Napíš svoj základný problém..."></textarea>
+  </div>
+  <div class="gate" id="gate2" style="display:none;">
+    <h3>2. Paralelná brána</h3>
+    <p>Čo všetko s tým súvisí?</p>
+    <textarea id="gate2-input" placeholder="Popíš kontext..."></textarea>
+  </div>
+  <div class="gate" id="gate3" style="display:none;">
+    <h3>3. Hlboká brána</h3>
+    <p>Čo by sa rozpadlo, keby to nebola pravda?</p>
+    <textarea id="gate3-input" placeholder="Popíš dôsledky..."></textarea>
+  </div>
+  <button id="next-gate-btn">Ďalej</button>
+</div>
 
-    <div class="invite-text">
-      Neodpovedáme.<br />
-      Ukazujeme, kde je napätie.
-    </div>
+<div id="projection-result" class="projection-result">
+<h3>Projekcia poľa</h3>
+<div id="tension-cards" class="tension-cards"></div>
+<div id="projection-text" class="projection-text"></div>
+</div>
 
-    <div class="input-container">
-      <textarea
-        id="epistemic-input"
-        rows="4"
-        maxlength="500"
-        spellcheck="false"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-      ></textarea>
+<div id="paywall-overlay">
+  <h2>POLE SA UZAVRELO.</h2>
+</div>
+</div>
 
-      <div class="input-hint">
-        Nepíš riešenie.<br />
-        Popíš stav.
+<script>
+// ================= AXIOMS =================
+const AXIOMS = {
+  INT: { label: "Integrita", color: "#ff5555" },
+  LEX: { label: "Lexikálna koherencia", color: "#ffaa00" },
+  VER: { label: "Verifikovateľnosť", color: "#33ccff" },
+  LIB: { label: "Sloboda", color: "#66ff66" },
+  UNI: { label: "Univerzálnosť", color: "#aa66ff" },
+  REL: { label: "Relačnosť", color: "#ff4444" },
+  WIS: { label: "Múdrosť", color: "#ff44aa" },
+  CRE: { label: "Kreativita", color: "#ff8800" }
+};
+
+// ================= SIMULATION VORTEX =================
+function initPole() {
+  return {
+    E: Math.random() * 0.4 + 0.4, // Energy
+    C: Math.random() * 0.4 + 0.4, // Coherence
+    T: Math.random() * 0.3 + 0.1, // Tension
+    M: 0.0,                       // Memory
+    S: Math.random() * 0.15 + 0.05 // Entropy
+  };
+}
+
+function clamp(x, lo=0.0, hi=1.0) {
+  return Math.max(lo, Math.min(hi, x));
+}
+
+function fieldMeans(poles) {
+  const means = { E: 0, C: 0, T: 0, M: 0, S: 0 };
+  poles.forEach(pole => {
+    means.E += pole.E;
+    means.C += pole.C;
+    means.T += pole.T;
+    means.M += pole.M;
+    means.S += pole.S;
+  });
+  means.E /= poles.length;
+  means.C /= poles.length;
+  means.T /= poles.length;
+  means.M /= poles.length;
+  means.S /= poles.length;
+  return means;
+}
+
+function vortexStep(poles) {
+  const means = fieldMeans(poles);
+  const ALPHA_E = 0.02;
+  const ALPHA_T = 0.03;
+  const ALPHA_C = 0.04;
+  const ALPHA_M = 0.01;
+  const ALPHA_S = 0.015;
+  const NOISE = 0.01;
+  const DT = 0.05;
+
+  poles.forEach(pole => {
+    const dE = ALPHA_E * (means.T - pole.T);
+    const dT = ALPHA_T * (1.0 - pole.C) - 0.5 * pole.S;
+    const dC = ALPHA_C * (pole.E - Math.abs(pole.T - means.T));
+    const anomaly = Math.abs(pole.T - means.T);
+    const dM = ALPHA_M * anomaly - 0.1 * pole.M;
+    const dS = ALPHA_S * (Math.abs(dE) + Math.abs(dT));
+
+    pole.E = clamp(pole.E + dE * DT + (Math.random() - 0.5) * NOISE);
+    pole.T = clamp(pole.T + dT * DT + (Math.random() - 0.5) * NOISE);
+    pole.C = clamp(pole.C + dC * DT + (Math.random() - 0.5) * NOISE);
+    pole.M = clamp(pole.M + dM * DT);
+    pole.S = clamp(pole.S + dS * DT);
+  });
+}
+
+function runVortex(query, steps=200) {
+  const poles = Array(8).fill().map(initPole);
+
+  if (/neviem|neistota/.test(query)) {
+    poles[3].T = 0.8; // WIS tension
+    poles[2].C = 0.3; // VER coherence drop
+  }
+  if (/rozhodnut|choice/.test(query)) {
+    poles[0].E = 0.9; // INT energy
+    poles[3].T = 0.7; // WIS tension
+  }
+
+  for (let i = 0; i < steps; i++) {
+    vortexStep(poles);
+  }
+
+  const means = fieldMeans(poles);
+  const K = means.C;
+  const κ = 0.4;
+
+  const tensionMatrix = {};
+  const axioms = Object.keys(AXIOMS);
+  axioms.forEach((a1, i) => {
+    tensionMatrix[a1] = {};
+    axioms.forEach((a2, j) => {
+      if (i !== j) {
+        const t = 1 - poles[i].C + Math.abs(poles[i].E - poles[j].E);
+        tensionMatrix[a1][a2] = clamp(t, 0.1, 0.9);
+      }
+    });
+  });
+
+  return { tensionMatrix, K, κ };
+}
+
+// ================= RENDER GRAPH =================
+function renderGraph(tensionMatrix) {
+  const connections = document.getElementById("connections");
+  connections.innerHTML = "";
+
+  const axioms = Object.keys(AXIOMS);
+  axioms.forEach((a1, i) => {
+    axioms.forEach((a2, j) => {
+      if (i >= j) return;
+      const tension = tensionMatrix[a1][a2];
+      if (!tension) return;
+
+      const n1 = document.querySelector(`[data-axiom="${a1}"]`);
+      const n2 = document.querySelector(`[data-axiom="${a2}"]`);
+      const x1 = parseFloat(n1.dataset.x);
+      const y1 = parseFloat(n1.dataset.y);
+      const x2 = parseFloat(n2.dataset.x);
+      const y2 = parseFloat(n2.dataset.y);
+
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", x1);
+      line.setAttribute("y1", y1);
+      line.setAttribute("x2", x2);
+      line.setAttribute("y2", y2);
+
+      if (tension === -1) {
+        line.setAttribute("stroke", "#f44");
+        line.setAttribute("stroke-width", "3");
+        line.setAttribute("marker-end", "url(#rune-⊘)");
+      } else if (tension > 0.7) {
+        line.setAttribute("stroke", "#6c6");
+        line.setAttribute("stroke-width", tension * 4);
+        line.setAttribute("marker-end", "url(#rune-◯)");
+      } else if (tension > 0.5) {
+        line.setAttribute("stroke", "#ffaa00");
+        line.setAttribute("stroke-width", tension * 3);
+        line.setAttribute("marker-end", "url(#rune-△)");
+      } else if (tension > 0.3) {
+        line.setAttribute("stroke", "#33ccff");
+        line.setAttribute("stroke-width", tension * 2);
+        line.setAttribute("marker-end", "url(#rune-◇)");
+      } else {
+        line.setAttribute("stroke", "#888");
+        line.setAttribute("stroke-width", "1");
+      }
+
+      connections.appendChild(line);
+    });
+  });
+}
+
+// ================= UPDATE UI =================
+function updateUI(tensionMatrix, K, κ) {
+  const axioms = Object.keys(AXIOMS);
+  const cards = document.getElementById("tension-cards");
+  cards.innerHTML = "";
+
+  axioms.forEach(axiom => {
+    const card = document.createElement("div");
+    card.className = "tension-card";
+    card.style.borderColor = AXIOMS[axiom].color;
+
+    let avgTension = 0;
+    let count = 0;
+    for (const other in tensionMatrix[axiom]) {
+      avgTension += tensionMatrix[axiom][other];
+      count++;
+    }
+    avgTension /= count;
+
+    card.innerHTML = `
+      <strong>${axiom}</strong>
+      <div class="bar">
+        <div class="bar-fill" style="width:${avgTension * 100}%;color:${AXIOMS[axiom].color}"></div>
       </div>
-    </div>
+    `;
+    cards.appendChild(card);
+  });
 
-  </div>
+  const text = K < κ ?
+    "<p><em>Pole nedokáže udržať koherenciu. Tvoja otázka rozbíja jeho štruktúru (QE).</em></p>" :
+    "<p><em>Napätie je viditeľné. Nie je to odpoveď, ale mapa možností.</em></p>";
+  document.getElementById("projection-text").innerHTML = text;
+}
 
-  <!-- ================================= -->
-  <!-- PAYWALL OVERLAY (CLOSURE STATE) -->
-  <!-- ================================= -->
-  <div id="paywall-overlay" aria-hidden="true">
+// ================= 3GATE LOGIC =================
+let currentGate = 1;
 
-    <div class="paywall-content">
+document.getElementById("next-gate-btn").onclick = () => {
+  if (currentGate === 1) {
+    const input1 = document.getElementById("gate1-input").value.trim();
+    if (!input1) return;
+    document.getElementById("gate1").style.display = "none";
+    document.getElementById("gate2").style.display = "block";
+    currentGate = 2;
+  }
+  else if (currentGate === 2) {
+    const input2 = document.getElementById("gate2-input").value.trim();
+    if (!input2) return;
+    document.getElementById("gate2").style.display = "none";
+    document.getElementById("gate3").style.display = "block";
+    currentGate = 3;
+  }
+  else if (currentGate === 3) {
+    const input3 = document.getElementById("gate3-input").value.trim();
+    if (!input3) return;
 
-      <p class="paywall-text">
-        <strong>Pole sa uzavrelo.</strong><br /><br />
-        Jeho existencia však nie je zadarmo.<br /><br />
-        Ak chceš podporiť infraštruktúru,<br />
-        robíš tak mimo poľa.
-      </p>
+    const combinedInput = [
+      document.getElementById("gate1-input").value,
+      document.getElementById("gate2-input").value,
+      document.getElementById("gate3-input").value
+    ].join(" || ");
 
-      <a
-        class="paywall-link"
-        href="https://revolut.me/fonfararichard"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        revolut.me/fonfararichard
-      </a>
+    const { tensionMatrix, K } = runVortex(combinedInput);
+    renderGraph(tensionMatrix);
+    updateUI(tensionMatrix, K);
+    document.getElementById("projection-result").classList.add("show");
 
-    </div>
-  </div>
-
-  <!-- ================================= -->
-  <!-- SCRIPTS -->
-  <!-- ================================= -->
-  <script src="field.js"></script>
-  <script src="states.js"></script>
-  <script src="tension.js"></script>
-  <script src="runes.js"></script>
-  <script src="main.js"></script>
-
+    setTimeout(() => {
+      document.getElementById("projection-result").classList.remove("show");
+      document.getElementById("gates-container").style.display = "none";
+      document.getElementById("paywall-overlay").style.display = "flex";
+      setTimeout(() => {
+        document.getElementById("paywall-overlay").style.display = "none";
+        document.getElementById("gates-container").style.display = "block";
+        document.getElementById("gate1").style.display = "block";
+        document.getElementById("gate2").style.display = "none";
+        document.getElementById("gate3").style.display = "none";
+        currentGate = 1;
+        document.querySelectorAll("textarea").forEach(el => el.value = "");
+      }, 3000);
+    }, 15000);
+  }
+};
+</script>
 </body>
 </html>
