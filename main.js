@@ -1,105 +1,141 @@
-/* =========================================
-   VECTAETOS — Main Control Logic
-   Orchestration only (no meaning, no answers)
-   ========================================= */
+// =========================================
+// VECTAETOS — main.js
+// Canonical interaction controller
+// =========================================
 
-import { STATES, setState, getState, isInteractionConsumed } from "./states.js";
-import { computeTension } from "./tension.js";
-import { applyTension, clearTension, collapseField } from "./field.js";
+// ---- IMPORTY (ak používaš moduly) ----
+// import { Field } from "./field.js";
+// import { States } from "./states.js";
+// import { projectTension } from "./tension.js";
+// import { projectRunes } from "./runes.js";
 
-/* ---------- DOM ---------- */
+// =========================================
+// GLOBÁLNE STAVY
+// =========================================
 
-const inputLayer = document.getElementById("input-layer");
-const inputField = document.getElementById("epistemic-input");
-const paywall = document.getElementById("paywall");
+let interactionConsumed = false;   // 1. interakcia prebehla
+let paywallShown = false;          // paywall zobrazený
+let secondIntentArmed = false;     // užívateľ sa POKÚSIL znovu vstúpiť
 
-/* ---------- Internal Flags ---------- */
+// DOM prvky
+const inputLayer   = document.getElementById("input-layer");
+const textInput    = document.getElementById("epistemic-input");
+const paywallLayer = document.getElementById("paywall-overlay");
 
-let gateLocked = false;
+// =========================================
+// INIT
+// =========================================
 
-/* ---------- Helpers ---------- */
-
-function openInput() {
-  inputLayer.hidden = false;
-  inputField.value = "";
-  inputField.focus();
-}
-
-function closeInput() {
-  inputLayer.hidden = true;
-  inputField.blur();
-}
-
-/* ---------- Initial Flow ---------- */
-
-/*
-INVITE → INPUT
-User signals intent by click
-*/
-
-document.addEventListener("click", () => {
-  const state = getState();
-
-  // First interaction: allow input
-  if (state === STATES.INVITE) {
-    setState(STATES.INPUT);
-    openInput();
-    return;
-  }
-
-  // Any further interaction after SILENT → collapse + paywall
-  if (isInteractionConsumed() && state !== STATES.PAYWALL) {
-    triggerCollapseAndPaywall();
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  initInputGate();
+  hidePaywall();
 });
 
-/* ---------- Input Handling ---------- */
+// =========================================
+// INPUT GATE LOGIKA
+// =========================================
 
-inputField.addEventListener("keydown", (e) => {
-  if (e.key !== "Enter") return;
-  e.preventDefault();
+function initInputGate() {
+  if (!textInput) return;
 
-  if (gateLocked) return;
+  // PRVÝ VSTUP — POVOLENÝ
+  textInput.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
 
-  const text = inputField.value.trim();
-  if (!text) return;
+    // zabráni novému riadku
+    e.preventDefault();
 
-  gateLocked = true;
-  closeInput();
+    const value = textInput.value.trim();
+    if (!value) return;
 
-  runGateSequence(text);
-});
+    // Ak už prebehla interakcia → ide o DRUHÝ INTENT
+    if (interactionConsumed) {
+      armSecondIntent();
+      return;
+    }
 
-/* ---------- Gate Sequence ---------- */
+    // PRVÁ A JEDINÁ INTERAKCIA
+    consumeFirstInteraction(value);
+  });
 
-function runGateSequence(text) {
-  // GATE 1 — Linear stabilization
-  setState(STATES.GATE_1);
-
-  setTimeout(() => {
-    // MIRROR — project tension
-    const tension = computeTension(text);
-    applyTension(tension);
-    setState(STATES.MIRROR);
-
-    // SILENT — withdraw projection
-    setTimeout(() => {
-      clearTension();
-      setState(STATES.SILENT);
-    }, 2200);
-
-  }, 900);
+  // POKUS O FOCUS NA INPUT PO INTERAKCII
+  textInput.addEventListener("focus", () => {
+    if (interactionConsumed) {
+      armSecondIntent();
+    }
+  });
 }
 
-/* ---------- Collapse + Paywall ---------- */
+// =========================================
+// SPRACOVANIE PRVEJ INTERAKCIE
+// =========================================
 
-function triggerCollapseAndPaywall() {
-  setState(STATES.PAYWALL);
+function consumeFirstInteraction(text) {
+  interactionConsumed = true;
 
-  collapseField();
+  // skry input
+  disableInput();
 
-  // allow visual collapse to finish before showing paywall
-  setTimeout(() => {
-    paywall.hidden = false;
-  }, 2400);
+  // ---- TU SA DEJE PROJEKCIA POĽA ----
+  // projectTension(text);
+  // projectRunes(text);
+
+  // pole má byť ticho — nič viac sa tu nedeje
 }
+
+// =========================================
+// DRUHÝ INTENT → PAYWALL
+// =========================================
+
+function armSecondIntent() {
+  if (paywallShown) return;
+
+  secondIntentArmed = true;
+  showPaywall();
+}
+
+// =========================================
+// PAYWALL LOGIKA
+// =========================================
+
+function showPaywall() {
+  if (!paywallLayer) return;
+
+  paywallShown = true;
+
+  paywallLayer.style.display = "flex";
+  paywallLayer.setAttribute("aria-hidden", "false");
+}
+
+function hidePaywall() {
+  if (!paywallLayer) return;
+
+  paywallLayer.style.display = "none";
+  paywallLayer.setAttribute("aria-hidden", "true");
+}
+
+// =========================================
+// INPUT CONTROL
+// =========================================
+
+function disableInput() {
+  if (!textInput) return;
+
+  textInput.blur();
+  textInput.disabled = true;
+  textInput.value = "";
+}
+
+// =========================================
+// BEZPEČNOSTNÉ POZNÁMKY
+// =========================================
+//
+// ❌ ŽIADNE click listenery na body / canvas
+// ❌ ŽIADNE mousemove / touchstart / tap
+// ❌ ŽIADNE automatické timeouty na paywall
+//
+// Paywall je aktivovaný VÝHRADNE:
+// - ENTER po prvej interakcii
+// - alebo focus na input po uzavretí poľa
+//
+// =========================================
