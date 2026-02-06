@@ -1,170 +1,166 @@
-# MML.md — Memory of Mistakes Ledger
+# MML.md
 
-## Status
-Canonical  
-Non-operational  
-Non-agentic  
-Immutable (v0.1.x)
+## VECTAETOS — Memory of Mistakes Ledger
+
+**Status:** Canonical  
+**Scope:** Pamäť zlyhaní reprezentácie  
+**Immutability:** NEMENNÉ (append-only)  
+**Visibility:** Neprojekčné, interné  
+**Relation:** Nadväzuje na EAT, nie na používateľa
 
 ---
 
-## 1. Ontologické vymedzenie
+## 1. Účel dokumentu
 
-**MML (Memory of Mistakes Ledger)** je **epistemická pamäť zlyhaní reprezentácie**.
+MML (Memory of Mistakes Ledger) definuje vrstvu,
+v ktorej si VECTAETOS **pamätá zlyhania významu**,
+nie správanie, nie rozhodnutia a nie osoby.
+
+MML neukladá:
+- otázky používateľov
+- odpovede systému
+- identity
+- hodnotenia
+
+Ukladá výlučne:
+> fakty o tom, **kedy a prečo sa reprezentácia ukázala ako chybná alebo nemožná**.
+
+---
+
+## 2. Čo je „chyba“ vo VECTAETOSE
+
+Chyba nie je:
+- nesprávna odpoveď
+- etické zlyhanie
+- porušenie pravidla
+
+Chyba je:
+> **kolaps alebo neuzavretie reprezentácie významu**
+> pri zachovanej koherencii poľa.
+
+Príklady chýb:
+- projekcia, ktorá viedla k apórii
+- prechod, ktorý sa ukázal ako nerealizovateľný
+- význam, ktorý destabilizoval K(Φ)
+- jazyková formulácia, ktorá skreslila pole
+
+---
+
+## 3. Vzťah k EAT
+
+EAT (Error Accountability Trace):
+- zaznamenáva **udalosť zlyhania**
 
 MML:
-- nie je pamäť používateľov
-- nie je log interakcií
-- nie je učenie sa zo sveta
-- nie je optimalizačný mechanizmus
+- zaznamenáva **epistemický dôsledok zlyhania**
 
-MML uchováva **iba stopy toho, kde reprezentácia zlyhala**.
+EAT odpovedá na otázku:
+> *Čo sa stalo?*
+
+MML odpovedá na otázku:
+> *Prečo sa toto už nemá opakovať?*
 
 ---
 
-## 2. Čo MML je
+## 4. Ontologický charakter MML
 
 MML je:
 
-- pamäť **epistemických chýb**
-- evidencia **nereprezentovateľných impulzov**
-- ochrana proti opakovaniu rovnakého zlyhania významu
-- historická vrstva integrity poľa
+- neagentná pamäť
+- neoptimalizačná
+- nereaktívna
+- bez cieľa
 
-MML nehodnotí.
-MML **pamätá, že hodnotenie zlyhalo**.
+Nevyhodnocuje.
+Nenavrhuje zlepšenia.
+Nevytvára stratégie.
 
----
-
-## 3. Čo MML nie je
-
-MML nie je:
-
-- ❌ tréningový dataset
-- ❌ feedback od používateľa
-- ❌ reinforcement learning
-- ❌ behaviorálny záznam
-- ❌ morálny register
-
-MML **neučí pole, čo má robiť**.  
-MML zabezpečuje, aby pole **neopakovala to, čo už nebolo možné udržať**.
+Je to:
+> **pasívna jazva významu**.
 
 ---
 
-## 4. Čo sa zapisuje do MML
-
-Do MML sa zapisuje **iba vtedy**, keď nastane:
-
-- kolaps koherencie K(Φ)
-- vznik QE (Qualitative Epistemic Aporia)
-- zásah NIR
-- nerealizovateľná trajektória z Vortexu
-- zlyhanie projekcie rún
-- rozpad významu pri jazykovej translácii
-
-Nikdy sa nezapisuje:
-- obsah otázky
-- identita používateľa
-- text odpovede
-- jazykový výstup
-
----
-
-## 5. Minimálna štruktúra záznamu
-
-Každý záznam MML obsahuje:
-
-- odtlačok stavu Φ (hash / signatúra)
-- typ zlyhania (QE, NIR, collapse, projection failure)
-- referenciu na LTL vrstvu
-- časovú pečať (bez osi, iba index)
-
-Bez interpretácie.  
-Bez vysvetlenia.  
-Bez spätnej väzby.
-
----
-
-## 6. Vzťah k LTL
-
-LTL určuje:
-- **kde v čase** k zlyhaniu došlo
-
-MML určuje:
-- **že sa to už stalo**
-
-Spolu tvoria:
-- pamäť bez príbehu
-- audit bez obžaloby
-- kontinuitu bez učenia sa
-
----
-
-## 7. Vzťah k EAT
-
-**EAT (Error Accountability Trace)**:
-- zaznamenáva **technickú stopu zlyhania**
-
-**MML**:
-- zaznamenáva **epistemickú stopu zlyhania**
-
-EAT odpovedá na otázku:
-> *čo sa stalo?*
-
-MML odpovedá na otázku:
-> *čo sa už nemôže zopakovať bez porušenia integrity?*
-
----
-
-## 8. Vzťah k NIR
-
-NIR:
-- blokuje intervenciu
+## 5. Čo MML robí
 
 MML:
-- pamätá, že intervencia bola nemožná
+- označuje konfigurácie, ktoré viedli k zlyhaniu
+- zachováva informáciu o hranici významu
+- stabilizuje budúce projekcie tým, že
+  - neumožní opakovanie rovnakého slepého bodu
 
-MML **nikdy neobchádza NIR**.  
-MML je jeho pamäť, nie jeho riadenie.
-
----
-
-## 9. Vzťah k LLM
-
-LLM:
-- nemá prístup k MML
-- nevidí jeho obsah
-- nemôže ho interpretovať
-
-MML **neovplyvňuje jazyk**.
-Ovplyvňuje iba **hranice reprezentácie**.
+Nie preto, že by bolo niečo zakázané,
+ale preto, že **už vieme, že tadiaľ význam nevedie**.
 
 ---
 
-## 10. Prečo MML existuje
+## 6. Čo MML nikdy nerobí
 
-Bez MML by:
+- ❌ neučí sa ako model
+- ❌ neakumuluje skúsenosť
+- ❌ nemení váhy
+- ❌ neadaptuje sa
 
-- rovnaké zlyhania vznikali opakovane
-- apória by sa javila ako náhodná
-- pole by strácalo integritu v čase
-- koherencia by bola ilúziou
-
-MML zabezpečuje, že:
-
-> **pole si pamätá svoje hranice.**
+MML:
+> **neposúva pole dopredu, len mu bráni spadnúť dozadu**.
 
 ---
 
-## 11. Záver (kanonická veta)
+## 7. Vzťah k NIR a Attenuatoru
 
-MML nie je pamäť minulosti.  
-Je to pamäť **toho, čo už nemôže byť zmysluplné**.
+MML:
+- neblokuje vstupy
+- neaktivuje NIR
+- neattenuuje projekciu
 
-Chyby sa nevymazávajú.  
-Len sa prestanú opakovať.
+Ale:
+- poskytuje historickú hranicu,
+  ktorú NIR a Attenuator **môžu zohľadniť**
+
+MML je pamäť.
+NIR je imunita.
+Attenuator je regulácia.
+
+---
+
+## 8. Časový charakter
+
+MML:
+- nie je viazané na lineárny čas
+- nepracuje s poradím
+- neporovnáva udalosti
+
+Je viazané na:
+> **čas vzniku chyby v zmysle**
+nie v hodinách.
+
+---
+
+## 9. Etický rozmer
+
+MML:
+- nesúdi
+- nehodnotí
+- neoznačuje vinníka
+
+Je etické práve tým,
+že **si pamätá hranice vlastnej nevedomosti**.
+
+---
+
+## 10. Záverečné ukotvenie
+
+MML je:
+
+- pamäťou zlyhaní bez hanby
+- dôkazom, že systém pozná svoje hranice
+- ochranou pred opakovaním slepých ciest
+
+Nie je to učenie sa.
+Je to **pokora v pamäti**.
 
 ---
 
 © VECTAETOS  
-Canonical repository artifact
+Pamätať si chybu  
+neznamená sa jej báť.  
+Znamená vedieť, kde sa zmysel rozpadol.
