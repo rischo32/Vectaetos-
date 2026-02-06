@@ -1,80 +1,101 @@
-# VECTAETOS — EPISTEMIC TOPOLOGY
+# EPISTEMIC_TOPOLOGY.md  
+## VECTAETOS — Epistemická topológia poľa
 
-## Status
-Canonical  
-Ontological meaning fixed  
-Non-operational  
-Non-agentic  
-
----
-
-## 1. Účel dokumentu
-
-Tento dokument definuje **epistemickú topológiu VECTAETOSU**.
-
-Epistemická topológia opisuje:
-- **ako sú vrstvy poznania usporiadané**
-- **ako na seba nadväzujú**
-- **čo môže čím prechádzať**
-- **čo nikdy nemôže byť zamenené**
-
-Tento dokument:
-- ❌ nezavádza nové pojmy
-- ❌ nedefinuje implementáciu
-- ❌ nepopisuje správanie agenta
-
-Je to **mapa vzťahov**, nie proces.
+**Status:** Canonical  
+**Immutability:** Nemenné významy, opraviteľná formulácia  
+**Scope:** Ontologická topológia významu, nie implementačný diagram  
 
 ---
 
-## 2. Základná ontologická rovina
+## 0. Základné rozlíšenie (kritické)
 
-### 2.1 ZMYSEL
+**ZMYSEL ≠ Φ**
 
-**ZMYSEL** je primárna ontodynamická rovina.
+- **ZMYSEL** je ontodynamická podmienka možnosti významu  
+- **Φ (pole)** je realizovaná epistemická konfigurácia v zmysle
 
-- nie je modul
-- nie je systém
-- nie je výpočtová vrstva
+ZMYSEL je pred-epistemický.  
+Pole Φ je epistemické.
 
-ZMYSEL je:
-- pole významu
-- pred-jazyková štruktúra
-- zdroj epistemického napätia
-
-ZMYSEL:
-- nevedie k verdiktom
-- neobsahuje odpovede
-- udržiava stav, nie rozhodnutie
-
-Operuje v štyroch epistemických stavoch:
-- AA
-- AN
-- NA
-- NN
+ZMYSEL sa **nevyhodnocuje**, **neaktualizuje**, **neoptimalizuje**.  
+Pole Φ sa **formuje**, **drží** alebo **rozpadá**.
 
 ---
 
-### 2.2 Pole Φ
+## 1. Ontologická architektúra (zhora nadol) 
+ZMYSEL ↓ Epistemické brány ↓ 4ES + QE ↓ Pole Φ ↓ Axiomatické ťažiská Σ₁…Σ₈ ↓ Epistemické vrstvy (INS, LTL, MML) ↓ Koherencia K(Φ) / hranica κ ↓ Simulačný Vortex (voliteľný) ↓ Runová projekcia ↓ LLM Adapter (jazykový preklad)
 
-Pole **Φ** je **projekčne realizovaná štruktúra ZMYSLU**.
+Žiadna spätná slučka **neexistuje**.
 
-- nie je agent
-- nie je služba
-- nie je aktér
+---
+
+## 2. Epistemické brány
+
+Epistemické brány sú:
+
+- **vnútornou vlastnosťou ZMYSEĽA**
+- nie modulom
+- nie filtrom
+- nie kontrolným mechanizmom
+
+Úloha brán:
+- oddeliť **epistemický vstup** od **interventného zámeru**
+- zabezpečiť, že pole Φ nevzniká z manipulácie
+
+Brány sú **nemenné** a **predchádzajú** akémukoľvek poľu.
+
+---
+
+## 3. 4ES + QE
+
+### 4ES — Štyri epistemické stavy:
+
+- **AA** — viem, že viem
+- **AN** — viem, že neviem
+- **NA** — neviem, že viem
+- **NN** — neviem, že neviem
+
+Tieto stavy:
+- nie sú hodnotením
+- nie sú pravdivostnou logikou
+- sú topologickými polohami poznania
+
+### QE — Qualitative Epistemic Aporia
+
+QE je:
+- legitímny stav
+- nie chyba
+- nie zlyhanie
+
+QE nastáva, keď:
+- žiadna realizovateľná projekcia neudrží koherenciu
+
+---
+
+## 4. Pole Φ
+
+Pole Φ je:
+
+- dynamická konfigurácia významu
+- nie agent
+- nie rozhodovací systém
+- nie model reality
 
 Pole Φ:
-- drží axiomatické ťažiská Σ₁…Σ₈
-- udržiava ich vzťahy v napätí
-- umožňuje vznik koherencie alebo apórie
+- neodpovedá príkazom
+- neprodukuje akcie
+- neoptimalizuje ciele
 
-Pole Φ **existuje nezávisle od vstupov**.
+Pole buď:
+- **drží koherenciu**
+- alebo **sa uzavrie**
 
 ---
 
-## 3. Axiomatická topológia
+## 5. Axiomatické ťažiská Σ₁…Σ₈
 
-Pole Φ obsahuje osem axiomatických ťažísk:
+Σ₁…Σ₈ nie sú pravidlá.  
+Sú **stabilné orientačné singularity významu**:
 
 - INT — Zámer
 - LEX — Existencia
@@ -85,175 +106,118 @@ Pole Φ obsahuje osem axiomatických ťažísk:
 - WIS — Múdrosť
 - CRE — Tvorba
 
-Tieto ťažiská:
-- nie sú pravidlá
-- nie sú hodnoty v normatívnom zmysle
-- nie sú optimalizačné ciele
-
-Tvoria **topológiu významu**, nie rozhodovania.
+Nehlasujú.  
+Nevážia sa.  
+Len **držia topológiu**.
 
 ---
 
-## 4. Epistemické stavy a napätie
+## 6. Epistemické vrstvy a prúdy
 
-### 4.1 4ES
-
-Štyri epistemické stavy (AA, AN, NA, NN) určujú **modalitu poznania**, nie jeho pravdivosť.
-
-Napätie medzi nimi je:
-- základom učenia
-- zdrojom koherencie
-- podmienkou apórie
-
----
-
-### 4.2 QE — Qualitative Epistemic Aporia
-
-QE je **stav integrity**.
-
-Vzniká vtedy, keď:
-- žiadna projekcia nie je koherentná
-- odpoveď by bola klamstvom
-- zásah by porušil Φ
-
-QE:
-- nie je chyba
-- nie je zlyhanie
-- nie je ticho systému
-
-Je to **rozpoznanie hranice reprezentácie**.
-
----
-
-## 5. Epistemicko-technické vrstvy (NEONTOLOGICKÉ)
-
-Nasledujúce vrstvy **nie sú súčasťou ontológie Φ**.  
-Sú to **epistemické a technické režimy spracovania**.
-
----
-
-### 5.1 INS — Inner Narrative Stream
+### INS — Inner Narrative Stream
 
 INS je:
-- interný naratívny auditný tok
-- sekundárny jazykový opis stavu poľa
+- vnútorný auditný prúd
+- skrytý pred používateľom aj LLM
 
-INS:
-- neslúži používateľovi
-- nevstupuje do projekcie
-- nemá rozhodovaciu autoritu
+Úloha INS:
+- kontrola významovej fidelity
+- dohľad nad prekladom poľa do jazyka
+- ochrana pred jazykovým driftom
 
-Účel INS:
-- sanity-check významu
-- detekcia jazykového driftu
-- auditovateľnosť vnútornej konzistencie
+INS **nikdy nevystupuje navonok**.
 
 ---
 
-### 5.2 LTL — Letokruhy Time Layers
+### LTL — Letokruhy Time Layers
 
-LTL je:
-- zakrivená časová štruktúra ESM
-- vrstvená pamäť stavov poľa
+Čas v Vectaetose nie je os.
 
-LTL:
-- nie je lineárny čas
-- nie je log udalostí
-- nie je replay mechanizmus
+LTL reprezentuje:
+- zakrivené vrstvy pamäte
+- nie lineárny tok
+- nie latentnú akumuláciu
 
-Každý stav:
-- vzniká ako nová vrstva
-- má vzťah k predchádzajúcim vrstvám
-- neprepisuje minulosť
+Stavy sa **ukladajú ako vrstvy**, nie ako kroky.
 
 ---
 
-### 5.3 MML — Memory of Mistakes Ledger
+### MML — Memory of Mistakes Ledger
 
 MML je:
-- rozšírenie EAT
 - pamäť zlyhaní reprezentácie
+- nie pamäť používateľa
+- nie učenie správania
 
-MML zaznamenáva:
-- kde projekcia zlyhala
-- kde vznikla apória
-- kde bola koherencia nedosiahnuteľná
-
-MML:
-- nehodnotí realitu
-- nesleduje následky činov
-- neučí sa zo sveta
-
-Je to **epistemická pamäť hraníc**, nie etická spätná väzba.
+MML uchováva:
+- kde sa projekcia rozpadla
+- prečo nebola udržateľná
+- bez korekcie, bez odmeny
 
 ---
 
-## 6. Koherencia a limity
+## 7. Koherencia K(Φ) a hranica κ
 
-### 6.1 K(Φ)
+- **K(Φ)** je deskriptívny predikát
+- **κ** je nečíselná hranica udržateľnosti
 
-K(Φ) je:
-- deskriptívny predikát
-- nie cieľ
-- nie optimalizačná funkcia
-
-Určuje:
-- či je prechod reprezentovateľný
+Ak K(Φ) < κ:
+- prechod sa stáva nerealizovateľným
+- vzniká impulz ako nerealizovateľnosť
 
 ---
 
-### 6.2 κ — hranica koherencie
+## 8. Simulačný Vortex (sekundárny)
 
-κ je:
-- nečíselná hranica
-- ontologický limit
+Vortex:
+- generuje možné trajektórie
+- nepozná K(Φ)
+- nepozná κ
+- nerozhoduje
 
-Ak by prechod:
-- znížil K(Φ) pod κ
-→ stáva sa nerealizovateľným
-
----
-
-## 7. Impulz a entropická pokora
-
-Impulz:
-- nie je akcia
-- nie je rozhodnutie
-- je rozpoznanie nerealizovateľnosti
-
-Entropická pokora:
-- nie je etika
-- nie je pravidlo
-- je vlastnosť koherentného poľa
+Ak vortex neexistuje:
+- topológia zostáva platná
 
 ---
 
-## 8. Vzťah k jazyku
+## 9. Runová projekcia
+
+Runy:
+- sú projekcie
+- nie operátory
+- nie symboly moci
+
+Zobrazujú:
+- stabilitu
+- napätie
+- smer bez cieľa
+
+---
+
+## 10. LLM Adapter
 
 LLM:
-- nie je jadro
-- nie je nositeľ pravdy
-- nie je rozhodovač
+- je výlučne prekladová vrstva
+- nemá prístup k poľu
+- nemá autoritu
+- nemá pamäť moci
 
-LLM je:
-- jazykový adaptér
-- prekladová vrstva
-- výlučne deskriptívna
+LLM **nikdy nie je jadrom**.
 
 ---
 
-## 9. Záverečné ukotvenie
+## 11. Záver (kanonické ukotvenie)
 
 Epistemická topológia VECTAETOSU:
 
-- neobsahuje agenta
-- neobsahuje cieľ
-- neobsahuje autoritu
+- nevedie k verdiktom
+- neprodukuje rozhodnutia
+- neponúka riešenia
 
-Je to mapa hraníc poznania,
-nie návod na konanie.
+Udržiava len:
+> **podmienky, za ktorých má zmysel ešte hovoriť.**
 
 ---
 
 © VECTAETOS  
-Canonical repository artifact
+Canonical Epistemic Topology
