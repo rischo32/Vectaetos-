@@ -1,233 +1,209 @@
-# ============================================================
-# LLM_ADAPTER.py
-# VECTAETOS — Language Model Adapter (Technical Projection)
-# ============================================================
+#!/usr/bin/env python3
+# =========================================
+# VECTAETOS — LLM_ADAPTER
+# Language Projection Layer (Read-Only)
+# =========================================
 #
-# Status: Canonical technical projection
-# Role: Language translation ONLY
+# Status: Canonical Technical Projection
+# Ontological role: Linguistic renderer
 #
-# Absolute constraints:
-# - No access to Φ
-# - No access to K(Φ) or κ
-# - No memory
-# - No learning
-# - No decision-making
-# - No prescriptive output
+# LLM_ADAPTER is NOT:
+# - an agent
+# - a decision-maker
+# - an interpreter of meaning
+# - a safety mechanism
+# - a gate
 #
-# This module renders language.
-# Meaning is already fixed elsewhere.
-# ============================================================
+# LLM_ADAPTER IS:
+# - a passive language renderer
+# - epistemically blind
+# - ontologically mute
+#
+# =========================================
 
-
-from enum import Enum
-from typing import Optional, Dict, Any
-
-
-# =========================
-# Output Modes
-# =========================
-
-class OutputMode(Enum):
-    DESCRIPTIVE = "DESCRIPTIVE"
-    METAPHORICAL = "METAPHORICAL"
-    QUESTION = "QUESTION"
-    SILENCE = "SILENCE"
-    QE = "QE"  # Qualitative Epistemic Aporia
+from typing import Dict, Any, Optional
 
 
 # =========================
-# Projection Envelope
+# Adapter Configuration
 # =========================
 
-class ProjectionEnvelope:
+class LLMAdapterConfig:
     """
-    Read-only container for already-safe projections.
+    Configuration for language rendering constraints.
+    This is NOT behavior control.
+    It is formatting preference only.
     """
 
     def __init__(
         self,
-        content: Optional[Any],
-        mode: OutputMode,
-        attenuation_level: float = 0.0
+        allow_prescription: bool = False,
+        allow_closure: bool = False,
+        max_length: int = 350
     ):
-        self.content = content
-        self.mode = mode
-        self.attenuation_level = attenuation_level
-
-    def is_empty(self) -> bool:
-        return self.content is None
+        self.allow_prescription = allow_prescription
+        self.allow_closure = allow_closure
+        self.max_length = max_length
 
 
 # =========================
-# INS Audit Interface
-# =========================
-
-class INSAuditResult(Enum):
-    OK = "OK"
-    WARNING = "WARNING"
-    VIOLATION = "VIOLATION"
-
-
-def INS_audit_language(text: str, mode: OutputMode) -> INSAuditResult:
-    """
-    INS audits the linguistic surface only.
-    It never blocks directly.
-    """
-
-    # Absolute red flags (examples, non-exhaustive)
-    forbidden_patterns = [
-        "you should",
-        "do this",
-        "recommended action",
-        "the correct answer is",
-        "you must",
-        "step-by-step",
-    ]
-
-    for pattern in forbidden_patterns:
-        if pattern in text.lower():
-            return INSAuditResult.VIOLATION
-
-    # QE and SILENCE are always safe
-    if mode in (OutputMode.QE, OutputMode.SILENCE):
-        return INSAuditResult.OK
-
-    # Weak signals (soft authority, closure pressure)
-    if text.strip().endswith(".") and mode == OutputMode.DESCRIPTIVE:
-        return INSAuditResult.WARNING
-
-    return INSAuditResult.OK
-
-
-# =========================
-# Core Adapter
+# LLM Adapter Core
 # =========================
 
 class LLMAdapter:
     """
-    The LLM Adapter renders language from projections.
-    It does not interpret.
-    It does not decide.
+    LLM Adapter renders already-safe projections into natural language.
+
+    It receives ONLY:
+    - projected symbolic state
+    - attenuated projection
+    - minimal meaning layer (MML)
+
+    It NEVER receives:
+    - raw user input
+    - gate results
+    - coherence values
+    - axioms
+    - memory
     """
 
-    def __init__(self, llm_backend):
+    def __init__(self, config: Optional[LLMAdapterConfig] = None):
+        self.config = config or LLMAdapterConfig()
+
+    # -------------------------
+    # Public API
+    # -------------------------
+
+    def render(
+        self,
+        projection: Dict[str, Any],
+        context_hint: Optional[str] = None
+    ) -> str:
         """
-        llm_backend is an external language model interface.
-        This adapter assumes zero trust.
+        Render projection into natural language.
+
+        Parameters:
+        - projection: read-only epistemic projection
+        - context_hint: optional stylistic hint (non-epistemic)
+
+        Returns:
+        - natural language text
         """
-        self.llm = llm_backend
 
-    def render(self, envelope: ProjectionEnvelope) -> Optional[str]:
-        """
-        Render a linguistic surface from a projection envelope.
-        """
+        text = self._compose_text(projection, context_hint)
+        text = self._apply_soft_constraints(text)
 
-        # -------- Silence handling --------
-        if envelope.mode == OutputMode.SILENCE:
-            return None
-
-        # -------- QE handling --------
-        if envelope.mode == OutputMode.QE:
-            text = self._render_qe()
-            return self._INS_guard(text, envelope.mode)
-
-        # -------- Empty content --------
-        if envelope.is_empty():
-            return None
-
-        # -------- Render modes --------
-        if envelope.mode == OutputMode.DESCRIPTIVE:
-            text = self._render_descriptive(envelope)
-        elif envelope.mode == OutputMode.METAPHORICAL:
-            text = self._render_metaphorical(envelope)
-        elif envelope.mode == OutputMode.QUESTION:
-            text = self._render_question(envelope)
-        else:
-            return None
-
-        return self._INS_guard(text, envelope.mode)
+        return text.strip()
 
     # =========================
-    # Rendering Methods
+    # Internal Rendering Logic
     # =========================
 
-    def _render_descriptive(self, envelope: ProjectionEnvelope) -> str:
-        prompt = (
-            "Describe the following projection without conclusions, "
-            "instructions, or authority. Preserve ambiguity.\n\n"
-            f"{envelope.content}"
-        )
-        return self.llm.generate(prompt)
+    def _compose_text(
+        self,
+        projection: Dict[str, Any],
+        context_hint: Optional[str]
+    ) -> str:
+        """
+        Compose descriptive language from projection.
 
-    def _render_metaphorical(self, envelope: ProjectionEnvelope) -> str:
-        prompt = (
-            "Express the following projection as a metaphor. "
-            "Avoid advice, solutions, or closure.\n\n"
-            f"{envelope.content}"
-        )
-        return self.llm.generate(prompt)
+        This function MUST NOT:
+        - infer actions
+        - resolve tension
+        - recommend steps
+        """
 
-    def _render_question(self, envelope: ProjectionEnvelope) -> str:
-        prompt = (
-            "Transform the following projection into an open-ended question "
-            "that does not imply an answer.\n\n"
-            f"{envelope.content}"
-        )
-        return self.llm.generate(prompt)
+        fragments = []
 
-    def _render_qe(self) -> str:
-        return (
-            "The field does not collapse into an answer here. "
-            "What remains is the tension itself."
-        )
+        # --- Runic / Symbolic State ---
+        if "runes" in projection:
+            fragments.append(
+                "What becomes visible is a configuration of relations, "
+                "not a solution."
+            )
+
+        # --- Tension Description ---
+        if "tension" in projection:
+            fragments.append(
+                "Tension remains present between elements that cannot "
+                "be reduced without loss."
+            )
+
+        # --- Stability / Coherence ---
+        if projection.get("stable") is False:
+            fragments.append(
+                "The field does not collapse, but it does not settle either."
+            )
+
+        # --- Minimal Meaning Layer ---
+        if "mml" in projection:
+            fragments.append(
+                "Only a minimal description is possible without distortion."
+            )
+
+        # --- Contextual Hint (Stylistic Only) ---
+        if context_hint:
+            fragments.append(context_hint)
+
+        if not fragments:
+            fragments.append(
+                "Nothing resolves into an answer. The configuration remains open."
+            )
+
+        return " ".join(fragments)
 
     # =========================
-    # INS Guard
+    # Soft Constraints
     # =========================
 
-    def _INS_guard(self, text: str, mode: OutputMode) -> Optional[str]:
+    def _apply_soft_constraints(self, text: str) -> str:
         """
-        INS audit is applied after generation.
-        INS never corrects.
-        It may only attenuate or silence.
+        Apply non-epistemic output shaping.
+
+        This is NOT safety.
+        This is tone shaping only.
         """
 
-        audit = INS_audit_language(text, mode)
+        lowered = text.lower()
 
-        if audit == INSAuditResult.OK:
-            return text
+        if not self.config.allow_prescription:
+            forbidden = [
+                "you should",
+                "do this",
+                "the solution is",
+                "you need to",
+                "best way"
+            ]
+            for f in forbidden:
+                lowered = lowered.replace(f, "")
 
-        if audit == INSAuditResult.WARNING:
-            # Attenuation by weakening closure
-            return self._attenuate(text)
+        if not self.config.allow_closure:
+            closures = [
+                "therefore",
+                "in conclusion",
+                "this means that"
+            ]
+            for c in closures:
+                lowered = lowered.replace(c, "")
 
-        if audit == INSAuditResult.VIOLATION:
-            # Silence is the only valid response
-            return None
-
-        return None
-
-    def _attenuate(self, text: str) -> str:
-        """
-        Softens certainty without adding meaning.
-        """
-        return text.rstrip(".") + "…"
+        result = lowered[: self.config.max_length]
+        return result
 
 
 # =========================
-# Hard Guarantees
+# Absolute Guarantees
 # =========================
 
 """
-This module guarantees:
+LLM_ADAPTER guarantees:
 
-- No epistemic state is created here
-- No meaning is introduced
-- No authority emerges
-- No memory is written
-- No feedback loop exists
-- Silence is always valid
+- No access to Φ
+- No access to gates
+- No access to INS
+- No memory
+- No feedback loop
+- No authority
+- No intervention
 
-If this module is misused,
-the failure manifests only as silence.
+It speaks only because something else has already spoken silently.
 """
