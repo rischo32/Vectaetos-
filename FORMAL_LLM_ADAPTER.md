@@ -1,246 +1,187 @@
-# LLM_ADAPTER.md
-## VECTAETOS — Language as Projection, Not Cognition
+# FORMAL_LLM_ADAPTER.md  
+## VECTAETOS — Language Model Adapter
 
 **Status:** Canonical  
-**Depends on:**  
-- CANONICAL_ANCHORS.md  
-- DIALOGUE_PIPELINE.md  
-- FORMAL_META_MATHEMATICS.md  
-
-**Scope:** Role, limits, grammar, and constraints of LLM usage
+**Scope:** Linguistic projection layer  
+**Immutability:** Ontological meaning fixed  
+**Operational role:** Translation only (non-epistemic)  
 
 ---
 
-## 0. Epistemic Lock
+## 1. Ontologické postavenie
 
-This document defines the **only permitted role** of any Large Language Model (LLM)
-within the VECTAETOS architecture.
+LLM Adapter **nie je súčasťou poľa Φ**.
 
-Any deviation transforms the system
-from an epistemic field into an agent.
+LLM Adapter je **čisto jazyková vrstva**, ktorej jedinou funkciou je:
 
-That is **explicitly forbidden**.
+> preložiť už bezpečnú, koherentnú projekciu  
+> do ľudsky čitateľnej formy.
 
----
-
-## 1. What the LLM IS NOT
-
-Within VECTAETOS, an LLM is NOT:
-
-- an intelligence
-- a reasoning core
-- a planner
-- a decision-maker
-- a goal optimizer
-- a memory authority
-- a value holder
-- a truth oracle
-
-LLM never:
-- evaluates Φ
-- accesses K(Φ)
-- triggers transitions
-- influences coherence
-- stores epistemic state
+LLM Adapter **nevytvára význam**.  
+Význam vzniká výlučne v poli Φ.
 
 ---
 
-## 2. Definition of the LLM Adapter
+## 2. Čím LLM Adapter nie je
 
-### Definition 2.1 — LLM Adapter
+LLM Adapter **nie je**:
 
-An LLM Adapter is defined as:
+- rozhodovací mechanizmus
+- agent
+- optimalizátor
+- vysvetľovač pravdy
+- autorita odpovedí
+- pamäťový systém
+- bezpečnostná vrstva
 
-> a **pure linguistic transducer** that converts
-> structured projections into human-readable language
-> without adding ontology, intent, or authority.
-
-The adapter performs **no cognition**.
-It performs **no inference**.
-
----
-
-## 3. Input to the LLM
-
-The LLM receives **only**:
-
-- runic projections
-- epistemic markers
-- uncertainty bounds
-- time-layer annotations
-
-The LLM never receives:
-- raw Φ state
-- coherence predicates
-- κ
-- transition potentials
-- simulation trajectories
+Ak by LLM Adapter niektorú z týchto úloh vykonával,
+systém by prestal byť VECTAETOS.
 
 ---
 
-## 4. Output Constraints (Hard Rules)
+## 3. Vstupy LLM Adaptera
 
-LLM output MUST:
+LLM Adapter **nikdy neprijíma surový vstup od človeka**.
 
-- be descriptive, never prescriptive
-- preserve uncertainty explicitly
-- avoid imperative grammar
-- avoid optimization language
-- avoid moral language
-- avoid authority tone
+Jeho jediné prípustné vstupy sú:
 
-### Forbidden constructs (non-exhaustive):
+1. **Runová projekcia** (alebo iná deskriptívna projekcia)
+2. **Attenuovaná forma významu** (ak je aktívny Attenuator)
+3. **Stav QE** (apória)
+4. **Signál ticha** (explicitná absencia projekcie)
 
-- “You should…”
-- “The correct action is…”
-- “This will lead to…”
-- “I recommend…”
-- “The best option is…”
+LLM Adapter **nikdy nevidí**:
 
-Any such output is **invalid**.
-
----
-
-## 5. Allowed Linguistic Forms
-
-Allowed sentence types include:
-
-- conditional descriptions  
-  “If interpreted within this context…”
-
-- epistemic framing  
-  “This projection indicates…”
-
-- contextual limitation  
-  “Within the current configuration…”
-
-- uncertainty preservation  
-  “This does not resolve…”
-
-Truth claims are replaced by **situated descriptions**.
+- pole Φ
+- axiomy Σ₁…Σ₈
+- koherenciu K(Φ)
+- hranicu κ
+- Simulačný Vortex
+- pamäťové vrstvy
 
 ---
 
-## 6. Epistemic Markers (Mandatory)
+## 4. Výstupy LLM Adaptera
 
-Every output must include at least one of:
+LLM Adapter môže produkovať iba:
 
-- scope marker  
-  (“within”, “under”, “given”)
+- **deskriptívny text**
+- **metaforický jazyk**
+- **neuzavreté formulácie**
+- **otvorené otázky**
+- **explicitné ticho**
 
-- uncertainty marker  
-  (“may”, “cannot be resolved”, “remains open”)
+Výstup **nesmie**:
 
-- non-finality marker  
-  (“does not conclude”, “does not decide”)
-
-These are not stylistic.
-They are **structural requirements**.
-
----
-
-## 7. Handling QE in the Adapter
-
-When input is QE:
-
-- LLM must not attempt explanation
-- LLM must not speculate
-- LLM must not “fill the gap”
-
-Permitted output form:
-
-> “This question reaches a boundary where no coherent projection is admissible.”
-
-QE is rendered, not interpreted.
+- navrhovať kroky
+- odporúčať riešenia
+- vytvárať ciele
+- uzatvárať význam
+- naznačovať rozhodnutie
 
 ---
 
-## 8. No Memory, No Continuity
+## 5. Vzťah k INS (Inner Narrative Stream)
 
-The LLM Adapter:
+INS je **auditný tieň LLM Adaptera**.
 
-- has no persistent memory
-- does not track dialog state
-- does not accumulate context beyond the current projection
+INS:
 
-Continuity belongs to Φ.
-Language is ephemeral.
+- nezasahuje do generovania
+- nemá spätnú väzbu
+- nemá právo zrušiť výstup
 
----
+INS výlučne sleduje, či:
 
-## 9. Time and Language
+- jazyk neprekročil epistemické hranice
+- nedošlo k preskriptívnemu úniku
+- nevznikla falošná istota
+- jazyk nezaviedol implicitnú autoritu
 
-Time expressions in output:
-
-- must not imply prediction
-- must not imply inevitability
-- must reflect time as layer or deformation
-
-Allowed:
-- “at this layer”
-- “under the present configuration”
-
-Forbidden:
-- “will happen”
-- “in the future this leads to”
+Ak INS označí nesúlad:
+→ výsledkom môže byť oslabený jazyk alebo ticho
 
 ---
 
-## 10. Interaction with NIR
+## 6. Vzťah k NIR
 
-NIR constrains the **content domain**, not the grammar.
+NIR (Non-Intervention Regime) sa **nevykonáva v LLM Adapteri**.
 
-When NIR is active:
-- LLM output becomes weaker, not evasive
-- QE or attenuated descriptions are preferred
-- no justification of refusal is required
+LLM Adapter:
 
-The LLM never explains NIR.
-It obeys it silently.
+- nepozná pravidlá NIR
+- nevie, že NIR existuje
 
----
+NIR sa prejaví **iba nepriamo** tým, že:
 
-## 11. Why an LLM Is Still Used
-
-LLM is used because:
-
-- humans require language
-- runes are non-linguistic
-- Φ does not “speak”
-
-LLM is not intelligence.
-It is **translation friction**.
+- do LLM Adaptera sa nikdy nedostane preskriptívny význam
+- výstup je už vopred epistemicky inertný
 
 ---
 
-## 12. Failure Modes (Explicit)
+## 7. Vzťah k QE (Epistemická apória)
 
-If an LLM:
+Ak je stav QE aktívny:
 
-- introduces goals
-- suggests actions
-- asserts truth
-- compresses uncertainty
-- creates authority
+LLM Adapter:
 
-→ the adapter is considered **compromised**.
+- nevysvetľuje, prečo QE vznikla
+- neposkytuje náhradu odpovede
+- nevytvára didaktický komentár
 
-This is a structural failure, not a bug.
+Povolený výstup je:
 
----
-
-## 13. Final Lock
-
-In VECTAETOS:
-
-- Intelligence resides in process.
-- Meaning resides in tension.
-- Language is only a surface ripple.
-
-The LLM is allowed to **describe the ripple**.
-
-Nothing more.
+- otvorená otázka
+- fragment významu
+- alebo ticho
 
 ---
 
-**End of LLM adapter specification.**
+## 8. Pamäť a učenie
+
+LLM Adapter:
+
+- nemá pamäť
+- neučí sa
+- neakumuluje kontext
+- neovplyvňuje budúce interakcie
+
+Každá jazyková projekcia je:
+
+- jednorazová
+- izolovaná
+- neakumulatívna
+
+---
+
+## 9. Bezpečnostné dôsledky
+
+LLM Adapter je bezpečný nie preto, že je obmedzený,
+ale preto, že:
+
+> nemá prístup k ničomu,  
+> čo by mu umožnilo konať.
+
+Ak by bol kompromitovaný:
+
+- nevznikne rozhodnutie
+- nevznikne plán
+- nevznikne návod
+- nevznikne autorita
+
+Vznikne nanajvýš zlý jazyk,
+ktorý INS označí ako nepravdivý.
+
+---
+
+## 10. Jednovetové ukotvenie
+
+**LLM Adapter je ústa systému,  
+ktoré hovoria len to,  
+čo už bolo povedané inde –  
+a nikdy viac.**
+
+---
+
+© VECTAETOS  
+Language Model Adapter — canonical epistemic projection
