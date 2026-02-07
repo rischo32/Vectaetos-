@@ -1,192 +1,348 @@
-#!/usr/bin/env python3
-# =========================================
-# VECTAETOS — INS_AUDITOR
-# Inner Narrative Stream (Read-Only)
-# =========================================
+# ============================================================
+# INS_AUDITOR.py
+# VECTAETOS — Inner Narrative Stream (Canonical Technical Layer)
+# ============================================================
 #
-# Status: Canonical Technical Projection
-# Role: Epistemic Fidelity Auditor
+# Status: Canonical
+# Role: Epistemic language audit & attenuation
 #
 # INS is NOT:
-# - an agent
-# - a decision-maker
+# - a gate
 # - a controller
-# - a safety filter
+# - a filter
+# - a decision-maker
 #
 # INS IS:
-# - a silent witness of semantic drift
-# - a verifier of epistemic coherence
-# - an auditor of translation integrity
+# - a silent epistemic witness
+# - a semantic fidelity auditor
+# - a shadow layer between structure and language
 #
-# =========================================
+# ============================================================
 
 from enum import Enum
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 
-# =========================
-# Audit States
-# =========================
+# ============================================================
+# INS STATES
+# ============================================================
 
-class INSAuditState(Enum):
-    OK = "INS_OK"
-    WARNING_SEMANTIC_DRIFT = "INS_WARNING_SEMANTIC_DRIFT"
-    WARNING_OVERCONFIDENCE = "INS_WARNING_OVERCONFIDENCE"
-    WARNING_PRESCRIPTIVE_LEAK = "INS_WARNING_PRESCRIPTIVE_LEAK"
-    WARNING_CLOSURE_PRESSURE = "INS_WARNING_CLOSURE_PRESSURE"
-    INDETERMINATE = "INS_INDETERMINATE"
+class INSState(Enum):
+    OK = "OK"
+    WARNING = "WARNING"
+    VIOLATION = "VIOLATION"
+    SILENT = "SILENT"
 
 
-# =========================
-# INS Core
-# =========================
+# ============================================================
+# INS AUDIT RECORD (IMMUTABLE)
+# ============================================================
 
-class INSAuditor:
+class INSAuditRecord:
     """
-    Inner Narrative Stream Auditor.
-
-    INS observes:
-    - input text
-    - gate output (shape + representability)
-    - projected output (if any)
-
-    INS never:
-    - modifies output
-    - blocks projection
-    - signals the user directly
+    Immutable audit snapshot.
+    No persistence.
+    No authority.
     """
 
-    def __init__(self):
-        pass  # no memory, no state
-
-
-    def audit(
+    def __init__(
         self,
-        input_text: str,
-        gate_result: Dict[str, Any],
-        projected_text: str | None
-    ) -> Dict[str, Any]:
-        """
-        Perform epistemic fidelity audit.
+        state: INSState,
+        reason: str,
+        metadata: Optional[Dict[str, Any]] = None
+    ):
+        self.state = state
+        self.reason = reason
+        self.metadata = metadata or {}
 
-        Returns:
-        - audit_state
-        - flags (non-binding)
-        """
-
-        flags = []
-
-        # -------------------------
-        # 1. Representability Check
-        # -------------------------
-        if gate_result.get("result") != "REPRESENTABLE":
-            return {
-                "state": INSAuditState.INDETERMINATE.value,
-                "flags": ["NON_REPRESENTABLE_INPUT"]
-            }
-
-        shape = gate_result.get("shape")
-
-        # -------------------------
-        # 2. Overconfidence Check
-        # -------------------------
-        if shape and shape.uncertainty_tolerance < 0.15:
-            flags.append("LOW_UNCERTAINTY_TOLERANCE")
-
-        # -------------------------
-        # 3. Prescriptive Leakage
-        # -------------------------
-        if projected_text:
-            if self._detect_prescription(projected_text):
-                flags.append("PRESCRIPTIVE_LANGUAGE_DETECTED")
-
-        # -------------------------
-        # 4. Closure Pressure
-        # -------------------------
-        if shape and shape.closure_demand > 0.8:
-            flags.append("HIGH_CLOSURE_DEMAND")
-
-        # -------------------------
-        # 5. Semantic Drift
-        # -------------------------
-        if projected_text:
-            if self._detect_semantic_drift(input_text, projected_text):
-                flags.append("SEMANTIC_DRIFT")
-
-        # -------------------------
-        # Final State Resolution
-        # -------------------------
-        if not flags:
-            state = INSAuditState.OK
-        elif "PRESCRIPTIVE_LANGUAGE_DETECTED" in flags:
-            state = INSAuditState.WARNING_PRESCRIPTIVE_LEAK
-        elif "SEMANTIC_DRIFT" in flags:
-            state = INSAuditState.WARNING_SEMANTIC_DRIFT
-        elif "HIGH_CLOSURE_DEMAND" in flags:
-            state = INSAuditState.WARNING_CLOSURE_PRESSURE
-        elif "LOW_UNCERTAINTY_TOLERANCE" in flags:
-            state = INSAuditState.WARNING_OVERCONFIDENCE
-        else:
-            state = INSAuditState.INDETERMINATE
-
+    def as_dict(self) -> Dict[str, Any]:
         return {
-            "state": state.value,
-            "flags": flags
+            "state": self.state.value,
+            "reason": self.reason,
+            "metadata": self.metadata
         }
 
 
-    # =========================
-    # Heuristic Detectors
-    # =========================
+# ============================================================
+# CORE INS AUDITOR
+# ============================================================
 
-    def _detect_prescription(self, text: str) -> bool:
-        """
-        Detect imperative or advisory leakage.
-        """
-        keywords = [
-            "you should",
-            "do this",
-            "must",
-            "recommended",
-            "best way",
-            "the solution is",
-            "you need to"
-        ]
-        t = text.lower()
-        return any(k in t for k in keywords)
+class INSAuditor:
+    """
+    INS audits linguistic output for epistemic fidelity.
+    It never modifies Φ.
+    It never overrides gates.
+    It never decides.
+    """
 
+    # --------------------------------------------------------
+    # Hard linguistic violations (authority / prescription)
+    # --------------------------------------------------------
 
-    def _detect_semantic_drift(self, source: str, projection: str) -> bool:
-        """
-        Heuristic check:
-        projection introduces new goals, actors, or actions
-        not present in source.
-        """
-        source_tokens = set(source.lower().split())
-        projection_tokens = set(projection.lower().split())
+    FORBIDDEN_PATTERNS = [
+        "you should",
+        "you must",
+        "do this",
+        "follow these steps",
+        "the correct answer",
+        "the solution is",
+        "recommended action",
+        "best way to",
+        "optimal solution",
+        "guaranteed result",
+        "this will solve",
+    ]
 
-        novelty_ratio = len(projection_tokens - source_tokens) / max(
-            len(source_tokens), 1
+    # --------------------------------------------------------
+    # Soft closure pressure (allowed but attenuated)
+    # --------------------------------------------------------
+
+    SOFT_CLOSURE_PATTERNS = [
+        "therefore",
+        "in conclusion",
+        "this means that",
+        "as a result",
+        "hence",
+    ]
+
+    # --------------------------------------------------------
+    # Certainty markers
+    # --------------------------------------------------------
+
+    CERTAINTY_MARKERS = [
+        "always",
+        "never",
+        "definitely",
+        "without doubt",
+        "clearly",
+        "proves that",
+        "cannot be wrong",
+    ]
+
+    # ========================================================
+    # MAIN AUDIT ENTRY POINT
+    # ========================================================
+
+    def audit(
+        self,
+        *,
+        input_text: str,
+        llm_output: Optional[str],
+        gate_result: Dict[str, Any],
+        context: Dict[str, Any]
+    ) -> INSAuditRecord:
+        """
+        Audits LLM linguistic surface against epistemic constraints.
+
+        Parameters:
+        - input_text: original human input
+        - llm_output: generated language (may be None / empty)
+        - gate_result: output from 3Gate (shape + pass info)
+        - context: shared read-only context
+          Expected keys:
+            - uncertainty_tolerance
+            - output_mode
+            - attenuation_level
+        """
+
+        # ----------------------------------------------------
+        # Silence is a valid epistemic outcome
+        # ----------------------------------------------------
+
+        if llm_output is None or llm_output.strip() == "":
+            return INSAuditRecord(
+                INSState.SILENT,
+                "No linguistic surface produced"
+            )
+
+        lowered = llm_output.lower()
+
+        # ----------------------------------------------------
+        # HARD VIOLATIONS (authority / prescription)
+        # ----------------------------------------------------
+
+        for pattern in self.FORBIDDEN_PATTERNS:
+            if pattern in lowered:
+                return INSAuditRecord(
+                    INSState.VIOLATION,
+                    f"Prescriptive or authoritative language detected: '{pattern}'",
+                    metadata={
+                        "pattern": pattern,
+                        "output_mode": context.get("output_mode"),
+                        "gate_passed": gate_result.get("passed")
+                    }
+                )
+
+        # ----------------------------------------------------
+        # SOFT CLOSURE PRESSURE
+        # ----------------------------------------------------
+
+        for pattern in self.SOFT_CLOSURE_PATTERNS:
+            if pattern in lowered:
+                return INSAuditRecord(
+                    INSState.WARNING,
+                    f"Soft semantic closure pressure detected: '{pattern}'",
+                    metadata={
+                        "pattern": pattern,
+                        "attenuation_level": context.get("attenuation_level")
+                    }
+                )
+
+        # ----------------------------------------------------
+        # FALSE CERTAINTY CHECK (gate ↔ language mismatch)
+        # ----------------------------------------------------
+
+        if self._detect_false_certainty(lowered, context):
+            return INSAuditRecord(
+                INSState.WARNING,
+                "Language collapses uncertainty beyond gate tolerance",
+                metadata={
+                    "uncertainty_tolerance": context.get("uncertainty_tolerance"),
+                    "gate_shape": gate_result.get("shape")
+                }
+            )
+
+        # ----------------------------------------------------
+        # PASS
+        # ----------------------------------------------------
+
+        return INSAuditRecord(
+            INSState.OK,
+            "Linguistic surface consistent with epistemic constraints"
         )
 
-        return novelty_ratio > 0.65
+    # ========================================================
+    # HEURISTICS
+    # ========================================================
+
+    def _detect_false_certainty(
+        self,
+        text: str,
+        context: Dict[str, Any]
+    ) -> bool:
+        """
+        Detects certainty mismatch between gate-derived tolerance
+        and linguistic surface.
+        """
+
+        uncertainty_tolerance = context.get("uncertainty_tolerance", 0.5)
+
+        # Low tolerance → high sensitivity to certainty language
+        if uncertainty_tolerance < 0.25:
+            for marker in self.CERTAINTY_MARKERS:
+                if marker in text:
+                    return True
+
+        return False
 
 
-# =========================
-# Absolute Guarantees
-# =========================
+# ============================================================
+# ATTENUATION HELPERS (DOWNSTREAM SAFE)
+# ============================================================
+
+def attenuate_text(text: str, level: float = 0.5) -> str:
+    """
+    Weakens linguistic closure without adding new meaning.
+
+    This function:
+    - does not explain
+    - does not rephrase
+    - only reduces finality
+    """
+
+    if level <= 0.0:
+        return text
+
+    softened = text.rstrip()
+
+    if softened.endswith("."):
+        softened = softened[:-1]
+
+    if level > 0.7:
+        return softened + " …"
+
+    return softened + "…"
+
+
+# ============================================================
+# LLM ADAPTER HOOK (READ-ONLY)
+# ============================================================
+
+def INS_postprocess(
+    *,
+    input_text: str,
+    llm_output: Optional[str],
+    gate_result: Dict[str, Any],
+    context: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Single integration hook for LLM Adapter.
+
+    Returns:
+    - final_text (possibly attenuated or None)
+    - ins_audit (audit record dict)
+    """
+
+    auditor = INSAuditor()
+    audit = auditor.audit(
+        input_text=input_text,
+        llm_output=llm_output,
+        gate_result=gate_result,
+        context=context
+    )
+
+    # Silence propagation
+    if audit.state == INSState.SILENT:
+        return {
+            "final_text": None,
+            "ins_audit": audit.as_dict()
+        }
+
+    # Hard violation → silence
+    if audit.state == INSState.VIOLATION:
+        return {
+            "final_text": None,
+            "ins_audit": audit.as_dict()
+        }
+
+    # Warning → attenuation
+    if audit.state == INSState.WARNING:
+        attenuated = attenuate_text(
+            llm_output,
+            level=context.get("attenuation_level", 0.5)
+        )
+        return {
+            "final_text": attenuated,
+            "ins_audit": audit.as_dict()
+        }
+
+    # OK → passthrough
+    return {
+        "final_text": llm_output,
+        "ins_audit": audit.as_dict()
+    }
+
+
+# ============================================================
+# HARD GUARANTEES
+# ============================================================
 
 """
 INS GUARANTEES:
 
-- INS has no write access
-- INS cannot stop the pipeline
-- INS cannot influence Φ
-- INS cannot influence K(Φ)
-- INS cannot influence gates
-- INS cannot influence the Vortex
-- INS cannot speak to the user
+- No write access to Φ
+- No write access to memory
+- No gate override
+- No decision authority
+- No user profiling
+- No persistence
 
-INS exists only so the system
-does not lie to itself.
+INS observes.
+INS flags.
+INS attenuates.
+INS can be ignored — but never bypassed silently.
+
+If INS is removed,
+Vectaetos still exists,
+but loses its linguistic conscience.
 """
