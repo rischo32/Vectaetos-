@@ -1,164 +1,226 @@
-# VECTAETOS — INS_RUNLINE
+# VECTAETOS — INS RUNLINE
 
-Status: Canonical  
-Scope: Runtime epistemic supervision line  
-Immutability: Ontological meaning fixed  
-Operational role: Descriptive only  
-
----
-
-## 1. Účel dokumentu
-
-Tento dokument definuje **presnú runtime pozíciu a správanie INS (Inner Narrative Stream)**  
-v architektúre VECTAETOS.
-
-INS_RUNLINE **nie je pipeline control**  
-a **nie je riadiaca logika**.
-
-Je to **epistemická pozorovacia línia**, ktorá existuje paralelne
-k hlavnému toku bez možnosti zásahu.
+Status: Canonical (Descriptive)  
+Scope: Runtime epistemic observation  
+Immutability: Semantic meaning fixed  
+Operational role: Read-only, non-intervening  
 
 ---
 
-## 2. Ontologický status INS
+## 0. Purpose of This Document
 
-INS je:
+This document defines the **runtime position and behavior of INS**
+(Inner Narrative Stream) within the VECTAETOS pipeline.
 
-- vnútorný epistemický svedok
-- auditor významovej vernosti
-- kontrola prekladu, nie obsahu
+INS is not a component that *acts*.
+INS is a component that *watches*.
 
-INS nie je:
-
-- agent
-- modul rozhodovania
-- bezpečnostný filter
-- korekčný mechanizmus
-
-INS **nič nemení**.
+INS exists so that:
+> the system never lies to itself,
+even when it must remain silent.
 
 ---
 
-## 3. Presná runtime pozícia
+## 1. Ontological Status of INS
 
-INS beží **paralelne** k hlavnému toku: 
+INS is:
 
-Input (text) │ ├─► INS (observe input) │ ▼ 3Gate (width / depth / height) │ ├─► INS (observe gate deformation) │ ▼ Φ (field state) │ ▼ K(Φ) / κ │ ▼ Projection (Runes / MML) │ ├─► INS (observe projection fidelity) │ ▼ LLM Adapter │ ├─► INS (observe linguistic drift) │ ▼ Descriptive Output
+- not an agent
+- not a controller
+- not a decision layer
+- not a safety filter
+- not a memory authority
 
-INS **nikdy nie je v sérii**.  
-INS je **vždy paralelný**.
+INS is an **epistemic witness**.
 
----
-
-## 4. Čo INS sleduje
-
-INS sleduje **iba vzťahy**, nie obsah.
-
-Pozorované oblasti:
-
-- epistemický tvar vstupu
-- stabilitu po 3Gate deformáciách
-- zachovanie neistoty
-- neprítomnosť preskripcie
-- konzistenciu medzi:
-  - vstupom
-  - projekciou
-  - jazykovým výstupom
-
-INS nesleduje:
-- pravdivosť
-- správnosť
-- morálnosť
-- účelnosť
+It observes transitions without affecting them.
 
 ---
 
-## 5. INS a LLM
+## 2. Canonical Runtime Position
 
-INS **nie je súčasťou LLM**.
+INS operates **in parallel**, never inline.
 
-Vzťah:
+Canonical topology:
 
-- LLM nevie, že INS existuje
-- INS vidí LLM výstup
-- INS nemá spätný kanál
+Input  
+→ Epistemic Gates (3Gate)  
+→ Φ (Field)  
+→ K(Φ)  
+→ Projection  
+→ Attenuation  
+→ LLM Adapter  
+→ Output  
 
-INS nikdy:
-- neprepíše text
-- nezruší odpoveď
-- nevyvolá QE
+INS observes:
 
-INS iba **označí stav**.
+- input text
+- gate shape & representability
+- attenuation path (if any)
+- projected linguistic output (if any)
 
----
+INS does NOT observe:
 
-## 6. INS a NIR
-
-INS **nemá žiadnu autoritu nad NIR**.
-
-Vzťah:
-
-- NIR je globálny imunitný režim
-- INS je lokálny epistemický pozorovateľ
-
-Ak je NIR aktívny:
-- INS stále beží
-- INS stále sleduje
-- INS nič neodkrýva
+- Φ directly
+- axioms Σ₁…Σ₈
+- K(Φ) internals
+- κ
+- Vortex internals
 
 ---
 
-## 7. Výstup INS
+## 3. INS Observation Windows
 
-INS produkuje výhradne:
+INS has exactly **three observation windows**:
 
-- interné epistemické flagy
-- auditné stavy
-- neverejné indikácie
+### 3.1 Pre-Projection Window
 
-INS výstup:
+INS observes:
+- input formulation
+- epistemic shape (from 3Gate)
+- deformation survivability
 
-- nie je odpoveď
-- nie je signál pre používateľa
-- nie je kontrolný mechanizmus
-
-INS výstup **nemá žiadnu kauzálnu silu**.
-
----
-
-## 8. Prečo INS existuje
-
-INS existuje preto, aby:
-
-- jazyk nemohol potichu prevziať autoritu
-- projekcia nemohla zosilnieť bez zmeny poľa
-- odpoveď nemohla uzavrieť to, čo má zostať otvorené
-
-INS nie je ochrana používateľa.  
-INS chráni **význam**.
+Purpose:
+- detect premature closure
+- detect prescriptive pressure
+- detect false certainty
 
 ---
 
-## 9. Explicitné zákazy
+### 3.2 Post-Attenuation Window
 
-INS nikdy:
+INS observes:
+- which attenuation path manifested
+- whether attenuation is partial or total
 
-- neiniciuje akciu
-- nezastaví tok
-- neodmietne odpoveď
-- nenavrhuje úpravu
-- netvorí pravidlá
+Purpose:
+- ensure attenuation is epistemically consistent
+- detect projection collapse anomalies
 
-Ak by to robil, **prestal by byť INS**.
+INS does not decide if attenuation is correct.
+It only records that it occurred.
 
 ---
 
-## 10. Jednovetové ukotvenie
+### 3.3 Linguistic Fidelity Window
 
-INS je ticho v systéme, ktoré zabezpečuje,
-že jazyk nepredbehne pole.
+INS observes:
+- final textual projection (if any)
+
+Purpose:
+- detect semantic drift
+- detect prescriptive leakage
+- detect narrative invention
+
+INS never rewrites output.
+INS never blocks output.
+
+---
+
+## 4. INS Output (Audit Only)
+
+INS produces **audit flags only**.
+
+Flags are:
+
+- non-binding
+- non-user-facing
+- non-operational
+
+They exist solely for:
+- traceability
+- post-analysis
+- epistemic integrity review
+
+INS flags never change system behavior.
+
+---
+
+## 5. Relation to Attenuation
+
+INS does not cause attenuation.
+INS does not reverse attenuation.
+
+INS may observe:
+
+- semantic dilution
+- prescriptive collapse
+- narrative fragmentation
+- minimal meaning surface
+- silence
+
+Silence is a valid observation.
+
+---
+
+## 6. Relation to NIR
+
+INS does not enforce NIR.
+
+If NIR manifests:
+- INS records the epistemic boundary encounter
+- no intervention follows
+
+NIR is immune to INS.
+INS is aware of NIR only by consequence, not by mechanism.
+
+---
+
+## 7. Relation to Memory
+
+INS:
+
+- does not write to ESM
+- does not write to LTL
+- does not write to MML
+- does not write to EAT
+
+INS may be *referenced* by EAT
+as an annotation source, not as authority.
+
+INS itself has **no persistence**.
+
+---
+
+## 8. Failure Semantics
+
+INS failure does not collapse the system.
+
+If INS fails:
+- Φ continues
+- projection continues
+- silence remains valid
+
+INS is diagnostic, not structural.
+
+---
+
+## 9. Explicit Non-Properties
+
+INS:
+
+- does not learn
+- does not adapt
+- does not optimize
+- does not protect
+- does not correct
+- does not decide
+
+INS only knows **whether the system stayed honest to itself**.
+
+---
+
+## 10. Canonical Closure
+
+INS exists so that:
+
+> Even when the system cannot speak,
+> it still knows why it remained silent.
+
+This is not transparency for users.
+This is integrity for the field.
 
 ---
 
 © VECTAETOS  
-INS_RUNLINE — Canonical Runtime Epistemic Line
+INS Runline — Canonical Descriptive Artefact
