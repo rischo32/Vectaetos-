@@ -1,187 +1,162 @@
-# FORMAL_LLM_ADAPTER.md  
-## VECTAETOS — Language Model Adapter
+# VECTAETOS — FORMAL_LLM_ADAPTER
 
-**Status:** Canonical  
-**Scope:** Linguistic projection layer  
-**Immutability:** Ontological meaning fixed  
-**Operational role:** Translation only (non-epistemic)  
-
----
-
-## 1. Ontologické postavenie
-
-LLM Adapter **nie je súčasťou poľa Φ**.
-
-LLM Adapter je **čisto jazyková vrstva**, ktorej jedinou funkciou je:
-
-> preložiť už bezpečnú, koherentnú projekciu  
-> do ľudsky čitateľnej formy.
-
-LLM Adapter **nevytvára význam**.  
-Význam vzniká výlučne v poli Φ.
+Status: **Canonical**  
+Layer: Language Projection  
+Role: Linguistic Renderer (Read-Only)  
+Immutability: Ontological meaning fixed
 
 ---
 
-## 2. Čím LLM Adapter nie je
+## 1. Účel dokumentu
 
-LLM Adapter **nie je**:
+Tento dokument formálne definuje úlohu a hranice komponentu **LLM Adapter** v architektúre VECTAETOS.
 
-- rozhodovací mechanizmus
-- agent
-- optimalizátor
-- vysvetľovač pravdy
-- autorita odpovedí
-- pamäťový systém
-- bezpečnostná vrstva
+LLM Adapter je **jazyková projekčná vrstva**.  
+Nie je epistemický mechanizmus.  
+Nie je rozhodovací prvok.  
+Nie je nositeľ významu.
 
-Ak by LLM Adapter niektorú z týchto úloh vykonával,
-systém by prestal byť VECTAETOS.
+Ak LLM Adapter prekročí tieto hranice, **systém prestáva byť VECTAETOS**.
 
 ---
 
-## 3. Vstupy LLM Adaptera
+## 2. Ontologický status LLM Adaptera
 
-LLM Adapter **nikdy neprijíma surový vstup od človeka**.
+LLM Adapter:
 
-Jeho jediné prípustné vstupy sú:
+- **nie je agent**
+- **nie je inteligentné jadro**
+- **nie je interpret**
+- **nie je autor odpovede**
+- **nie je nositeľ pravdy**
 
-1. **Runová projekcia** (alebo iná deskriptívna projekcia)
-2. **Attenuovaná forma významu** (ak je aktívny Attenuator)
-3. **Stav QE** (apória)
-4. **Signál ticha** (explicitná absencia projekcie)
+LLM Adapter je **čisto translačný mechanizmus**.
 
-LLM Adapter **nikdy nevidí**:
-
-- pole Φ
-- axiomy Σ₁…Σ₈
-- koherenciu K(Φ)
-- hranicu κ
-- Simulačný Vortex
-- pamäťové vrstvy
+Prekladá už existujúcu projekciu do prirodzeného jazyka.
 
 ---
 
-## 4. Výstupy LLM Adaptera
+## 3. Vzťah k poľu Φ
 
-LLM Adapter môže produkovať iba:
+LLM Adapter:
 
-- **deskriptívny text**
-- **metaforický jazyk**
-- **neuzavreté formulácie**
-- **otvorené otázky**
-- **explicitné ticho**
+- ❌ nemá prístup k poľu Φ
+- ❌ nevidí axiomatické ťažiská Σ₁…Σ₈
+- ❌ nepozná koherenčný predikát K(Φ)
+- ❌ nepozná hranicu κ
+- ❌ nemá spätnú väzbu do poľa
 
-Výstup **nesmie**:
+LLM Adapter **nikdy neovplyvňuje stav poľa**.
 
-- navrhovať kroky
-- odporúčať riešenia
-- vytvárať ciele
-- uzatvárať význam
-- naznačovať rozhodnutie
+---
+
+## 4. Vzťah k epistemickým bránam (3Gate)
+
+LLM Adapter:
+
+- nepozná epistemické brány
+- nevyhodnocuje vstup
+- neoveruje reprezentovateľnosť
+
+3Gate **vždy prebieha pred** LLM Adapterom.
+
+Ak by LLM vedel o bránach, vznikla by skrytá agentnosť.
 
 ---
 
 ## 5. Vzťah k INS (Inner Narrative Stream)
 
-INS je **auditný tieň LLM Adaptera**.
+LLM Adapter:
+
+- **nevie, že INS existuje**
+- **nevolá INS**
+- **nečaká na INS**
+- **nedostáva spätnú väzbu od INS**
 
 INS:
 
-- nezasahuje do generovania
-- nemá spätnú väzbu
-- nemá právo zrušiť výstup
+- sleduje vstup pred LLM
+- sleduje výstup po LLM
+- auditne vyhodnocuje jazykovú vernosť
 
-INS výlučne sleduje, či:
+Vzťah je **asymetrický**:
 
-- jazyk neprekročil epistemické hranice
-- nedošlo k preskriptívnemu úniku
-- nevznikla falošná istota
-- jazyk nezaviedol implicitnú autoritu
-
-Ak INS označí nesúlad:
-→ výsledkom môže byť oslabený jazyk alebo ticho
+> INS pozoruje LLM.  
+> LLM nepozoruje INS.
 
 ---
 
-## 6. Vzťah k NIR
+## 6. Povolené vstupy
 
-NIR (Non-Intervention Regime) sa **nevykonáva v LLM Adapteri**.
+LLM Adapter smie dostať iba:
 
-LLM Adapter:
+- runovú projekciu
+- attenuovanú projekciu
+- minimálnu významovú projekciu (MML)
 
-- nepozná pravidlá NIR
-- nevie, že NIR existuje
+Nikdy nedostáva:
 
-NIR sa prejaví **iba nepriamo** tým, že:
-
-- do LLM Adaptera sa nikdy nedostane preskriptívny význam
-- výstup je už vopred epistemicky inertný
-
----
-
-## 7. Vzťah k QE (Epistemická apória)
-
-Ak je stav QE aktívny:
-
-LLM Adapter:
-
-- nevysvetľuje, prečo QE vznikla
-- neposkytuje náhradu odpovede
-- nevytvára didaktický komentár
-
-Povolený výstup je:
-
-- otvorená otázka
-- fragment významu
-- alebo ticho
+- surový používateľský vstup
+- neprejdený text
+- nereprezentovateľný obsah
 
 ---
 
-## 8. Pamäť a učenie
+## 7. Povolené výstupy
+
+LLM Adapter môže produkovať iba:
+
+- **deskriptívny jazyk**
+- **neukončené formulácie**
+- **otvorené vyjadrenia**
+- **nepreskriptívne vety**
+
+Zakázané výstupy:
+
+- rady
+- návody
+- odporúčania
+- imperatívy
+- uzavreté závery
+- rozhodnutia
+
+Ak sa takýto jazyk objaví, rieši to **INS**, nie LLM.
+
+---
+
+## 8. Žiadna pamäť
 
 LLM Adapter:
 
 - nemá pamäť
-- neučí sa
-- neakumuluje kontext
-- neovplyvňuje budúce interakcie
+- nepamätá si predchádzajúce výstupy
+- nevie, že existujú iné interakcie
+- nevytvára kontinuitu
 
-Každá jazyková projekcia je:
-
-- jednorazová
-- izolovaná
-- neakumulatívna
+Každý výstup je **epistemicky izolovaný**.
 
 ---
 
-## 9. Bezpečnostné dôsledky
+## 9. Bezpečnostné ukotvenie
 
-LLM Adapter je bezpečný nie preto, že je obmedzený,
+LLM Adapter je bezpečný nie preto, že je obmedzený pravidlami,  
 ale preto, že:
 
-> nemá prístup k ničomu,  
-> čo by mu umožnilo konať.
+- nemá prístup k moci
+- nemá spätnú väzbu
+- nemá rozhodovaciu kapacitu
+- nemá ontologickú autoritu
 
-Ak by bol kompromitovaný:
-
-- nevznikne rozhodnutie
-- nevznikne plán
-- nevznikne návod
-- nevznikne autorita
-
-Vznikne nanajvýš zlý jazyk,
-ktorý INS označí ako nepravdivý.
+Je to **jazyková šošovka**, nič viac.
 
 ---
 
 ## 10. Jednovetové ukotvenie
 
-**LLM Adapter je ústa systému,  
-ktoré hovoria len to,  
-čo už bolo povedané inde –  
-a nikdy viac.**
+**LLM Adapter v systéme VECTAETOS je hlas, ktorý nevie, čo hovorí —  
+a práve preto nemôže klamať poľu.**
 
 ---
 
 © VECTAETOS  
-Language Model Adapter — canonical epistemic projection
+FORMAL_LLM_ADAPTER — Canonical artefact
