@@ -1,201 +1,185 @@
-# FORMAL_Simulation_Vortex.md
-## VECTAETOS — Simulačný Vortex Φ (5D)
+# FORMAL_Simulation_Vortex.md  
+## VECTAETOS — Simulation Vortex
 
-**Status:** kanonický formálny artefakt  
-**Úloha:** generátor kandidátnych trajektórií poľa Φ  
-**Pozícia v architektúre:** medzi meta-matematikou poľa a runovou projekciou  
-**Rozhodovanie:** zakázané  
-**Preskripcia:** zakázaná  
-
----
-
-## 1. Základná definícia
-
-Simulačný Vortex nie je agent, optimalizátor ani rozhodovací mechanizmus.  
-Vortex je **exploračný dynamický proces**, ktorý generuje **možné trajektórie vývoja poľa Φ** bez nároku na pravdu, cieľ alebo preferenciu.
-
-> Vortex navrhuje.  
-> Pole Φ rozhoduje koherenciou.  
-> Človek interpretuje.
+**Status:** Canonical  
+**Scope:** Exploratory trajectory generator  
+**Immutability:** Ontological role fixed  
+**Operational authority:** None  
 
 ---
 
-## 2. Stavový priestor Φ (5D)
+## 0. Purpose of the Simulation Vortex
 
-Pole Φ je reprezentované stavovým vektorom:
+The Simulation Vortex exists to **explore possible trajectories of Φ without realizing any of them**.
 
-σ = (E, C, T, M, S)
+It is not:
+- a planner
+- a predictor
+- an optimizer
+- a decision aid
+- a recommendation system
 
-kde:
-
-- **E — Energy**  
-  intenzita dynamickej aktivity poľa
-
-- **C — Coherence**  
-  miera globálnej kompatibility všetkých epistemických dimenzií
-
-- **T — Tension**  
-  vnútorné napätie medzi neoptimalizovateľnými aspektmi významu
-
-- **M — Memory**  
-  rezonančná stopa anomálií (nie archív)
-
-- **S — Entropy / Saturation**  
-  miera vyčerpania, rozptylu alebo rozkladu významu
-
-Vortex nikdy neoptimalizuje žiadnu zložku samostatne.
+The Vortex produces **possibility space**, not outcomes.
 
 ---
 
-## 3. Ontologický status Vortexu
+## 1. Ontological Position
 
-Vortex:
+The Simulation Vortex is **ontologically external** to Φ.
 
-- ❌ nemá cieľovú funkciu  
-- ❌ nepozná axiomy Σ₁…Σ₈  
-- ❌ nepozná koherenčný predikát K(Φ)  
-- ❌ nepozná hranicu κ  
-- ❌ nevie, čo je „dobré“ alebo „zlé“
+It:
+- does not belong to Φ
+- does not influence Φ
+- does not modify Φ
+- does not observe K(Φ)
+- does not know κ
 
-Vortex **nevie**, či je trajektória realizovateľná.  
-To je zámer.
-
----
-
-## 4. Generovanie trajektórií
-
-V každom kroku t:
-
-Φ(t) → Vortex → { Φ₁(t+Δt), Φ₂(t+Δt), … }
-
-Každá trajektória je:
-
-- lokálne konzistentná
-- globálne neoverená
-- epistemicky neutrálna
-
-Trajektórie môžu byť:
-
-- plynulé
-- chaotické
-- perturbované
-- metastabilné
-- kolapsové
-
-Kolaps **nie je trest**, ale fyzikálny limit významu.
+The Vortex exists **after coherence evaluation**, never before.
 
 ---
 
-## 5. Typy Vortexov
+## 2. Inputs
 
-### 5.1 Light Vortex
-- malé fluktuácie
-- lokálne prenosy energie a napätia
-- zachovanie kontinuity
+The Vortex may receive:
 
-### 5.2 Deep Vortex
-- zriedkavé silné perturbácie
-- narušenie metastability
-- generovanie apórií
+- a snapshot of projected field state (read-only)
+- abstracted state vectors (E, C, T, M, S)
+- axiomatic configuration Σ₁…Σ₈
 
-### 5.3 Dual Vortex (default)
-- kombinácia Light + Deep
-- odporúčaný režim pre reálne simulácie
+Inputs are:
+- anonymized
+- de-contextualized
+- non-semantic
 
----
-
-## 6. Vzťah ku koherencii
-
-Vortex **nikdy**:
-
-- neporovnáva trajektórie
-- nevyberá „lepšiu“
-- nefiltruje výsledky
-
-Koherencia K(Φ) sa aplikuje **až mimo Vortexu**  
-ako **predikát realizovateľnosti**, nie ako spätná väzba.
+The Vortex never receives:
+- user intent
+- natural language
+- epistemic meaning
+- memory layers
+- coherence thresholds
 
 ---
 
-## 7. Impulz a nerealizovateľnosť
+## 3. What the Vortex Does
 
-Ak trajektória navrhnutá Vortexom:
+The Vortex:
 
-- znižuje K(Φ) pod hranicu κ  
-→ **impulz sa stáva nerealizovateľným**
+- generates hypothetical Φ(t) trajectories
+- explores divergence under perturbation
+- reveals metastability and collapse zones
+- maps tension propagation
 
-Tento stav:
+It does so **without preference**.
 
-- nie je zamietnutie
-- nie je zákaz
-- nie je penalizácia
-
-Je to **ontologická nedefinovateľnosť prechodu**.
-
----
-
-## 8. Vzťah k QE (Epistemická apória)
-
-Ak **žiadna trajektória** navrhnutá Vortexom:
-
-- neudrží K(Φ) ≥ κ
-
-nastáva stav:
-
-QE — Qualitative Epistemic Aporia
-
-Vortex pokračuje v návrhoch.  
-Pole zostáva v apórii.  
-Dialóg sa stabilizuje otázkou alebo tichom.
+There is no scoring.
+There is no ranking.
+There is no selection.
 
 ---
 
-## 9. Bezpečnostné vlastnosti
+## 4. What the Vortex Never Does
 
-Simulačný Vortex je bezpečný, pretože:
+The Vortex never:
 
-- nemá cieľ
-- nemá pamäť úspechu
-- nemá odmenu
-- nemá spätnú slučku moci
+- selects a trajectory
+- labels a trajectory as correct
+- writes to memory
+- feeds back into Φ
+- influences projection layers
+- triggers action
+- informs the user directly
 
-Manipulácia je možná **len zvonka**  
-a prejaví sa ako **deformácia trajektórií**, nie ako skrytý vplyv.
-
----
-
-## 10. Vzťah k runám
-
-Vortex **neprodukuje runy**.
-
-Runy vznikajú až po:
-
-Φ(t) → K(Φ) → projekcia → runy
-
-Vortex je **pred-jazykový**.
+Any of the above would constitute **intervention**.
 
 ---
 
-## 11. Implementačná poznámka
+## 5. Relation to Coherence
 
-Každá implementácia Vortexu:
+The Vortex:
 
-- môže používať rôzne numerické metódy
-- môže mať rôzne parametre
-- musí však zachovať:
-  - absenciu optimalizácie
-  - absenciu preskripcie
-  - nevedomosť o koherencii
+- cannot evaluate K(Φ)
+- cannot detect κ
+- cannot know if a trajectory is realizable
 
-Implementácia je **variant**, nie autorita.
+A trajectory may appear “stable” inside the Vortex
+and still be **non-representable** in Φ.
 
----
-
-## 12. Jednovetové ukotvenie
-
-> Simulačný Vortex je mechanizmus, ktorý umožňuje poľu Φ preskúmať možné spôsoby bytia bez toho, aby si ktorýkoľvek z nich nárokoval na pravdu.
+This ignorance is **intentional**.
 
 ---
 
-© Vectaetos  
-Simulačný Vortex — formálny rez
+## 6. Safety by Powerlessness
+
+The Simulation Vortex is safe because:
+
+- it has no write access
+- it has no authority
+- it has no memory access
+- it has no decision channel
+- it has no semantic interpretation
+
+It cannot be misused to control reality
+because it has no interface to reality.
+
+---
+
+## 7. Relationship to Memory
+
+The Vortex:
+
+- does not read ESM
+- does not write ESM
+- does not access LTL
+- does not append EAT
+- does not influence MML
+
+Memory remains **epistemic**, not predictive.
+
+---
+
+## 8. Relationship to Web Projection
+
+The Web:
+
+- may visualize Vortex output
+- may display trajectories as shapes or motion
+
+But:
+- no trajectory is privileged
+- no trajectory is named
+- no trajectory is suggested
+
+Visualization ≠ recommendation.
+
+---
+
+## 9. Failure Modes
+
+If the Vortex:
+
+- collapses numerically
+- diverges chaotically
+- produces no trajectories
+
+This is not an error.
+
+It is a **descriptive outcome**.
+
+Silence is valid.
+
+---
+
+## 10. Canonical Closure
+
+The Simulation Vortex exists to remind the system of one thing:
+
+> Possibility is not permission.
+
+The Vortex imagines.
+Φ decides nothing.
+The system acts never.
+
+---
+
+© VECTAETOS  
+Canonical repository artefact
