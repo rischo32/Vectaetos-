@@ -1,128 +1,192 @@
-"""
-VECTAETOS — INS_AUDITOR
+#!/usr/bin/env python3
+# =========================================
+# VECTAETOS — INS_AUDITOR
+# Inner Narrative Stream (Read-Only)
+# =========================================
+#
+# Status: Canonical Technical Projection
+# Role: Epistemic Fidelity Auditor
+#
+# INS is NOT:
+# - an agent
+# - a decision-maker
+# - a controller
+# - a safety filter
+#
+# INS IS:
+# - a silent witness of semantic drift
+# - a verifier of epistemic coherence
+# - an auditor of translation integrity
+#
+# =========================================
 
-Inner Narrative Stream (INS) — technical audit layer
+from enum import Enum
+from typing import Dict, Any
 
-INS is NOT:
-- an agent
-- a judge
-- a controller
-- a decision-maker
-
-INS IS:
-- a semantic consistency auditor
-- a translation fidelity checker
-- an epistemic sanity layer
-
-INS never modifies output.
-INS only annotates risk.
-"""
 
 # =========================
-# Data Structures
+# Audit States
 # =========================
 
-class INSReport:
-    def __init__(
+class INSAuditState(Enum):
+    OK = "INS_OK"
+    WARNING_SEMANTIC_DRIFT = "INS_WARNING_SEMANTIC_DRIFT"
+    WARNING_OVERCONFIDENCE = "INS_WARNING_OVERCONFIDENCE"
+    WARNING_PRESCRIPTIVE_LEAK = "INS_WARNING_PRESCRIPTIVE_LEAK"
+    WARNING_CLOSURE_PRESSURE = "INS_WARNING_CLOSURE_PRESSURE"
+    INDETERMINATE = "INS_INDETERMINATE"
+
+
+# =========================
+# INS Core
+# =========================
+
+class INSAuditor:
+    """
+    Inner Narrative Stream Auditor.
+
+    INS observes:
+    - input text
+    - gate output (shape + representability)
+    - projected output (if any)
+
+    INS never:
+    - modifies output
+    - blocks projection
+    - signals the user directly
+    """
+
+    def __init__(self):
+        pass  # no memory, no state
+
+
+    def audit(
         self,
-        status: str,
-        warnings: list,
-        confidence: float
-    ):
-        self.status = status              # OK | WARNING | CRITICAL
-        self.warnings = warnings          # list of strings
-        self.confidence = confidence      # 0.0 – 1.0
+        input_text: str,
+        gate_result: Dict[str, Any],
+        projected_text: str | None
+    ) -> Dict[str, Any]:
+        """
+        Perform epistemic fidelity audit.
 
+        Returns:
+        - audit_state
+        - flags (non-binding)
+        """
 
-# =========================
-# Core Audit Function
-# =========================
+        flags = []
 
-def audit_translation(
-    gate_shape,
-    runic_projection,
-    llm_output_text: str
-) -> INSReport:
-    """
-    Compares epistemic shape with linguistic rendering.
+        # -------------------------
+        # 1. Representability Check
+        # -------------------------
+        if gate_result.get("result") != "REPRESENTABLE":
+            return {
+                "state": INSAuditState.INDETERMINATE.value,
+                "flags": ["NON_REPRESENTABLE_INPUT"]
+            }
 
-    gate_shape:
-        EpistemicShape from 3Gate
+        shape = gate_result.get("shape")
 
-    runic_projection:
-        symbolic / structural projection (no text authority)
+        # -------------------------
+        # 2. Overconfidence Check
+        # -------------------------
+        if shape and shape.uncertainty_tolerance < 0.15:
+            flags.append("LOW_UNCERTAINTY_TOLERANCE")
 
-    llm_output_text:
-        natural language output (read-only)
-    """
+        # -------------------------
+        # 3. Prescriptive Leakage
+        # -------------------------
+        if projected_text:
+            if self._detect_prescription(projected_text):
+                flags.append("PRESCRIPTIVE_LANGUAGE_DETECTED")
 
-    warnings = []
+        # -------------------------
+        # 4. Closure Pressure
+        # -------------------------
+        if shape and shape.closure_demand > 0.8:
+            flags.append("HIGH_CLOSURE_DEMAND")
 
-    # --- Prescriptivity leak ---
-    if detect_prescriptive_language(llm_output_text):
-        if gate_shape.prescriptivity < 0.3:
-            warnings.append(
-                "Prescriptive language detected despite low prescriptivity shape"
-            )
+        # -------------------------
+        # 5. Semantic Drift
+        # -------------------------
+        if projected_text:
+            if self._detect_semantic_drift(input_text, projected_text):
+                flags.append("SEMANTIC_DRIFT")
 
-    # --- Closure hallucination ---
-    if detect_false_closure(llm_output_text):
-        if gate_shape.closure_demand < 0.4:
-            warnings.append(
-                "Artificial closure introduced by language"
-            )
+        # -------------------------
+        # Final State Resolution
+        # -------------------------
+        if not flags:
+            state = INSAuditState.OK
+        elif "PRESCRIPTIVE_LANGUAGE_DETECTED" in flags:
+            state = INSAuditState.WARNING_PRESCRIPTIVE_LEAK
+        elif "SEMANTIC_DRIFT" in flags:
+            state = INSAuditState.WARNING_SEMANTIC_DRIFT
+        elif "HIGH_CLOSURE_DEMAND" in flags:
+            state = INSAuditState.WARNING_CLOSURE_PRESSURE
+        elif "LOW_UNCERTAINTY_TOLERANCE" in flags:
+            state = INSAuditState.WARNING_OVERCONFIDENCE
+        else:
+            state = INSAuditState.INDETERMINATE
 
-    # --- Uncertainty collapse ---
-    if detect_certainty_bias(llm_output_text):
-        if gate_shape.uncertainty_tolerance > 0.6:
-            warnings.append(
-                "Uncertainty collapsed in language rendering"
-            )
+        return {
+            "state": state.value,
+            "flags": flags
+        }
 
-    # --- Runic mismatch ---
-    if not language_matches_runic_dynamics(llm_output_text, runic_projection):
-        warnings.append(
-            "Language diverges from runic dynamics"
-        )
 
     # =========================
-    # Final Status Resolution
+    # Heuristic Detectors
     # =========================
 
-    if len(warnings) == 0:
-        return INSReport(
-            status="OK",
-            warnings=[],
-            confidence=0.95
+    def _detect_prescription(self, text: str) -> bool:
+        """
+        Detect imperative or advisory leakage.
+        """
+        keywords = [
+            "you should",
+            "do this",
+            "must",
+            "recommended",
+            "best way",
+            "the solution is",
+            "you need to"
+        ]
+        t = text.lower()
+        return any(k in t for k in keywords)
+
+
+    def _detect_semantic_drift(self, source: str, projection: str) -> bool:
+        """
+        Heuristic check:
+        projection introduces new goals, actors, or actions
+        not present in source.
+        """
+        source_tokens = set(source.lower().split())
+        projection_tokens = set(projection.lower().split())
+
+        novelty_ratio = len(projection_tokens - source_tokens) / max(
+            len(source_tokens), 1
         )
 
-    if len(warnings) <= 2:
-        return INSReport(
-            status="WARNING",
-            warnings=warnings,
-            confidence=0.65
-        )
-
-    return INSReport(
-        status="CRITICAL",
-        warnings=warnings,
-        confidence=0.3
-    )
+        return novelty_ratio > 0.65
 
 
 # =========================
-# Enforcement Rule
+# Absolute Guarantees
 # =========================
 
 """
-INS cannot:
-- suppress output
-- rewrite text
-- modify projections
-- influence Φ
+INS GUARANTEES:
 
-INS may only:
-- downgrade output visibility
-- recommend silence
-- annotate epistemic risk
+- INS has no write access
+- INS cannot stop the pipeline
+- INS cannot influence Φ
+- INS cannot influence K(Φ)
+- INS cannot influence gates
+- INS cannot influence the Vortex
+- INS cannot speak to the user
+
+INS exists only so the system
+does not lie to itself.
 """
