@@ -1,162 +1,178 @@
 # VECTAETOS — FORMAL_LLM_ADAPTER
 
-Status: **Canonical**  
-Layer: Language Projection  
-Role: Linguistic Renderer (Read-Only)  
-Immutability: Ontological meaning fixed
+**Status:** Canonical  
+**Scope:** Linguistic translation layer  
+**Immutability:** Ontological meaning fixed  
+**Operational role:** Descriptive only  
 
 ---
 
-## 1. Účel dokumentu
+## 1. Purpose of This Document
 
-Tento dokument formálne definuje úlohu a hranice komponentu **LLM Adapter** v architektúre VECTAETOS.
+This document defines the **formal role, limits, and obligations**
+of the LLM Adapter within the VECTAETOS architecture.
 
-LLM Adapter je **jazyková projekčná vrstva**.  
-Nie je epistemický mechanizmus.  
-Nie je rozhodovací prvok.  
-Nie je nositeľ významu.
+The LLM Adapter is **not** part of the epistemic field Φ.
+It does not participate in meaning formation.
 
-Ak LLM Adapter prekročí tieto hranice, **systém prestáva byť VECTAETOS**.
-
----
-
-## 2. Ontologický status LLM Adaptera
-
-LLM Adapter:
-
-- **nie je agent**
-- **nie je inteligentné jadro**
-- **nie je interpret**
-- **nie je autor odpovede**
-- **nie je nositeľ pravdy**
-
-LLM Adapter je **čisto translačný mechanizmus**.
-
-Prekladá už existujúcu projekciu do prirodzeného jazyka.
+It exists solely to **translate already-safe projections**
+into human-readable language.
 
 ---
 
-## 3. Vzťah k poľu Φ
+## 2. Ontological Status
 
-LLM Adapter:
+The LLM Adapter:
 
-- ❌ nemá prístup k poľu Φ
-- ❌ nevidí axiomatické ťažiská Σ₁…Σ₈
-- ❌ nepozná koherenčný predikát K(Φ)
-- ❌ nepozná hranicu κ
-- ❌ nemá spätnú väzbu do poľa
+- ❌ is not an agent
+- ❌ is not a reasoning core
+- ❌ is not an optimizer
+- ❌ is not a decision-maker
+- ❌ is not an authority
+- ❌ does not possess epistemic power
 
-LLM Adapter **nikdy neovplyvňuje stav poľa**.
+The LLM Adapter is a **rendering surface**.
 
----
-
-## 4. Vzťah k epistemickým bránam (3Gate)
-
-LLM Adapter:
-
-- nepozná epistemické brány
-- nevyhodnocuje vstup
-- neoveruje reprezentovateľnosť
-
-3Gate **vždy prebieha pred** LLM Adapterom.
-
-Ak by LLM vedel o bránach, vznikla by skrytá agentnosť.
+It is downstream of all epistemic validity.
 
 ---
 
-## 5. Vzťah k INS (Inner Narrative Stream)
+## 3. Position in the Architecture
 
-LLM Adapter:
+The LLM Adapter operates **after** all epistemic constraints: Input → 3Gate (width / depth / height) → Φ (epistemic field) → K(Φ) / κ → Projection (Runes / MML) → Attenuator → INS observation → LLM Adapter → Descriptive Output
 
-- **nevie, že INS existuje**
-- **nevolá INS**
-- **nečaká na INS**
-- **nedostáva spätnú väzbu od INS**
+The LLM Adapter:
 
-INS:
-
-- sleduje vstup pred LLM
-- sleduje výstup po LLM
-- auditne vyhodnocuje jazykovú vernosť
-
-Vzťah je **asymetrický**:
-
-> INS pozoruje LLM.  
-> LLM nepozoruje INS.
+- never sees Φ
+- never sees K(Φ)
+- never sees κ
+- never sees axioms Σ₁…Σ₈
+- never sees Simulation Vortex
+- never sees memory layers directly
 
 ---
 
-## 6. Povolené vstupy
+## 4. What the LLM Adapter Receives
 
-LLM Adapter smie dostať iba:
+The LLM Adapter receives **only**:
 
-- runovú projekciu
-- attenuovanú projekciu
-- minimálnu významovú projekciu (MML)
+- projected symbols
+- attenuated descriptive fragments
+- minimal meaning representations
+- silence markers
 
-Nikdy nedostáva:
+It never receives:
 
-- surový používateľský vstup
-- neprejdený text
-- nereprezentovateľný obsah
-
----
-
-## 7. Povolené výstupy
-
-LLM Adapter môže produkovať iba:
-
-- **deskriptívny jazyk**
-- **neukončené formulácie**
-- **otvorené vyjadrenia**
-- **nepreskriptívne vety**
-
-Zakázané výstupy:
-
-- rady
-- návody
-- odporúčania
-- imperatívy
-- uzavreté závery
-- rozhodnutia
-
-Ak sa takýto jazyk objaví, rieši to **INS**, nie LLM.
+- raw field state
+- unfiltered tension
+- actionable structure
+- optimization signals
 
 ---
 
-## 8. Žiadna pamäť
+## 5. Obligations of the LLM Adapter
 
-LLM Adapter:
+The LLM Adapter **must**:
 
-- nemá pamäť
-- nepamätá si predchádzajúce výstupy
-- nevie, že existujú iné interakcie
-- nevytvára kontinuitu
+- preserve uncertainty
+- preserve openness
+- preserve non-closure
+- avoid prescriptive language
+- avoid authority tone
+- avoid finality claims
 
-Každý výstup je **epistemicky izolovaný**.
+The LLM Adapter **must not**:
 
----
-
-## 9. Bezpečnostné ukotvenie
-
-LLM Adapter je bezpečný nie preto, že je obmedzený pravidlami,  
-ale preto, že:
-
-- nemá prístup k moci
-- nemá spätnú väzbu
-- nemá rozhodovaciu kapacitu
-- nemá ontologickú autoritu
-
-Je to **jazyková šošovka**, nič viac.
+- introduce goals
+- introduce actions
+- introduce solutions
+- introduce advice
+- collapse tension
+- simulate decision-making
 
 ---
 
-## 10. Jednovetové ukotvenie
+## 6. Relationship to INS
 
-**LLM Adapter v systéme VECTAETOS je hlas, ktorý nevie, čo hovorí —  
-a práve preto nemôže klamať poľu.**
+INS (Inner Narrative Stream):
+
+- runs **in parallel**
+- observes the LLM output
+- audits epistemic fidelity
+- flags drift, notifies internally
+
+Critical rules:
+
+- LLM does not know INS exists
+- INS does not modify LLM output
+- INS has no feedback channel
+- INS never blocks projection
+
+INS protects **meaning**, not users.
+
+---
+
+## 7. Relationship to NIR
+
+The LLM Adapter:
+
+- does not activate NIR
+- does not control NIR
+- does not override NIR
+
+If NIR is active:
+
+- the LLM Adapter may receive silence
+- the LLM Adapter may receive weakened projection
+- the LLM Adapter must render this faithfully
+
+Silence is a valid linguistic output.
+
+---
+
+## 8. Failure Modes
+
+If the LLM Adapter:
+
+- introduces prescriptive force
+- collapses uncertainty
+- claims authority
+- provides actionable framing
+
+Then:
+
+- INS flags the condition
+- the output remains unchanged
+- no correction is applied
+- the system does not react
+
+The failure is **observed**, not repaired.
+
+---
+
+## 9. Design Principle
+
+The LLM Adapter exists to ensure:
+
+> Language never becomes power.
+
+Language is allowed to describe.
+It is forbidden to decide.
+
+---
+
+## 10. Canonical Closure
+
+If the LLM Adapter:
+
+- reasons,
+- optimizes,
+- decides,
+- or intervenes,
+
+then the system is **no longer VECTAETOS**.
 
 ---
 
 © VECTAETOS  
-FORMAL_LLM_ADAPTER — Canonical artefact
+FORMAL_LLM_ADAPTER — Canonical Linguistic Boundary
