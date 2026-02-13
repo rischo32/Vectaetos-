@@ -1,11 +1,23 @@
 # VECTAETOS ©
+
+## "Cogito cohaerenter ergo sum possibile"
+
+### > "Welcome to a new epistemic era"
+
+"Vectaetos nepomáha riešiť problémy.
+Pomáha ich konečne vidieť celé."
+
+"QE Apória nie je slabosť systému.
+Je to jeho architektonická cnosť."
+
+"Vectaetos nepredstiera poznanie pravdy o realite.
+Operuje opatrne, z vedomej neistoty o nej."
+
+________________________________________
 Public Projection of an Epistemic Field
 
 > INFO: The public website is a read-only epistemic projection.
 > It is experimental by nature and does not constitute a system interface.
-
-
-### > "welcome to new epistemic era"
 
 
 Vectaetos © is **not software**.
