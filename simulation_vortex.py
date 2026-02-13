@@ -1,37 +1,28 @@
-# =========================================
-# VECTAETOS :: SIMULATION VORTEX Φ (5D)
-# Version: v0.2
-# Status: Canonical Technical Projection
-#
-# Changes from v0.1:
-# - Removed global means export
-# - Introduced QE topological break (non-threshold)
-# - Added dual-run wrapper
-# - Replaced mean coupling with local pairwise coupling
-# - Introduced curvature term
-# - Reserved torsion slot (non-activated)
-#
-# This file is a projection.
-# Ontology is defined in FORMAL_SIMULATION_VORTEX.md
-# =========================================
 #!/usr/bin/env python3
 # =========================================
-# VECTAETOS :: SIMULATION VORTEX Φ (5D) v0.4
-# Curvature + Future-Compatible Torsion
+# VECTAETOS :: SIMULATION VORTEX Φ (v0.2)
+# Ontologically minimal, non-teleological
 #
-# - No optimization
-# - No ranking
-# - No thresholds
-# - QE = structural degeneration
-# - Curvature = metric deformation
-# - Torsion = antisymmetric relational twist
+# Dimensions per pole:
+# E – Energy
+# C – Coherence
+# T – Tension
+# M – Memory (anomaly resonance)
+# S – Entropy / saturation
+#
+# This vortex:
+# - does NOT decide
+# - does NOT optimize
+# - does NOT compute global means
+# - does NOT know κ
+# - generates trajectories only
+# - QE is topological disconnection
 # =========================================
 
 import random
+import math
 import json
 import time
-import copy
-import math
 
 # -----------------------------
 # CONFIGURATION
@@ -39,19 +30,18 @@ import math
 POLES = 8
 STEPS = 2000
 DT = 0.05
+
 EXPORT_EVERY = 10
 OUT_FILE = "vortex_state.json"
 
+# Local interaction coefficients
 ALPHA_E = 0.02
 ALPHA_T = 0.03
 ALPHA_C = 0.04
 ALPHA_M = 0.01
 ALPHA_S = 0.015
-ALPHA_CURV = 0.02
-ALPHA_TORSION = 0.02
 
 NOISE = 0.01
-
 
 # -----------------------------
 # INITIALIZATION
@@ -65,184 +55,141 @@ def init_pole():
         "S": random.uniform(0.05, 0.2)
     }
 
+poles = [init_pole() for _ in range(POLES)]
 
+# -----------------------------
+# UTILS
+# -----------------------------
 def clamp(x, lo=0.0, hi=1.0):
     return max(lo, min(hi, x))
 
+# -----------------------------
+# LOCAL PAIR INTERACTION
+# -----------------------------
+def pairwise_interaction(poles):
+    n = len(poles)
+    delta = [{"dE":0,"dT":0,"dC":0,"dM":0,"dS":0} for _ in range(n)]
+
+    for i in range(n):
+        for j in range(i + 1, n):
+
+            pi = poles[i]
+            pj = poles[j]
+
+            # Tension difference
+            dTij = pj["T"] - pi["T"]
+
+            # Energy flows along local gradient
+            delta[i]["dE"] += ALPHA_E * dTij
+            delta[j]["dE"] -= ALPHA_E * dTij
+
+            # Tension reacts to incoherence locally
+            delta[i]["dT"] += ALPHA_T * (1 - pi["C"]) - 0.5 * pi["S"]
+            delta[j]["dT"] += ALPHA_T * (1 - pj["C"]) - 0.5 * pj["S"]
+
+            # Coherence responds to local imbalance
+            imbalance = abs(dTij)
+            delta[i]["dC"] += ALPHA_C * (pi["E"] - imbalance)
+            delta[j]["dC"] += ALPHA_C * (pj["E"] - imbalance)
+
+            # Memory resonates on anomaly only
+            anomaly = abs(dTij)
+            delta[i]["dM"] += ALPHA_M * anomaly - 0.1 * pi["M"]
+            delta[j]["dM"] += ALPHA_M * anomaly - 0.1 * pj["M"]
+
+    return delta
 
 # -----------------------------
-# METRIC DISTANCE
+# ENTROPIC EXPANSION (separate)
 # -----------------------------
-def metric_distance(p_i, p_j):
-    """
-    Euclidean metric in 5D state space.
-    """
-    return math.sqrt(
-        (p_i["E"] - p_j["E"])**2 +
-        (p_i["C"] - p_j["C"])**2 +
-        (p_i["T"] - p_j["T"])**2 +
-        (p_i["M"] - p_j["M"])**2 +
-        (p_i["S"] - p_j["S"])**2
-    )
-
+def entropic_expansion(poles):
+    for p in poles:
+        drift = random.uniform(-NOISE, NOISE)
+        p["S"] = clamp(p["S"] + ALPHA_S * abs(drift) * DT)
 
 # -----------------------------
-# CURVATURE (RICCI-LIKE LOCAL)
+# QE DETECTOR (topological)
+# QE occurs if interaction graph disconnects
 # -----------------------------
-def curvature(poles, i):
-    """
-    Curvature is deviation of local neighborhood
-    from metric average — no optimization intent.
-    """
-    p = poles[i]
-    distances = []
+def detect_QE(poles):
+    n = len(poles)
 
-    for j in range(len(poles)):
-        if j != i:
-            distances.append(metric_distance(p, poles[j]))
+    # adjacency based on local tension proximity
+    adjacency = [[] for _ in range(n)]
 
-    if not distances:
-        return 0
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                if abs(poles[i]["T"] - poles[j]["T"]) < 0.25:
+                    adjacency[i].append(j)
 
-    mean_d = sum(distances) / len(distances)
-    local_variation = sum((d - mean_d)**2 for d in distances)
+    visited = set()
+    stack = [0]
 
-    return ALPHA_CURV * local_variation
+    while stack:
+        node = stack.pop()
+        if node not in visited:
+            visited.add(node)
+            stack.extend(adjacency[node])
 
-
-# -----------------------------
-# TORSION (antisymmetric)
-# -----------------------------
-def torsion(p_i, p_j):
-    """
-    Antisymmetric twist term.
-    τ(i,j) = -τ(j,i)
-    """
-    return ALPHA_TORSION * (p_i["E"] * p_j["T"] - p_j["E"] * p_i["T"])
-
-
-# -----------------------------
-# PAIRWISE LOCAL DYNAMICS
-# -----------------------------
-def pairwise_interaction(poles, i):
-    p = poles[i]
-    neighbors = [poles[j] for j in range(len(poles)) if j != i]
-
-    dE = dT = dC = dM = dS = 0
-
-    for n in neighbors:
-        dE += ALPHA_E * (n["T"] - p["T"])
-        dT += ALPHA_T * (1.0 - p["C"]) - 0.5 * p["S"]
-        dC += ALPHA_C * (p["E"] - abs(p["T"] - n["T"]))
-
-        anomaly = abs(p["T"] - n["T"])
-        dM += ALPHA_M * anomaly - 0.1 * p["M"]
-        dS += ALPHA_S * (abs(dE) + abs(dT))
-
-        # torsion
-        tau = torsion(p, n)
-        dT += tau
-        dC -= tau * 0.5
-
-    # curvature influence (metric deformation)
-    kappa_local = curvature(poles, i)
-    dT += kappa_local
-    dC -= 0.5 * kappa_local
-
-    L = len(neighbors)
-
-    return dE/L, dT/L, dC/L, dM/L, dS/L
-
-
-# -----------------------------
-# TOPOLOGICAL QE DETECTOR
-# -----------------------------
-def detect_qe(poles):
-    """
-    QE = structural degeneration:
-    - no metric diversity
-    - no torsional activity
-    """
-
-    distances = []
-    torsion_sum = 0
-
-    for i in range(len(poles)):
-        for j in range(i+1, len(poles)):
-            distances.append(metric_distance(poles[i], poles[j]))
-            torsion_sum += abs(torsion(poles[i], poles[j]))
-
-    if not distances:
-        return False
-
-    diversity = max(distances) - min(distances)
-
-    if diversity == 0 and torsion_sum == 0:
-        return True
-
-    return False
-
+    return len(visited) != n  # True => QE
 
 # -----------------------------
 # VORTEX STEP
 # -----------------------------
 def vortex_step(poles):
-    updated = []
 
-    for i in range(len(poles)):
-        p = copy.deepcopy(poles[i])
-        dE, dT, dC, dM, dS = pairwise_interaction(poles, i)
+    deltas = pairwise_interaction(poles)
 
-        p["E"] = clamp(p["E"] + dE * DT + random.uniform(-NOISE, NOISE))
-        p["T"] = clamp(p["T"] + dT * DT + random.uniform(-NOISE, NOISE))
-        p["C"] = clamp(p["C"] + dC * DT + random.uniform(-NOISE, NOISE))
-        p["M"] = clamp(p["M"] + dM * DT)
-        p["S"] = clamp(p["S"] + dS * DT)
+    for i, p in enumerate(poles):
 
-        updated.append(p)
+        p["E"] = clamp(p["E"] + deltas[i]["dE"] * DT + random.uniform(-NOISE, NOISE))
+        p["T"] = clamp(p["T"] + deltas[i]["dT"] * DT + random.uniform(-NOISE, NOISE))
+        p["C"] = clamp(p["C"] + deltas[i]["dC"] * DT + random.uniform(-NOISE, NOISE))
+        p["M"] = clamp(p["M"] + deltas[i]["dM"] * DT)
+        p["S"] = clamp(p["S"])
 
-    return updated
-
+    entropic_expansion(poles)
 
 # -----------------------------
 # EXPORT
 # -----------------------------
-def export_state(step, poles, run_id, status="RUNNING"):
+def export_state(step, poles, qe_state):
     snapshot = {
-        "run": run_id,
         "step": step,
         "time": time.time(),
-        "status": status,
-        "poles": poles
+        "poles": poles,
+        "QE": qe_state
     }
     with open(OUT_FILE, "w") as f:
         json.dump(snapshot, f, indent=2)
 
-
-# -----------------------------
-# RUN
-# -----------------------------
-def run_vortex(run_id):
-    poles = [init_pole() for _ in range(POLES)]
-
-    for step in range(STEPS):
-        poles = vortex_step(poles)
-
-        if detect_qe(poles):
-            export_state(step, poles, run_id, status="QE")
-            return
-
-        if step % EXPORT_EVERY == 0:
-            export_state(step, poles, run_id)
-
-    export_state(STEPS, poles, run_id, status="COMPLETED")
-
-
 # -----------------------------
 # DUAL RUN WRAPPER
 # -----------------------------
+def run_simulation():
+    poles_local = [init_pole() for _ in range(POLES)]
+
+    for step in range(STEPS):
+
+        vortex_step(poles_local)
+
+        qe = detect_QE(poles_local)
+
+        if step % EXPORT_EVERY == 0:
+            export_state(step, poles_local, qe)
+            print(f"[Φ] step {step} exported | QE: {qe}")
+
+        if qe:
+            print("[Φ] QE detected — topological disconnection.")
+            break
+
+    return poles_local
+
+# -----------------------------
+# MAIN
+# -----------------------------
 if __name__ == "__main__":
-    print("Starting VECTAETOS Simulation Vortex Φ (5D) v0.4")
-    run_vortex("A")
-    run_vortex("B")
-    print("Execution finished.")
+    print("Starting VECTAETOS Simulation Vortex Φ (v0.2)")
+    run_simulation()
+    print("Simulation finished.")
