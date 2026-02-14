@@ -1,153 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>VECTAETΦS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #0a0a0a;
-      color: #e8e8e8;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.8;
-      letter-spacing: 0.02em;
-    }
-
-    main {
-      max-width: 760px;
-      margin: 14vh auto;
-      padding: 0 1.5rem;
-    }
-
-    h1 {
-      text-align: center;
-      font-weight: 500;
-      font-size: 1.7rem;
-      letter-spacing: 0.18em;
-      margin-bottom: 5rem;
-    }
-
-    p {
-      margin-bottom: 2.2rem;
-      font-size: 1rem;
-    }
-
-    .anchor {
-      margin: 7rem 0;
-      font-style: italic;
-      opacity: 0.75;
-    }
-
-    .hard {
-      font-weight: 500;
-    }
-
-    .projection {
-      margin: 5rem 0;
-    }
-
-    a {
-      color: #9bbcff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #2a2a2a;
-      margin: 6rem 0;
-    }
-
-    footer {
-      margin-top: 8rem;
-      opacity: 0.3;
-      font-size: 0.8rem;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>VECTAETΦS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin:0;
+  background:#000;
+  overflow:hidden;
+}
+canvas { display:block; }
+</style>
 </head>
-
 <body>
-<main>
+<canvas id="field"></canvas>
 
-  <h1>VECTAETΦS</h1>
+<script>
+const canvas = document.getElementById("field");
+const ctx = canvas.getContext("2d");
 
-  <p class="anchor">
-    Not everything that can be projected should become a decision.
-  </p>
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-  <p>
-    This is not a system.
-  </p>
+let t = 0;
 
-  <p>
-    It is a configuration of tension.
-  </p>
+// 8 axiomatických ťažísk (rovnomerne v kruhu)
+const AXIOMS = 8;
 
-  <p>
-    It does not interpret.
-    <br>
-    It does not conclude.
-    <br>
-    It does not authorize.
-  </p>
+function draw(){
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  <p class="hard">
-    Speed erodes coherence.
-  </p>
+  const cx = canvas.width/2;
+  const cy = canvas.height/2;
 
-  <p>
-    Qualitative Epistemic Aporia is not collapse.
-    <br>
-    It is the visible edge of answerability.
-  </p>
+  const grid = 140;
+  const scale = Math.min(canvas.width, canvas.height) * 0.45 / grid;
 
-  <p>
-    Truth is not assumed.
-    <br>
-    Uncertainty is represented.
-  </p>
+  for(let x=-grid; x<grid; x++){
+    for(let y=-grid; y<grid; y++){
 
-  <p class="anchor">
-    cogito cohaerenter ergo sum possibile
-  </p>
+      let px = x * scale;
+      let py = y * scale;
 
-  <div class="projection">
-    <p>
-      What appears here is projection.
-    </p>
+      // tenzná deformácia od 8 ťažísk
+      let tension = 0;
 
-    <p>
-      Projection is generation without authority.
-      <br>
-      Without recommendation.
-      <br>
-      Without verdict.
-    </p>
+      for(let i=0;i<AXIOMS;i++){
+        const angle = (Math.PI*2/AXIOMS)*i;
+        const ax = Math.cos(angle)*200;
+        const ay = Math.sin(angle)*200;
 
-    <p>
-      If a boundary becomes visible,
-      coherence has held.
-    </p>
+        const dx = px-ax;
+        const dy = py-ay;
+        const dist = Math.sqrt(dx*dx+dy*dy);
 
-    <p>
-      <a href="STRESS_TEST.html">Enter projection</a>
-    </p>
-  </div>
+        tension += Math.sin(dist*0.02 - t*0.015) * 0.8;
+      }
 
-  <hr>
+      const r = Math.sqrt(px*px+py*py);
 
-  <footer>
-    This projection does not decide.<br>
-    Responsibility remains outside the field.
-  </footer>
+      // epistemická pulzácia (U(t))
+      const uncertainty = Math.sin(r*0.01 - t*0.01) * 0.5;
 
-</main>
+      const warpX = px + tension*6;
+      const warpY = py + tension*6;
+
+      const intensity = 120 + 120*Math.sin(r*0.015 - t*0.02 + uncertainty);
+
+      ctx.fillStyle = `rgb(0, ${intensity}, ${intensity})`;
+      ctx.fillRect(cx + warpX, cy + warpY, 1, 1);
+    }
+  }
+
+  t++;
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
 </body>
 </html>
