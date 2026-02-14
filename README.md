@@ -1,9 +1,4 @@
-### VECTAETOS™  
-Framework © 2026 Richard Fonfára  
-All projections are non-prescriptive.
-All rights reserved.
-
-## "Cogito cohaerenter ergo sum possibile"
+### "Cogito cohaerenter ergo sum possibile"
 
 ### > "Welcome to a new epistemic era"
 
@@ -233,6 +228,17 @@ Vectaetos is released under the:
 **Vectaetos Custom License (VCL-1.0)**  
 See `LICENSE.md` for full terms.
 
+---
+
+## Legal & Framework Notice
+
+VECTAETOS™  
+Framework © 2026 Richard Fonfára  
+
+All projections are descriptive and non-prescriptive.  
+Use of this framework does not transfer decision authority.
+
+See LICENSE.md for full terms.
 ---
 
 ## Final Note
