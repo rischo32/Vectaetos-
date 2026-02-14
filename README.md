@@ -1,4 +1,6 @@
-# VECTAETOS ©
+### VECTAETOS™  
+© 2026 Richard Fonfára  
+All projections are non-prescriptive.
 
 ## "Cogito cohaerenter ergo sum possibile"
 
