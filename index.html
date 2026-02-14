@@ -8,16 +8,18 @@
 body{
   margin:0;
   background:#05070a;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
   overflow:hidden;
+  font-family:system-ui;
 }
+canvas{display:block;}
 .top{
   position:absolute;
   top:20px;
   width:100%;
   text-align:center;
-  font-size:32px;
+  font-size:28px;
   color:#e0e0e0;
+  pointer-events:none;
 }
 .bottom{
   position:absolute;
@@ -31,7 +33,6 @@ body{
   text-decoration:none;
   margin:0 10px;
 }
-.bottom a:hover{ color:#fff; }
 </style>
 </head>
 <body>
@@ -42,99 +43,76 @@ body{
   <a href="https://zenodo.org/records/18395048" target="_blank">DOI</a>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
-<script>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.152.2/build/three.module.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
 camera.position.z = 4;
 
-const renderer = new THREE.WebGLRenderer({ antialias:true });
+const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
-// axiomatické farby
 const COLORS = [
-  0x666666, // INT
-  0xf1c40f, // LEX
-  0x00bcd4, // VER
-  0x3498db, // LIB
-  0xff9800, // UNI
-  0x4caf50, // REL
-  0xf44336, // WIS
-  0x9c27b0  // CRE
+  0x666666,0xf1c40f,0x00bcd4,0x3498db,
+  0xff9800,0x4caf50,0xf44336,0x9c27b0
 ];
 
-// 8 bodov na sfére (geometrická symetria)
 const radius = 1.5;
 const nodes = [];
-const nodeGroup = new THREE.Group();
+const group = new THREE.Group();
+scene.add(group);
 
 for(let i=0;i<8;i++){
   const phi = Math.acos(-1 + (2*i)/8);
-  const theta = Math.sqrt(8*Math.PI) * phi;
+  const theta = Math.sqrt(8*Math.PI)*phi;
 
-  const x = radius * Math.cos(theta) * Math.sin(phi);
-  const y = radius * Math.sin(theta) * Math.sin(phi);
-  const z = radius * Math.cos(phi);
+  const x = radius*Math.cos(theta)*Math.sin(phi);
+  const y = radius*Math.sin(theta)*Math.sin(phi);
+  const z = radius*Math.cos(phi);
 
   const geo = new THREE.SphereGeometry(0.08,16,16);
   const mat = new THREE.MeshBasicMaterial({color:COLORS[i]});
   const mesh = new THREE.Mesh(geo,mat);
   mesh.position.set(x,y,z);
 
-  nodeGroup.add(mesh);
+  group.add(mesh);
   nodes.push(mesh.position.clone());
 }
 
-scene.add(nodeGroup);
-
-// hrany (symetrické)
-const edgeGroup = new THREE.Group();
-scene.add(edgeGroup);
-
 for(let i=0;i<nodes.length;i++){
   for(let j=i+1;j<nodes.length;j++){
-
-    const geometry = new THREE.BufferGeometry().setFromPoints([
-      nodes[i],
-      nodes[j]
-    ]);
-
-    const material = new THREE.LineBasicMaterial({
-      color: COLORS[i],
+    const geo = new THREE.BufferGeometry().setFromPoints([nodes[i],nodes[j]]);
+    const mat = new THREE.LineBasicMaterial({
+      color:COLORS[i],
       transparent:true,
-      opacity:0.5
+      opacity:0.4
     });
-
-    const line = new THREE.Line(geometry,material);
-    edgeGroup.add(line);
+    const line = new THREE.Line(geo,mat);
+    group.add(line);
   }
 }
 
-let t = 0;
+let t=0;
 
 function animate(){
   requestAnimationFrame(animate);
-  t += 0.003;
+  t+=0.003;
 
-  // pomalá rotácia
-  nodeGroup.rotation.y += 0.002;
-  nodeGroup.rotation.x += 0.001;
+  group.rotation.y+=0.002;
+  group.rotation.x+=0.001;
 
-  edgeGroup.rotation.copy(nodeGroup.rotation);
-
-  // jemné plávanie
-  nodeGroup.position.y = Math.sin(t)*0.15;
-  edgeGroup.position.y = nodeGroup.position.y;
+  group.position.y = Math.sin(t)*0.15;
 
   renderer.render(scene,camera);
 }
 
 animate();
 
-window.addEventListener('resize',()=>{
+window.addEventListener("resize",()=>{
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth,window.innerHeight);
