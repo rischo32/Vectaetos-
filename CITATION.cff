@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use, study, or reference this work, please cite it as below."
 title: "Vectaetos – Canonical Core v0.1"
 abstract: >
-  Vectaetos is an epistemic and ontological framework describing intelligence
+  Vectaetos™ is an epistemic and ontological framework © describing intelligence
   as a coherent field of relations rather than an agentic or optimization-based system.
   It introduces concepts such as Entropic Humility, epistemic field Φ,
   non-numerical coherence thresholds, and qualitative epistemic aporia (QE),
@@ -36,3 +36,6 @@ preferred-citation:
   year: 2026
   doi: "10.5281/zenodo.18395048"
   publisher: "Zenodo"
+
+title: "VECTAETOS™ Framework"
+copyright: "© 2026 Richard Fonfára"
