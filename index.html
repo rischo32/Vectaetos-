@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
 <meta charset="UTF-8">
 <title>Φ</title>
@@ -7,19 +7,23 @@
 <style>
 body{
   margin:0;
-  background:#f4f4f4;
+  background:#0b0f14;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
   overflow:hidden;
 }
 canvas{ display:block; }
+
 .top{
   position:absolute;
   top:20px;
   width:100%;
   text-align:center;
-  font-size:32px;
-  font-weight:500;
+  font-size:36px;
+  font-weight:400;
+  letter-spacing:4px;
+  color:#eaeaea;
 }
+
 .bottom{
   position:absolute;
   bottom:20px;
@@ -28,12 +32,12 @@ canvas{ display:block; }
   font-size:14px;
 }
 .bottom a{
-  color:#333;
+  color:#999;
   text-decoration:none;
   margin:0 10px;
 }
 .bottom a:hover{
-  text-decoration:underline;
+  color:#fff;
 }
 </style>
 </head>
@@ -59,15 +63,16 @@ function resize(){
 resize();
 window.addEventListener("resize", resize);
 
+// 8 axiomatických singularít
 const AXIOMS = [
-  {label:"INT",color:"#666666"},
+  {label:"INT",color:"#ff5555"},
   {label:"LEX",color:"#f1c40f"},
-  {label:"VER",color:"#00bcd4"},
-  {label:"LIB",color:"#3498db"},
+  {label:"VER",color:"#00e5ff"},
+  {label:"LIB",color:"#2979ff"},
   {label:"UNI",color:"#ff9800"},
-  {label:"REL",color:"#4caf50"},
-  {label:"WIS",color:"#f44336"},
-  {label:"CRE",color:"#9c27b0"}
+  {label:"REL",color:"#00e676"},
+  {label:"WIS",color:"#ff1744"},
+  {label:"CRE",color:"#d500f9"}
 ];
 
 let t = 0;
@@ -77,11 +82,11 @@ function draw(){
 
   const cx = canvas.width/2;
   const cy = canvas.height/2;
-  const radius = Math.min(canvas.width,canvas.height)*0.32;
+  const radius = Math.min(canvas.width,canvas.height)*0.34;
 
   let nodes = [];
 
-  // vypočítaj pozície 8 ťažísk
+  // rozmiestnenie 8 singularít do kruhu
   for(let i=0;i<AXIOMS.length;i++){
     const angle = (Math.PI*2/AXIOMS.length)*i - Math.PI/2;
     const x = cx + Math.cos(angle)*radius;
@@ -89,7 +94,7 @@ function draw(){
     nodes.push({x,y});
   }
 
-  // kreslenie napätí medzi každým párom
+  // TENZNÉ LÍNIE (multicolor blending)
   for(let i=0;i<nodes.length;i++){
     for(let j=i+1;j<nodes.length;j++){
 
@@ -100,29 +105,47 @@ function draw(){
       const dy = n2.y-n1.y;
       const dist = Math.sqrt(dx*dx+dy*dy);
 
-      const tension = 0.5 + 0.5*Math.sin(dist*0.01 + t*0.02 + i+j);
+      const tension = 0.5 + 0.5*Math.sin(dist*0.008 + t*0.02 + i*j);
 
-      ctx.strokeStyle = AXIOMS[i].color;
-      ctx.lineWidth = 1 + tension*3;
+      // farebný prechod medzi dvoma axiomatmi
+      const grad = ctx.createLinearGradient(n1.x,n1.y,n2.x,n2.y);
+      grad.addColorStop(0, AXIOMS[i].color);
+      grad.addColorStop(1, AXIOMS[j].color);
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 0.5 + tension*3;
+      ctx.globalAlpha = 0.2 + tension*0.6;
 
       ctx.beginPath();
       ctx.moveTo(n1.x,n1.y);
 
-      // mierna tenzná krivka
-      const mx = (n1.x+n2.x)/2 + Math.sin(t*0.02+i)*30*tension;
-      const my = (n1.y+n2.y)/2 + Math.cos(t*0.02+j)*30*tension;
+      const mx = (n1.x+n2.x)/2 + Math.sin(t*0.015+i)*40*tension;
+      const my = (n1.y+n2.y)/2 + Math.cos(t*0.015+j)*40*tension;
 
       ctx.quadraticCurveTo(mx,my,n2.x,n2.y);
       ctx.stroke();
     }
   }
 
-  // kreslenie ťažísk
+  ctx.globalAlpha = 1;
+
+  // KRESLENIE SINGULARÍT
   for(let i=0;i<nodes.length;i++){
-    ctx.fillStyle = AXIOMS[i].color;
+    const pulse = 8 + Math.sin(t*0.03+i)*3;
+
     ctx.beginPath();
-    ctx.arc(nodes[i].x,nodes[i].y,10,0,Math.PI*2);
+    ctx.fillStyle = AXIOMS[i].color;
+    ctx.shadowColor = AXIOMS[i].color;
+    ctx.shadowBlur = 20;
+    ctx.arc(nodes[i].x,nodes[i].y,pulse,0,Math.PI*2);
     ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // label
+    ctx.fillStyle = "#ccc";
+    ctx.font = "12px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText(AXIOMS[i].label, nodes[i].x, nodes[i].y - 15);
   }
 
   t++;
