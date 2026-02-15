@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
 <meta charset="UTF-8">
 <title>Φ</title>
@@ -7,19 +7,20 @@
 <style>
 body{
   margin:0;
-  background:#05070a;
+  background:#0a0a0a;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
   overflow:hidden;
-  font-family:system-ui;
 }
-canvas{display:block;}
+canvas{ display:block; }
 .top{
   position:absolute;
   top:20px;
   width:100%;
   text-align:center;
-  font-size:28px;
-  color:#e0e0e0;
-  pointer-events:none;
+  font-size:36px;
+  font-weight:500;
+  color:#fff;
+  letter-spacing:2px;
 }
 .bottom{
   position:absolute;
@@ -29,95 +30,161 @@ canvas{display:block;}
   font-size:14px;
 }
 .bottom a{
-  color:#888;
+  color:#aaa;
   text-decoration:none;
-  margin:0 10px;
+  margin:0 12px;
+}
+.bottom a:hover{
+  color:#fff;
 }
 </style>
 </head>
 <body>
 
 <div class="top">Φ</div>
+<canvas id="field"></canvas>
+
 <div class="bottom">
-  <a href="https://github.com/rischo32/Vectaetos" target="_blank">Repository</a> |
+  <a href="https://github.com/rischo32/Vectaetos" target="_blank">Repository</a>
+  |
   <a href="https://zenodo.org/records/18395048" target="_blank">DOI</a>
 </div>
 
-<script type="module">
+<script>
+const canvas = document.getElementById("field");
+const ctx = canvas.getContext("2d");
 
-import * as THREE from 'https://unpkg.com/three@0.152.2/build/three.module.js';
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
-camera.position.z = 4;
+/* ===============================
+   8 AXIOMATICKÉ ŤAŽISKÁ
+   =============================== */
 
-const renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild(renderer.domElement);
-
-const COLORS = [
-  0x666666,0xf1c40f,0x00bcd4,0x3498db,
-  0xff9800,0x4caf50,0xf44336,0x9c27b0
+const AXIOMS = [
+  {label:"INT",color:"#ff3366"},
+  {label:"LEX",color:"#ffaa00"},
+  {label:"VER",color:"#33ccff"},
+  {label:"LIB",color:"#66ff66"},
+  {label:"UNI",color:"#aa66ff"},
+  {label:"REL",color:"#00ffaa"},
+  {label:"WIS",color:"#ff44aa"},
+  {label:"CRE",color:"#9c27b0"}
 ];
 
-const radius = 1.5;
-const nodes = [];
-const group = new THREE.Group();
-scene.add(group);
+let t = 0;
 
-for(let i=0;i<8;i++){
-  const phi = Math.acos(-1 + (2*i)/8);
-  const theta = Math.sqrt(8*Math.PI)*phi;
+/* ===============================
+   GEOMETRIA – KONŠTANTNÝ KRUH
+   =============================== */
 
-  const x = radius*Math.cos(theta)*Math.sin(phi);
-  const y = radius*Math.sin(theta)*Math.sin(phi);
-  const z = radius*Math.cos(phi);
+function computeNodes(){
+  const cx = canvas.width/2;
+  const cy = canvas.height/2;
+  const radius = Math.min(canvas.width,canvas.height)*0.35;
 
-  const geo = new THREE.SphereGeometry(0.08,16,16);
-  const mat = new THREE.MeshBasicMaterial({color:COLORS[i]});
-  const mesh = new THREE.Mesh(geo,mat);
-  mesh.position.set(x,y,z);
+  let nodes = [];
 
-  group.add(mesh);
-  nodes.push(mesh.position.clone());
-}
-
-for(let i=0;i<nodes.length;i++){
-  for(let j=i+1;j<nodes.length;j++){
-    const geo = new THREE.BufferGeometry().setFromPoints([nodes[i],nodes[j]]);
-    const mat = new THREE.LineBasicMaterial({
-      color:COLORS[i],
-      transparent:true,
-      opacity:0.4
-    });
-    const line = new THREE.Line(geo,mat);
-    group.add(line);
+  for(let i=0;i<AXIOMS.length;i++){
+    const angle = (Math.PI*2/AXIOMS.length)*i - Math.PI/2;
+    const x = cx + Math.cos(angle)*radius;
+    const y = cy + Math.sin(angle)*radius;
+    nodes.push({x,y});
   }
+
+  return nodes;
 }
 
-let t=0;
+/* ===============================
+   SYMETRICKÁ TENZIA
+   w_ij = w_ji
+   ŽIADNA NORMALIZÁCIA
+   =============================== */
 
-function animate(){
-  requestAnimationFrame(animate);
-  t+=0.003;
-
-  group.rotation.y+=0.002;
-  group.rotation.x+=0.001;
-
-  group.position.y = Math.sin(t)*0.15;
-
-  renderer.render(scene,camera);
+function tensionWeight(i,j){
+  // Symetrická funkcia – nezávislá od poradia
+  const phase = i + j;
+  const value = 0.5 + 0.5*Math.sin(t*0.02 + phase);
+  return value; // v rozsahu 0–1
 }
 
-animate();
+/* ===============================
+   RENDER
+   =============================== */
 
-window.addEventListener("resize",()=>{
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth,window.innerHeight);
-});
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
+  const nodes = computeNodes();
+
+  // HRANY (symetrické)
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+
+      const n1 = nodes[i];
+      const n2 = nodes[j];
+
+      const w = tensionWeight(i,j);
+
+      ctx.lineWidth = 1 + w*4;
+
+      // farebný prechod medzi dvoma uzlami
+      const gradient = ctx.createLinearGradient(n1.x,n1.y,n2.x,n2.y);
+      gradient.addColorStop(0, AXIOMS[i].color);
+      gradient.addColorStop(1, AXIOMS[j].color);
+
+      ctx.strokeStyle = gradient;
+      ctx.globalAlpha = 0.15 + w*0.35;
+
+      ctx.beginPath();
+
+      // mierna krivka – symetrická
+      const mx = (n1.x+n2.x)/2;
+      const my = (n1.y+n2.y)/2;
+      const curveOffset = Math.sin(t*0.015 + i + j) * 25;
+
+      const dx = n2.y - n1.y;
+      const dy = n1.x - n2.x;
+      const length = Math.sqrt(dx*dx + dy*dy);
+
+      const nx = dx/length;
+      const ny = dy/length;
+
+      ctx.moveTo(n1.x,n1.y);
+      ctx.quadraticCurveTo(
+        mx + nx*curveOffset,
+        my + ny*curveOffset,
+        n2.x,n2.y
+      );
+      ctx.stroke();
+    }
+  }
+
+  ctx.globalAlpha = 1;
+
+  // UZLY (konštantná vzdialenosť, bez posunu)
+  for(let i=0;i<nodes.length;i++){
+    ctx.fillStyle = AXIOMS[i].color;
+    ctx.beginPath();
+    ctx.arc(nodes[i].x,nodes[i].y,10,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "12px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText(AXIOMS[i].label, nodes[i].x, nodes[i].y - 18);
+  }
+
+  t++;
+  requestAnimationFrame(draw);
+}
+
+draw();
 </script>
+
 </body>
 </html>
