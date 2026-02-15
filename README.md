@@ -1,3 +1,12 @@
+# Vectaetos
+
+[![GitHub Actions](https://github.com/rischo32/Vectaetos/actions/workflows/ci.yml/badge.svg)](https://github.com/rischo32/Vectaetos/actions)
+[![codecov](https://codecov.io/gh/rischo32/Vectaetos/branch/main/graph/badge.svg)](https://codecov.io/gh/rischo32/Vectaetos)
+[![GitHub release](https://img.shields.io/github/v/release/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/releases)
+[![License](https://img.shields.io/github/license/rischo32/Vectaetos)](LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/issues)
+[![GitHub stars](https://img.shields.io/github/stars/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/stargazers)
+
 ### "Cogito cohaerenter ergo sum possibile"
 
 ### > "Welcome to a new epistemic era"
