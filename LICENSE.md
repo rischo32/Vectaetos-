@@ -2,7 +2,7 @@
 
 **Version:** 1.0  
 **Date:** 2026-01-27  
-**Applies to:** Vectaetos – Canonical Core v0.1  
+**Applies to:** Vectaetos – Canonical Core v0.2
 **DOI:** https://doi.org/10.5281/zenodo.18395048
 
 ---
