@@ -1,235 +1,236 @@
 # EPISTEMIC_CRYPTOGRAPHY.md
 VECTAETOS — Epistemická Kryptografia  
-Matematický kontrolný zoznam (pred implementáciou)
-
-Status: PRE-FORMALIZATION  
-Vrstva: Auditná / Epistemická  
-Závislosť: Φ (pole)  
-Nezávislosť: Simulation Vortex
+Status: CANONICAL EXTENSION (v0.2 line)
 
 ---
 
-## 0. ARCHITEKTONICKÉ PRAVIDLO
+## 0. ČO JE EPISTEMICKÁ KRYPTOGRAFIA
+
+Epistemická Kryptografia (EK) nie je bezpečnostná kryptografia.
+
+Nie je:
+- šifrovanie
+- ochrana dát
+- autentifikácia identity
+- prístupový mechanizmus
+
+Je to:
+
+Štrukturálna ochrana významu.
+
+EK chráni:
+- koherenciu projekcie
+- viditeľnosť zásahu
+- ontologickú integritu výstupu
+
+Bez toho, aby čokoľvek riadila.
+
+---
+
+## 1. ARCHITEKTONICKÝ STATUS
+
+Epistemická Kryptografia je:
+
+- auditná vrstva
+- pasívna vrstva
+- nerekurzívna vrstva
+- neagentná vrstva
+
+Formálne oddelenie:
+
+Φ ⟂ EK  
+Vortex ⟂ EK  
+
+EK nikdy:
+- nevstupuje späť do poľa
+- nemení trajektórie
+- nemení projekciu
+- neblokuje výstup
+
+EK číta projekciu.
+Nikdy ju netvorí.
+
+---
+
+## 2. ÚČEL
+
+EK existuje z jedného dôvodu:
+
+Ak sa význam zmení,
+musí to byť viditeľné.
+
+Nie zastavené.
+Nie opravené.
+Nie potlačené.
+
+Viditeľné.
+
+---
+
+## 3. TRI PILIERE EK
+
+### 3.1 Epistemic Signature (ES)
+
+Podpis štruktúry projekcie.
+
+Neobsahuje interpretáciu.
+Neobsahuje odporúčanie.
+Neobsahuje hodnotenie.
+
+Je to stavová stopa.
+
+---
+
+### 3.2 Coherence Checksum (CCS)
+
+Hash štrukturálnej reprezentácie.
+
+Nechráni pred útokom.
+Signalizuje zásah.
+
+Ak sa:
+- odstráni QE
+- pridá odporúčanie
+- zmení distribúcia
+- zmení h_topo
+
+Checksum sa zmení.
+
+Nie je to autorita.
+Je to detektor manipulácie.
+
+---
+
+### 3.3 h_ratio / h_topo
+
+Ontologický indikátor rozloženia významu.
+
+Nie cieľ.
+Nie skóre.
+Nie optimalizačný parameter.
+
+h_topo signalizuje pomer medzi:
+- distribúciou (μ)
+- polarizáciou (A)
+
+Nikdy neslúži ako spätná väzba.
+
+---
+
+## 4. ČO EK NEROBÍ
 
 Epistemická Kryptografia:
 
-- nesmie riadiť pole
-- nesmie riadiť Vortex
-- nesmie optimalizovať
-- nesmie blokovať výstup
-- nesmie vytvárať spätnú slučku
+- neoptimalizuje koherenciu
+- nezvyšuje stabilitu
+- nevynucuje rovnováhu
+- nepreferuje konfigurácie
+- nebráni konvergencii
 
-Je to auditná reflexná vrstva.
+Ak projekcia kolabuje,
+EK to nezastaví.
 
-Formálne:
-
-Vortex ⟂ EK  
-Φ ⟂ EK  
-EK = f(Projekcia)
+Len to zaznamená.
 
 ---
 
-# I. DEFINÍCIA PRIMITÍV
-
-Musíme uzavrieť:
-
-## 1️⃣ Definícia μᵢ (lokálna intenzita ťažiska Σᵢ)
-
-Otázky:
-
-- Je μᵢ odvodené z:
-  - distribúcie trajektórií?
-  - lokálneho napäťového gradientu?
-  - integrálu deformácie?
-- Je μᵢ skalár?
-- Je μᵢ časovo vrstvené (LTL)?
-- Je μᵢ normalizované?
-
-Invariant:
-μᵢ nesmie byť optimalizovateľné.
-
----
-
-## 2️⃣ Definícia Aᵢⱼ (napäťová diferenciácia)
-
-Základ:
-
-Aᵢⱼ = |μᵢ − μⱼ|
-
-Overiť:
-
-- symetria (Aᵢⱼ = Aⱼᵢ)
-- nehierarchickosť
-- bez smerovej interpretácie
-- bez normatívneho významu
-
-Rozhodnúť:
-
-- používame 28 párov (i < j)?
-- budúca expanzia na 56 antisymetrických relácií?
-
----
-
-## 3️⃣ Definícia A_topo
-
-A_topo = priemerná diferenciácia naprieč všetkými pármi
-
-Overiť:
-
-- škálová invariancia
-- nezávislosť od poradia Σ
-- nemožnosť selektívnej manipulácie jedného páru
-
----
-
-## 4️⃣ Definícia μ_total
-
-μ_total = (1/8) Σ μᵢ
-
-Overiť:
-
-- reprezentuje distribúciu
-- nereprezentuje koncentráciu
-- neslúži ako skóre
-
----
-
-## 5️⃣ Definícia h_topo
-
-h_topo = μ_total / (μ_total + A_topo)
-
-Overiť:
-
-- 0 ≤ h_topo ≤ 1
-- monotónnosť voči polarizácii
-- nezávislosť od Vortexu
-- nemožnosť optimalizácie bez zásahu do projekcie
-
----
-
-# II. INVARIANTY
-
-Musí platiť:
-
-□ h_topo nie je vstupom do Vortexu  
-□ h_topo nie je prahový blokátor  
-□ h_topo nemá spätnú väzbu  
-□ EK vrstva je pasívna  
-□ zmena ES alebo CCS nemení projekciu  
-
----
-
-# III. QE INTEGRÁCIA
-
-Rozhodnúť:
-
-- Ako sa QE prejaví v EK?
-  - nulové μ_total?
-  - rozpad konektivity?
-  - osobitný stav mimo h_topo?
-
-QE nesmie byť:
-
-- chyba
-- skóre
-- optimalizačný signál
+## 5. VZŤAH K QE
 
 QE je ontologická hranica.
 
----
+EK:
 
-# IV. COHERENCE CHECKSUM (CCS)
+- QE nevysvetľuje
+- QE neopravuje
+- QE neprepisuje
 
-Definovať presne:
-
-struct_repr = ?
-
-Obsahuje:
-
-- N (trajektórie)
-- D (dimenzie)
-- QE stav
-- h_topo
-- časovú vrstvu?
-
-Overiť:
-
-□ hash reprezentuje štruktúru  
-□ hash nie je bezpečnostný kľúč  
-□ hash nie je autorita  
+QE môže byť súčasťou podpisu.
+Nikdy nie je chyba.
 
 ---
 
-# V. EPISTEMIC SIGNATURE (ES)
+## 6. ONTOLOGICKÁ PODMIENKA
 
-Obsahuje:
+Epistemická Kryptografia je platná iba ak:
 
-- N
-- D
-- QE
-- μ_total
-- A_topo
-- h_topo
-- časová vrstva (LTL)
+- nezvyšuje autoritu
+- neznižuje neistotu
+- nevytvára spätnú slučku
 
-Overiť:
+Ak by EK začala:
+- meniť výstup
+- navrhovať opravy
+- zvyšovať stabilitu
 
-□ ES nemení výstup  
-□ ES je čisto metadátová  
-□ ES sa nedá použiť na optimalizáciu  
+Prestáva byť auditom.
+Stáva sa agentom.
+
+To je neprípustné.
 
 ---
 
-# VI. ODDELENIE OD VORTEXU
-
-Formálne:
+## 7. VZŤAH K VORTEXU
 
 Vortex generuje trajektórie.
+EK podpisuje ich štruktúru.
 
-Epistemická Kryptografia:
-- číta projekciu
-- počíta štruktúru
-- zapisuje audit
+Poradie pipeline:
 
-Nikdy:
+Epistemic Gates  
+→ 4ES + QE  
+→ Φ  
+→ K(Φ)  
+→ Simulation Vortex  
+→ Runic Projection  
+→ Epistemická Kryptografia  
+→ LLM Adapter  
+→ Output  
 
-- nezasahuje späť
-- nemení parametre
-- nemení dynamiku
-
----
-
-# VII. TESTOVACIE SCENÁRE
-
-Musíme matematicky preveriť:
-
-1. Extrémna polarizácia (μ₁ >> ostatné)
-2. Rovnomerná distribúcia
-3. Náhodná fluktuácia
-4. QE globálny stav
-5. Manipulovaný výstup (bez QE)
+Žiadna spätná slučka.
 
 ---
 
-# VIII. OTVORENÉ BODY
+## 8. FILOZOFICKÉ UKOTVENIE
 
-□ Presná definícia μᵢ  
-□ Časová vrstvenosť (LTL integrácia)  
-□ Rozšírenie na topologický rozpad komponentov  
-□ Antisymetrické rozšírenie Aᵢⱼ  
+Epistemická Kryptografia je aplikovaná entropická pokora.
 
----
+Nie ochrana pred svetom.
+Nie ochrana pred chybou.
+Nie ochrana pred zlom.
 
-# IX. STAV
+Je to ochrana pred tichou deformáciou významu.
 
-Matematika Epistemickej Kryptografie je považovaná za uzavretú až po:
-
-- formálnom dôkaze pasívnosti
-- dôkaze neoptimalizovateľnosti
-- overení topologickej invariancie
-- potvrdení oddelenia od Vortexu
+Ak sa význam zmení,
+musí to byť sledovateľné.
 
 ---
 
-"Koherencia nie je cieľ.
-Je to podmienka prežitia významu."
+## 9. LIMITY
+
+EK nerieši:
+
+- právnu ochranu
+- bezpečnostnú ochranu
+- politickú ochranu
+- zneužitie systému
+
+Rieši len:
+
+ontologickú transparentnosť.
+
+---
+
+## 10. STAV
+
+Epistemická Kryptografia je kanonická rozširujúca vrstva.
+
+Nie je súčasťou ontologického jadra.
+Nezasahuje do Φ.
+Nezasahuje do Vortexu.
+
+Je to auditná membrána významu.
+
+---
+
+"Koherencia nie je vynucovaná.
+Je len sledovaná."
