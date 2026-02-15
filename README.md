@@ -7,6 +7,12 @@
 [![GitHub stars](https://img.shields.io/github/stars/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/github-pages-blue)](https://github.com/rischo32/Vectaetos)
 
+# VECTAETOS™
+
+[![Ontological Layer](https://img.shields.io/badge/Ontological-Layer_%CE%A6-black?style=flat)](https://github.com/rischo32/Vectaetos)
+[![Non-Prescriptive](https://img.shields.io/badge/Non--Prescriptive-System-darkgreen?style=flat)](https://github.com/rischo32/Vectaetos)
+[![Intrinsic Humility](https://img.shields.io/badge/Intrinsic-Humility_%CE%BC%2FA-blue?style=flat)](https://github.com/rischo32/Vectaetos)
+
 ### "Cogito cohaerenter ergo sum possibile"
 
 ### > "Welcome to a new epistemic era"
