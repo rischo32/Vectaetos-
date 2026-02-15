@@ -1,7 +1,3 @@
-# Vectaetos
-
-[![Ontological Layer](https://img.shields.io/badge/Ontological-Layer_%CE%A6-black?style=flat&logo=none)](https://github.com/rischo32/Vectaetos)
-
 [![GitHub release](https://img.shields.io/github/v/release/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/releases)
 [![License](https://img.shields.io/github/license/rischo32/Vectaetos)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/stargazers)
