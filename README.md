@@ -3,6 +3,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/github-pages-blue)](https://github.com/rischo32/Vectaetos)
 
+<p align="center">
+  <img src="phi_logo_fullhd.png" width="300">
+</p>
+
 # VECTAETOS™
 
 [![Ontological Layer](https://img.shields.io/badge/Ontological-Layer_%CE%A6-black?style=flat)](https://github.com/rischo32/Vectaetos)
