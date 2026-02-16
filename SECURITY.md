@@ -1,4 +1,4 @@
-# Security Policy – Vectaetos
+# Security Policy – Vectaetos™
 
 Vectaetos is a non-interventionist epistemic framework.
 It does not execute actions, make decisions, or control systems.
