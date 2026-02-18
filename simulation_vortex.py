@@ -3,32 +3,30 @@
 # ------------------------------------------------------------
 # - 8 invariant singularities
 # - antisymmetric relational tensions R_ij
-# - local blind fluctuation
-# - pairwise coupling
-# - bounded via tanh (topological compression)
-# - QE as graph fragmentation
+# - pairwise interaction field
+# - bounded dynamics (tanh stabilization)
+# - QE = topological fragmentation
 # - no optimization
 # - no objective
-# - no feedback
+# - no agent
 # ============================================================
 
 import random
 import math
 from typing import List, Tuple
 
-
 # ------------------------------------------------------------
-# CONFIG
+# CONFIGURATION
 # ------------------------------------------------------------
 
 N = 8
-INTERACTION_STRENGTH = 0.02
-NOISE_LEVEL = 0.01
-QE_THRESHOLD = 0.15
+INTERACTION_STRENGTH = 0.03
+NOISE_LEVEL = 0.005
+QE_EDGE_THRESHOLD = 0.15
 
 
 # ------------------------------------------------------------
-# INITIAL RELATIONAL FIELD
+# INITIAL RELATIONAL MATRIX
 # ------------------------------------------------------------
 
 def generate_initial_relations(n: int = N) -> List[List[float]]:
@@ -36,29 +34,29 @@ def generate_initial_relations(n: int = N) -> List[List[float]]:
 
     for i in range(n):
         for j in range(i + 1, n):
-            val = random.uniform(-0.3, 0.3)
+            val = random.uniform(-0.2, 0.2)
             R[i][j] = val
-            R[j][i] = -val  # strict antisymmetry
+            R[j][i] = -val  # antisymmetry
 
     return R
 
 
 # ------------------------------------------------------------
-# SINGLE STEP UPDATE
+# PAIRWISE INTERACTION FIELD
 # ------------------------------------------------------------
 
 def pairwise_interaction(R: List[List[float]]) -> List[List[float]]:
-    new_R = [row[:] for row in R]
+    new_R = [[0.0 for _ in range(N)] for _ in range(N)]
 
     for i in range(N):
         for j in range(i + 1, N):
 
             tension = R[i][j]
 
-            # Local blind fluctuation
-            delta = random.uniform(-NOISE_LEVEL, NOISE_LEVEL)
+            # blind micro-noise (non-agentic)
+            noise = random.uniform(-NOISE_LEVEL, NOISE_LEVEL)
 
-            # Coupling via shared neighbors
+            # relational coupling
             coupling = 0.0
             for k in range(N):
                 if k != i and k != j:
@@ -66,13 +64,13 @@ def pairwise_interaction(R: List[List[float]]) -> List[List[float]]:
 
             coupling *= INTERACTION_STRENGTH
 
-            updated = tension + delta + coupling
+            updated = tension + noise + coupling
 
-            # Topological compression (prevents divergence)
-            bounded = math.tanh(updated)
+            # bounded stabilization
+            stabilized = math.tanh(updated)
 
-            new_R[i][j] = bounded
-            new_R[j][i] = -bounded  # preserve antisymmetry
+            new_R[i][j] = stabilized
+            new_R[j][i] = -stabilized
 
     return new_R
 
@@ -82,12 +80,15 @@ def pairwise_interaction(R: List[List[float]]) -> List[List[float]]:
 # ------------------------------------------------------------
 
 def detect_qe(R: List[List[float]]) -> bool:
+    """
+    QE occurs when relational graph becomes disconnected.
+    """
 
     visited = set()
 
-    def dfs(node):
+    def dfs(node: int):
         for j in range(N):
-            if abs(R[node][j]) > QE_THRESHOLD and j not in visited:
+            if abs(R[node][j]) > QE_EDGE_THRESHOLD and j not in visited:
                 visited.add(j)
                 dfs(j)
 
@@ -98,7 +99,7 @@ def detect_qe(R: List[List[float]]) -> bool:
 
 
 # ------------------------------------------------------------
-# MAIN SIMULATION ENTRY
+# RUN SIMULATION
 # ------------------------------------------------------------
 
 def run_simulation(steps: int = 2000) -> Tuple[List[List[float]], bool]:
@@ -107,6 +108,7 @@ def run_simulation(steps: int = 2000) -> Tuple[List[List[float]], bool]:
     qe_state = False
 
     for _ in range(steps):
+
         R = pairwise_interaction(R)
 
         if detect_qe(R):
@@ -117,7 +119,7 @@ def run_simulation(steps: int = 2000) -> Tuple[List[List[float]], bool]:
 
 
 # ------------------------------------------------------------
-# STANDALONE TEST
+# LOCAL TEST
 # ------------------------------------------------------------
 
 if __name__ == "__main__":
