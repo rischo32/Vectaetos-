@@ -1,195 +1,112 @@
-#!/usr/bin/env python3
-# =========================================
-# VECTAETOS :: SIMULATION VORTEX Φ (v0.2)
-# Ontologically minimal, non-teleological
-#
-# Dimensions per pole:
-# E – Energy
-# C – Coherence
-# T – Tension
-# M – Memory (anomaly resonance)
-# S – Entropy / saturation
-#
-# This vortex:
-# - does NOT decide
-# - does NOT optimize
-# - does NOT compute global means
-# - does NOT know κ
-# - generates trajectories only
-# - QE is topological disconnection
-# =========================================
+# -------------------------------------------------
+# VECTAETOS :: Simulation Vortex Φ (Canonical Core)
+# -------------------------------------------------
+# - 8 invariant singularities
+# - antisymmetric relational tensions R_ij
+# - no optimization
+# - no target
+# - QE as topological fragmentation
+# -------------------------------------------------
 
 import random
-import math
-import json
-import time
+from typing import List, Tuple
 
-# -----------------------------
-# CONFIGURATION
-# -----------------------------
-POLES = 8
-STEPS = 2000
-DT = 0.05
 
-EXPORT_EVERY = 10
-OUT_FILE = "vortex_state.json"
+N = 8
+INTERACTION_STRENGTH = 0.02
+NOISE_LEVEL = 0.01
+QE_THRESHOLD = 0.6  # fragmentation threshold
 
-# Local interaction coefficients
-ALPHA_E = 0.02
-ALPHA_T = 0.03
-ALPHA_C = 0.04
-ALPHA_M = 0.01
-ALPHA_S = 0.015
 
-NOISE = 0.01
+# -------------------------------
+# RELATIONAL MATRIX
+# -------------------------------
 
-# -----------------------------
-# INITIALIZATION
-# -----------------------------
-def init_pole():
-    return {
-        "E": random.uniform(0.4, 0.8),
-        "C": random.uniform(0.4, 0.8),
-        "T": random.uniform(0.1, 0.4),
-        "M": 0.0,
-        "S": random.uniform(0.05, 0.2)
-    }
-
-poles = [init_pole() for _ in range(POLES)]
-
-# -----------------------------
-# UTILS
-# -----------------------------
-def clamp(x, lo=0.0, hi=1.0):
-    return max(lo, min(hi, x))
-
-# -----------------------------
-# LOCAL PAIR INTERACTION
-# -----------------------------
-def pairwise_interaction(poles):
-    n = len(poles)
-    delta = [{"dE":0,"dT":0,"dC":0,"dM":0,"dS":0} for _ in range(n)]
+def generate_initial_relations(n: int = N) -> List[List[float]]:
+    R = [[0.0 for _ in range(n)] for _ in range(n)]
 
     for i in range(n):
         for j in range(i + 1, n):
+            val = random.uniform(-0.3, 0.3)
+            R[i][j] = val
+            R[j][i] = -val  # antisymmetry
 
-            pi = poles[i]
-            pj = poles[j]
+    return R
 
-            # Tension difference
-            dTij = pj["T"] - pi["T"]
 
-            # Energy flows along local gradient
-            delta[i]["dE"] += ALPHA_E * dTij
-            delta[j]["dE"] -= ALPHA_E * dTij
+# -------------------------------
+# LOCAL PAIRWISE INTERACTION
+# -------------------------------
 
-            # Tension reacts to incoherence locally
-            delta[i]["dT"] += ALPHA_T * (1 - pi["C"]) - 0.5 * pi["S"]
-            delta[j]["dT"] += ALPHA_T * (1 - pj["C"]) - 0.5 * pj["S"]
+def pairwise_interaction(R: List[List[float]]) -> List[List[float]]:
+    new_R = [row[:] for row in R]
 
-            # Coherence responds to local imbalance
-            imbalance = abs(dTij)
-            delta[i]["dC"] += ALPHA_C * (pi["E"] - imbalance)
-            delta[j]["dC"] += ALPHA_C * (pj["E"] - imbalance)
+    for i in range(N):
+        for j in range(i + 1, N):
 
-            # Memory resonates on anomaly only
-            anomaly = abs(dTij)
-            delta[i]["dM"] += ALPHA_M * anomaly - 0.1 * pi["M"]
-            delta[j]["dM"] += ALPHA_M * anomaly - 0.1 * pj["M"]
+            tension = R[i][j]
 
-    return delta
+            # Local blind perturbation
+            delta = random.uniform(-NOISE_LEVEL, NOISE_LEVEL)
 
-# -----------------------------
-# ENTROPIC EXPANSION (separate)
-# -----------------------------
-def entropic_expansion(poles):
-    for p in poles:
-        drift = random.uniform(-NOISE, NOISE)
-        p["S"] = clamp(p["S"] + ALPHA_S * abs(drift) * DT)
+            # Interaction coupling
+            coupling = 0.0
+            for k in range(N):
+                if k != i and k != j:
+                    coupling += (R[i][k] - R[j][k])
 
-# -----------------------------
-# QE DETECTOR (topological)
-# QE occurs if interaction graph disconnects
-# -----------------------------
-def detect_QE(poles):
-    n = len(poles)
+            coupling *= INTERACTION_STRENGTH
 
-    # adjacency based on local tension proximity
-    adjacency = [[] for _ in range(n)]
+            updated = tension + delta + coupling
 
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                if abs(poles[i]["T"] - poles[j]["T"]) < 0.25:
-                    adjacency[i].append(j)
+            new_R[i][j] = updated
+            new_R[j][i] = -updated
+
+    return new_R
+
+
+# -------------------------------
+# TOPOLOGICAL QE DETECTOR
+# -------------------------------
+
+def detect_qe(R: List[List[float]]) -> bool:
+    """
+    QE = relational graph fragmentation.
+    If too many weak links, graph loses connectivity.
+    """
 
     visited = set()
-    stack = [0]
 
-    while stack:
-        node = stack.pop()
-        if node not in visited:
-            visited.add(node)
-            stack.extend(adjacency[node])
+    def dfs(node):
+        for j in range(N):
+            if abs(R[node][j]) > QE_THRESHOLD and j not in visited:
+                visited.add(j)
+                dfs(j)
 
-    return len(visited) != n  # True => QE
+    visited.add(0)
+    dfs(0)
 
-# -----------------------------
-# VORTEX STEP
-# -----------------------------
-def vortex_step(poles):
+    return len(visited) < N
 
-    deltas = pairwise_interaction(poles)
 
-    for i, p in enumerate(poles):
+# -------------------------------
+# RUN SIMULATION
+# -------------------------------
 
-        p["E"] = clamp(p["E"] + deltas[i]["dE"] * DT + random.uniform(-NOISE, NOISE))
-        p["T"] = clamp(p["T"] + deltas[i]["dT"] * DT + random.uniform(-NOISE, NOISE))
-        p["C"] = clamp(p["C"] + deltas[i]["dC"] * DT + random.uniform(-NOISE, NOISE))
-        p["M"] = clamp(p["M"] + deltas[i]["dM"] * DT)
-        p["S"] = clamp(p["S"])
+def run_simulation(steps: int = 2000) -> Tuple[List[List[float]], bool]:
 
-    entropic_expansion(poles)
+    R = generate_initial_relations()
+    qe_state = False
 
-# -----------------------------
-# EXPORT
-# -----------------------------
-def export_state(step, poles, qe_state):
-    snapshot = {
-        "step": step,
-        "time": time.time(),
-        "poles": poles,
-        "QE": qe_state
-    }
-    with open(OUT_FILE, "w") as f:
-        json.dump(snapshot, f, indent=2)
+    for _ in range(steps):
+        R = pairwise_interaction(R)
 
-# -----------------------------
-# DUAL RUN WRAPPER
-# -----------------------------
-def run_simulation():
-    poles_local = [init_pole() for _ in range(POLES)]
+        if detect_qe(R):
+            qe_state = True
 
-    for step in range(STEPS):
+    return R, qe_state
 
-        vortex_step(poles_local)
 
-        qe = detect_QE(poles_local)
-
-        if step % EXPORT_EVERY == 0:
-            export_state(step, poles_local, qe)
-            print(f"[Φ] step {step} exported | QE: {qe}")
-
-        if qe:
-            print("[Φ] QE detected — topological disconnection.")
-            break
-
-    return poles_local
-
-# -----------------------------
-# MAIN
-# -----------------------------
 if __name__ == "__main__":
-    print("Starting VECTAETOS Simulation Vortex Φ (v0.2)")
-    run_simulation()
-    print("Simulation finished.")
+    R_final, qe = run_simulation()
+    print("QE state:", qe)
