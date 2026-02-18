@@ -1,26 +1,35 @@
-# -------------------------------------------------
-# VECTAETOS :: Simulation Vortex Φ (Canonical Core)
-# -------------------------------------------------
+# ============================================================
+# VECTAETOS :: Simulation Vortex Φ (v0.4 CANONICAL)
+# ------------------------------------------------------------
 # - 8 invariant singularities
 # - antisymmetric relational tensions R_ij
+# - local blind fluctuation
+# - pairwise coupling
+# - bounded via tanh (topological compression)
+# - QE as graph fragmentation
 # - no optimization
-# - no target
-# - QE as topological fragmentation
-# -------------------------------------------------
+# - no objective
+# - no feedback
+# ============================================================
 
 import random
+import math
 from typing import List, Tuple
 
+
+# ------------------------------------------------------------
+# CONFIG
+# ------------------------------------------------------------
 
 N = 8
 INTERACTION_STRENGTH = 0.02
 NOISE_LEVEL = 0.01
-QE_THRESHOLD = 0.6  # fragmentation threshold
+QE_THRESHOLD = 0.15
 
 
-# -------------------------------
-# RELATIONAL MATRIX
-# -------------------------------
+# ------------------------------------------------------------
+# INITIAL RELATIONAL FIELD
+# ------------------------------------------------------------
 
 def generate_initial_relations(n: int = N) -> List[List[float]]:
     R = [[0.0 for _ in range(n)] for _ in range(n)]
@@ -29,14 +38,14 @@ def generate_initial_relations(n: int = N) -> List[List[float]]:
         for j in range(i + 1, n):
             val = random.uniform(-0.3, 0.3)
             R[i][j] = val
-            R[j][i] = -val  # antisymmetry
+            R[j][i] = -val  # strict antisymmetry
 
     return R
 
 
-# -------------------------------
-# LOCAL PAIRWISE INTERACTION
-# -------------------------------
+# ------------------------------------------------------------
+# SINGLE STEP UPDATE
+# ------------------------------------------------------------
 
 def pairwise_interaction(R: List[List[float]]) -> List[List[float]]:
     new_R = [row[:] for row in R]
@@ -46,10 +55,10 @@ def pairwise_interaction(R: List[List[float]]) -> List[List[float]]:
 
             tension = R[i][j]
 
-            # Local blind perturbation
+            # Local blind fluctuation
             delta = random.uniform(-NOISE_LEVEL, NOISE_LEVEL)
 
-            # Interaction coupling
+            # Coupling via shared neighbors
             coupling = 0.0
             for k in range(N):
                 if k != i and k != j:
@@ -59,21 +68,20 @@ def pairwise_interaction(R: List[List[float]]) -> List[List[float]]:
 
             updated = tension + delta + coupling
 
-            new_R[i][j] = updated
-            new_R[j][i] = -updated
+            # Topological compression (prevents divergence)
+            bounded = math.tanh(updated)
+
+            new_R[i][j] = bounded
+            new_R[j][i] = -bounded  # preserve antisymmetry
 
     return new_R
 
 
-# -------------------------------
-# TOPOLOGICAL QE DETECTOR
-# -------------------------------
+# ------------------------------------------------------------
+# QE DETECTOR (GRAPH FRAGMENTATION)
+# ------------------------------------------------------------
 
 def detect_qe(R: List[List[float]]) -> bool:
-    """
-    QE = relational graph fragmentation.
-    If too many weak links, graph loses connectivity.
-    """
 
     visited = set()
 
@@ -89,9 +97,9 @@ def detect_qe(R: List[List[float]]) -> bool:
     return len(visited) < N
 
 
-# -------------------------------
-# RUN SIMULATION
-# -------------------------------
+# ------------------------------------------------------------
+# MAIN SIMULATION ENTRY
+# ------------------------------------------------------------
 
 def run_simulation(steps: int = 2000) -> Tuple[List[List[float]], bool]:
 
@@ -103,9 +111,14 @@ def run_simulation(steps: int = 2000) -> Tuple[List[List[float]], bool]:
 
         if detect_qe(R):
             qe_state = True
+            break
 
     return R, qe_state
 
+
+# ------------------------------------------------------------
+# STANDALONE TEST
+# ------------------------------------------------------------
 
 if __name__ == "__main__":
     R_final, qe = run_simulation()
