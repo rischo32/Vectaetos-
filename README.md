@@ -219,6 +219,8 @@ Zenodo DOIs:
   https://zenodo.org/records/18076787
 - Epistemic crypthography
   https://zenodo.org/records/18676110
+[ "Auditná vrstva Φ je kryptografická integritná štruktúra, ktorá overuje konzistenciu prechodov bez akumulácie významu." ]
+  
 ---
 
 ## Citation
