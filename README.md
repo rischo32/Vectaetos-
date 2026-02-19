@@ -13,7 +13,7 @@
 
 ### > "Welcome to a new epistemic era"
 
-"Vectaetos nepomáha riešiť problémy.
+"Vectaetos™ nepomáha riešiť problémy.
 Pomáha ich konečne vidieť celé."
 
 "QE Apória nie je slabosť systému.
@@ -29,7 +29,7 @@ Public Projection of an Epistemic Field
 > It is experimental by nature and does not constitute a system interface.
 
 
-Vectaetos © is **not software**.
+Vectaetos™ © is **not software**.
 It is an **epistemic field formalism** with descriptive projections.
 
 This repository exists for **archival, citation, and public reading purposes only**.
@@ -43,7 +43,7 @@ Ontologically, Vectaetos is **not**:
 
 ---
 
-## What VectaetOS Is
+## What VectaetOS™ Is
 
 Vectaetos is an **epistemic field (Φ)** —
 a structured configuration of meaning under tension,
@@ -60,7 +60,7 @@ It preserves the conditions under which understanding remains possible.
 
 ---
 
-## What VectaetOS Is Not
+## What VectaetOS™ Is Not
 
 Vectaetos explicitly rejects being:
 
@@ -217,15 +217,17 @@ Zenodo DOIs:
   https://zenodo.org/records/18395048
 - Supporting Epistemic Artefacts  
   https://zenodo.org/records/18076787
-
+- Epistemic crypthography
+  https://zenodo.org/records/18676110
 ---
 
 ## Citation
 
-If you reference Vectaetos, please cite:
+If you reference Vectaetos™, please cite:
 
 Fonfára, R. (2026).  
-*Vectaetos: Canonical Core v0.1.1*.  
+ORCID : https://orcid.org/0009-0008-5980-8940
+*Vectaetos™: Canonical Core v0.2.1*.  
 Zenodo. https://doi.org/10.5281/zenodo.18395048
 
 See `CITATION.cff` for full metadata.
@@ -236,7 +238,7 @@ See `CITATION.cff` for full metadata.
 
 Vectaetos is released under the:
 
-**Vectaetos Custom License (VCL-1.0)**  
+**Vectaetos™ Custom License (VCL-1.0)**  
 See `LICENSE.md` for full terms.
 
 ---
