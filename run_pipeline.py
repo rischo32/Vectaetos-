@@ -1,67 +1,93 @@
-# ============================================================
-# VECTAETOS :: CANONICAL PIPELINE v0.2
-# ------------------------------------------------------------
-# Φ → Vortex → QE detection
-# → Relational Projection
-# → Epistemic Cryptography (audit only)
-# → Hash-chained logging
-# ------------------------------------------------------------
-# No feedback loops.
-# No optimization.
-# No intervention.
-# ============================================================
+import time
+import hashlib
 
-from simulation_vortex import run_simulation
-from relational_projection import relations_to_poles
-from epistemic_cryptography import epistemic_signature
-from phi_logger import log_event
+from phi_audit import PhiAudit
+
+# ---------------------------------------------------
+# Inicializácia auditu (mimo hlavného toku Φ)
+# ---------------------------------------------------
+
+audit = PhiAudit()
 
 
-STEPS = 2000
+# ---------------------------------------------------
+# Hlavná pipeline
+# ---------------------------------------------------
+
+def run_pipeline(input_data):
+
+    # -----------------------------
+    # 1. Gate processing
+    # -----------------------------
+
+    gate_mode = "standard"   # alebo correction / silent
+    qe_emergence = False     # nastav podľa tvojho výstupu
+
+    # -----------------------------
+    # 2. Φ spracovanie
+    # -----------------------------
+
+    # Tu ide tvoja existujúca logika:
+    # vortex
+    # relational_projection
+    # entropy evaluation
+    # atď.
+
+    projection_result = process_field(input_data)
+
+    # -----------------------------
+    # 3. Vytvorenie topologických hashov
+    # -----------------------------
+
+    entropy_signature = hashlib.sha256(
+        str(projection_result.get("entropy_state")).encode()
+    ).hexdigest()
+
+    projection_hash = hashlib.sha256(
+        str(projection_result).encode()
+    ).hexdigest()
+
+    vortex_step = projection_result.get("step", None)
+
+    # -----------------------------
+    # 4. PHI log entry (bez semantiky)
+    # -----------------------------
+
+    entry = {
+        "timestamp": int(time.time()),
+        "event_type": "FIELD_PROJECTION",
+        "gate_mode": gate_mode,
+        "qe_emergence": qe_emergence,
+        "entropy_signature": entropy_signature,
+        "projection_hash": projection_hash,
+        "vortex_step": vortex_step
+    }
+
+    # -----------------------------
+    # 5. Audit append (čisto observačné)
+    # -----------------------------
+
+    audit.append_entry(entry)
+
+    # -----------------------------
+    # 6. Návrat projekcie
+    # -----------------------------
+
+    return projection_result
 
 
-def main():
+# ---------------------------------------------------
+# Dummy placeholder (nahraď svojou implementáciou)
+# ---------------------------------------------------
 
-    # --------------------------------------------------------
-    # 1. Simulation start
-    # --------------------------------------------------------
-    log_event("simulation_start", {"steps": STEPS})
-
-    # --------------------------------------------------------
-    # 2. Run Vortex
-    # Returns:
-    #   R  -> antisymmetric relational matrix
-    #   qe -> QE state (True / False)
-    # --------------------------------------------------------
-    R, qe_state = run_simulation(steps=STEPS)
-
-    log_event("simulation_end", {"qe_state": qe_state})
-
-    # --------------------------------------------------------
-    # 3. Relational projection (R → poles)
-    # --------------------------------------------------------
-    poles = relations_to_poles(R)
-
-    log_event("relational_projection_complete", {
-        "poles_count": len(poles)
-    })
-
-    # --------------------------------------------------------
-    # 4. Epistemic Cryptography (audit layer only)
-    # --------------------------------------------------------
-    audit = epistemic_signature(poles, qe_state=qe_state)
-
-    log_event("epistemic_audit", audit)
-
-    # --------------------------------------------------------
-    # 5. Output (descriptive only)
-    # --------------------------------------------------------
-    print("\n--- VECTAETOS :: Epistemic Signature ---\n")
-    print(audit)
+def process_field(input_data):
+    return {
+        "entropy_state": "stable",
+        "step": 1,
+        "projection": "topology_snapshot"
+    }
 
 
-# ------------------------------------------------------------
-# ENTRY POINT
-# ------------------------------------------------------------
 if __name__ == "__main__":
-    main()
+    result = run_pipeline("test_input")
+    print(result)
