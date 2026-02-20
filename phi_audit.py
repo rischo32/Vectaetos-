@@ -1,64 +1,48 @@
 """
 phi_audit.py
-Φ Audit Layer — Signed Hash Chain (Level B)
+Φ Audit Layer — HMAC Signed Hash Chain (Mobile Stable Version)
 
-Implements:
-- Linear hash chain
-- Ed25519 signature of chain state
-- No semantic storage
-- No feedback into Φ
-
-Compatible with:
-PHI_LOG_PROTOCOL.md
+No external dependencies.
+Uses Python standard library only.
 """
 
 import json
 import os
 import hashlib
+import hmac
+import secrets
 import time
-from nacl.signing import SigningKey, VerifyKey
-from nacl.encoding import HexEncoder
 
 
 class PhiAudit:
 
-    def __init__(self, log_path="phi_log.jsonl",
+    def __init__(self,
+                 log_path="phi_log.jsonl",
                  audit_path="phi_audit.json",
-                 private_key_path="phi_private.key",
-                 public_key_path="phi_public.key"):
+                 key_path="phi_secret.key"):
 
         self.log_path = log_path
         self.audit_path = audit_path
-        self.private_key_path = private_key_path
-        self.public_key_path = public_key_path
+        self.key_path = key_path
 
-        self._ensure_keys()
+        self._ensure_secret_key()
+        self.secret_key = self._load_secret_key()
         self.previous_chain_hash = self._load_last_chain_hash()
 
     # ---------------------------------------------------
-    # Key Management
+    # Secret Key Management
     # ---------------------------------------------------
 
-    def _ensure_keys(self):
-        if not os.path.exists(self.private_key_path):
-            signing_key = SigningKey.generate()
-            verify_key = signing_key.verify_key
+    def _ensure_secret_key(self):
+        if not os.path.exists(self.key_path):
+            key = secrets.token_bytes(32)
+            with open(self.key_path, "wb") as f:
+                f.write(key)
+            print("[Φ-AUDIT] Secret key generated.")
 
-            with open(self.private_key_path, "wb") as f:
-                f.write(signing_key.encode())
-
-            with open(self.public_key_path, "wb") as f:
-                f.write(verify_key.encode())
-
-            print("[Φ-AUDIT] New Ed25519 keypair generated.")
-
-    def _load_signing_key(self):
-        with open(self.private_key_path, "rb") as f:
-            return SigningKey(f.read())
-
-    def _load_verify_key(self):
-        with open(self.public_key_path, "rb") as f:
-            return VerifyKey(f.read())
+    def _load_secret_key(self):
+        with open(self.key_path, "rb") as f:
+            return f.read()
 
     # ---------------------------------------------------
     # Hashing
@@ -67,46 +51,49 @@ class PhiAudit:
     def _hash(self, data: str) -> str:
         return hashlib.sha256(data.encode()).hexdigest()
 
+    def _hmac_sign(self, message: str) -> str:
+        return hmac.new(
+            self.secret_key,
+            message.encode(),
+            hashlib.sha256
+        ).hexdigest()
+
     def _load_last_chain_hash(self):
         if not os.path.exists(self.audit_path):
             return "0" * 64
 
         with open(self.audit_path, "r") as f:
-            audit_data = json.load(f)
-            return audit_data.get("last_chain_hash", "0" * 64)
+            data = json.load(f)
+            return data.get("last_chain_hash", "0" * 64)
 
     # ---------------------------------------------------
-    # Logging Entry
+    # Append Entry
     # ---------------------------------------------------
 
     def append_entry(self, entry: dict):
-        """
-        entry must already conform to PHI_LOG_PROTOCOL
-        """
 
         entry_json = json.dumps(entry, sort_keys=True)
         entry_hash = self._hash(entry_json)
 
         chain_hash = self._hash(self.previous_chain_hash + entry_hash)
-
-        signed_chain_hash = self._sign(chain_hash)
+        signature = self._hmac_sign(chain_hash)
 
         audit_record = {
             "timestamp": int(time.time()),
             "entry_hash": entry_hash,
             "chain_hash": chain_hash,
-            "signature": signed_chain_hash
+            "signature": signature
         }
 
-        # append to log file
+        # append log line
         with open(self.log_path, "a") as f:
             f.write(entry_json + "\n")
 
-        # update audit file
+        # update audit state
         with open(self.audit_path, "w") as f:
             json.dump({
                 "last_chain_hash": chain_hash,
-                "last_signature": signed_chain_hash
+                "last_signature": signature
             }, f, indent=2)
 
         self.previous_chain_hash = chain_hash
@@ -114,35 +101,13 @@ class PhiAudit:
         return audit_record
 
     # ---------------------------------------------------
-    # Signing
+    # Verify Integrity
     # ---------------------------------------------------
 
-    def _sign(self, message: str) -> str:
-        signing_key = self._load_signing_key()
-        signed = signing_key.sign(message.encode())
-        return signed.signature.hex()
+    def verify_full_log(self):
 
-    # ---------------------------------------------------
-    # Verification
-    # ---------------------------------------------------
-
-    def verify_chain_hash(self, chain_hash: str, signature_hex: str) -> bool:
-        try:
-            verify_key = self._load_verify_key()
-            verify_key.verify(chain_hash.encode(), bytes.fromhex(signature_hex))
-            return True
-        except Exception:
-            return False
-
-    # ---------------------------------------------------
-    # Full Log Integrity Check
-    # ---------------------------------------------------
-
-    def verify_full_log(self) -> bool:
         if not os.path.exists(self.log_path):
             return True
-
-        verify_key = self._load_verify_key()
 
         previous_hash = "0" * 64
 
@@ -163,8 +128,9 @@ class PhiAudit:
         final_chain_hash = audit_data["last_chain_hash"]
         final_signature = audit_data["last_signature"]
 
-        try:
-            verify_key.verify(final_chain_hash.encode(), bytes.fromhex(final_signature))
-            return final_chain_hash == previous_hash
-        except Exception:
-            return False
+        expected_signature = self._hmac_sign(final_chain_hash)
+
+        return (
+            final_chain_hash == previous_hash and
+            final_signature == expected_signature
+        )
