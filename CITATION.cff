@@ -1,41 +1,35 @@
 cff-version: 1.2.0
-message: "If you use, study, or reference this work, please cite it as below."
-title: "Vectaetos – Canonical Core v0.1"
-abstract: >
-  Vectaetos™ is an epistemic and ontological framework © describing intelligence
-  as a coherent field of relations rather than an agentic or optimization-based system.
-  It introduces concepts such as Entropic Humility, epistemic field Φ,
-  non-numerical coherence thresholds, and qualitative epistemic aporia (QE),
-  offering a non-prescriptive foundation for human and non-human intelligences.
+title: "Vectaetos 1.0 — Frozen Ontological Core"
+message: "If you use this work, please cite it as below."
+type: report
+
 authors:
   - family-names: "Fonfára"
     given-names: "Richard"
-    orcid: "https://orcid.org/0009-0008-5980-8940"
-version: "0.1"
-date-released: 2026-01-01
-doi: "10.5281/zenodo.18395048"
-license: "Vectaetos Custom License (VCL-1.0)"
-repository-code: "https://github.com/rischo32/Vectaetos"
-url: "https://vectaetos.eu"
-keywords:
-  - epistemic fields
-  - entropic humility
-  - coherence
-  - non-agentic intelligence
-  - AI safety
-  - ontology
-  - meta-mathematics
-  - runic projection
-  - qualitative epistemic aporia
-preferred-citation:
-  type: report
-  authors:
-    - family-names: "Fonfára"
-      given-names: "Richard"
-  title: "Vectaetos – Canonical Core v0.1"
-  year: 2026
-  doi: "10.5281/zenodo.18395048"
-  publisher: "Zenodo"
 
-title: "VECTAETOS™ Framework"
-copyright: "© 2026 Richard Fonfára"
+version: "1.0"
+doi: "10.5281/zenodo.18735195"
+date-released: 2026
+
+license: "CC-BY-NC-ND-4.0"
+
+repository-code: "https://github.com/rischo32/Vectaetos"
+
+ORCID: https://orcid.org/0009-0008-5980-8940
+
+keywords:
+  - vectaetos
+  - epistemic-field
+  - relational-topology
+  - non-agentic-systems
+  - entropic-humility
+  - ontology
+  - structural-coherence
+
+abstract: >
+  Vectaetos 1.0 defines the frozen ontological core of Φ as a non-agentic,
+  non-teleological epistemic field composed of eight invariant singularities
+  (Σ₁…Σ₈) and antisymmetric relational tensions Rᵢⱼ.
+  The 1.x lineage prohibits optimization, feedback loops,
+  teleological attractors, and adaptive convergence.
+  Entropic humility (κ) defines the ontological boundary of representability.
