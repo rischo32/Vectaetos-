@@ -2,12 +2,14 @@
 [![GitHub stars](https://img.shields.io/github/stars/rischo32/Vectaetos)](https://github.com/rischo32/Vectaetos/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/github-pages-blue)](https://github.com/rischo32/Vectaetos)
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg?logo=python)
-
-# VECTAETOS™
-
 [![Ontological Layer](https://img.shields.io/badge/Ontological-Layer_%CE%A6-black?style=flat)](https://github.com/rischo32/Vectaetos)
 [![Non-Prescriptive](https://img.shields.io/badge/Non--Prescriptive-System-darkgreen?style=flat)](https://github.com/rischo32/Vectaetos)
 [![Intrinsic Humility](https://img.shields.io/badge/Intrinsic-Humility_%CE%BC%2FA-blue?style=flat)](https://github.com/rischo32/Vectaetos)
+
+## VECTAETOS™ VECTAETOS™ — Onto-Epistemic Field © Framework
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18735195.svg)](https://doi.org/10.5281/zenodo.18735195)
+[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 ### "Cogito cohaerenter ergo sum possibile"
 
