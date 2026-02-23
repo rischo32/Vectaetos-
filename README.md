@@ -6,9 +6,29 @@
 [![Non-Prescriptive](https://img.shields.io/badge/Non--Prescriptive-System-darkgreen?style=flat)](https://github.com/rischo32/Vectaetos)
 [![Intrinsic Humility](https://img.shields.io/badge/Intrinsic-Humility_%CE%BC%2FA-blue?style=flat)](https://github.com/rischo32/Vectaetos)
 
-## VECTAETOS™ VECTAETOS™ — Onto-Epistemic Field © Framework
+## VECTAETOS™ — Onto-Epistemic Field © Framework
+
+---
+
+## Canonical Releases
+
+### VECTAETOS™ 1.0 — Frozen Ontological Core  
+Formal non-agentic epistemic field specification.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18735195.svg)](https://doi.org/10.5281/zenodo.18735195)
+
+---
+
+### VECTAETOS™ 1.0.1 — Mathematical Appendix Integrated  
+No ontological modification. Formal precision extension only.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18739552.svg)](https://doi.org/10.5281/zenodo.18739552)
+
+---
+
+All releases are archival and immutable.  
+Any ontological change creates a new major lineage.
+
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 ### "Cogito cohaerenter ergo sum possibile"
