@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vortex Scenario Mapping</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #0d0f14;
+    color: #e6e6e6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.subtitle {
+    opacity: 0.6;
+    margin-bottom: 30px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 140px;
+    background: #151922;
+    border: 1px solid #2a2f3a;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: #5c7cff;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.results {
+    margin-top: 40px;
+}
+
+.card {
+    background: #151922;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #2a2f3a;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.footer {
+    margin-top: 60px;
+    opacity: 0.4;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Vortex Scenario Mapping</h1>
+    <div class="subtitle">
+        Structured decision exploration under uncertainty (4ES + QE)
+    </div>
+
+    <textarea id="problem" placeholder="Describe your decision problem..."></textarea>
+    <button onclick="generateScenarios()">Generate 5 Scenarios</button>
+
+    <div class="results" id="results"></div>
+
+    <div class="footer">
+        Vortex Application Layer · vectaetos.eu
+    </div>
+</div>
+
+<script>
+function generateScenarios() {
+    const problem = document.getElementById("problem").value;
+    const results = document.getElementById("results");
+
+    if (!problem.trim()) {
+        alert("Please describe your problem.");
+        return;
+    }
+
+    results.innerHTML = `
+        <div class="card"><div class="label">AA – Coherent Alignment</div>
+        Full systemic alignment between actors and structure.</div>
+
+        <div class="card"><div class="label">AN – Human Intention vs Instability</div>
+        Human desire pushes system toward structural imbalance.</div>
+
+        <div class="card"><div class="label">NA – Systemic Direction Misunderstood</div>
+        System evolves coherently, but stakeholders resist or misinterpret.</div>
+
+        <div class="card"><div class="label">NN – Mutual Collapse</div>
+        Breakdown of both strategic coherence and actor alignment.</div>
+
+        <div class="card"><div class="label">QE – Epistemic Aporia</div>
+        No stable decision possible without coherence loss.</div>
+    `;
+}
+</script>
+
+</body>
+</html>
