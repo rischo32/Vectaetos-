@@ -19,7 +19,7 @@ Formal non-agentic epistemic field specification.
 
 ---
 
-### VECTAETOS™ 1.0.1 — Mathematical Appendix Integrated  
+### VECTAETOS™ 1.1 — Mathematical Appendix Integrated  
 No ontological modification. Formal precision extension only.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18739552.svg)](https://doi.org/10.5281/zenodo.18739552)
