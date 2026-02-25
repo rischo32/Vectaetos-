@@ -1,16 +1,12 @@
-cff-version: 1.2.0
-title: "Vectaetos 1.0 — Frozen Ontological Core"
-message: "If you use this work, please cite it as below."
-type: report
-
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
 authors:
-  - family-names: "Fonfára"
-    given-names: "Richard"
-
-version: "1.0"
-doi: "10.5281/zenodo.18735195"
-date-released: 2026
-
+- family-names: Richard 
+  given-names: Fonfára
+orcid: https://orcid.org/0000-0000-0000-0000
+title: 
+version: v0.2.0
+date-released: 2026-02-08
 license: "CC-BY-NC-ND-4.0"
 
 repository-code: "https://github.com/rischo32/Vectaetos"
@@ -27,7 +23,7 @@ keywords:
   - structural-coherence
 
 abstract: >
-  Vectaetos 1.0 defines the frozen ontological core of Φ as a non-agentic,
+  Vectaetos™ defines the frozen ontological core of Φ as a non-agentic,
   non-teleological epistemic field composed of eight invariant singularities
   (Σ₁…Σ₈) and antisymmetric relational tensions Rᵢⱼ.
   The 1.x lineage prohibits optimization, feedback loops,
