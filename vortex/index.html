@@ -1,130 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Vortex Scenario Mapping</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: system-ui, -apple-system, sans-serif;
-    background: #0d0f14;
-    color: #e6e6e6;
-}
-
-.container {
-    max-width: 800px;
-    margin: 60px auto;
-    padding: 20px;
-}
-
-h1 {
-    font-size: 28px;
-    font-weight: 600;
-}
-
-.subtitle {
-    opacity: 0.6;
-    margin-bottom: 30px;
-}
-
-textarea {
-    width: 100%;
-    min-height: 140px;
-    background: #151922;
-    border: 1px solid #2a2f3a;
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 16px;
-    resize: vertical;
-}
-
-button {
-    margin-top: 15px;
-    padding: 12px 20px;
-    background: #5c7cff;
-    border: none;
-    border-radius: 6px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.85;
-}
-
-.results {
-    margin-top: 40px;
-}
-
-.card {
-    background: #151922;
-    padding: 18px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #2a2f3a;
-}
-
-.label {
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.footer {
-    margin-top: 60px;
-    opacity: 0.4;
-    font-size: 14px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-    <h1>Vortex Scenario Mapping</h1>
-    <div class="subtitle">
-        Structured decision exploration under uncertainty (4ES + QE)
-    </div>
-
-    <textarea id="problem" placeholder="Describe your decision problem..."></textarea>
-    <button onclick="generateScenarios()">Generate 5 Scenarios</button>
-
-    <div class="results" id="results"></div>
-
-    <div class="footer">
-        Vortex Application Layer · vectaetos.eu
-    </div>
-</div>
-
-<script>
-function generateScenarios() {
-    const problem = document.getElementById("problem").value;
-    const results = document.getElementById("results");
-
-    if (!problem.trim()) {
-        alert("Please describe your problem.");
-        return;
+  <meta charset="UTF-8">
+  <title>Vortex Core</title>
+  <style>
+    body {
+      background: #0e0e11;
+      color: #e5e5e5;
+      font-family: monospace;
+      max-width: 700px;
+      margin: 40px auto;
     }
 
-    results.innerHTML = `
-        <div class="card"><div class="label">AA – Coherent Alignment</div>
-        Full systemic alignment between actors and structure.</div>
+    textarea {
+      width: 100%;
+      height: 80px;
+      background: #1a1a22;
+      color: white;
+      border: 1px solid #333;
+      padding: 10px;
+    }
 
-        <div class="card"><div class="label">AN – Human Intention vs Instability</div>
-        Human desire pushes system toward structural imbalance.</div>
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #2b2bff;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
 
-        <div class="card"><div class="label">NA – Systemic Direction Misunderstood</div>
-        System evolves coherently, but stakeholders resist or misinterpret.</div>
+    .output {
+      margin-top: 20px;
+      background: #111;
+      padding: 15px;
+      border: 1px solid #333;
+    }
 
-        <div class="card"><div class="label">NN – Mutual Collapse</div>
-        Breakdown of both strategic coherence and actor alignment.</div>
+    .metric {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
 
-        <div class="card"><div class="label">QE – Epistemic Aporia</div>
-        No stable decision possible without coherence loss.</div>
-    `;
+<h2>Vortex – Strukturálne zrkadlo otázky</h2>
+
+<textarea id="question" maxlength="100" placeholder="Zadaj otázku (max 100 znakov)..."></textarea>
+<br>
+<button onclick="analyze()">Analyzovať</button>
+
+<div class="output" id="result"></div>
+
+<script>
+async function analyze() {
+  const question = document.getElementById("question").value;
+
+  const res = await fetch("https://vortex-core.fonfararichard.workers.dev/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("result").innerHTML = `
+    <div class="metric"><b>Fragmentácia:</b> ${data.fragmentation_detected}</div>
+    <div class="metric"><b>Humility index:</b> ${data.humility_index}</div>
+    <div class="metric"><b>µ total:</b> ${data.mu_total}</div>
+    <div class="metric"><b>Asymetria:</b> ${data.asymmetry_total}</div>
+    <div class="metric"><b>Interpretácia:</b> ${data.structural_interpretation}</div>
+  `;
 }
 </script>
 
