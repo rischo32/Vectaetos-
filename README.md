@@ -183,7 +183,7 @@ which observes but never intervenes.
 
 ---
 
-## Safety by Design
+## Safety by Design ? ❌ ### ∆πchitectural safety
 
 - **NIR — Non-Intervention Regime**
   - global immunity condition
