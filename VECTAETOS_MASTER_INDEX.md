@@ -1,6 +1,8 @@
+# Tento dokument predatavuje viac internu poznamku v projekte, nez jeho officialny dokument, bude upravovany, bude dopĺňany ... 
+
 # 1. ONTOLOGICKÉ JADRO poľa (nemenné)
 - Φ definícia (Zmysel, NIR, LTL...)
-- Σ₁…Σ₈ (Zamer, Exzistencia, Sloboda, Pravda...)
+- Σ₁…Σ₈ (Zamer, Exzistencia, Sloboda, Pravda, Múdrost, Jednota, Vzájomnosť, Tvorba)
 - K(Φ), κ (Attenuator)
 - 4ES + QE Aporia je nereprezentovateľnosť
 - Vortex je horizontálny mikroskop.
