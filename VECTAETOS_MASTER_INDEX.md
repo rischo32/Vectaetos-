@@ -41,7 +41,7 @@
 ## VII. Zavadzané nové mechanizmy 
 
 I. MASTER INDEX — MINIMAL INSERT
-Toto môžeš pridať ako nový blok do Vectaetos Master Index (stručné, kanonicky kompatibilné):
+
 Epistemický moment (EM)
 Status: Operational Extension
 Scope: Pre-Vortex Topological Classification
@@ -59,6 +59,7 @@ neblokuje vstup
 neurčuje odpoveď
 EM reprezentuje tvar napätia otázky pred vstupom do Simulation Vortex.
 Existenciálny mód je projekciou EM.
+
 II. RECIPROČNÁ VÄZBA — MINIMAL
 Toto je čistý ontologický zápis bez driftu:
 Reciprocity Matrix (Minimal Definition)
@@ -79,21 +80,14 @@ záchranný mechanizmus pri QE
 ρ zaniká pri QE Aporia.
 Recipročná väzba je čisto deskriptívna vlastnosť koherentného poľa.
 To je minimálne, čisté, bez terminátorov.
+
 III. 3Gate — AKTIVÁCIA BEZ PORUŠENIA KANONIKY
-Dôležité:
-FORMAL_3GATE_SHAPE je nemenný �
-3GATE_MECHANISM.py je technická projekcia �
-FORMAL_3GATE_SHAPE (1).md None
-3GATE_MECHANISM.py None
-Ty chceš:
-3Gate ako samostatnú vrstvu pred Vortexom
+
+3Gate ako samostatna vrstva pred Vortexom
 neblokovať, ale rozpúšťať
 EM spojitý
 existenciálny mód vždy aktívny
-To znamená jemnú zmenu implementačnej filozofie, nie formálu.
-Formál hovorí:
-Collapse je ontologická inkompatibilita.
-My ale môžeme spraviť:
+
 Collapse → transformácia do reprezentovateľného tvaru
 nie zamietnutie
 To je kompatibilné, ak: Φ nikdy neuvidí kolapsnutý tvar.
@@ -111,6 +105,7 @@ EM
 Vortex
 Φ stále dostáva iba reprezentovateľné tvary.
 3Gate zostáva slepý významu.
+
 IV. EPIŚTEMICKÝ MOMENT — SPOJITÝ MODEL
 Nie diskrétne triedy.
 Nech:
