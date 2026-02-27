@@ -76,11 +76,34 @@ scene.add(createAxis(0x444444,
   new THREE.Vector3(0, 0, axisLength)
 ));
 
+  /* ----------------------------------------
+   3D GRID
+-----------------------------------------*/
+
+const gridColor = 0x222222;
+
+const gridXY = new THREE.GridHelper(2, 20, gridColor, gridColor);
+gridXY.rotation.x = Math.PI / 2;
+scene.add(gridXY);
+
+const gridXZ = new THREE.GridHelper(2, 20, gridColor, gridColor);
+scene.add(gridXZ);
+
+const gridYZ = new THREE.GridHelper(2, 20, gridColor, gridColor);
+gridYZ.rotation.z = Math.PI / 2;
+scene.add(gridYZ);
+
+// zníženie opacity
+[gridXY, gridXZ, gridYZ].forEach(g => {
+  g.material.opacity = 0.08;
+  g.material.transparent = true;
+});
+  
 /* ----------------------------------------
    EPISTEMIC POINT
 -----------------------------------------*/
 
-const pointGeometry = new THREE.SphereGeometry(0.05, 32, 32);
+const pointGeometry = new THREE.SphereGeometry(0.035, 32, 32);
 const pointMaterial = new THREE.MeshBasicMaterial({ color: 0x5DA9FF });
 const point = new THREE.Mesh(pointGeometry, pointMaterial);
 
@@ -97,12 +120,12 @@ function animate() {
 
   time += 0.003;
 
-  const radius = 1.4;
+  const radius = 1.8;
   const x = Math.cos(time) * radius;
   const z = Math.sin(time) * radius;
   const y = 0.9 + Math.sin(time * 0.5) * 0.05;
 
-  camera.position.set(x, y, z);
+  camera.position.set(1,8, 1,2, 1,8);
   camera.lookAt(0, 0, 0);
 
   renderer.render(scene, camera);
