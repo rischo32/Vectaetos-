@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 
 export class SceneManager {
+
   constructor() {
+
     this.time = 0;
     this.radius = 2.2;
 
@@ -13,10 +15,13 @@ export class SceneManager {
     this.gatePoints = [];
     this.targetPositions = [];
 
-    this.splitting = false;
-    this.splitProgress = 0;
-
     this.intensity = 0;
+
+    // Stavový cyklus
+    this.state = "idle"; // idle | splitting | settled | reforming
+    this.splitProgress = 0;
+    this.settleTimer = 0;
+
     this.baseHue = 210 / 360;
   }
 
@@ -107,22 +112,19 @@ export class SceneManager {
     this.scene.add(this.emPoint);
   }
 
-  /* =========================
-     EXTERNAL UPDATE
-  ========================= */
-
   setIntensity(value) {
     this.intensity = value;
   }
 
   /* =========================
-     SPLIT
+     SPLIT TRIGGER
   ========================= */
 
   startSplit(W, H, D, intensity) {
-    if (this.splitting) return;
 
-    this.splitting = true;
+    if (this.state !== "idle") return;
+
+    this.state = "splitting";
     this.splitProgress = 0;
 
     const axisLength = 1.5;
@@ -165,6 +167,7 @@ export class SceneManager {
   ========================= */
 
   update() {
+
     this.time += 0.002;
 
     // Kamera mikro-orbit
@@ -175,8 +178,9 @@ export class SceneManager {
     );
     this.camera.lookAt(0, 0, 0);
 
-    // Draft EM pulz
-    if (!this.splitting && this.emPoint) {
+    // Idle pulz EM
+    if (this.state === "idle" && this.emPoint) {
+
       const scale =
         1 +
         this.intensity * 0.8 +
@@ -194,8 +198,9 @@ export class SceneManager {
         Math.sin(this.time * 4) * this.intensity * 0.3;
     }
 
-    // Split animácia
-    if (this.splitting && this.splitProgress < 1) {
+    // Splitting
+    if (this.state === "splitting") {
+
       this.splitProgress += 0.02;
 
       const eased =
@@ -210,7 +215,53 @@ export class SceneManager {
           eased
         );
       }
+
+      if (this.splitProgress >= 1) {
+        this.state = "settled";
+        this.settleTimer = 0;
+      }
     }
+
+    // Settled pause
+    if (this.state === "settled") {
+
+      this.settleTimer += 0.02;
+
+      if (this.settleTimer > 1.5) {
+        this.state = "reforming";
+      }
+    }
+
+    // Reforming
+    if (this.state === "reforming") {
+
+      this.splitProgress -= 0.02;
+
+      for (let i = 0; i < this.gatePoints.length; i++) {
+        this.gatePoints[i].position.lerpVectors(
+          new THREE.Vector3(0, 0, 0),
+          this.targetPositions[i],
+          this.splitProgress
+        );
+      }
+
+      if (this.splitProgress <= 0) {
+        this.cleanupSplit();
+        this.state = "idle";
+      }
+    }
+  }
+
+  cleanupSplit() {
+
+    for (let g of this.gatePoints) {
+      this.scene.remove(g);
+    }
+
+    this.gatePoints = [];
+    this.targetPositions = [];
+
+    this.setupEMPoint();
   }
 
   render() {
@@ -220,7 +271,9 @@ export class SceneManager {
   onResize() {
     this.camera.aspect =
       window.innerWidth / window.innerHeight;
+
     this.camera.updateProjectionMatrix();
+
     this.renderer.setSize(
       window.innerWidth,
       window.innerHeight
