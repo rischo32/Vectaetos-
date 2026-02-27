@@ -15,9 +15,9 @@
 
   #ui {
     position: absolute;
-    top: 50%;
+    bottom: 40px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     width: 420px;
     text-align: center;
     pointer-events: none;
@@ -31,7 +31,7 @@
     color: #fff;
     padding: 12px;
     resize: none;
-    border-radius: 12px;
+    border-radius: 14px;
     outline: none;
     pointer-events: all;
   }
@@ -65,6 +65,10 @@
 <script type="module">
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
+/* =========================
+   BASIC SCENE
+========================= */
+
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
@@ -80,50 +84,86 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x0C0D10, 1);
 document.body.appendChild(renderer.domElement);
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.4);
-scene.add(ambient);
+/* =========================
+   LIGHT
+========================= */
 
-const directional = new THREE.DirectionalLight(0xffffff, 0.3);
-directional.position.set(2,3,2);
-scene.add(directional);
+scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-/* AXES */
-function createAxis(color, start, end) {
-  const material = new THREE.LineBasicMaterial({ color });
+const dir = new THREE.DirectionalLight(0xffffff, 0.3);
+dir.position.set(2,3,2);
+scene.add(dir);
+
+/* =========================
+   AXES
+========================= */
+
+function axis(start, end) {
+  const material = new THREE.LineBasicMaterial({ color: 0x333333 });
   const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
   return new THREE.Line(geometry, material);
 }
 
 const axisLength = 1.5;
-scene.add(createAxis(0x333333,new THREE.Vector3(-axisLength,0,0),new THREE.Vector3(axisLength,0,0)));
-scene.add(createAxis(0x333333,new THREE.Vector3(0,-axisLength,0),new THREE.Vector3(0,axisLength,0)));
-scene.add(createAxis(0x333333,new THREE.Vector3(0,0,-axisLength),new THREE.Vector3(0,0,axisLength)));
 
-/* GRID */
+scene.add(axis(
+  new THREE.Vector3(-axisLength,0,0),
+  new THREE.Vector3(axisLength,0,0)
+));
+
+scene.add(axis(
+  new THREE.Vector3(0,-axisLength,0),
+  new THREE.Vector3(0,axisLength,0)
+));
+
+scene.add(axis(
+  new THREE.Vector3(0,0,-axisLength),
+  new THREE.Vector3(0,0,axisLength)
+));
+
+/* =========================
+   GRID
+========================= */
+
 const grid = new THREE.GridHelper(3,30,0x222222,0x222222);
 grid.material.opacity = 0.08;
 grid.material.transparent = true;
 scene.add(grid);
 
-/* EM POINT */
-const geometry = new THREE.SphereGeometry(0.04, 32, 32);
-const material = new THREE.MeshStandardMaterial({
+/* =========================
+   EM POINT
+========================= */
+
+const baseHue = 210 / 360;
+
+const emGeometry = new THREE.SphereGeometry(0.04, 32, 32);
+const emMaterial = new THREE.MeshStandardMaterial({
   color: 0x5DA9FF,
   emissive: 0x5DA9FF,
   emissiveIntensity: 0.6
 });
-const point = new THREE.Mesh(geometry, material);
-scene.add(point);
+let emPoint = new THREE.Mesh(emGeometry, emMaterial);
+scene.add(emPoint);
 
-/* CAMERA ORBIT */
+/* =========================
+   CAMERA ORBIT
+========================= */
+
 let time = 0;
 const radius = 2.2;
 
-/* INPUT LOGIC */
+/* =========================
+   INPUT LOGIC
+========================= */
+
 const textarea = document.getElementById("question");
 const bufferFill = document.getElementById("bufferFill");
 
 let intensity = 0;
+let splitting = false;
+let splitProgress = 0;
+let gatePoints = [];
+let targetPositions = [];
 
 textarea.addEventListener("input", () => {
   const length = textarea.value.length;
@@ -131,12 +171,74 @@ textarea.addEventListener("input", () => {
   bufferFill.style.width = (intensity * 100) + "%";
 });
 
-/* ANIMATE */
+textarea.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    if (!splitting) startSplit();
+  }
+});
+
+/* =========================
+   SIGMA HEURISTIC
+========================= */
+
+function computeSigma(text) {
+  const length = text.length;
+  const words = text.split(" ").length;
+
+  const W = Math.min(1, words / 12);
+  const H = Math.min(1, text.includes("?") ? 0.8 : 0.4);
+  const D = Math.min(1, length / 100);
+
+  return { W, H, D };
+}
+
+/* =========================
+   SPLIT
+========================= */
+
+function startSplit() {
+  splitting = true;
+  splitProgress = 0;
+
+  const { W, H, D } = computeSigma(textarea.value);
+  const I = intensity;
+
+  targetPositions = [
+    new THREE.Vector3(W * I * axisLength, 0, 0),
+    new THREE.Vector3(0, H * I * axisLength, 0),
+    new THREE.Vector3(0, 0, D * I * axisLength)
+  ];
+
+  const colors = [
+    new THREE.Color().setHSL(baseHue - 0.03, 0.8, 0.4 + W * 0.3),
+    new THREE.Color().setHSL(baseHue + 0.05, 0.8, 0.4 + H * 0.3),
+    new THREE.Color().setHSL(baseHue - 0.1, 0.8, 0.4 + D * 0.3)
+  ];
+
+  for (let i = 0; i < 3; i++) {
+    const g = new THREE.SphereGeometry(0.035, 24, 24);
+    const m = new THREE.MeshStandardMaterial({
+      color: colors[i],
+      emissive: colors[i],
+      emissiveIntensity: 0.6
+    });
+    const mesh = new THREE.Mesh(g, m);
+    scene.add(mesh);
+    gatePoints.push(mesh);
+  }
+
+  scene.remove(emPoint);
+}
+
+/* =========================
+   ANIMATION LOOP
+========================= */
+
 function animate() {
   requestAnimationFrame(animate);
   time += 0.002;
 
-  /* camera */
   camera.position.set(
     Math.cos(time)*radius,
     1.2 + Math.sin(time*0.5)*0.1,
@@ -144,14 +246,30 @@ function animate() {
   );
   camera.lookAt(0,0,0);
 
-  /* EM pulz podľa bufferu */
-  const scale = 1 + intensity * 0.8 + Math.sin(time*10)*0.05;
-  point.scale.set(scale, scale, scale);
+  if (!splitting && emPoint) {
+    const scale = 1 + intensity * 0.8 + Math.sin(time*10)*0.05;
+    emPoint.scale.set(scale, scale, scale);
 
-  /* jemný drift */
-  point.position.x = Math.sin(time*3) * intensity * 0.3;
-  point.position.y = Math.cos(time*2) * intensity * 0.2;
-  point.position.z = Math.sin(time*4) * intensity * 0.3;
+    emPoint.position.x = Math.sin(time*3) * intensity * 0.3;
+    emPoint.position.y = Math.cos(time*2) * intensity * 0.2;
+    emPoint.position.z = Math.sin(time*4) * intensity * 0.3;
+  }
+
+  if (splitting && splitProgress < 1) {
+    splitProgress += 0.02;
+
+    const eased = splitProgress < 0.5
+      ? 2 * splitProgress * splitProgress
+      : 1 - Math.pow(-2 * splitProgress + 2, 2) / 2;
+
+    for (let i = 0; i < gatePoints.length; i++) {
+      gatePoints[i].position.lerpVectors(
+        new THREE.Vector3(0,0,0),
+        targetPositions[i],
+        eased
+      );
+    }
+  }
 
   renderer.render(scene, camera);
 }
