@@ -1,77 +1,124 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Vortex Core</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vortex — Epistemic Field</title>
   <style>
     body {
-      background: #0e0e11;
-      color: #e5e5e5;
-      font-family: monospace;
-      max-width: 700px;
-      margin: 40px auto;
+      margin: 0;
+      overflow: hidden;
+      background: #0C0D10;
+      font-family: Inter, sans-serif;
     }
 
-    textarea {
-      width: 100%;
-      height: 80px;
-      background: #1a1a22;
-      color: white;
-      border: 1px solid #333;
-      padding: 10px;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #2b2bff;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-
-    .output {
-      margin-top: 20px;
-      background: #111;
-      padding: 15px;
-      border: 1px solid #333;
-    }
-
-    .metric {
-      margin-bottom: 8px;
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
 
-<h2>Vortex – Strukturálne zrkadlo otázky</h2>
+<script type="module">
+import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
-<textarea id="question" maxlength="100" placeholder="Zadaj otázku (max 100 znakov)..."></textarea>
-<br>
-<button onclick="analyze()">Analyzovať</button>
+/* ----------------------------------------
+   BASIC SCENE SETUP
+-----------------------------------------*/
 
-<div class="output" id="result"></div>
+const scene = new THREE.Scene();
 
-<script>
-async function analyze() {
-  const question = document.getElementById("question").value;
+const camera = new THREE.PerspectiveCamera(
+  60,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  100
+);
 
-  const res = await fetch("https://vortex-core.fonfararichard.workers.dev/analyze", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question })
-  });
+camera.position.set(1.4, 0.9, 1.4);
+camera.lookAt(0, 0, 0);
 
-  const data = await res.json();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setClearColor(0x0C0D10, 1);
 
-  document.getElementById("result").innerHTML = `
-    <div class="metric"><b>Fragmentácia:</b> ${data.fragmentation_detected}</div>
-    <div class="metric"><b>Humility index:</b> ${data.humility_index}</div>
-    <div class="metric"><b>µ total:</b> ${data.mu_total}</div>
-    <div class="metric"><b>Asymetria:</b> ${data.asymmetry_total}</div>
-    <div class="metric"><b>Interpretácia:</b> ${data.structural_interpretation}</div>
-  `;
+document.body.appendChild(renderer.domElement);
+
+/* ----------------------------------------
+   AXES (W=X, H=Y, D=Z)
+-----------------------------------------*/
+
+function createAxis(color, start, end) {
+  const material = new THREE.LineBasicMaterial({ color });
+  const points = [start, end];
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  return new THREE.Line(geometry, material);
 }
+
+const axisLength = 1.2;
+
+// W (X axis)
+scene.add(createAxis(0x444444,
+  new THREE.Vector3(-axisLength, 0, 0),
+  new THREE.Vector3(axisLength, 0, 0)
+));
+
+// H (Y axis)
+scene.add(createAxis(0x444444,
+  new THREE.Vector3(0, -axisLength, 0),
+  new THREE.Vector3(0, axisLength, 0)
+));
+
+// D (Z axis)
+scene.add(createAxis(0x444444,
+  new THREE.Vector3(0, 0, -axisLength),
+  new THREE.Vector3(0, 0, axisLength)
+));
+
+/* ----------------------------------------
+   EPISTEMIC POINT
+-----------------------------------------*/
+
+const pointGeometry = new THREE.SphereGeometry(0.05, 32, 32);
+const pointMaterial = new THREE.MeshBasicMaterial({ color: 0x5DA9FF });
+const point = new THREE.Mesh(pointGeometry, pointMaterial);
+
+scene.add(point);
+
+/* ----------------------------------------
+   CAMERA MICRO ORBIT
+-----------------------------------------*/
+
+let time = 0;
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  time += 0.003;
+
+  const radius = 1.4;
+  const x = Math.cos(time) * radius;
+  const z = Math.sin(time) * radius;
+  const y = 0.9 + Math.sin(time * 0.5) * 0.05;
+
+  camera.position.set(x, y, z);
+  camera.lookAt(0, 0, 0);
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+/* ----------------------------------------
+   RESPONSIVE
+-----------------------------------------*/
+
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 </script>
 
 </body>
