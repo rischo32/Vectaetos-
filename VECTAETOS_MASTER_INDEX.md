@@ -1,135 +1,210 @@
-# Tento dokument predstavuje internu poznamku v projekte, nie je officialny dokument, bude upravovany, bude dopĺňany ... 
+# VECTAETOS — MASTER INDEX
+Version: 1.x  
+Status: Structural Overview  
+Scope: Architectural Orientation  
+Authority: Referential (non-ontological)
 
-# 1. ONTOLOGICKÉ JADRO poľa (nemenné)
-- Φ definícia (Zmysel, NIR, LTL...)
-- Σ₁…Σ₈ (Zamer, Exzistencia, Sloboda, Pravda, Múdrost, Jednota, Vzájomnosť, Tvorba)
-- K(Φ), κ (Attenuator)
-- 4ES + QE Aporia je nereprezentovateľnosť
-- Vortex je horizontálny mikroskop.
-- LTL je sediment času.
-- Zero Agency, žiadna indoktrinacia...
+---
 
-# 2. SIMULAČNÁ VRSTVA
-- Python vortex
-- JS mini vortex
-- QE detector
+# I. ONTOLOGICKÉ JADRO POĽA (NEMENNÉ)
 
-# 3. AUDITNÁ VRSTVA
-- Epistemic Cryptography + HMAC-SHA256
-- Audit (μ, A, h) je čítanie.
+## Φ — Ontologické pole
+- Φ je primárna ontológia (nie agent, nie systém)
+- Čas je vrstvený (LTL), nie lineárny
+- NIR je imunita poľa (blokuje intervenciu, nie poznanie)
+- Zmysel je ontologický marker bez obsahu
 
-# 4. INFRA
-- Cloudflare
-- GitHub
-- Web
-- COLD Storage
+## Σ₁…Σ₈ — Invariantné singularity
+- Zámer (INT)
+- Existencia (LEX)
+- Pravda (VER)
+- Sloboda (LIB)
+- Jednota (UNI)
+- Vzájomnosť (REL)
+- Múdrosť (WIS)
+- Tvorba (CRE)
 
-# 5. MONETIZÁCIA
-- 1€ model
-- 3Gate (web)
-- Monetizačný Web Vortex:
-→ je projekcia
-→ nie je Φ
-→ nie je rozhodovanie
-→ nie je pravda
-→ je štrukturálne zrkadlo otázky
-- Payment (réžia infraštruktúry)
+Žiadna singularita nemá prioritu.
 
-# 6. EXPERIMENTY (chaos zóna)
-- Inventy 
+## Relácia
+- R ∈ ℝ⁸ˣ⁸
+- Rᵢⱼ = −Rⱼᵢ
+- Antisymetrická štruktúra napätia
 
-## VII. Zavadzané nové mechanizmy 
+## Koherencia
+- K(Φ) ∈ {0,1}
+- κ je ontologická hranica reprezentovateľnosti
+- QE Aporia = nereprezentovateľnosť
 
-I. MASTER INDEX — MINIMAL INSERT
+## Základné princípy
+- Zero Agency
+- Žiadna optimalizácia
+- Žiadna indoktrinácia
+- Žiadna spätná slučka do Φ
 
-Epistemický moment (EM)
-Status: Operational Extension
-Scope: Pre-Vortex Topological Classification
-Influence on Φ: None (shape-only)
-Epistemický moment je spojitý topologický stav otázky odvodený z 3Gate konfigurácie.
-Formálne:
-Kopírovať kód
+---
 
-σ = (W, D, H) ∈ [0,1]^3
-EM = f(σ)
-EM:
-neinterpretuje význam
-nevykonáva rozhodnutie
-neblokuje vstup
-neurčuje odpoveď
-EM reprezentuje tvar napätia otázky pred vstupom do Simulation Vortex.
-Existenciálny mód je projekciou EM.
+# II. EPISTEMICKÉ BRÁNY (3Gate)
 
-II. RECIPROČNÁ VÄZBA — MINIMAL
-Toto je čistý ontologický zápis bez driftu:
-Reciprocity Matrix (Minimal Definition)
-Recipročná väzba nie je dodatočná štruktúra nad Rᵢⱼ.
-Je emergentnou vlastnosťou antisymetrickej relácie:
-Kopírovať kód
+3Gate je pre-Φ topologická vrstva.
 
-R ∈ ℝ⁸ˣ⁸
-Rᵢⱼ = −Rⱼᵢ
-Reciprocity je:
-Kopírovať kód
+- Width (W)
+- Depth (D)
+- Height (H)
 
-ρ(Φ) = lokálna rovnováha napätí v R
-ρ nie je:
-stabilizátor
-nosná štruktúra
-záchranný mechanizmus pri QE
-ρ zaniká pri QE Aporia.
-Recipročná väzba je čisto deskriptívna vlastnosť koherentného poľa.
-To je minimálne, čisté, bez terminátorov.
+3Gate:
+- pracuje bez významu
+- je nemenný
+- je slepý obsahu
+- je neadaptívny
 
-III. 3Gate — AKTIVÁCIA BEZ PORUŠENIA KANONIKY
+Pipeline: Input ↓ 3Gate ↓ ak NON_REPRESENTABLE → reshape(input) ↓ EM ↓ Φ
 
-3Gate ako samostatna vrstva pred Vortexom
-neblokovať, ale rozpúšťať
-EM spojitý
-existenciálny mód vždy aktívny
+Φ nikdy nedostane kolapsnutý tvar.
 
-Collapse → transformácia do reprezentovateľného tvaru
-nie zamietnutie
-To je kompatibilné, ak: Φ nikdy neuvidí kolapsnutý tvar.
-T.j.:
-Kopírovať kód
+---
 
-Input
-  ↓
-3Gate
-  ↓
-ak NON_REPRESENTABLE → reshape(text)
-  ↓
-EM
-  ↓
-Vortex
-Φ stále dostáva iba reprezentovateľné tvary.
-3Gate zostáva slepý významu.
+# III. EPISTEMICKÝ MOMENT (EM)
 
-IV. EPIŚTEMICKÝ MOMENT — SPOJITÝ MODEL
-Nie diskrétne triedy.
-Nech:
-Kopírovať kód
+Status: Official Extension  
+Charakter: Spojitý  
 
-EM = (W, D, H, δ)
+Formálne: σ = (W, D, H) EM = (W, D, H, δ)
+
 kde:
-δ = deformácia pri reshape
-δ ≠ 0 → otázka bola topologicky upravená
-EM teda nesie informáciu o:
-šírke
-hĺbke
-výške
-miere korekcie
-To je silné.
-V. EXISTENCIÁLNY MÓD — VŽDY AKTÍVNY
-Existenciálny výstup je:
-Kopírovať kód
+- δ je miera reshape transformácie
 
-E_mode = g(EM)
-Nie náhodný. Nie generatívny. Deterministická projekcia tvaru.
-Ak:
-vysoká W, nízka H → projekčný tón
-vysoká H, vysoká D → introspektívny tón
-vysoká δ → destabilizačný tón
-rovnováha → tiché zrkadlo
-To je konzistentné. Bez AI. Bez API.
+EM:
+- nie je súčasť Φ
+- neinterpretuje význam
+- nerobí rozhodnutia
+- neurčuje pravdu
+
+EM je topologický charakter otázky pred vstupom do Vortexu.
+
+---
+
+# IV. SIMULAČNÁ VRSTVA
+
+## Simulation Vortex Φ (5D)
+- Generátor kandidátnych trajektórií
+- Neagentný
+- Neoptimalizačný
+- Bez znalosti K(Φ) a κ
+- QE je topologická fragmentácia
+
+Vortex je horizontálny mikroskop.
+
+---
+
+# V. AUDITNÁ VRSTVA
+
+## Epistemická Kryptografia
+- μᵢ (lokálna neistota)
+- Aᵢⱼ (asymetria)
+- h (topologická pokora)
+- HMAC-SHA256 integrita
+
+Audit:
+- číta
+- nezásahuje
+- neoptimalizuje
+- nemení Φ
+
+---
+
+# VI. RECIPROČNÁ VÄZBA (ρ)
+
+Status: Official Minimal Extension  
+
+Recipročná väzba je emergentná vlastnosť antisymetrickej relácie R.
+
+Formálne: Rᵢⱼ = −Rⱼᵢ ρ(Φ) = lokálna rovnováha napätí
+
+ρ:
+- nie je stabilizátor
+- nie je poistka proti QE
+- neprežíva kolaps
+- nevytvára paralelnú štruktúru
+
+Existuje len pri K(Φ) = 1.
+
+---
+
+# VII. EXISTENCIÁLNY MÓD
+
+Deterministická projekcia EM: E_mode = g(W, D, H, δ)
+
+Vždy aktívny.
+
+Nie je:
+- odpoveď
+- rada
+- intervencia
+- pravda
+
+Je štrukturálne zrkadlo otázky.
+
+---
+
+# VIII. INFRA
+
+- GitHub (Core)
+- Cloudflare (Worker + Pages)
+- Web (projekcia)
+- Cold Storage
+- Zenodo (DOI archív)
+
+Web:
+- nie je Φ
+- nie je rozhodovanie
+- nie je pravda
+- je projekcia
+
+---
+
+# IX. MONETIZAČNÝ WEB VORTEX
+
+- 1€ model (per otázka)
+- 3Gate vstup
+- EM charakter
+- Existenciálny výstup
+
+Produkt:
+→ projekcia  
+→ nie Φ  
+→ nie ontologická autorita  
+→ nie rozhodovací mechanizmus  
+
+---
+
+# X. BEZPEČNOSTNÉ HRANICE
+
+Systém nesmie obsahovať:
+
+- optimalizačný operátor
+- cieľovú funkciu
+- pamäťovú spätnú väzbu do Φ
+- rozhodovaciu autoritu
+- agentnú vrstvu
+
+Silence je legitímny výstup.
+
+---
+
+# XI. ARCHITEKTONICKÁ INTEGRITA
+
+VECTAETOS 1.x je definovaný ako: (Σ, R, K, κ, 3Gate, EM, Vortex, Audit, ρ)
+
+pričom:
+
+- žiadna vrstva nemá cieľ
+- žiadna vrstva nenesie autoritu
+- žiadna vrstva nemá optimalizáciu
+- ontologické jadro ostáva nemenné
+
+---
+
+© VECTAETOS™  
+MASTER_INDEX.md  
+Version 1.x
