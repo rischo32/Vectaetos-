@@ -1,131 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vortex — Epistemic Field</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: #0C0D10;
-      font-family: Inter, sans-serif;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vortex — Epistemic Field</title>
 
-    canvas {
-      display: block;
-    }
-  </style>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: #0C0D10;
+  }
+</style>
 </head>
+
 <body>
 
 <script type="module">
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
-/* ----------------------------------------
-   BASIC SCENE SETUP
------------------------------------------*/
+/* ================================
+   SCENE
+================================ */
 
 const scene = new THREE.Scene();
 
+/* ================================
+   CAMERA
+================================ */
+
 const camera = new THREE.PerspectiveCamera(
-  60,
+  65,
   window.innerWidth / window.innerHeight,
   0.1,
   100
 );
 
-camera.position.set(1.4, 0.9, 1.4);
-camera.lookAt(0, 0, 0);
-
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x0C0D10, 1);
-
 document.body.appendChild(renderer.domElement);
 
-/* ----------------------------------------
+/* ================================
+   LIGHT (subtle depth)
+================================ */
+
+const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+scene.add(ambient);
+
+const directional = new THREE.DirectionalLight(0xffffff, 0.3);
+directional.position.set(2, 3, 2);
+scene.add(directional);
+
+/* ================================
    AXES (W=X, H=Y, D=Z)
------------------------------------------*/
+================================ */
 
 function createAxis(color, start, end) {
   const material = new THREE.LineBasicMaterial({ color });
-  const points = [start, end];
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
   return new THREE.Line(geometry, material);
 }
 
-const axisLength = 1.2;
+const axisLength = 1.5;
 
-// W (X axis)
-scene.add(createAxis(0x444444,
+scene.add(createAxis(0x333333,
   new THREE.Vector3(-axisLength, 0, 0),
   new THREE.Vector3(axisLength, 0, 0)
-));
+)); // W
 
-// H (Y axis)
-scene.add(createAxis(0x444444,
+scene.add(createAxis(0x333333,
   new THREE.Vector3(0, -axisLength, 0),
   new THREE.Vector3(0, axisLength, 0)
-));
+)); // H
 
-// D (Z axis)
-scene.add(createAxis(0x444444,
+scene.add(createAxis(0x333333,
   new THREE.Vector3(0, 0, -axisLength),
   new THREE.Vector3(0, 0, axisLength)
-));
+)); // D
 
-  /* ----------------------------------------
-   3D GRID
------------------------------------------*/
+/* ================================
+   3D GRID (true spatial feel)
+================================ */
 
-const gridColor = 0x222222;
+const gridSize = 3;
+const divisions = 30;
 
-const gridXY = new THREE.GridHelper(2, 20, gridColor, gridColor);
-gridXY.rotation.x = Math.PI / 2;
-scene.add(gridXY);
-
-const gridXZ = new THREE.GridHelper(2, 20, gridColor, gridColor);
+const gridXZ = new THREE.GridHelper(gridSize, divisions, 0x222222, 0x222222);
+gridXZ.material.opacity = 0.08;
+gridXZ.material.transparent = true;
 scene.add(gridXZ);
 
-const gridYZ = new THREE.GridHelper(2, 20, gridColor, gridColor);
+const gridXY = new THREE.GridHelper(gridSize, divisions, 0x222222, 0x222222);
+gridXY.rotation.x = Math.PI / 2;
+gridXY.material.opacity = 0.05;
+gridXY.material.transparent = true;
+scene.add(gridXY);
+
+const gridYZ = new THREE.GridHelper(gridSize, divisions, 0x222222, 0x222222);
 gridYZ.rotation.z = Math.PI / 2;
+gridYZ.material.opacity = 0.05;
+gridYZ.material.transparent = true;
 scene.add(gridYZ);
 
-// zníženie opacity
-[gridXY, gridXZ, gridYZ].forEach(g => {
-  g.material.opacity = 0.08;
-  g.material.transparent = true;
-});
-  
-/* ----------------------------------------
+/* ================================
    EPISTEMIC POINT
------------------------------------------*/
+================================ */
 
-const pointGeometry = new THREE.SphereGeometry(0.035, 32, 32);
-const pointMaterial = new THREE.MeshBasicMaterial({ color: 0x5DA9FF });
+const pointGeometry = new THREE.SphereGeometry(0.04, 32, 32);
+const pointMaterial = new THREE.MeshStandardMaterial({
+  color: 0x5DA9FF,
+  emissive: 0x5DA9FF,
+  emissiveIntensity: 0.6,
+  metalness: 0.1,
+  roughness: 0.4
+});
 const point = new THREE.Mesh(pointGeometry, pointMaterial);
-
 scene.add(point);
 
-/* ----------------------------------------
-   CAMERA MICRO ORBIT
------------------------------------------*/
+/* ================================
+   CAMERA ORBIT (micro living)
+================================ */
 
 let time = 0;
+const radius = 2.2;
 
 function animate() {
   requestAnimationFrame(animate);
 
-  time += 0.003;
+  time += 0.002;
 
-  const radius = 1.8;
   const x = Math.cos(time) * radius;
   const z = Math.sin(time) * radius;
-  const y = 0.9 + Math.sin(time * 0.5) * 0.05;
+  const y = 1.2 + Math.sin(time * 0.6) * 0.1;
 
-  camera.position.set(1,8, 1,2, 1,8);
+  camera.position.set(x, y, z);
   camera.lookAt(0, 0, 0);
 
   renderer.render(scene, camera);
@@ -133,9 +143,9 @@ function animate() {
 
 animate();
 
-/* ----------------------------------------
+/* ================================
    RESPONSIVE
------------------------------------------*/
+================================ */
 
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
