@@ -40,7 +40,6 @@ export class SceneManager {
   }
 
   setupScene() {
-
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x0C0D10);
   }
@@ -76,7 +75,14 @@ export class SceneManager {
 
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
-    this.controls.screenSpacePanning = false;
+
+    this.controls.enablePan = false;
+
+    this.controls.minDistance = 2;
+    this.controls.maxDistance = 6;
+
+    this.controls.minPolarAngle = 0.6;
+    this.controls.maxPolarAngle = 2.2;
   }
 
   setupLights() {
@@ -84,7 +90,7 @@ export class SceneManager {
     const ambient = new THREE.AmbientLight(0xffffff, 0.35);
     this.scene.add(ambient);
 
-    const directional = new THREE.DirectionalLight(0xffffff, 0.5);
+    const directional = new THREE.DirectionalLight(0xffffff, 0.6);
     directional.position.set(2, 3, 2);
     this.scene.add(directional);
   }
@@ -126,12 +132,12 @@ export class SceneManager {
 
   setupEMPoint() {
 
-    const geometry = new THREE.SphereGeometry(0.05, 32, 32);
+    const geometry = new THREE.SphereGeometry(0.06, 32, 32);
 
     const material = new THREE.MeshStandardMaterial({
       color: 0x5DA9FF,
       emissive: 0x5DA9FF,
-      emissiveIntensity: 0.8
+      emissiveIntensity: 0.9
     });
 
     this.emPoint = new THREE.Mesh(geometry, material);
@@ -140,11 +146,10 @@ export class SceneManager {
   }
 
   /* =========================
-     INTENSITY (buffer pulz)
+     INTENSITY
   ========================= */
 
   setIntensity(value) {
-
     this.intensity = value;
   }
 
@@ -152,17 +157,22 @@ export class SceneManager {
      SPLIT
   ========================= */
 
-  startSplit(W, H, D, intensity) {
+  startSplit(W, H, D) {
 
     if (this.splitting) return;
 
     this.splitting = true;
     this.splitProgress = 0;
 
+    // Hybrid režim → zamkni kameru počas splitu
+    this.controls.enableRotate = false;
+
+    const scale = 2.4;
+
     this.targetPositions = [
-      new THREE.Vector3(W * intensity * 1.8, 0, 0),
-      new THREE.Vector3(0, H * intensity * 1.8, 0),
-      new THREE.Vector3(0, 0, D * intensity * 1.8)
+      new THREE.Vector3(Math.pow(W, 0.6) * scale, 0, 0),
+      new THREE.Vector3(0, Math.pow(H, 0.6) * scale, 0),
+      new THREE.Vector3(0, 0, Math.pow(D, 0.6) * scale)
     ];
 
     const colors = [
@@ -175,7 +185,7 @@ export class SceneManager {
 
     for (let i = 0; i < 3; i++) {
 
-      const geometry = new THREE.SphereGeometry(0.04, 24, 24);
+      const geometry = new THREE.SphereGeometry(0.05, 24, 24);
 
       const material = new THREE.MeshStandardMaterial({
         color: colors[i],
@@ -196,30 +206,29 @@ export class SceneManager {
   }
 
   /* =========================
-     UPDATE LOOP
+     UPDATE
   ========================= */
 
   update() {
 
     this.time += 0.01;
-
     this.controls.update();
 
-    // Idle EM pulz
+    // Idle pulz
     if (!this.splitting && this.emPoint) {
 
-      const pulse = 1 + Math.sin(this.time * 5) * 0.05;
+      const pulse = 1 + Math.sin(this.time * 5) * 0.06;
 
       this.emPoint.scale.set(pulse, pulse, pulse);
 
       this.emPoint.position.x =
-        Math.sin(this.time * 1.5) * 0.1 * this.intensity;
+        Math.sin(this.time * 1.5) * 0.12 * this.intensity;
 
       this.emPoint.position.y =
-        Math.cos(this.time * 1.2) * 0.1 * this.intensity;
+        Math.cos(this.time * 1.2) * 0.12 * this.intensity;
 
       this.emPoint.position.z =
-        Math.sin(this.time * 1.8) * 0.1 * this.intensity;
+        Math.sin(this.time * 1.8) * 0.12 * this.intensity;
     }
 
     // Split animácia
@@ -239,6 +248,13 @@ export class SceneManager {
           this.targetPositions[i],
           eased
         );
+      }
+
+      if (this.splitProgress >= 1) {
+
+        // Po splite → mierne povolíme rotáciu
+        this.controls.enableRotate = true;
+        this.splitting = false;
       }
     }
   }
