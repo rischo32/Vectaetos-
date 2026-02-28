@@ -164,7 +164,7 @@ export class SceneManager {
     this.splitting = true;
     this.splitProgress = 0;
 
-    // Hybrid režim → zamkni kameru počas splitu
+    // Zamkni kameru počas splitu
     this.controls.enableRotate = false;
 
     const scale = 2.4;
@@ -206,7 +206,7 @@ export class SceneManager {
   }
 
   /* =========================
-     UPDATE
+     UPDATE LOOP
   ========================= */
 
   update() {
@@ -214,7 +214,7 @@ export class SceneManager {
     this.time += 0.01;
     this.controls.update();
 
-    // Idle pulz
+    // Idle EM pulz
     if (!this.splitting && this.emPoint) {
 
       const pulse = 1 + Math.sin(this.time * 5) * 0.06;
@@ -251,42 +251,51 @@ export class SceneManager {
       }
 
       if (this.splitProgress >= 1) {
-
-        // Jemné napätie medzi bránami
-if (!this.splitting && this.gatePoints.length === 3) {
-
-  const minDistance = 0.4;
-  const tensionStrength = 0.002;
-
-  for (let i = 0; i < this.gatePoints.length; i++) {
-
-    for (let j = i + 1; j < this.gatePoints.length; j++) {
-
-      const a = this.gatePoints[i];
-      const b = this.gatePoints[j];
-
-      const direction = new THREE.Vector3()
-        .subVectors(a.position, b.position);
-
-      const distance = direction.length();
-
-      if (distance < minDistance) {
-
-        direction.normalize();
-
-        const push = direction.multiplyScalar(tensionStrength);
-
-        a.position.add(push);
-        b.position.sub(push);
-      }
-    }
-  }
-}
-        
-        // Po splite → mierne povolíme rotáciu
         this.controls.enableRotate = true;
         this.splitting = false;
       }
+    }
+
+    // Jemné napätie medzi bránami
+    if (!this.splitting && this.gatePoints.length === 3) {
+
+      const minDistance = 0.4;
+      const tensionStrength = 0.002;
+
+      for (let i = 0; i < this.gatePoints.length; i++) {
+
+        for (let j = i + 1; j < this.gatePoints.length; j++) {
+
+          const a = this.gatePoints[i];
+          const b = this.gatePoints[j];
+
+          const direction = new THREE.Vector3()
+            .subVectors(a.position, b.position);
+
+          const distance = direction.length();
+
+          if (distance < minDistance) {
+
+            direction.normalize();
+
+            const push = direction.multiplyScalar(tensionStrength);
+
+            a.position.add(push);
+            b.position.sub(push);
+          }
+        }
+      }
+
+      // Entropický návrat do stredu
+      const returnStrength = 0.0025;
+
+      this.gatePoints.forEach(point => {
+
+        const toCenter = new THREE.Vector3()
+          .subVectors(new THREE.Vector3(0, 0, 0), point.position);
+
+        point.position.add(toCenter.multiplyScalar(returnStrength));
+      });
     }
   }
 
