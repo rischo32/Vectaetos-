@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VORTEX — Epistemic Interface</title>
+  <title>VORTEX</title>
 
-  <!-- Import map pre THREE -->
   <script type="importmap">
   {
     "imports": {
-      "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
+      "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
     }
   }
   </script>
@@ -19,11 +19,7 @@
 
 <body>
 
-  <!-- 3D Canvas sa vkladá rendererom -->
-
-  <!-- UI Layer -->
   <div class="ui-layer">
-
     <div class="input-panel">
       <textarea
         id="question"
@@ -35,13 +31,10 @@
         <div id="bufferFill"></div>
       </div>
     </div>
-
   </div>
 
-  <!-- Overlay (EM výsledok) -->
   <div id="overlay"></div>
 
-  <!-- Main Script -->
   <script type="module" src="./js/main.js"></script>
 
 </body>
