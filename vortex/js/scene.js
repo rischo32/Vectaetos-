@@ -1,28 +1,26 @@
-import * as THREE from 'three';
+import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
+import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
 
 export class SceneManager {
 
   constructor() {
 
-    this.time = 0;
-    this.radius = 2.2;
-
     this.scene = null;
     this.camera = null;
     this.renderer = null;
+    this.controls = null;
+
+    this.time = 0;
 
     this.emPoint = null;
     this.gatePoints = [];
+
+    this.splitting = false;
+    this.splitProgress = 0;
+
     this.targetPositions = [];
 
     this.intensity = 0;
-
-    // Stavový cyklus
-    this.state = "idle"; // idle | splitting | settled | reforming
-    this.splitProgress = 0;
-    this.settleTimer = 0;
-
-    this.baseHue = 210 / 360;
   }
 
   /* =========================
@@ -30,51 +28,84 @@ export class SceneManager {
   ========================= */
 
   init() {
+
     this.setupScene();
     this.setupCamera();
     this.setupRenderer();
+    this.setupControls();
     this.setupLights();
-    this.setupAxes();
     this.setupGrid();
+    this.setupAxes();
     this.setupEMPoint();
   }
 
   setupScene() {
+
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x0C0D10);
   }
 
   setupCamera() {
+
     this.camera = new THREE.PerspectiveCamera(
       65,
       window.innerWidth / window.innerHeight,
       0.1,
       100
     );
+
+    this.camera.position.set(0, 1.5, 3);
   }
 
   setupRenderer() {
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: false
+    });
+
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
     document.body.appendChild(this.renderer.domElement);
   }
 
-  setupLights() {
-    this.scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+  setupControls() {
 
-    const dir = new THREE.DirectionalLight(0xffffff, 0.3);
-    dir.position.set(2, 3, 2);
-    this.scene.add(dir);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.05;
+    this.controls.screenSpacePanning = false;
+  }
+
+  setupLights() {
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.35);
+    this.scene.add(ambient);
+
+    const directional = new THREE.DirectionalLight(0xffffff, 0.5);
+    directional.position.set(2, 3, 2);
+    this.scene.add(directional);
+  }
+
+  setupGrid() {
+
+    const grid = new THREE.GridHelper(4, 40, 0x222222, 0x222222);
+    grid.material.opacity = 0.08;
+    grid.material.transparent = true;
+
+    this.scene.add(grid);
   }
 
   setupAxes() {
+
     const axisLength = 1.5;
-    const material = new THREE.LineBasicMaterial({ color: 0x333333 });
+    const axisMaterial = new THREE.LineBasicMaterial({ color: 0x333333 });
 
     const makeAxis = (start, end) => {
       const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
-      return new THREE.Line(geometry, material);
+      return new THREE.Line(geometry, axisMaterial);
     };
 
     this.scene.add(makeAxis(
@@ -93,65 +124,67 @@ export class SceneManager {
     ));
   }
 
-  setupGrid() {
-    const grid = new THREE.GridHelper(3, 30, 0x222222, 0x222222);
-    grid.material.opacity = 0.08;
-    grid.material.transparent = true;
-    this.scene.add(grid);
-  }
-
   setupEMPoint() {
-    const geometry = new THREE.SphereGeometry(0.04, 32, 32);
+
+    const geometry = new THREE.SphereGeometry(0.05, 32, 32);
+
     const material = new THREE.MeshStandardMaterial({
       color: 0x5DA9FF,
       emissive: 0x5DA9FF,
-      emissiveIntensity: 0.7
+      emissiveIntensity: 0.8
     });
 
     this.emPoint = new THREE.Mesh(geometry, material);
+
     this.scene.add(this.emPoint);
   }
 
+  /* =========================
+     INTENSITY (buffer pulz)
+  ========================= */
+
   setIntensity(value) {
+
     this.intensity = value;
   }
 
   /* =========================
-     SPLIT TRIGGER
+     SPLIT
   ========================= */
 
   startSplit(W, H, D, intensity) {
 
-    if (this.state !== "idle") return;
+    if (this.splitting) return;
 
-    this.state = "splitting";
+    this.splitting = true;
     this.splitProgress = 0;
 
-    const axisLength = 1.5;
-
     this.targetPositions = [
-      new THREE.Vector3(W * intensity * axisLength, 0, 0),
-      new THREE.Vector3(0, H * intensity * axisLength, 0),
-      new THREE.Vector3(0, 0, D * intensity * axisLength)
+      new THREE.Vector3(W * intensity * 1.8, 0, 0),
+      new THREE.Vector3(0, H * intensity * 1.8, 0),
+      new THREE.Vector3(0, 0, D * intensity * 1.8)
     ];
 
     const colors = [
-      new THREE.Color().setHSL(this.baseHue - 0.03, 0.8, 0.4 + W * 0.3),
-      new THREE.Color().setHSL(this.baseHue + 0.05, 0.8, 0.4 + H * 0.3),
-      new THREE.Color().setHSL(this.baseHue - 0.1, 0.8, 0.4 + D * 0.3)
+      new THREE.Color(0x4FC3F7),
+      new THREE.Color(0x81C784),
+      new THREE.Color(0xBA68C8)
     ];
 
     this.gatePoints = [];
 
     for (let i = 0; i < 3; i++) {
-      const g = new THREE.SphereGeometry(0.035, 24, 24);
-      const m = new THREE.MeshStandardMaterial({
+
+      const geometry = new THREE.SphereGeometry(0.04, 24, 24);
+
+      const material = new THREE.MeshStandardMaterial({
         color: colors[i],
         emissive: colors[i],
         emissiveIntensity: 0.7
       });
 
-      const mesh = new THREE.Mesh(g, m);
+      const mesh = new THREE.Mesh(geometry, material);
+
       this.scene.add(mesh);
       this.gatePoints.push(mesh);
     }
@@ -168,38 +201,29 @@ export class SceneManager {
 
   update() {
 
-    this.time += 0.002;
+    this.time += 0.01;
 
-    // Kamera mikro-orbit
-    this.camera.position.set(
-      Math.cos(this.time) * this.radius,
-      1.2 + Math.sin(this.time * 0.5) * 0.1,
-      Math.sin(this.time) * this.radius
-    );
-    this.camera.lookAt(0, 0, 0);
+    this.controls.update();
 
-    // Idle pulz EM
-    if (this.state === "idle" && this.emPoint) {
+    // Idle EM pulz
+    if (!this.splitting && this.emPoint) {
 
-      const scale =
-        1 +
-        this.intensity * 0.8 +
-        Math.sin(this.time * 10) * 0.05;
+      const pulse = 1 + Math.sin(this.time * 5) * 0.05;
 
-      this.emPoint.scale.set(scale, scale, scale);
+      this.emPoint.scale.set(pulse, pulse, pulse);
 
       this.emPoint.position.x =
-        Math.sin(this.time * 3) * this.intensity * 0.3;
+        Math.sin(this.time * 1.5) * 0.1 * this.intensity;
 
       this.emPoint.position.y =
-        Math.cos(this.time * 2) * this.intensity * 0.2;
+        Math.cos(this.time * 1.2) * 0.1 * this.intensity;
 
       this.emPoint.position.z =
-        Math.sin(this.time * 4) * this.intensity * 0.3;
+        Math.sin(this.time * 1.8) * 0.1 * this.intensity;
     }
 
-    // Splitting
-    if (this.state === "splitting") {
+    // Split animácia
+    if (this.splitting && this.splitProgress < 1) {
 
       this.splitProgress += 0.02;
 
@@ -209,69 +233,23 @@ export class SceneManager {
           : 1 - Math.pow(-2 * this.splitProgress + 2, 2) / 2;
 
       for (let i = 0; i < this.gatePoints.length; i++) {
+
         this.gatePoints[i].position.lerpVectors(
           new THREE.Vector3(0, 0, 0),
           this.targetPositions[i],
           eased
         );
       }
-
-      if (this.splitProgress >= 1) {
-        this.state = "settled";
-        this.settleTimer = 0;
-      }
-    }
-
-    // Settled pause
-    if (this.state === "settled") {
-
-      this.settleTimer += 0.02;
-
-      if (this.settleTimer > 1.5) {
-        this.state = "reforming";
-      }
-    }
-
-    // Reforming
-    if (this.state === "reforming") {
-
-      this.splitProgress -= 0.02;
-
-      for (let i = 0; i < this.gatePoints.length; i++) {
-        this.gatePoints[i].position.lerpVectors(
-          new THREE.Vector3(0, 0, 0),
-          this.targetPositions[i],
-          this.splitProgress
-        );
-      }
-
-      if (this.splitProgress <= 0) {
-        this.cleanupSplit();
-        this.state = "idle";
-      }
     }
   }
 
-  cleanupSplit() {
-
-    for (let g of this.gatePoints) {
-      this.scene.remove(g);
-    }
-
-    this.gatePoints = [];
-    this.targetPositions = [];
-
-    this.setupEMPoint();
-  }
-
-  render() {
-    this.renderer.render(this.scene, this.camera);
-  }
+  /* =========================
+     RESIZE
+  ========================= */
 
   onResize() {
-    this.camera.aspect =
-      window.innerWidth / window.innerHeight;
 
+    this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(
