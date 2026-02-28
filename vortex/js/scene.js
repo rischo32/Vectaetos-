@@ -252,6 +252,37 @@ export class SceneManager {
 
       if (this.splitProgress >= 1) {
 
+        // Jemné napätie medzi bránami
+if (!this.splitting && this.gatePoints.length === 3) {
+
+  const minDistance = 0.4;
+  const tensionStrength = 0.002;
+
+  for (let i = 0; i < this.gatePoints.length; i++) {
+
+    for (let j = i + 1; j < this.gatePoints.length; j++) {
+
+      const a = this.gatePoints[i];
+      const b = this.gatePoints[j];
+
+      const direction = new THREE.Vector3()
+        .subVectors(a.position, b.position);
+
+      const distance = direction.length();
+
+      if (distance < minDistance) {
+
+        direction.normalize();
+
+        const push = direction.multiplyScalar(tensionStrength);
+
+        a.position.add(push);
+        b.position.sub(push);
+      }
+    }
+  }
+}
+        
         // Po splite → mierne povolíme rotáciu
         this.controls.enableRotate = true;
         this.splitting = false;
