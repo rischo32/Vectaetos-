@@ -1,3 +1,4 @@
+}
 import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
 
@@ -28,7 +29,6 @@ export class SceneManager {
   ========================= */
 
   init() {
-
     this.setupScene();
     this.setupCamera();
     this.setupRenderer();
@@ -45,14 +45,12 @@ export class SceneManager {
   }
 
   setupCamera() {
-
     this.camera = new THREE.PerspectiveCamera(
       65,
       window.innerWidth / window.innerHeight,
       0.1,
       100
     );
-
     this.camera.position.set(0, 1.5, 3);
   }
 
@@ -164,7 +162,7 @@ export class SceneManager {
     this.splitting = true;
     this.splitProgress = 0;
 
-    // Zamkni kameru počas splitu
+    // Hybrid: zamknúť kameru počas splitu
     this.controls.enableRotate = false;
 
     const scale = 2.4;
@@ -206,7 +204,7 @@ export class SceneManager {
   }
 
   /* =========================
-     UPDATE LOOP
+     UPDATE
   ========================= */
 
   update() {
@@ -256,15 +254,15 @@ export class SceneManager {
       }
     }
 
-    // Jemné napätie medzi bránami
+    // Dynamické napätie + entropia
     if (!this.splitting && this.gatePoints.length === 3) {
 
       const minDistance = 0.4;
       const tensionStrength = 0.002;
 
-      for (let i = 0; i < this.gatePoints.length; i++) {
-
-        for (let j = i + 1; j < this.gatePoints.length; j++) {
+      // Jemné odpudzovanie
+      for (let i = 0; i < 3; i++) {
+        for (let j = i + 1; j < 3; j++) {
 
           const a = this.gatePoints[i];
           const b = this.gatePoints[j];
@@ -286,15 +284,21 @@ export class SceneManager {
         }
       }
 
-      // Entropický návrat do stredu
-      const returnStrength = 0.0025;
+      // Dynamicky škálovaný návrat
+      const baseReturn = 0.003;
 
       this.gatePoints.forEach(point => {
 
         const toCenter = new THREE.Vector3()
           .subVectors(new THREE.Vector3(0, 0, 0), point.position);
 
-        point.position.add(toCenter.multiplyScalar(returnStrength));
+        const distance = toCenter.length();
+
+        const dynamicReturn = baseReturn + distance * 0.002;
+
+        point.position.add(
+          toCenter.normalize().multiplyScalar(dynamicReturn)
+        );
       });
     }
   }
