@@ -1,6 +1,13 @@
-}
+/* =========================
+   CDN IMPORTS
+========================= */
+
 import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
+
+/* =========================
+   SCENE MANAGER
+========================= */
 
 export class SceneManager {
 
@@ -20,7 +27,6 @@ export class SceneManager {
     this.splitProgress = 0;
 
     this.targetPositions = [];
-
     this.intensity = 0;
   }
 
@@ -29,6 +35,7 @@ export class SceneManager {
   ========================= */
 
   init() {
+
     this.setupScene();
     this.setupCamera();
     this.setupRenderer();
@@ -40,25 +47,27 @@ export class SceneManager {
   }
 
   setupScene() {
+
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x0C0D10);
   }
 
   setupCamera() {
+
     this.camera = new THREE.PerspectiveCamera(
       65,
       window.innerWidth / window.innerHeight,
       0.1,
       100
     );
+
     this.camera.position.set(0, 1.5, 3);
   }
 
   setupRenderer() {
 
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: false
+      antialias: true
     });
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -69,7 +78,10 @@ export class SceneManager {
 
   setupControls() {
 
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls = new OrbitControls(
+      this.camera,
+      this.renderer.domElement
+    );
 
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
@@ -95,7 +107,13 @@ export class SceneManager {
 
   setupGrid() {
 
-    const grid = new THREE.GridHelper(4, 40, 0x222222, 0x222222);
+    const grid = new THREE.GridHelper(
+      4,
+      40,
+      0x222222,
+      0x222222
+    );
+
     grid.material.opacity = 0.08;
     grid.material.transparent = true;
 
@@ -105,7 +123,9 @@ export class SceneManager {
   setupAxes() {
 
     const axisLength = 1.5;
-    const axisMaterial = new THREE.LineBasicMaterial({ color: 0x333333 });
+    const axisMaterial = new THREE.LineBasicMaterial({
+      color: 0x333333
+    });
 
     const makeAxis = (start, end) => {
       const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
@@ -162,7 +182,6 @@ export class SceneManager {
     this.splitting = true;
     this.splitProgress = 0;
 
-    // Hybrid: zamknúť kameru počas splitu
     this.controls.enableRotate = false;
 
     const scale = 2.4;
@@ -204,7 +223,7 @@ export class SceneManager {
   }
 
   /* =========================
-     UPDATE
+     UPDATE LOOP
   ========================= */
 
   update() {
@@ -212,7 +231,7 @@ export class SceneManager {
     this.time += 0.01;
     this.controls.update();
 
-    // Idle EM pulz
+    // Idle pulz
     if (!this.splitting && this.emPoint) {
 
       const pulse = 1 + Math.sin(this.time * 5) * 0.06;
@@ -254,37 +273,9 @@ export class SceneManager {
       }
     }
 
-    // Dynamické napätie + entropia
+    // Entropický návrat
     if (!this.splitting && this.gatePoints.length === 3) {
 
-      const minDistance = 0.4;
-      const tensionStrength = 0.002;
-
-      // Jemné odpudzovanie
-      for (let i = 0; i < 3; i++) {
-        for (let j = i + 1; j < 3; j++) {
-
-          const a = this.gatePoints[i];
-          const b = this.gatePoints[j];
-
-          const direction = new THREE.Vector3()
-            .subVectors(a.position, b.position);
-
-          const distance = direction.length();
-
-          if (distance < minDistance) {
-
-            direction.normalize();
-
-            const push = direction.multiplyScalar(tensionStrength);
-
-            a.position.add(push);
-            b.position.sub(push);
-          }
-        }
-      }
-
-      // Dynamicky škálovaný návrat
       const baseReturn = 0.003;
 
       this.gatePoints.forEach(point => {
@@ -301,6 +292,8 @@ export class SceneManager {
         );
       });
     }
+
+    this.renderer.render(this.scene, this.camera);
   }
 
   /* =========================
@@ -317,4 +310,4 @@ export class SceneManager {
       window.innerHeight
     );
   }
-}
+                 }
